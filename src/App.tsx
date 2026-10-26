@@ -56,7 +56,6 @@ import { WaterRippleEffect } from './components/WaterRippleEffect';
 import { LiveBackground } from './components/LiveBackground';
 import { PdfScannerModal } from './components/PdfScannerModal';
 import { RecentlyAddedModal } from './components/RecentlyAddedModal';
-import { MoreAppsModal } from './components/MoreAppsModal';
 import { AlertTriangle } from 'lucide-react';
 
 export default function App() {
@@ -252,7 +251,6 @@ export default function App() {
   }, [customQuestions]);
 
   const [isRecentlyAddedOpen, setIsRecentlyAddedOpen] = useState<boolean>(false);
-  const [isMoreAppsOpen, setIsMoreAppsOpen] = useState<boolean>(false);
 
   // Detect all terms added by users excluding those already in the data bank
   const recentlyAddedQuestions = useMemo(() => {
@@ -502,7 +500,6 @@ export default function App() {
           isExamInProgress={examStage === 'active'}
           onOpenRecentlyAdded={() => setIsRecentlyAddedOpen(true)}
           recentlyAddedCount={recentlyAddedQuestions.length}
-          onOpenMoreApps={() => setIsMoreAppsOpen(true)}
         />
 
         {/* Main Body Stage */}
@@ -522,7 +519,6 @@ export default function App() {
               onOpenPdfScanner={() => setIsPdfScannerOpen(true)}
               onOpenRecentlyAdded={() => setIsRecentlyAddedOpen(true)}
               recentlyAddedCount={recentlyAddedQuestions.length}
-              onOpenMoreApps={() => setIsMoreAppsOpen(true)}
             />
           )}
 
@@ -645,12 +641,6 @@ export default function App() {
           setIsPdfScannerOpen(true);
         }}
         dataBankCount={CE_QUESTIONS_MASTER.length}
-      />
-
-      {/* More Apps Modal */}
-      <MoreAppsModal
-        isOpen={isMoreAppsOpen}
-        onClose={() => setIsMoreAppsOpen(false)}
       />
 
       {/* Confirmation Dialog for Leaving Active Exam (No window.confirm!) */}

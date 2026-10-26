@@ -55,7 +55,6 @@ interface HomeScreenProps {
   onOpenPdfScanner?: () => void;
   onOpenRecentlyAdded?: () => void;
   recentlyAddedCount?: number;
-  onOpenMoreApps?: () => void;
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({
@@ -71,8 +70,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   newCardsCount = 0,
   onOpenPdfScanner,
   onOpenRecentlyAdded,
-  recentlyAddedCount = 0,
-  onOpenMoreApps
+  recentlyAddedCount = 0
 }) => {
   const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
   const [editName, setEditName] = useState<string>(profile.name);

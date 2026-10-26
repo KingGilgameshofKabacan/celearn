@@ -15,11 +15,10 @@ import {
   VolumeX,
   Flame,
   Clock,
-  Grid,
-  ExternalLink,
   ChevronRight,
   Palette,
-  Sigma
+  Sigma,
+  Mail
 } from 'lucide-react';
 import { CeLearnLogo } from './CeLearnLogo';
 import { soundManager } from '../utils/audio';
@@ -30,7 +29,6 @@ import {
 } from '../utils/storage';
 import confetti from 'canvas-confetti';
 import { StreakData } from '../types';
-import { CeleGrindTrackerIcon, CeleBoardEngineIcon, MORE_CELE_APPS } from './MoreAppsModal';
 
 export type AppTab = 'home' | 'exam' | 'flashcards' | 'formulas' | 'dictionary' | 'analytics' | 'achievements' | 'themes';
 
@@ -44,7 +42,6 @@ interface HeaderProps {
   isExamInProgress: boolean;
   onOpenRecentlyAdded?: () => void;
   recentlyAddedCount?: number;
-  onOpenMoreApps?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -56,8 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
   totalCount,
   isExamInProgress: _isExamInProgress,
   onOpenRecentlyAdded,
-  recentlyAddedCount = 0,
-  onOpenMoreApps
+  recentlyAddedCount = 0
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => soundManager.isEnabled());
@@ -212,6 +208,14 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             );
           })}
+          <a
+            href="mailto:franicholas119@gmail.com"
+            title="Contact Us"
+            className="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 flex items-center space-x-1.5 interactive-btn text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800"
+          >
+            <Mail className="w-4 h-4 text-orange-500" />
+            <span>Contact Us</span>
+          </a>
         </nav>
 
         {/* Actions Zone: Recently Added, Streak, More Apps, Night/Light Mode Theme & Hamburger Catalog Menu */}
@@ -257,22 +261,6 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="text-emerald-500 text-[11px] font-bold" title="Checked in today">✓</span>
             )}
           </button>
-
-          {/* More Apps Header Button - Located directly beside streak and beside the night/light mode */}
-          {onOpenMoreApps && (
-            <button
-              onClick={onOpenMoreApps}
-              title="More CELE Apps (Grind Tracker & Board Engine)"
-              className="flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl border bg-orange-50/80 hover:bg-orange-100 dark:bg-orange-950/40 dark:hover:bg-orange-900/50 border-orange-200 dark:border-orange-900/60 text-orange-700 dark:text-orange-400 transition interactive-btn shadow-xs cursor-pointer"
-              aria-label="More CELE Apps"
-            >
-              <div className="flex -space-x-1 overflow-hidden py-0.5 shrink-0">
-                <CeleGrindTrackerIcon size={18} />
-                <CeleBoardEngineIcon size={18} />
-              </div>
-              <span className="font-bold hidden xs:inline sm:inline">More Apps</span>
-            </button>
-          )}
 
           {/* Day / Night Theme Switcher */}
           <button
@@ -393,53 +381,30 @@ export const Header: React.FC<HeaderProps> = ({
                         </button>
                       );
                     })}
-                  </div>
-                </div>
 
-                {/* Section 2: More Apps */}
-                <div className="space-y-2.5 pt-3 border-t border-stone-200 dark:border-stone-800">
-                  <div className="flex items-center justify-between text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider px-1">
-                    <span>More Apps</span>
-                    <span className="text-[10px] text-orange-600 dark:text-orange-400 font-mono font-bold">CELE Suite</span>
-                  </div>
-
-                  <div className="space-y-2">
-                    {MORE_CELE_APPS.map(app => (
-                      <a
-                        key={app.id}
-                        href={app.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50 hover:bg-white dark:bg-stone-800/50 dark:hover:bg-stone-800 hover:border-orange-400 dark:hover:border-orange-500 transition flex items-center justify-between group shadow-xs interactive-card"
-                      >
-                        <div className="flex items-center space-x-3.5 min-w-0">
-                          <div className="shrink-0 group-hover:scale-105 transition-transform">
-                            {app.id === 'grind-tracker' ? (
-                              <CeleGrindTrackerIcon size={42} />
-                            ) : (
-                              <CeleBoardEngineIcon size={42} />
-                            )}
-                          </div>
-                          <div className="min-w-0">
-                            <div className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors flex items-center gap-1.5">
-                              <span>{app.name}</span>
-                              <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover:text-orange-500" />
-                            </div>
-                            <div className="text-xs text-stone-600 dark:text-stone-400 truncate mt-0.5">
-                              {app.tag}
-                            </div>
-                          </div>
+                    {/* Contact Us: Redirects to Email */}
+                    <a
+                      href="mailto:franicholas119@gmail.com"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="w-full p-3.5 rounded-2xl text-left transition flex items-center justify-between group interactive-btn cursor-pointer bg-stone-50 hover:bg-stone-100 dark:bg-stone-800/60 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700/80 hover:border-orange-400 dark:hover:border-orange-500 shadow-xs"
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0">
+                        <div className="p-2.5 rounded-xl shrink-0 transition-colors bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 group-hover:bg-orange-500 group-hover:text-white">
+                          <Mail className="w-4 h-4" />
                         </div>
+                        <div className="min-w-0">
+                          <span className="font-bold text-sm text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+                            Contact Us
+                          </span>
+                        </div>
+                      </div>
 
-                        <span className="text-xs font-bold text-orange-600 dark:text-orange-400 shrink-0 font-mono ml-2">
-                          Open &rarr;
-                        </span>
-                      </a>
-                    ))}
+                      <ChevronRight className="w-4 h-4 shrink-0 transition-transform text-stone-400 group-hover:translate-x-1 group-hover:text-orange-500" />
+                    </a>
                   </div>
                 </div>
 
-                {/* Section 3: Quick Utilities */}
+                {/* Section 2: Quick Utilities */}
                 <div className="space-y-2.5 pt-3 border-t border-stone-200 dark:border-stone-800">
                   <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider px-1">
                     Quick Utilities
