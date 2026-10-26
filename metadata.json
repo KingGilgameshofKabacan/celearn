@@ -1,0 +1,6 @@
+{
+  "name": "CELEARN — Civil Engineering Board Exam Reviewer",
+  "description": "Comprehensive CE Licensure Exam (CELE) terminology, principles, and definitions mastery simulator covering PSAD, HPGE, and MSTE with flashcards, mock board assessments, subtopic analytics, and gamified progression.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

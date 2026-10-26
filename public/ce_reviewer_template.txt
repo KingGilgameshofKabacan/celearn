@@ -1,0 +1,53 @@
+[PSAD]
+Term: DEVELOPMENT LENGTH
+Definition: The minimum embedment length of a reinforcing bar required to develop its design yield strength without pullout failure in concrete.
+- Governed by NSCP 2015 Section 425 and ACI 318.
+- Dependent on bar diameter, clear cover, and concrete compressive strength f'c.
+
+Term: PLASTIC HINGE
+Definition: A localized yielding zone in a structural flexural member where large inelastic rotations take place under a constant plastic moment Mp.
+
+Term: LATERAL-TORSIONAL BUCKLING
+Definition: An out-of-plane instability failure mode of unbraced beams in flexure where the compression flange buckles sideways while the cross-section twists.
+
+Term: MODULUS OF RUPTURE
+Definition: The theoretical flexural tensile stress at which an unreinforced concrete beam experiences first cracking: fr = 0.62 · λ · √f'c (in MPa for normal-weight concrete).
+
+Term: PUNCHING SHEAR
+Definition: Critical two-way shear failure occurring around column perimeters in footings and flat slabs, evaluated at distance d/2 from the column face.
+
+[HPGE]
+Term: WATER HAMMER
+Definition: A destructive hydraulic acoustic shock wave created in closed pipes when fluid flow velocity changes abruptly due to rapid valve closure.
+- Pressure surge is calculated by the Joukowsky equation: ΔP = ρ · c · Δv.
+- Prevented using surge tanks, air chambers, and slow-closing motorized valves.
+
+Term: HYDRAULIC JUMP
+Definition: A rapid transition in open channel flow where high-velocity supercritical flow abruptly changes into low-velocity subcritical flow with large energy dissipation.
+
+Term: VOID RATIO
+Definition: The fundamental soil phase ratio of the volume of void spaces (Vv) to the volume of solid soil particles (Vs): e = Vv / Vs.
+
+Term: QUICK CONDITION
+Definition: A boiling condition in saturated cohesionless soils where upward seepage drag forces equal the submerged soil unit weight, causing effective stress to drop to zero.
+
+Term: METACENTRIC HEIGHT
+Definition: The distance between the center of gravity (G) and metacenter (M) of a floating vessel, serving as the primary index of initial static stability.
+
+[MSTE]
+Term: STOPPING SIGHT DISTANCE
+Definition: The minimum roadway distance required by a motor vehicle driver traveling at design speed to perceive an unexpected stationary road hazard and bring the vehicle to a complete safe stop.
+- Formulated as SSD = 0.278 · V · t + V² / [254 · (f ± G)].
+- Accounts for a standard 2.5-second perception-reaction time and braking friction.
+
+Term: FREE FLOAT
+Definition: In a CPM schedule network, the amount of time an activity can be delayed without delaying the early start date of any immediately succeeding activity.
+
+Term: GREENSHIELDS MODEL
+Definition: The classic macroscopic traffic stream model postulating a linear relationship between vehicle speed and traffic density: v = vf · (1 - k/kj).
+
+Term: ECONOMIC LIMIT OF HAUL
+Definition: The total haul distance where the financial cost of hauling excavated cut equals the cost of borrowing fill from a nearby borrow pit plus excavation waste.
+
+Term: CAPITALIZED COST
+Definition: The present worth of an engineering asset or public works infrastructure project that is assumed to provide service perpetually, including initial construction and perpetual replacements.

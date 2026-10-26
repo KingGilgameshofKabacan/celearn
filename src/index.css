@@ -1,0 +1,614 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  .transform-gpu {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  /* 60 FPS Hardware-Accelerated 3D Flip Card Engine */
+  .perspective-stage {
+    perspective: 1400px;
+    -webkit-perspective: 1400px;
+    perspective-origin: center center;
+  }
+
+  .card-3d-flipper {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .card-3d-flipper.is-flipped {
+    transform: rotateY(180deg) translate3d(0, 0, 0);
+  }
+
+  .card-3d-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .card-3d-face {
+    grid-area: 1 / 1;
+    width: 100%;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .card-3d-front {
+    transform: rotateY(0deg);
+  }
+
+  .card-3d-back {
+    transform: rotateY(180deg);
+  }
+
+  .card-3d-flipper:not(.is-flipped) .card-3d-front {
+    pointer-events: auto !important;
+    visibility: visible !important;
+    z-index: 10;
+  }
+
+  .card-3d-flipper:not(.is-flipped) .card-3d-back {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    z-index: 1;
+  }
+
+  .card-3d-flipper.is-flipped .card-3d-front {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    z-index: 1;
+  }
+
+  .card-3d-flipper.is-flipped .card-3d-back {
+    pointer-events: auto !important;
+    visibility: visible !important;
+    z-index: 10;
+  }
+
+  /* =========================================================================
+     iOS Safari & WebKit PWA Native UX Engine
+     ========================================================================= */
+
+  /* Tabular Numerics for timer digits, countdowns, streaks, and scores */
+  .tabular-nums,
+  [data-tabular-nums],
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
+  }
+
+  /* Safe Area Utility Classes */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pl-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+  .pr-safe {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  .p-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  .min-h-dvh {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: 100dvh;
+  }
+  .h-dvh {
+    height: 100vh;
+    height: -webkit-fill-available;
+    height: 100dvh;
+  }
+
+  /* Touch Target Minimum 48px x 48px bounding box */
+  .touch-target,
+  .btn-touch {
+    min-height: 48px;
+    min-width: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Base HTML & Body iOS optimizations */
+html {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Prevent unwanted UI text highlighting while preserving readable formula text */
+button,
+[role="button"],
+[role="tab"],
+nav,
+.select-none-ui {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure text inputs on iOS don't trigger automatic zoom (requires font-size >= 16px on small screens) */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="search"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Custom Theme Variables */
+:root {
+  --color-cream-bg: #FAF6F0;
+  --color-card-white: #FFFFFF;
+  --color-card-beige: #F5EFEB;
+  --color-border-beige: #E6DDD0;
+  --color-orange-primary: #EA580C;
+  --color-orange-hover: #C2410C;
+  --color-orange-soft: #FFF7ED;
+  --color-text-main: #1C1917;
+  --color-text-muted: #78716C;
+}
+
+html.dark,
+body.dark,
+.dark,
+[data-theme="dark"] {
+  --color-cream-bg: #141210;
+  --color-card-white: #1C1917;
+  --color-card-beige: #24201C;
+  --color-border-beige: #38312B;
+  --color-orange-primary: #F97316;
+  --color-orange-hover: #EA580C;
+  --color-orange-soft: #2B1B10;
+  --color-text-main: #FAF6F0;
+  --color-text-muted: #A8A29E;
+}
+
+/* =========================================================================
+   COMPREHENSIVE THEME SYNCHRONIZATION ENGINE
+   Dynamically syncs tiles, cards, borders, buttons, accents, headers, and text
+   with the selected personality theme in both Day and Night modes!
+   ========================================================================= */
+
+/* Root & Body canvas background */
+html,
+body,
+[data-theme-root] {
+  background-color: var(--theme-canvas-bg) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Card & Tile Surfaces (Primary Cards across all views) */
+[data-personality-theme] .bg-white:not([data-keep-color]):not(.ignore-theme):not(.swatch-pill),
+[data-personality-theme] .dark\:bg-stone-900:not([data-keep-color]):not(.ignore-theme),
+[data-personality-theme] .dark .dark\:bg-stone-900:not([data-keep-color]):not(.ignore-theme),
+html.dark[data-personality-theme] .dark\:bg-stone-900:not([data-keep-color]):not(.ignore-theme),
+body.dark[data-personality-theme] .dark\:bg-stone-900:not([data-keep-color]):not(.ignore-theme) {
+  background-color: var(--theme-card-bg) !important;
+}
+
+/* Elevated Surfaces, Subcards, Input backgrounds, and Module Subpanels */
+[data-personality-theme] .bg-stone-50:not([data-keep-color]):not(.ignore-theme):not(.swatch-pill),
+[data-personality-theme] .bg-stone-100:not([data-keep-color]):not(.ignore-theme):not(.swatch-pill),
+[data-personality-theme] .dark\:bg-stone-800:not([data-keep-color]):not(.ignore-theme),
+[data-personality-theme] .dark .dark\:bg-stone-800:not([data-keep-color]):not(.ignore-theme),
+[data-personality-theme] .dark\:bg-stone-800\/60:not([data-keep-color]):not(.ignore-theme),
+[data-personality-theme] .dark\:bg-stone-800\/80:not([data-keep-color]):not(.ignore-theme),
+[data-personality-theme] .dark\:bg-stone-800\/50:not([data-keep-color]):not(.ignore-theme),
+html.dark[data-personality-theme] .dark\:bg-stone-800:not([data-keep-color]):not(.ignore-theme) {
+  background-color: var(--theme-card-elevated) !important;
+}
+
+/* Card & Tile Borders */
+[data-personality-theme] .border-stone-200:not([data-keep-color]),
+[data-personality-theme] .border-stone-300:not([data-keep-color]),
+[data-personality-theme] .border-stone-100:not([data-keep-color]),
+[data-personality-theme] .dark\:border-stone-800:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:border-stone-800:not([data-keep-color]),
+[data-personality-theme] .dark\:border-stone-700:not([data-keep-color]),
+[data-personality-theme] .dark\:border-stone-700\/80:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:border-stone-700:not([data-keep-color]),
+html.dark[data-personality-theme] .dark\:border-stone-800:not([data-keep-color]),
+html.dark[data-personality-theme] .dark\:border-stone-700:not([data-keep-color]) {
+  border-color: var(--theme-border) !important;
+}
+
+/* Primary Action Buttons */
+[data-personality-theme] .bg-orange-600:not([data-keep-color]),
+[data-personality-theme] .bg-orange-500:not([data-keep-color]):not(.swatch-pill):not(.status-dot),
+[data-personality-theme] .bg-gradient-to-r.from-orange-500.to-amber-500 {
+  background: var(--theme-primary) !important;
+  color: #ffffff !important;
+}
+
+[data-personality-theme] .hover\:bg-orange-500:hover:not([data-keep-color]),
+[data-personality-theme] .hover\:bg-orange-600:hover:not([data-keep-color]),
+[data-personality-theme] .hover\:from-orange-600:hover {
+  background: var(--theme-primary-hover) !important;
+}
+
+/* Accent Badges, Pills, and Banner Backgrounds */
+[data-personality-theme] .bg-orange-100:not([data-keep-color]),
+[data-personality-theme] .bg-orange-50:not([data-keep-color]),
+[data-personality-theme] .bg-orange-50\/70:not([data-keep-color]),
+[data-personality-theme] .bg-orange-50\/60:not([data-keep-color]),
+[data-personality-theme] .dark\:bg-orange-950:not([data-keep-color]),
+[data-personality-theme] .dark\:bg-orange-950\/60:not([data-keep-color]),
+[data-personality-theme] .dark\:bg-orange-950\/40:not([data-keep-color]),
+[data-personality-theme] .dark\:bg-orange-950\/70:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:bg-orange-950:not([data-keep-color]),
+[data-personality-theme] .bg-orange-500\/10:not([data-keep-color]),
+[data-personality-theme] .bg-orange-500\/15:not([data-keep-color]),
+[data-personality-theme] .bg-orange-500\/20:not([data-keep-color]),
+[data-personality-theme] .bg-orange-500\/5:not([data-keep-color]),
+[data-personality-theme] .bg-gradient-to-r.from-orange-500\/10,
+[data-personality-theme] .bg-gradient-to-br.from-orange-500\/10 {
+  background: var(--theme-primary-soft) !important;
+  background-image: none !important;
+}
+
+/* Accent Text & Indicators */
+[data-personality-theme] .text-orange-600:not([data-keep-color]),
+[data-personality-theme] .text-orange-500:not([data-keep-color]),
+[data-personality-theme] .text-orange-700:not([data-keep-color]),
+[data-personality-theme] .dark\:text-orange-400:not([data-keep-color]),
+[data-personality-theme] .dark\:text-orange-300:not([data-keep-color]),
+[data-personality-theme] .dark\:text-orange-200:not([data-keep-color]),
+[data-personality-theme] .dark\:text-orange-500:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:text-orange-400:not([data-keep-color]) {
+  color: var(--theme-primary) !important;
+}
+
+/* Accent Borders & Hover */
+[data-personality-theme] .border-orange-500:not([data-keep-color]),
+[data-personality-theme] .border-orange-600:not([data-keep-color]),
+[data-personality-theme] .border-orange-500\/40:not([data-keep-color]),
+[data-personality-theme] .border-orange-500\/25:not([data-keep-color]),
+[data-personality-theme] .border-orange-500\/80:not([data-keep-color]),
+[data-personality-theme] .border-orange-200:not([data-keep-color]),
+[data-personality-theme] .border-orange-200\/80:not([data-keep-color]),
+[data-personality-theme] .border-orange-200\/50:not([data-keep-color]),
+[data-personality-theme] .dark\:border-orange-900\/50:not([data-keep-color]),
+[data-personality-theme] .dark\:border-orange-900\/40:not([data-keep-color]),
+[data-personality-theme] .hover\:border-orange-500:hover,
+[data-personality-theme] .dark\:hover\:border-orange-500:hover,
+[data-personality-theme] .group:hover .group-hover\:border-orange-500 {
+  border-color: var(--theme-primary) !important;
+}
+
+[data-personality-theme] .group:hover .group-hover\:text-orange-600,
+[data-personality-theme] .group:hover .dark\:group-hover\:text-orange-400 {
+  color: var(--theme-primary) !important;
+}
+
+/* Rings & Focus States */
+[data-personality-theme] .ring-orange-500,
+[data-personality-theme] .ring-orange-500\/10,
+[data-personality-theme] .ring-orange-500\/20,
+[data-personality-theme] .focus\:ring-orange-500:focus {
+  --tw-ring-color: var(--theme-primary) !important;
+}
+
+/* Sticky Header Bar & Drawer Panels */
+[data-personality-theme] header.sticky {
+  background-color: var(--theme-header-bg) !important;
+  border-color: var(--theme-border) !important;
+}
+
+[data-personality-theme] header.sticky nav button.bg-orange-100,
+[data-personality-theme] header.sticky nav button.dark\:bg-orange-950\/70 {
+  background-color: var(--theme-primary-soft) !important;
+  color: var(--theme-primary) !important;
+}
+
+/* Footer */
+[data-personality-theme] footer {
+  background-color: var(--theme-footer-bg) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text-muted) !important;
+}
+
+/* Text Hierarchy */
+[data-personality-theme] .text-stone-900:not([data-keep-color]):not(.swatch-pill),
+[data-personality-theme] .dark\:text-stone-100:not([data-keep-color]):not(.swatch-pill),
+[data-personality-theme] .dark .dark\:text-stone-100:not([data-keep-color]):not(.swatch-pill) {
+  color: var(--theme-text-primary) !important;
+}
+
+[data-personality-theme] .text-stone-800:not([data-keep-color]),
+[data-personality-theme] .dark\:text-stone-200:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:text-stone-200:not([data-keep-color]) {
+  color: var(--theme-text-primary) !important;
+}
+
+[data-personality-theme] .text-stone-700:not([data-keep-color]),
+[data-personality-theme] .dark\:text-stone-300:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:text-stone-300:not([data-keep-color]) {
+  color: var(--theme-text-primary) !important;
+}
+
+[data-personality-theme] .text-stone-600:not([data-keep-color]),
+[data-personality-theme] .text-stone-500:not([data-keep-color]),
+[data-personality-theme] .dark\:text-stone-400:not([data-keep-color]),
+[data-personality-theme] .dark .dark\:text-stone-400:not([data-keep-color]),
+[data-personality-theme] .dark\:text-stone-500:not([data-keep-color]) {
+  color: var(--theme-text-muted) !important;
+}
+
+/* Fill colors for icons when fill-current is applied */
+[data-personality-theme] .fill-current.text-orange-600,
+[data-personality-theme] .fill-current.text-orange-500,
+[data-personality-theme] .dark .fill-current.text-orange-500 {
+  color: var(--theme-primary) !important;
+  fill: var(--theme-primary) !important;
+}
+
+/* Selection highlight */
+[data-personality-theme] ::selection {
+  background-color: var(--theme-primary) !important;
+  color: #ffffff !important;
+}
+
+/* Distraction-Free Mode */
+[data-distraction-free="true"] .live-hover-shape {
+  display: none !important;
+}
+
+/* Smooth native scroll settings */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-cream-bg);
+  color: var(--color-text-main);
+  transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Performance Virtualization & Containment */
+.ce-term-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 130px;
+}
+
+/* 60 FPS Fluid Motion Helpers */
+.interactive-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+.interactive-card:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.interactive-btn {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, box-shadow 0.15s ease;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+.interactive-btn:active {
+  transform: scale(0.97) translate3d(0, 0, 0);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(234, 88, 12, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(234, 88, 12, 0.5);
+}
+
+/* Print Rules */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Still Water Ripple Wave Effect (Clicks only) */
+.water-wave-primary,
+.water-wave-secondary,
+.water-wave-core {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0) scale(0);
+  will-change: transform, opacity;
+}
+
+.water-wave-primary {
+  width: 200px;
+  height: 200px;
+  border: 2px solid rgba(249, 115, 22, 0.45);
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.25);
+  animation: waterRippleExpand 0.85s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+html.dark .water-wave-primary,
+body.dark .water-wave-primary {
+  border: 2px solid rgba(56, 189, 248, 0.55);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+}
+
+.water-wave-secondary {
+  width: 130px;
+  height: 130px;
+  border: 1.5px solid rgba(234, 88, 12, 0.3);
+  animation: waterRippleExpand 0.75s cubic-bezier(0.2, 0.9, 0.3, 1) 0.08s forwards;
+  opacity: 0;
+}
+
+html.dark .water-wave-secondary,
+body.dark .water-wave-secondary {
+  border: 1.5px solid rgba(14, 165, 233, 0.45);
+}
+
+.water-wave-core {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.6) 0%, rgba(56, 189, 248, 0) 70%);
+  animation: waterDropletCore 0.4s ease-out forwards;
+}
+
+html.dark .water-wave-core,
+body.dark .water-wave-core {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.7) 0%, rgba(249, 115, 22, 0) 70%);
+}
+
+@keyframes waterRippleExpand {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0.08);
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes waterDropletCore {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* 60 FPS Live Moving Shapes Hovering in Background */
+.live-hover-shape {
+  pointer-events: none;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.live-float-up-down {
+  animation-name: floatUpDown;
+}
+
+.live-float-diagonal {
+  animation-name: floatDiagonal;
+}
+
+.live-float-sway {
+  animation-name: floatSway;
+}
+
+.live-float-pulse {
+  animation-name: floatPulse;
+}
+
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -28px, 0);
+  }
+}
+
+@keyframes floatDiagonal {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-20px, -30px, 0) scale(1.04);
+  }
+}
+
+@keyframes floatSway {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(24px, -18px, 0);
+  }
+}
+
+@keyframes floatPulse {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(0.96);
+  }
+  50% {
+    transform: translate3d(-12px, 16px, 0) scale(1.05);
+  }
+}

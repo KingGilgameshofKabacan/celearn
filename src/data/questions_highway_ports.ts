@@ -1,0 +1,911 @@
+import { CEQuestion } from '../types';
+
+/**
+ * Authentic Board Examination Terminologies & Questions
+ * Extracted and compiled directly from:
+ * HIGHWAY_AND_TRANSPORTAION_ENGINEERING_TERMS___PORTS_AND_HARBOR_TERMS_db8e580d.pdf (33 pages)
+ * Covering:
+ * - Highway classification, planning, speed limits, parking criteria
+ * - Road safety design, sight distance, sag vertical curves, curbs, escape ramps
+ * - Road markings, signs, shapes, colors, letters, clearances, AH26 Asian Highway
+ * - Pavements, concrete mixing/curing, joints, distresses
+ * - Traffic flow fundamentals, capacities, speeds, delays
+ * - Ports & Harbors: types of harbors/ports, quay wall stability, relieving platforms,
+ *   bollards (capacities), tides, datums (MLLW, MHHW, Design Low Tide), Bay of Fundy,
+ *   and ocean wave mechanics.
+ *
+ * Total Terms: 81
+ */
+export const HIGHWAY_PORTS_QUESTIONS: CEQuestion[] = [
+  {
+    id: 4001,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "A highway proposed for a road corridor connecting several highly urbanized centers with ribbon-type development and high traffic demand, characterized by no frontage access.",
+    answer: "EXPRESSWAY",
+    choices: ["EXPRESSWAY","PROVINCIAL ROAD","FEEDER ROAD","COLLECTOR STREET"],
+    explanation: "Expressways feature full control of access, grade-separated intersections for extremely high flows, and emergency stopping provided clear of the main carriageway.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4002,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Easy",
+    question: "Roads that form part of the main trunkline system, all roads leading to national seaports, national parks, or coast-to-coast roads, divided into North-South Backbone, East-West Laterals, and Other Strategic Roads.",
+    answer: "NATIONAL ROADS",
+    choices: ["NATIONAL ROADS","PROVINCIAL ROADS","MUNICIPAL ROADS","BARANGAY ROADS"],
+    explanation: "National arterial roads in the Philippines form the continuous backbone network under DPWH jurisdiction connecting regional trade centers.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4003,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Easy",
+    question: "Roads connecting one municipality with another, or connecting a municipality to a public wharf or railway station, designated as such by the Sangguniang Panlalawigan.",
+    answer: "PROVINCIAL ROADS",
+    choices: ["PROVINCIAL ROADS","NATIONAL ROADS","CITY ROADS","PRIVATE ROADS"],
+    explanation: "Provincial roads provide inter-municipal mobility and link agricultural centers to provincial seaports and rail hubs.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4004,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Easy",
+    question: "Public roads and streets within the poblacion area of a municipality designated by the Sangguniang Bayan, primarily serving local traffic at the start and end of trips.",
+    answer: "MUNICIPAL ROADS",
+    choices: ["MUNICIPAL ROADS","NATIONAL HIGHWAYS","EXPRESSWAYS","PROVINCIAL TRUNKROADS"],
+    explanation: "Municipal roads accommodate local residential and commercial movements; through traffic is diverted to bypasses or main arterial roads.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4005,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Alternative highway routes constructed around communities or trading centers aimed at improving safety and reducing through traffic volume inside the town center.",
+    answer: "BYPASSES",
+    choices: ["BYPASSES","RADIAL CORRIDORS","CUL-DE-SACS","FRONTAGE LANES"],
+    explanation: "Where a bypass is built, the old road is downgraded in the hierarchy to discourage through traffic, with limited access points to the bypass.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4006,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under Philippine traffic regulations, the maximum legal speed limit on open country roads with no blind corners for passenger cars and motorcycles.",
+    answer: "80 KPH",
+    choices: ["80 KPH","100 KPH","60 KPH","50 KPH"],
+    explanation: "The speed limit on open country roads not closely bordered by habitation is 80 kph for passenger cars/motorcycles and 50 kph for trucks and buses.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4007,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under Philippine traffic regulations, the maximum legal speed limit on open country roads with no blind corners for motor trucks and heavy buses.",
+    answer: "50 KPH",
+    choices: ["50 KPH","70 KPH","80 KPH","40 KPH"],
+    explanation: "Motor trucks and buses are restricted to 50 kph on open country roads to ensure safe stopping distances.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4008,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under Philippine traffic regulations, the maximum speed limit on through streets or boulevards clear of traffic with no blind corners for passenger cars and motorcycles.",
+    answer: "40 KPH",
+    choices: ["40 KPH","60 KPH","50 KPH","30 KPH"],
+    explanation: "On designated through streets and boulevards, the maximum speed is 40 kph for light vehicles and 30 kph for trucks and buses.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4009,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under Philippine traffic regulations, the maximum speed limit on through streets or boulevards clear of traffic with no blind corners for motor trucks and buses.",
+    answer: "30 KPH",
+    choices: ["30 KPH","40 KPH","50 KPH","20 KPH"],
+    explanation: "Commercial motor trucks and buses must not exceed 30 kph on designated through streets and boulevards.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4010,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The statutory speed limit for all vehicles approaching blind corners, crowded streets, intersections, and passing school zones in the Philippines.",
+    answer: "20 KPH",
+    choices: ["20 KPH","30 KPH","15 KPH","40 KPH"],
+    explanation: "When approaching blind corners, school zones, and stationary transit vehicles, maximum vehicle speed is strictly capped at 20 kph.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4011,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The theoretical ideal capacity of a single unobstructed highway passenger car lane under ideal roadway and environmental conditions.",
+    answer: "2,000 VEHICLES/HOUR",
+    choices: ["2,000 VEHICLES/HOUR","1,200 VEHICLES/HOUR","3,500 VEHICLES/HOUR","1,000 VEHICLES/HOUR"],
+    explanation: "Under ideal conditions with 3.65m lane width, level terrain, and passenger cars only, ideal freeway lane capacity is taken as 2,000 pcphpl.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4012,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The minimum distance from the boundaries of intersecting roads within which parallel parking of vehicles must be prohibited.",
+    answer: "6 METERS",
+    choices: ["6 METERS","12 METERS","3 METERS","15 METERS"],
+    explanation: "To maintain sight distance and turning paths, parallel parking is prohibited within 6m on both approach and exit sides of an intersection (or 5-6m per DPWH).",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4013,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The minimum prohibited parking distances from intersecting road boundaries on the approach side and exit side for angle parking bays.",
+    answer: "12M APPROACH AND 9M EXIT",
+    choices: ["12M APPROACH AND 9M EXIT","6M APPROACH AND 6M EXIT","15M APPROACH AND 15M EXIT","9M APPROACH AND 12M EXIT"],
+    explanation: "Angle parking requires greater clearance: 12 meters on the approach side and 9 meters on the exit side of intersecting road boundaries.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4014,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The minimum clear distance required between a parked vehicle and a barrier line to maintain moving traffic for a single lane.",
+    answer: "AT LEAST 3 METERS CLEARANCE FROM BARRIER LINE",
+    choices: ["AT LEAST 3 METERS CLEARANCE FROM BARRIER LINE","AT LEAST 1.5 METERS CLEARANCE","AT LEAST 4.5 METERS CLEARANCE","AT LEAST 2 METERS CLEARANCE"],
+    explanation: "When parking adjacent to barrier lines, at least 3.0 meters of clear lane width must be maintained so vehicles do not cross the barrier line.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4015,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "In highway safety geometric design, the standard height of an object in the path of a vehicle used to calculate Stopping Sight Distance (SSD).",
+    answer: "150 MM",
+    choices: ["150 MM","300 MM","600 MM","100 MM"],
+    explanation: "Standard stopping sight distance criteria use a driver eye height of 1.08 m (or 1.05 m) and an object height of 150 mm (0.15 m) on the road surface.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4016,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Easy",
+    question: "The standard driver perception-reaction time value adopted for road safety geometric design across the whole range of design speeds.",
+    answer: "2.5 SECONDS",
+    choices: ["2.5 SECONDS","1.5 SECONDS","3.5 SECONDS","0.75 SECONDS"],
+    explanation: "AASHTO and DPWH design guidelines specify 2.5 seconds as the conservative design perception-reaction time for braking.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4017,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Hard",
+    question: "Which of the following represents the four distinct design criteria used for establishing sag vertical curves?",
+    answer: "HEADLIGHT SIGHT DISTANCE, PASSENGER COMFORT, DRAINAGE CONTROL, AND GENERAL APPEARANCE",
+    choices: ["HEADLIGHT SIGHT DISTANCE, PASSENGER COMFORT, DRAINAGE CONTROL, AND GENERAL APPEARANCE","STOPPING SIGHT DISTANCE, PASSING SIGHT DISTANCE, TANGENT RUNOUT, AND BRAKING SIGHT","PAVEMENT DEFLECTION, TIRE SKID, CANT DEFICIENCY, AND RUNOFF GRADIENT","DECELERATION LENGTH, ENTRY TAPER, REACTION DISTANCE, AND FRICTION ANGLE"],
+    explanation: "Sag vertical curves are governed by: (1) headlight beam illumination distance at night, (2) riding passenger comfort (radial acceleration), (3) longitudinal drainage at flat crests, and (4) aesthetic visual appearance.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4018,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The type of concrete curb designed for roadways where operating speeds exceed 60 kph, all traffic islands, and medians to prevent vehicle vaulting upon impact.",
+    answer: "MOUNTABLE OR DROP CURB",
+    choices: ["MOUNTABLE OR DROP CURB","BARRIER CURB","VERTICAL CUT CURB","HIGHWAY LIP GUTTER"],
+    explanation: "Mountable or drop curbs feature sloping faces allowing errant vehicles to traverse safely without severe rolling or vaulting at speeds > 60 kph.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4019,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The type of concrete curb suited for the edge of the traveled way in low-speed areas (less than 60 kph) where parking is allowed and drivers should not mount the sidewalk.",
+    answer: "BARRIER CURB",
+    choices: ["BARRIER CURB","MOUNTABLE CURB","DROP CURB","ROLLED GUTTER"],
+    explanation: "Barrier curbs have steep, nearly vertical faces (150-200mm high) to inhibit errant vehicles from leaving the roadway and encroaching onto sidewalks.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4020,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The minimum clear walkway width that must be provided when a pedestrian footbridge is cantilevered off the superstructure of a vehicular road bridge.",
+    answer: "1.5 METERS",
+    choices: ["1.5 METERS","1.0 METER","2.5 METERS","0.75 METER"],
+    explanation: "A minimum clear width of 1.5 meters allows two pedestrians or wheelchair users to pass comfortably, widening for high cycle/pedestrian volumes.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4021,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "Specialized auxiliary lanes provided exclusively on steep uphill grades to allow slow-moving heavy trucks to pull out and prevent traffic platoon congestion.",
+    answer: "CLIMBING LANES",
+    choices: ["CLIMBING LANES","OVERTAKING LANES","TURNING SLIP LANES","DECELERATION LANES"],
+    explanation: "Climbing lanes are justified when truck crawl speed drops by 15 kph or more on sustained ascending grades with high traffic volume.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4022,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Hard",
+    question: "The four recognized types of runaway truck escape ramps constructed on steep descending mountainous grades.",
+    answer: "SAND PILE, DESCENDING GRADE, HORIZONTAL GRADE, AND ASCENDING GRADE",
+    choices: ["SAND PILE, DESCENDING GRADE, HORIZONTAL GRADE, AND ASCENDING GRADE","GRAVEL BED, RUNOFF APRON, BAFFLE WALL, AND NET RESTRAINT","BARRIER TRAP, ARRESTER BED, FRICTION MAT, AND INCLINE GORE","WATER BASIN, CONCRETE FLUME, TURNOUT SLIP, AND BUFFER TAPER"],
+    explanation: "Escape ramps decelerate runaway out-of-control trucks using gravity ascents, loose aggregate arrester beds, or sand piles.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4023,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "Any location in an intersection where two vehicle travel paths cross, diverge, merge, or weave with one another.",
+    answer: "CONFLICT POINT",
+    choices: ["CONFLICT POINT","MERGE NODE","STOPPING ZONE","HOLDING LINE"],
+    explanation: "A standard 4-leg cross intersection contains 32 conflict points (16 crossing, 8 merging, and 8 diverging conflicts).",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4024,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The maximum recommended design speed through a modern roundabout (rotunda) in urban and rural environments.",
+    answer: "40 KPH URBAN AND 50 KPH RURAL",
+    choices: ["40 KPH URBAN AND 50 KPH RURAL","60 KPH URBAN AND 80 KPH RURAL","20 KPH URBAN AND 30 KPH RURAL","50 KPH URBAN AND 70 KPH RURAL"],
+    explanation: "Roundabouts control vehicle speed physically via deflection around a central island, designed for max 40 kph in urban areas and 50 kph in rural areas.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4025,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Auxiliary channelized lanes provided at intersections to allow right-turning vehicles to bypass traffic signals and reduce turning delays.",
+    answer: "RIGHT TURN SLIP LANES",
+    choices: ["RIGHT TURN SLIP LANES","LEFT TURN BAYS","STORAGE LANES","CLIMBING RUNS"],
+    explanation: "Right turn slip lanes utilize triangular corner islands to guide turning traffic safely into high-entry-angle or free-flow slip arrangements.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4026,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The five standard engineering options for treating roadside hazards in order of preference.",
+    answer: "REMOVE, MOVE OUTSIDE CLEAR ZONE, MODIFY, REPLACE, AND SHIELD WITH BARRIER",
+    choices: ["REMOVE, MOVE OUTSIDE CLEAR ZONE, MODIFY, REPLACE, AND SHIELD WITH BARRIER","PAINT WHITE, ADD WARNING SIGN, INSTALL DELINEATOR, REDUCE SPEED, AND CLOSE ROAD","EXCAVATE, ELEVATE, CHANNELIZE, FLATTEN SLOPE, AND ADD BERM","STRIP MARK, RUMBLE STRIP, CURB CHANNEL, DIAGONAL MARK, AND ENFORCE SPEED"],
+    explanation: "The fundamental road safety hierarchy is: eliminate hazard first, relocate outside clear zone, make frangible/breakaway, and finally shield with safety barriers.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4027,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Hard",
+    question: "Under NCHRP Report 350 and AASHTO procedures, how many standardized crash test levels (TL) are defined for evaluating roadside safety barrier performance?",
+    answer: "SIX TEST LEVELS",
+    choices: ["SIX TEST LEVELS","FOUR TEST LEVELS","THREE TEST LEVELS","EIGHT TEST LEVELS"],
+    explanation: "NCHRP Report 350 establishes six test levels (TL-1 through TL-6) ranging from low-speed urban to high-speed heavy tanker truck impacts.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4028,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The minimum lateral offset required from the face of a high-speed barrier curb to a concrete or W-beam safety barrier.",
+    answer: "AT LEAST 3 METERS OFFSET FROM BARRIER",
+    choices: ["AT LEAST 3 METERS OFFSET FROM BARRIER","AT LEAST 1 METER OFFSET","AT LEAST 5 METERS OFFSET","0.5 METER OFFSET"],
+    explanation: "Locating curbs closer than 3.0m in front of high-speed barriers causes vehicle trajectory instability and vaulting over the barrier upon impact.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4029,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "According to DPWH Road Safety Design Standards, which standard geometric shape is reserved exclusively for the STOP sign?",
+    answer: "OCTAGON",
+    choices: ["OCTAGON","EQUILATERAL TRIANGLE POINT DOWN","CIRCLE","DIAMOND"],
+    explanation: "The regular 8-sided octagon (red background with white legend) is reserved internationally and locally solely for the STOP sign.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4030,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The standard sign shape consisting of an equilateral triangle with one point pointing vertically downward is reserved exclusively for which sign?",
+    answer: "GIVE WAY SIGN",
+    choices: ["GIVE WAY SIGN","STOP SIGN","ROUNDABOUT SIGN","PEDESTRIAN CROSSING"],
+    explanation: "An equilateral triangle with vertex pointed downward (red border, white background) is reserved exclusively for the GIVE WAY (YIELD) sign.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4031,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The standard sign shape consisting of an equilateral triangle with one point vertically upward is used for which major category of road signs?",
+    answer: "WARNING SIGNS",
+    choices: ["WARNING SIGNS","REGULATORY SIGNS","GUIDE SIGNS","SPECIAL INSTRUCTION SIGNS"],
+    explanation: "An equilateral triangle pointing upward (Type W) is the standard warning sign shape under DPWH road signage standards.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4032,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The circular shape symbol is primarily used for which major category of road traffic signs?",
+    answer: "REGULATORY SIGNS",
+    choices: ["REGULATORY SIGNS","WARNING SIGNS","GUIDE SIGNS","HAZARD MARKERS"],
+    explanation: "Circular signs (Type R) are mandatory regulatory signs indicating speed limits, directional prohibitions, and mandatory movements.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4033,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The pentagon shape with point pointing upward is used exclusively for which specific roadside signs?",
+    answer: "PEDESTRIAN AND SCHOOL CROSSING SIGNS",
+    choices: ["PEDESTRIAN AND SCHOOL CROSSING SIGNS","HOSPITAL SIGNS","STOP SIGNS","RAILROAD ADVANCE SIGNS"],
+    explanation: "Pentagonal signs pointing upward with fluorescent yellow-green background designate school zones and pedestrian crossing areas.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4034,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under DPWH Road Signs Manual, what are the standard background colors for Direction signs, Service signs, and Tourist facility signs respectively?",
+    answer: "GREEN FOR DIRECTION, BLUE FOR SERVICE, BROWN FOR TOURIST",
+    choices: ["GREEN FOR DIRECTION, BLUE FOR SERVICE, BROWN FOR TOURIST","YELLOW FOR DIRECTION, WHITE FOR SERVICE, RED FOR TOURIST","BLUE FOR DIRECTION, GREEN FOR SERVICE, ORANGE FOR TOURIST","WHITE FOR DIRECTION, BLUE FOR SERVICE, YELLOW FOR TOURIST"],
+    explanation: "Direction signs use green backgrounds, service signs use blue backgrounds, and tourist/recreational facility signs use brown backgrounds.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4035,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "What background color is used for roadwork signs whose legends specifically relate to active construction personnel working on the roadway?",
+    answer: "FLUORESCENT ORANGE",
+    choices: ["FLUORESCENT ORANGE","STANDARD YELLOW","FLUORESCENT YELLOW-GREEN","REFLECTORIZED RED"],
+    explanation: "Fluorescent orange provides superior daytime and dusk conspicuity for active road work crews and construction machinery.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4036,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Hard",
+    question: "What is the required minimum longitudinal spacing between two separate road signs conveying different messages located along a roadway?",
+    answer: "0.6 VM APART (WHERE V IS 85TH PERCENTILE SPEED IN KPH)",
+    choices: ["0.6 VM APART (WHERE V IS 85TH PERCENTILE SPEED IN KPH)","1.0 VM APART","0.2 VM APART","50 METERS APART RIGIDLY"],
+    explanation: "To allow adequate driver reading and processing time without message visual clutter, signs must be spaced at least 0.6 × V meters apart.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4037,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under DPWH standards, a LOW CLEARANCE warning sign must be installed on bridges and overpasses where the vertical clearance above the road pavement is equal to or less than:",
+    answer: "4.80 METERS",
+    choices: ["4.80 METERS","5.50 METERS","4.20 METERS","3.60 METERS"],
+    explanation: "Structures with vertical clearance of 4.80m or less require a 1950mm x 600mm rectangular LOW CLEARANCE sign reckoned above road crown.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4038,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The designated Asian Highway route number traversing the Philippines from Laoag to Zamboanga via the Daang Maharlika corridor, spanning approximately 3,517 km.",
+    answer: "AH26",
+    choices: ["AH26","AH1","AH5","AH12"],
+    explanation: "The Philippines is linked into the UN-ESCAP Asian Highway network as AH26, identified by the G10-1 blue retroreflective shield sign.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4039,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The minimum number of Chevron alignment signs that a driver should have continuously in view while negotiating a horizontal curve.",
+    answer: "AT LEAST THREE (3) SIGNS",
+    choices: ["AT LEAST THREE (3) SIGNS","AT LEAST ONE (1) SIGN","AT LEAST FIVE (5) SIGNS","TWO (2) SIGNS"],
+    explanation: "Chevron sign spacing must ensure that at least three chevron signs are simultaneously visible to define curve trajectory throughout the turn.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4040,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The nominal spacing of roadside guide posts erected on pairs along straight sections of road formation.",
+    answer: "150 METERS",
+    choices: ["150 METERS","100 METERS","50 METERS","200 METERS"],
+    explanation: "Guide posts are spaced at 150m along tangents; on curves with radius R <= 150m, spacing = 0.3R + 5 meters; for R > 150m, spacing = 0.6R meters.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4041,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "The physical curb color used on road curbs to designate statutory NO PARKING zones and NO LOADING/UNLOADING zones respectively.",
+    answer: "YELLOW FOR NO PARKING, RED FOR NO LOADING/UNLOADING",
+    choices: ["YELLOW FOR NO PARKING, RED FOR NO LOADING/UNLOADING","RED FOR NO PARKING, YELLOW FOR NO LOADING/UNLOADING","WHITE FOR NO PARKING, BLUE FOR NO LOADING/UNLOADING","BLACK FOR NO PARKING, GREEN FOR NO LOADING/UNLOADING"],
+    explanation: "Curbs painted yellow prohibit parking; curbs painted red strictly prohibit both parking and passenger loading/unloading (fire lanes).",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4042,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "Under DPWH marking guidelines, the standard center line on a two-lane two-way rural road with speed limit over 60 kph consists of a broken line with:",
+    answer: "150MM WIDTH, 3M STROKE LENGTH, AND 9M GAPS",
+    choices: ["150MM WIDTH, 3M STROKE LENGTH, AND 9M GAPS","100MM WIDTH, 5M STROKE LENGTH, AND 5M GAPS","200MM WIDTH, 2M STROKE LENGTH, AND 4M GAPS","150MM WIDTH, 6M STROKE LENGTH, AND 6M GAPS"],
+    explanation: "Rural centerlines feature 150mm wide broken white lines with 3m line segments and 9m spaces (12m cycle).",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4043,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The standard dimensions and pattern of non-signalized Zebra pedestrian crossings marked on Philippine highways.",
+    answer: "SERIES OF LONGITUDINAL BARS 300MM OR 600MM WIDE AND NOT LESS THAN 4M LONG",
+    choices: ["SERIES OF LONGITUDINAL BARS 300MM OR 600MM WIDE AND NOT LESS THAN 4M LONG","TWO SOLID TRANSVERSE LINES 200MM WIDE AND 2M APART","DIAGONAL YELLOW CHEVRONS SPACED AT 6M","CONTINUOUS SOLID TRANSVERSE RECTANGLE 1M WIDE"],
+    explanation: "Zebra crossings feature 300mm or 600mm wide white longitudinal bars alternating with road surface, with length >= 4m.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4044,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The minimum width required for a painted median island on wide roadways where traffic volume cannot justify a raised curbed island.",
+    answer: "AT LEAST 2 METERS WIDE (ON ROADS NOT LESS THAN 10M WIDE)",
+    choices: ["AT LEAST 2 METERS WIDE (ON ROADS NOT LESS THAN 10M WIDE)","AT LEAST 1 METER WIDE (ON ROADS NOT LESS THAN 6M WIDE)","AT LEAST 3 METERS WIDE (ON ROADS NOT LESS THAN 15M WIDE)","0.5 METER WIDE (ON ANY TWO-LANE ROAD)"],
+    explanation: "Painted median outlines must be at least 100mm wide with a minimum island width of 2m; never installed on roadways less than 10m wide.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4045,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The standard minimum vertical length of alphanumeric words and numerals painted directly on pavement surfaces on high-speed highways.",
+    answer: "AT LEAST 5 METERS",
+    choices: ["AT LEAST 5 METERS","AT LEAST 2.5 METERS","AT LEAST 1.5 METERS","AT LEAST 7.5 METERS"],
+    explanation: "Due to shallow driver sight angles, letters must be elongated to at least 2.5m on urban roads and at least 5.0m on high-speed highways.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4046,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The standard length of pavement arrows painted on highway surfaces for lane use control on urban roads and high-speed roads respectively.",
+    answer: "5M ON URBAN ROADS AND 7.5M ON HIGH-SPEED ROADS",
+    choices: ["5M ON URBAN ROADS AND 7.5M ON HIGH-SPEED ROADS","2.5M ON URBAN ROADS AND 5M ON HIGH-SPEED ROADS","3M ON URBAN ROADS AND 6M ON HIGH-SPEED ROADS","4M ON URBAN ROADS AND 8M ON HIGH-SPEED ROADS"],
+    explanation: "Pavement turn arrows are elongated: 5.0m in length in urban areas and 7.5m on high-speed highways.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4047,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "The legal definition of a vehicle that is stationary solely for the period of time needed to pick up or set down passengers or load/unload goods.",
+    answer: "STANDING VEHICLE",
+    choices: ["STANDING VEHICLE","PARKED VEHICLE","ABANDONED VEHICLE","STALLED VEHICLE"],
+    explanation: "Under traffic law, a vehicle is standing if stationary only for active passenger loading/unloading; if stationary beyond that time, it is parked.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4048,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Easy",
+    question: "Harbors that are naturally protected from storms and destructive ocean waves by the natural configuration and sheltering topography of the coastline land.",
+    answer: "NATURAL HARBORS",
+    choices: ["NATURAL HARBORS","ARTIFICIAL HARBORS","SEMI-NATURAL HARBORS","TIDAL BASINS"],
+    explanation: "Natural harbors (such as Manila Bay or Subic Bay) utilize natural bays, headlands, and peninsulas for wind and wave shelter.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4049,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Easy",
+    question: "Harbors whose sheltered water area is created artificially through the construction of massive breakwaters or through extensive capital dredging.",
+    answer: "ARTIFICIAL HARBORS",
+    choices: ["ARTIFICIAL HARBORS","NATURAL HARBORS","SEMI-NATURAL HARBORS","ESTUARY ROADS"],
+    explanation: "Artificial harbors require engineering structures like rubble-mound breakwaters and sea groins to establish tranquil basins along exposed coasts.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4050,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Hard",
+    question: "In the geotechnical and structural stability design of a gravity quay wall, which four failure mechanisms must be rigorously verified?",
+    answer: "SLIDING, BEARING CAPACITY, OVERTURNING, AND CIRCULAR SLIP/SETTLEMENT",
+    choices: ["SLIDING, BEARING CAPACITY, OVERTURNING, AND CIRCULAR SLIP/SETTLEMENT","WAVE RESONANCE, SEICHE DRIFT, CAPILLARY SUCTION, AND TIDAL BORE","FLUID FRICTION, BERNOULLI HEAD, REYNOLDS DRAG, AND HYDRAULIC JUMP","CORROSION, CAVITATION, VAPOR LEAKAGE, AND WAVE REFRACTION"],
+    explanation: "Quay wall stability checks include: factor of safety against basal sliding (FS >= 1.5), overturning about toe (FS >= 1.5), foundation bearing capacity, and global deep-seated circular rotational slip.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4051,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Hard",
+    question: "A horizontal reinforced concrete deck structure constructed below the top deck level of a quay and supported on bearing piles to reduce lateral earth pressures on the sheet pile wall.",
+    answer: "RELIEVING PLATFORM",
+    choices: ["RELIEVING PLATFORM","DOLPHIN CAP","FENDER APRON","BERTHING BREASTWORK"],
+    explanation: "A relieving platform shields the lower sheet wall from vertical soil surcharge, dramatically reducing lateral active earth pressure acting on the bulkhead.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4052,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "An offshore marine berth structure with no direct land connection to the shoreline at which tankers and bulk vessels can berth on one or both sides.",
+    answer: "SEA ISLAND",
+    choices: ["SEA ISLAND","QUAY WALL","SLIPWAY","DRY DOCK"],
+    explanation: "Sea islands are constructed in deep water for supertankers, connected to land via underwater pipelines rather than causeways.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4053,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "The normal maximum working capacity of a Tee-Head mooring bollard commonly specified in commercial port berths.",
+    answer: "150 TONS",
+    choices: ["150 TONS","200 TONS","100 TONS","50 TONS"],
+    explanation: "Tee-head bollards accommodate steep mooring rope angles from single vessels with a rated capacity of 150 tons.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4054,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "The normal maximum working capacity of single/double pillar bollards and sloping head bollards used in general port mooring applications.",
+    answer: "200 TONS",
+    choices: ["200 TONS","150 TONS","100 TONS","300 TONS"],
+    explanation: "Pillar bollards and sloping head bollards (which can take lines from two vessels without interference) are typically rated for 200 metric tons.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4055,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "The body of water possessing the highest tides in the world, where tidal rises up to 100 feet (16 to 21 meters) have been recorded.",
+    answer: "BAY OF FUNDY",
+    choices: ["BAY OF FUNDY","MANILA BAY","PERSIAN GULF","ENGLISH CHANNEL"],
+    explanation: "The Bay of Fundy (between Nova Scotia and New Brunswick, Canada) experiences extreme resonance tides with tidal ranges exceeding 50 to 100 ft.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4056,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "The time delay or interval (up to two and a half days) between the alignment of conjunction/opposition (new or full moon) and the actual arrival of the highest spring tide.",
+    answer: "AGE OF THE TIDE",
+    choices: ["AGE OF THE TIDE","TIDAL LAG","DIURNAL RETARDATION","LUNAR EPACT"],
+    explanation: "Frictional resistance of the seabed and oceanic basin inertia retards tidal propagation, creating the age of the tide (typically 1 to 2.5 days).",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4057,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Easy",
+    question: "The phase of the astronomical tidal cycle characterized by the falling of the water level as water recedes back towards the sea.",
+    answer: "EBB TIDE",
+    choices: ["EBB TIDE","FLOOD TIDE","SPRING TIDE","NEAP TIDE"],
+    explanation: "Flood tide is the rising tide; ebb tide is the falling tide receding towards low water.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4058,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Hard",
+    question: "The official tidal datum line adopted by the Philippine Ports Authority (PPA) for the engineering design and depth sounding charts of port facilities.",
+    answer: "MEAN LOWER LOW WATER (MLLW)",
+    choices: ["MEAN LOWER LOW WATER (MLLW)","MEAN SEA LEVEL (MSL)","MEAN HIGH WATER (MHW)","LOWEST ASTRONOMICAL TIDE (LAT)"],
+    explanation: "MLLW represents the average height of the lower low waters over a 19-year National Tidal Datum Epoch, ensuring adequate vessel navigational draft.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4059,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Hard",
+    question: "The tidal datum defined as the arithmetic mean of all higher high water levels recorded over an official 19-year Metonic cycle.",
+    answer: "MEAN HIGHER HIGH WATER (MHHW)",
+    choices: ["MEAN HIGHER HIGH WATER (MHHW)","MEAN HIGH WATER (MHW)","HIGHEST ASTRONOMICAL TIDE (HAT)","MEAN LOWER LOW WATER (MLLW)"],
+    explanation: "MHHW is crucial for determining wharf top-of-deck elevations and crest elevations of coastal seawalls to prevent wave overtopping.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4060,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Hard",
+    question: "Under international technical resolutions of the Water Wave Congress, what design water level guarantees that approximately 98% of tides are safe for vessel navigation?",
+    answer: "DESIGN LOW TIDE",
+    choices: ["DESIGN LOW TIDE","MEAN SEA LEVEL","EXTREME STORM SURGE","CHART MAXIMUM DRAFT"],
+    explanation: "Design Low Tide ensures that port approach channels and berthing basins provide safe keel clearance for vessels 98% of the time.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4061,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "The difference in vertical water elevation between the Mean Higher High Water (MHHW) and the Mean Lower Low Water (MLLW).",
+    answer: "DIURNAL RANGE",
+    choices: ["DIURNAL RANGE","MEAN RANGE","SPRING RANGE","AMPLITUDE OFFSET"],
+    explanation: "Diurnal range represents the total extreme tidal excursion between the higher high water and lower low water in a tidal day.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4062,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Easy",
+    question: "Waves formed behind a moving vessel or boat due to the displacement of water by its advancing hull.",
+    answer: "WAKES",
+    choices: ["WAKES","SWELLS","TSUNAMIS","SEICHES"],
+    explanation: "Ship wakes consist of diverging bow waves and transverse stern waves that can cause shoreline erosion in restricted navigation canals.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4063,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "Surface ocean waves that have traveled out of their generating wind fetch area into regions of calmer winds or opposing weather.",
+    answer: "SWELLS",
+    choices: ["SWELLS","SEA WAVES","CAPILLARY WAVES","INTERNAL WAVES"],
+    explanation: "Swells are characterized by long, regular, smooth crests with low steepness that travel across thousands of miles of open ocean.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4064,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Easy",
+    question: "Ocean surface waves that are actively growing under the direct influence and turbulent drag of the local generating wind field.",
+    answer: "SEA WAVES",
+    choices: ["SEA WAVES","SWELLS","TIDAL WAVES","SEICHES"],
+    explanation: "Sea waves are chaotic, irregular, steep-crested waves found inside the active storm fetch area.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4065,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Medium",
+    question: "Water waves characterized by having very long periods (ranging from 30 seconds up to 12 hours 25 minutes) observed in enclosed port basins or semi-enclosed bays.",
+    answer: "SEICHING WAVES",
+    choices: ["SEICHING WAVES","CAPILLARY WAVES","GRAVITY WAVES","SOLITARY WAVES"],
+    explanation: "Seiching waves induce slow horizontal oscillations of moored ships, posing severe vessel surging against fenders and bollards.",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4066,
+    area: "MSTE",
+    subtopic: "Ports, Harbors, Waves & Coastal Engineering",
+    difficulty: "Hard",
+    question: "Water waves propagating in an intermediate depth regime where the ratio of water depth to wavelength is between 0.04 and 0.50 (or 0.40 to 0.50).",
+    answer: "TRANSITIONAL WATER WAVES",
+    choices: ["TRANSITIONAL WATER WAVES","DEEP WATER WAVES","SHALLOW WATER WAVES","CAPILLARY WAVES"],
+    explanation: "In transitional (intermediate) water waves, both gravity and seabed depth influence wave celerity: c = √((gL/2π) tanh(2πd/L)).",
+    reference: "PRC CELE Board Reviewer — Ports & Harbors Engineering"
+  },
+  {
+    id: 4067,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Easy",
+    question: "The minimum required mechanical mixing time for the concrete batch ingredients of a Portland cement concrete pavement.",
+    answer: "AT LEAST 1.5 MINUTES",
+    choices: ["AT LEAST 1.5 MINUTES","AT LEAST 5 MINUTES","AT LEAST 30 SECONDS","AT LEAST 10 MINUTES"],
+    explanation: "Concrete pavement specifications require a minimum drum mixing time of 1.5 minutes (90 seconds) to ensure thorough homogeneous blending.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4068,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Easy",
+    question: "The standard minimum number of days of continuous moist curing required for a newly placed Portland cement concrete pavement.",
+    answer: "14 DAYS",
+    choices: ["14 DAYS","7 DAYS","28 DAYS","3 DAYS"],
+    explanation: "DPWH Item 311 specifications mandate a minimum of 14 days of curing before opening concrete pavement to heavy traffic or until design flexural strength (3.8 MPa) is reached.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4069,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Medium",
+    question: "A thin road surface treatment consisting of one or two layers of bituminous binder sprayed over a prepared base, each covered with stone aggregate chips and rolled.",
+    answer: "SURFACE DRESSING",
+    choices: ["SURFACE DRESSING","TACK COAT","PRIME COAT","ASPHALTIC CONCRETE"],
+    explanation: "Surface dressing (chip sealing) restores surface texture, improves skid resistance, and waterproofs underlying road layers.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4070,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Medium",
+    question: "Transverse joints placed in concrete pavement slabs at regular intervals to provide expansion space when the slab expands under rising summer temperatures.",
+    answer: "EXPANSION JOINTS",
+    choices: ["EXPANSION JOINTS","CONTRACTION JOINTS","CONSTRUCTION JOINTS","WARPING JOINTS"],
+    explanation: "Expansion joints contain compressible filler boards and lubricated dowel bars to allow thermal expansion without compressive crushing.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4071,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Medium",
+    question: "Transverse joints placed in concrete pavements at regular intervals to control and relieve tensile stresses caused by temperature shrinkage and moisture loss.",
+    answer: "CONTRACTION JOINTS",
+    choices: ["CONTRACTION JOINTS","EXPANSION JOINTS","CONSTRUCTION JOINTS","ISOLATION JOINTS"],
+    explanation: "Contraction (dummy/weakened-plane) joints are sawn to a depth of D/4 to predetermine crack locations where tensile stresses concentrate.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4072,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Easy",
+    question: "Joints provided across the pavement width where concrete placing is suspended at the end of a workday or interrupted by plant breakdown.",
+    answer: "CONSTRUCTION JOINTS",
+    choices: ["CONSTRUCTION JOINTS","CONTRACTION JOINTS","EXPANSION JOINTS","WARPING JOINTS"],
+    explanation: "Transverse construction joints utilize smooth tied or doweled steel bars to ensure smooth vertical load transfer across successive pours.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4073,
+    area: "MSTE",
+    subtopic: "Pavement Design & Distress Evaluation",
+    difficulty: "Medium",
+    question: "The three principal types of internal stresses developed within rigid Portland cement concrete pavement slabs.",
+    answer: "TRAFFIC LOAD STRESS, TEMPERATURE CHANGE STRESS, AND BENDING/WARPING STRESS",
+    choices: ["TRAFFIC LOAD STRESS, TEMPERATURE CHANGE STRESS, AND BENDING/WARPING STRESS","SHEAR PUNCHING STRESS, HYDROSTATIC UPLIFT, AND FRICTION DRAG","CAPILLARY TENSION, POISSON DILATANCY, AND PLASTIC SETTLEMENT","SEISMIC DRIFT, BEARING CRUSH, AND TORSIONAL RESISTANCE"],
+    explanation: "Westergaard analysis considers wheel load stresses, uniform thermal expansion/contraction stresses, and thermal curling (warping) stresses due to top-bottom temperature gradients.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4074,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The proportional change in the volume of an earthwork material relative to the volume it occupied in its original natural undisturbed in-situ state.",
+    answer: "SHRINKAGE AND SWELL",
+    choices: ["SHRINKAGE AND SWELL","OPTIMUM MOISTURE","BULK MODULUS","CONSOLIDATION RATIO"],
+    explanation: "Excavated rock and soil swell when loosened, while compacted fills shrink relative to cut bank volumes (shrinkage factor typically 10-20%).",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4075,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "The maximum distance beyond which it is more economical to waste excavated material and borrow from an adjacent pit than to haul the material.",
+    answer: "LIMIT OF ECONOMIC HAUL",
+    choices: ["LIMIT OF ECONOMIC HAUL","FREE HAUL DISTANCE","STATION HAUL","OVERHAUL LIMIT"],
+    explanation: "LEH = Free Haul Distance + (Cost of Borrow / Cost of Overhaul). Beyond this distance, borrow is cheaper than hauling.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4076,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Easy",
+    question: "The cost of acquiring and transporting suitable earthwork material from an off-site borrow pit to construct an embankment fill.",
+    answer: "COST OF BORROW",
+    choices: ["COST OF BORROW","OVERHAUL COST","FREE HAUL COST","CLEARING COST"],
+    explanation: "Cost of borrow governs the economic haul calculation on mass haul diagrams.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4077,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Medium",
+    question: "What are the three fundamental engineering ways of resolving crossing conflicts in traffic facility design?",
+    answer: "TIME SHARING, GRADE SEPARATION, AND SPACE SHARING",
+    choices: ["TIME SHARING, GRADE SEPARATION, AND SPACE SHARING","STOP SIGNS, RUMBLE STRIPS, AND SPEED BUMPS","CHANNELIZATION, WEAVING, AND FREE HAULING","CHEVRONS, DELINEATORS, AND PARKING BAYS"],
+    explanation: "Time sharing assigns right-of-way sequentially (traffic signals), grade separation separates vertical levels (flyovers), and space sharing routes movements into roundabouts.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4078,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Easy",
+    question: "Which engineering factor is recognized as the primary consideration in the geometric cross-section design of highways, runways, and taxiways (CE Board May/Nov 2017)?",
+    answer: "DRAINAGE",
+    choices: ["DRAINAGE","AESTHETICS","EARTHWORK BALANCE","CURB HEIGHT"],
+    explanation: "Rapid removal of storm water via cross slopes, gutters, and ditches is the single most critical factor preserving pavement subgrade life.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4079,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "Transportation agencies primarily involved in planning, designing, constructing, maintaining, and operating fixed infrastructure facilities.",
+    answer: "FACILITY-ORIENTED ORGANIZATIONS",
+    choices: ["FACILITY-ORIENTED ORGANIZATIONS","OPERATING ORGANIZATIONS","TRANSIT CARRIERS","REGULATORY COMMISSIONS"],
+    explanation: "DPWH, city engineering offices, and toll corporations are facility-oriented organizations, whereas bus/freight carriers are operating organizations.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4080,
+    area: "MSTE",
+    subtopic: "Transportation Engineering & Traffic Flow",
+    difficulty: "Easy",
+    question: "Transportation enterprises, known as carriers, that are primarily concerned with managing and operating vehicle fleets to provide transport services.",
+    answer: "OPERATING ORGANIZATIONS",
+    choices: ["OPERATING ORGANIZATIONS","FACILITY-ORIENTED ORGANIZATIONS","HIGHWAY DEPARTMENTS","PORT AUTHORITIES"],
+    explanation: "Operating organizations include trucking companies, bus fleets, shipping lines, and airline operators.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  },
+  {
+    id: 4081,
+    area: "MSTE",
+    subtopic: "Highway Geometry & Earthworks",
+    difficulty: "Medium",
+    question: "What are the four basic drawing elements comprising the standard set of highway engineering plans?",
+    answer: "PLAN VIEW, PROFILE, GEOMETRIC CROSS SECTION, AND SUPERELEVATION DIAGRAM",
+    choices: ["PLAN VIEW, PROFILE, GEOMETRIC CROSS SECTION, AND SUPERELEVATION DIAGRAM","TOPOGRAPHY, MASS DIAGRAM, SOIL LOG, AND DRAINAGE SCHEDULE","ALIGNMENT SHEET, VICINITY MAP, TYPICAL PAVEMENT, AND BILL OF QUANTITIES","CONTOUR MAP, BORROW PIT DETAIL, BRIDGE ELEVATION, AND UTILITY PLAN"],
+    explanation: "Complete highway contract plans integrate horizontal plan view, longitudinal profile, typical geometric cross sections, and superelevation transition diagrams.",
+    reference: "PRC CELE Board Reviewer — Highway & Transportation Engineering"
+  }
+];

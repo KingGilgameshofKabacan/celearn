@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+    <title>CELEARN — Civil Engineering Board Exam Reviewer</title>
+    <meta name="description" content="CELEARN is an advanced Civil Engineering Licensure Examination (CELE) reviewer platform covering PSAD, HPGE, and MSTE with Table of Specifications (TOS) mastery, 3D flashcards, mock board tests, and Smart Analytics." />
+    
+    <!-- iOS WebKit & Safari PWA Capabilities -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CELEARN" />
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    <meta name="theme-color" content="#EA580C" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
+    
+    <!-- PWA Web App Manifest & Apple Icons -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
+
+    <meta property="og:title" content="CELEARN — Civil Engineering Board Exam Reviewer" />
+    <meta property="og:description" content="Master CELE board examination terminologies, NSCP 2015 codes, formulas, and principles with CELEARN." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Custom CELEARN Vector Favicon (Truss + Theodolite Mark) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='cg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23EA580C'/%3E%3Cstop offset='100%25' stop-color='%23F97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='48' height='48' rx='12' fill='url(%23cg)'/%3E%3Cpath d='M24 8L10 38H38L24 8Z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M17 24H31' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='24' r='3.5' fill='white'/%3E%3Cpath d='M24 16V32' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('cele_theme_mode_v1');
+          var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches) || !saved;
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+          var savedPersonalityTheme = localStorage.getItem('cele_active_theme_id') || 'sunrise-momentum';
+          document.documentElement.setAttribute('data-personality-theme', savedPersonalityTheme);
+
+          var palettes = {
+            'midnight-strategist': isDark ? { bg: '#0A0F1D', card: '#0F172A', prim: '#38BDF8', bord: '#24344D' } : { bg: '#F0F4F8', card: '#FFFFFF', prim: '#0284C7', bord: '#CBD5E1' },
+            'zen-scholar': isDark ? { bg: '#111A14', card: '#18241D', prim: '#52B788', bord: '#2C4033' } : { bg: '#F5F7F2', card: '#FFFFFF', prim: '#2D5A43', bord: '#D5DFD1' },
+            'cyber-engineer': isDark ? { bg: '#050811', card: '#0B1120', prim: '#06B6D4', bord: '#1E293B' } : { bg: '#F0F9FF', card: '#FFFFFF', prim: '#0891B2', bord: '#BAE6FD' },
+            'academic-classic': isDark ? { bg: '#171312', card: '#211C1A', prim: '#D4A373', bord: '#423832' } : { bg: '#FAF7F2', card: '#FFFFFF', prim: '#6B1D28', bord: '#E2D5C3' },
+            'sunrise-momentum': isDark ? { bg: '#141210', card: '#1C1815', prim: '#F97316', bord: '#3D332B' } : { bg: '#FFFDF9', card: '#FFFFFF', prim: '#EA580C', bord: '#FED7AA' },
+            'deep-work': isDark ? { bg: '#101012', card: '#17171A', prim: '#A1A1AA', bord: '#32323A' } : { bg: '#F4F4F5', card: '#FFFFFF', prim: '#3F3F46', bord: '#D4D4D8' }
+          };
+          var p = palettes[savedPersonalityTheme] || palettes['sunrise-momentum'];
+          document.documentElement.style.setProperty('--theme-canvas-bg', p.bg);
+          document.documentElement.style.setProperty('--theme-card-bg', p.card);
+          document.documentElement.style.setProperty('--theme-border', p.bord);
+          document.documentElement.style.setProperty('--theme-primary', p.prim);
+
+          var savedDistraction = localStorage.getItem('cele_distraction_free_v1');
+          if (savedDistraction === 'true') {
+            document.documentElement.setAttribute('data-distraction-free', 'true');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="antialiased selection:bg-orange-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
