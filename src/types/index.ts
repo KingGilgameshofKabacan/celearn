@@ -18,27 +18,6 @@ export interface CEQuestion {
 
 export type StudyMode = 'flashcard' | 'repetition';
 
-export interface FormulaVariable {
-  symbol: string;
-  name: string;
-  unit?: string;
-}
-
-export interface CEFormula {
-  id: string;
-  name: string;
-  area: CEArea;
-  subtopic: string;
-  difficulty: DifficultyLevel;
-  formula: string;
-  latex?: string;
-  variables: FormulaVariable[];
-  description: string;
-  shortcutsAndTips: string[];
-  choices: string[];
-  correctChoice: string;
-}
-
 export type FeedbackMode = 'immediate' | 'delayed';
 
 export interface ExamConfig {
@@ -48,6 +27,18 @@ export interface ExamConfig {
   count: number;
   timeLimitMinutes: number; // 0 for untimed
   feedbackMode: FeedbackMode;
+}
+
+export interface ActiveExamSession {
+  id: string;
+  timestamp: number;
+  config: ExamConfig;
+  questions: CEQuestion[];
+  currentIndex: number;
+  userAnswers: Record<number, string>;
+  flaggedIds: number[];
+  secondsRemaining: number;
+  secondsElapsed: number;
 }
 
 export interface ExamSessionResult {
@@ -68,6 +59,7 @@ export interface ExamSessionResult {
 }
 
 export type FlashcardMasteryStatus = 'unstudied' | 'learning' | 'mastered';
+export type SRSRating = 'again' | 'hard' | 'good' | 'easy';
 
 export interface FlashcardItemProgress {
   status: FlashcardMasteryStatus;
@@ -75,6 +67,10 @@ export interface FlashcardItemProgress {
   reviewCount: number;
   interval?: number; // In days: 1, 3, 7, 14, 30, etc.
   dueDate?: number; // Timestamp when due for review
+  easeFactor?: number; // SM-2 / Vaia Ease Factor (default 2.5)
+  repetitions?: number; // Consecutive successful reviews
+  lapses?: number; // Times rated 'again'
+  lastRating?: SRSRating;
   timesGraduated?: number;
 }
 

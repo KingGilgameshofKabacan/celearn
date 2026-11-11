@@ -10,7 +10,9 @@ import {
   DailyTasksStatus,
   DailyActivityRecord,
   FlashcardItemProgress,
-  FlashcardMasteryStatus
+  FlashcardMasteryStatus,
+  ActiveExamSession,
+  SRSRating
 } from '../types';
 import { INITIAL_ACHIEVEMENTS } from '../data/achievements';
 import { CE_QUESTIONS_MASTER } from '../data/questions';
@@ -19,6 +21,7 @@ import { soundManager } from './audio';
 
 const STORAGE_KEYS = {
   EXAM_HISTORY: 'cele_exam_history_v1',
+  ACTIVE_EXAM_SESSION: 'cele_active_exam_session_v1',
   FLASHCARD_PROGRESS: 'cele_flashcard_progress_v1',
   ACHIEVEMENTS: 'cele_achievements_v1',
   THEME: 'cele_theme_mode_v1',
@@ -33,13 +36,39 @@ const STORAGE_KEYS = {
   DAILY_TASKS: 'cele_daily_tasks_v1',
   DAILY_ACTIVITY: 'cele_daily_activity_v1',
   FORMULA_BOOKMARKS: 'cele_formula_bookmarks_v1',
-  FORMULA_PROGRESS: 'cele_formula_progress_v1'
+  FORMULA_PROGRESS: 'cele_formula_progress_v1',
+  BOTTLE_CAPS: 'cele_bottle_caps_v1'
 };
 
 export const DEFAULT_USER_PROFILE = {
-  name: 'Engr. Dave',
-  targetRank: 'Top 1 (CELE Topnotcher)',
+  name: 'Dweller Dave',
+  targetRank: 'Vault 101 Chief Overseer (Top 1 CELE)',
   targetExamDate: '2026-11-15'
+};
+
+export const getBottleCaps = (): number => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.BOTTLE_CAPS);
+    if (raw !== null) {
+      const parsed = parseInt(raw, 10);
+      if (!isNaN(parsed) && parsed >= 0) return parsed;
+    }
+  } catch {}
+  return 150; // Initial Vault Dweller Allowance
+};
+
+export const addBottleCaps = (amount: number): number => {
+  try {
+    const current = getBottleCaps();
+    const updated = Math.max(0, current + amount);
+    localStorage.setItem(STORAGE_KEYS.BOTTLE_CAPS, String(updated));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_caps_updated', { detail: updated }));
+    }
+    return updated;
+  } catch {
+    return 150;
+  }
 };
 
 export const getUserProfile = () => {
@@ -76,6 +105,37 @@ export const saveExamResult = (result: ExamSessionResult): void => {
     localStorage.setItem(STORAGE_KEYS.EXAM_HISTORY, JSON.stringify(history.slice(0, 50)));
   } catch (e) {
     console.error('Failed to save exam result', e);
+  }
+};
+
+export const getActiveExamSession = (): ActiveExamSession | null => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.ACTIVE_EXAM_SESSION);
+    if (!raw) return null;
+    const session: ActiveExamSession = JSON.parse(raw);
+    // Ensure session is structurally valid
+    if (session && Array.isArray(session.questions) && session.questions.length > 0) {
+      return session;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+export const saveActiveExamSession = (session: ActiveExamSession): void => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.ACTIVE_EXAM_SESSION, JSON.stringify(session));
+  } catch (e) {
+    console.error('Failed to save active exam session', e);
+  }
+};
+
+export const clearActiveExamSession = (): void => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.ACTIVE_EXAM_SESSION);
+  } catch (e) {
+    console.error('Failed to clear active exam session', e);
   }
 };
 
@@ -414,6 +474,7 @@ export const getActiveThemeId = (): ThemeId => {
   try {
     const saved = localStorage.getItem(STORAGE_KEYS.ACTIVE_THEME);
     if (
+      saved === 'vault-tec' ||
       saved === 'midnight-strategist' ||
       saved === 'zen-scholar' ||
       saved === 'cyber-engineer' ||
@@ -601,6 +662,9 @@ export const performDailyCheckIn = (): { streak: StreakData; isNewCheckIn: boole
 
   // Evaluate achievements with updated streak
   evaluateAchievements();
+
+  // Award Vault-Tec Daily Ration: 50 Bottle Caps
+  addBottleCaps(50);
 
   // Broadcast event across applet so all active components sync immediately
   if (typeof window !== 'undefined') {
@@ -885,6 +949,169 @@ export const getLast7DaysActivity = (): DailyActivityRecord[] => {
 // SPACED REPETITION QUEUE & INTERVAL PROGRESSION
 // ==========================================
 
+export const formatSRSIntervalLabel = (days: number): string => {
+  if (days <= 0) return '<10m';
+  if (days === 1) return '1d';
+  if (days < 30) return `${days}d`;
+  if (days < 365) return `${Math.round(days / 30)}mo`;
+  return `${(days / 365).toFixed(1)}y`;
+};
+
+/**
+ * Vaia (StudySmarter) SRS Interval Calculator
+ * Previews the next interval in days for all 4 ratings (Again, Hard, Good, Easy)
+ */
+export const calculateSRSIntervals = (
+  prev?: FlashcardItemProgress
+): Record<SRSRating, { days: number; label: string }> => {
+  const repetitions = prev?.repetitions || 0;
+  const easeFactor = prev?.easeFactor || 2.5;
+  const currentInterval = prev?.interval || 0;
+
+  // Again: Reset interval to 1 day (with in-session review)
+  const againDays = 1;
+
+  // Hard:
+  let hardDays = 1;
+  if (repetitions === 0) {
+    hardDays = 1;
+  } else {
+    hardDays = Math.max(1, Math.round((currentInterval || 1) * 1.2));
+  }
+
+  // Good:
+  let goodDays = 1;
+  if (repetitions === 0) {
+    goodDays = 1;
+  } else if (repetitions === 1) {
+    goodDays = 3;
+  } else {
+    goodDays = Math.max(hardDays + 1, Math.round((currentInterval || 1) * easeFactor));
+  }
+
+  // Easy:
+  let easyDays = 3;
+  if (repetitions === 0) {
+    easyDays = 3;
+  } else if (repetitions === 1) {
+    easyDays = 7;
+  } else {
+    easyDays = Math.max(goodDays + 2, Math.round((currentInterval || 1) * easeFactor * 1.3));
+  }
+
+  return {
+    again: { days: againDays, label: formatSRSIntervalLabel(againDays) },
+    hard: { days: hardDays, label: formatSRSIntervalLabel(hardDays) },
+    good: { days: goodDays, label: formatSRSIntervalLabel(goodDays) },
+    easy: { days: easyDays, label: formatSRSIntervalLabel(easyDays) }
+  };
+};
+
+/**
+ * Schedules a flashcard using the adaptive Vaia Spaced Repetition System.
+ * Calculates dynamic intervals, updates ease factors, and sets due dates.
+ */
+export const scheduleSRSFlashcard = (
+  questionId: number,
+  rating: SRSRating
+): FlashcardItemProgress => {
+  const progress = getFlashcardProgress();
+  const prev = progress[questionId] || {
+    status: 'unstudied',
+    lastReviewed: 0,
+    reviewCount: 0,
+    interval: 0,
+    dueDate: 0,
+    easeFactor: 2.5,
+    repetitions: 0,
+    lapses: 0,
+    timesGraduated: 0
+  };
+
+  const now = Date.now();
+  let repetitions = prev.repetitions || 0;
+  let easeFactor = prev.easeFactor || 2.5;
+  let lapses = prev.lapses || 0;
+  let nextInterval = 1;
+
+  switch (rating) {
+    case 'again': {
+      repetitions = 0;
+      lapses += 1;
+      nextInterval = 1;
+      easeFactor = Math.max(1.3, easeFactor - 0.2);
+      break;
+    }
+    case 'hard': {
+      if (repetitions === 0) {
+        nextInterval = 1;
+      } else {
+        nextInterval = Math.max(1, Math.round((prev.interval || 1) * 1.2));
+      }
+      easeFactor = Math.max(1.3, easeFactor - 0.15);
+      repetitions += 1;
+      break;
+    }
+    case 'good': {
+      if (repetitions === 0) {
+        nextInterval = 1;
+      } else if (repetitions === 1) {
+        nextInterval = 3;
+      } else {
+        nextInterval = Math.max(2, Math.round((prev.interval || 1) * easeFactor));
+      }
+      repetitions += 1;
+      break;
+    }
+    case 'easy': {
+      if (repetitions === 0) {
+        nextInterval = 3;
+      } else if (repetitions === 1) {
+        nextInterval = 7;
+      } else {
+        nextInterval = Math.max(4, Math.round((prev.interval || 1) * easeFactor * 1.3));
+      }
+      easeFactor = Math.min(3.0, easeFactor + 0.15);
+      repetitions += 1;
+      break;
+    }
+  }
+
+  const nextDueDate = now + nextInterval * 24 * 60 * 60 * 1000;
+  // Status: if interval >= 14 or graduated with >= 3 repetitions, card is mastered. If again, learning.
+  const status: FlashcardMasteryStatus = rating === 'again'
+    ? 'learning'
+    : nextInterval >= 14 || repetitions >= 3
+    ? 'mastered'
+    : 'learning';
+
+  const updatedItem: FlashcardItemProgress = {
+    status,
+    lastReviewed: now,
+    reviewCount: (prev.reviewCount || 0) + 1,
+    interval: nextInterval,
+    dueDate: nextDueDate,
+    easeFactor: parseFloat(easeFactor.toFixed(2)),
+    repetitions,
+    lapses,
+    lastRating: rating,
+    timesGraduated: status === 'mastered' ? (prev.timesGraduated || 0) + 1 : (prev.timesGraduated || 0)
+  };
+
+  progress[questionId] = updatedItem;
+
+  try {
+    localStorage.setItem(STORAGE_KEYS.FLASHCARD_PROGRESS, JSON.stringify(progress));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_flashcard_progress_updated', { detail: progress }));
+    }
+  } catch (e) {
+    console.error('Failed to save SRS flashcard', e);
+  }
+
+  return updatedItem;
+};
+
 export const getNextStackedInterval = (
   currentInterval: number | undefined,
   isPerfect: boolean
@@ -903,41 +1130,7 @@ export const scheduleGraduatedFlashcard = (
   questionId: number,
   isPerfect: boolean
 ): FlashcardItemProgress => {
-  const progress = getFlashcardProgress();
-  const prev = progress[questionId] || {
-    status: 'unstudied',
-    lastReviewed: 0,
-    reviewCount: 0,
-    interval: 0,
-    dueDate: 0,
-    timesGraduated: 0
-  };
-
-  const nextInterval = getNextStackedInterval(prev.interval, isPerfect);
-  const now = Date.now();
-  const nextDueDate = now + nextInterval * 24 * 60 * 60 * 1000;
-
-  const updatedItem: FlashcardItemProgress = {
-    status: 'mastered',
-    lastReviewed: now,
-    reviewCount: (prev.reviewCount || 0) + 1,
-    interval: nextInterval,
-    dueDate: nextDueDate,
-    timesGraduated: (prev.timesGraduated || 0) + 1
-  };
-
-  progress[questionId] = updatedItem;
-
-  try {
-    localStorage.setItem(STORAGE_KEYS.FLASHCARD_PROGRESS, JSON.stringify(progress));
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('cele_flashcard_progress_updated', { detail: progress }));
-    }
-  } catch (e) {
-    console.error('Failed to save graduated flashcard', e);
-  }
-
-  return updatedItem;
+  return scheduleSRSFlashcard(questionId, isPerfect ? 'easy' : 'good');
 };
 
 export const isCardDue = (item?: FlashcardItemProgress): boolean => {

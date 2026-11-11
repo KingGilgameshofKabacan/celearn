@@ -1,4 +1,5 @@
 export type ThemeId =
+  | 'vault-tec'
   | 'midnight-strategist'
   | 'zen-scholar'
   | 'cyber-engineer'
@@ -42,6 +43,45 @@ export interface PersonalityTheme {
 }
 
 export const THEMES_DATA: PersonalityTheme[] = [
+  {
+    id: 'vault-tec',
+    name: 'Vault-Tec Overseer',
+    tagline: 'Vault 101 Licensure Terminal & Pip-Boy OS',
+    personality: 'Resilient, tactical, atomic-age engineering discipline, and unwavering survival grit.',
+    description:
+      'Vault-Tec iconic cobalt navy, hazard yellow accents, Phosphor green Pip-Boy telemetry meters, and mechanical relay acoustics tailored for the CELE Wasteland grind.',
+    bestSuitedFor: 'Endurance calculations, timed G.O.A.T. mock assessments, S.P.E.C.I.A.L. civil engineering mastery, and intense board exam preparation.',
+    appearance: 'Vault cobalt blue & bunker steel, hazard gold indicators, and Pip-Boy terminal phosphor green telemetry.',
+    soundPackTitle: 'Pip-Boy Relay & Geiger Engine',
+    soundPackDescription: 'Vintage vacuum-tube relay clicks, mechanical switchgear toggles, retro terminal chirps, and authentic bottle cap rewards.',
+    isDarkBase: true,
+    colors: {
+      primary: '#FBC02D',
+      primaryHover: '#F59E0B',
+      secondary: '#22C55E',
+      canvasBg: '#080E1E',
+      cardSurface: '#0E1B38',
+      elevatedSurface: '#162852',
+      border: '#2B447A',
+      textPrimary: '#F8FAFC',
+      textMuted: '#93C5FD',
+      accent: '#FBC02D',
+      accentSoft: 'rgba(251, 192, 45, 0.18)',
+      swatches: [
+        { name: 'Vault Cobalt', hex: '#080E1E' },
+        { name: 'Console Slate', hex: '#0E1B38' },
+        { name: 'Vault-Tec Gold', hex: '#FBC02D' },
+        { name: 'Pip-Boy Green', hex: '#22C55E' },
+        { name: 'Bunker Steel', hex: '#2B447A' }
+      ]
+    },
+    previewCard: {
+      statValue: '100% G.O.A.T.',
+      statLabel: 'Reactor & Structural Integrity',
+      badgeText: 'OVERSEER CLEARANCE',
+      actionText: 'Initiate Vault Protocol'
+    }
+  },
   {
     id: 'midnight-strategist',
     name: 'Midnight Strategist',
@@ -278,7 +318,7 @@ export const THEMES_DATA: PersonalityTheme[] = [
   }
 ];
 
-export const DEFAULT_THEME_ID: ThemeId = 'sunrise-momentum';
+export const DEFAULT_THEME_ID: ThemeId = 'vault-tec';
 
 export interface ActivePalette {
   canvasBg: string;
@@ -299,6 +339,38 @@ export interface ActivePalette {
 export const getThemePalette = (themeId: ThemeId, mode: 'dark' | 'light'): ActivePalette => {
   const isDark = mode === 'dark';
   switch (themeId) {
+    case 'vault-tec':
+      return isDark
+        ? {
+            canvasBg: '#080E1E',
+            cardSurface: '#0E1B38',
+            elevatedSurface: '#162852',
+            border: '#2B447A',
+            primary: '#FBC02D',
+            primaryHover: '#F59E0B',
+            secondary: '#22C55E',
+            textPrimary: '#F8FAFC',
+            textMuted: '#93C5FD',
+            accent: '#FBC02D',
+            accentSoft: 'rgba(251, 192, 45, 0.18)',
+            headerBg: 'rgba(14, 27, 56, 0.96)',
+            footerBg: 'rgba(8, 14, 30, 0.96)'
+          }
+        : {
+            canvasBg: '#F0F4FA',
+            cardSurface: '#FFFFFF',
+            elevatedSurface: '#E2ECF9',
+            border: '#BFDBFE',
+            primary: '#1E40AF',
+            primaryHover: '#1D4ED8',
+            secondary: '#D97706',
+            textPrimary: '#0F172A',
+            textMuted: '#475569',
+            accent: '#D97706',
+            accentSoft: 'rgba(217, 119, 6, 0.12)',
+            headerBg: 'rgba(255, 255, 255, 0.96)',
+            footerBg: 'rgba(240, 244, 250, 0.96)'
+          };
     case 'midnight-strategist':
       return isDark
         ? {

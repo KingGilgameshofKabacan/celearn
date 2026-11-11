@@ -612,3 +612,130 @@ body.dark .water-wave-core {
     transform: translate3d(-12px, 16px, 0) scale(1.05);
   }
 }
+
+/* =========================================================================
+   Mechanical 3D Split-Flap Clock & Alive Digital HUD Engine
+   ========================================================================= */
+
+@keyframes flipDownTop {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flipDownBottom {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.flip-perspective {
+  perspective: 600px;
+  -webkit-perspective: 600px;
+}
+
+.flip-card-top-half {
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-bottom-half {
+  transform-origin: 50% 0%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.animate-flip-top {
+  animation: flipDownTop 0.22s ease-in forwards;
+}
+
+.animate-flip-bottom {
+  animation: flipDownBottom 0.22s ease-out 0.22s forwards;
+}
+
+@keyframes digitalDotPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8));
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(0.85);
+    filter: none;
+  }
+}
+
+.digital-colon-dot {
+  animation: digitalDotPulse 1s infinite;
+}
+
+@keyframes liveRadarRing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.live-radar-ping {
+  animation: liveRadarRing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* =========================================================================
+   Vault-Tec // Fallout Shelter Franchise Theme Engine
+   ========================================================================= */
+
+.vault-tec-hazard-stripe {
+  background: repeating-linear-gradient(
+    45deg,
+    #fbc02d,
+    #fbc02d 12px,
+    #080e1e 12px,
+    #080e1e 24px
+  );
+}
+
+.vault-tec-hazard-stripe-sm {
+  background: repeating-linear-gradient(
+    45deg,
+    #fbc02d,
+    #fbc02d 6px,
+    #080e1e 6px,
+    #080e1e 12px
+  );
+}
+
+.pip-boy-terminal-text {
+  color: #22c55e;
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.65), 0 0 12px rgba(34, 197, 94, 0.25);
+}
+
+.pip-boy-amber-text {
+  color: #fbbf24;
+  text-shadow: 0 0 6px rgba(251, 191, 36, 0.65), 0 0 12px rgba(251, 191, 36, 0.25);
+}
+
+.vault-panel-rivets {
+  box-shadow: inset 0 1px 0 rgba(251, 192, 45, 0.25), 0 4px 12px rgba(0, 0, 0, 0.35);
+  border: 1px solid #2b447a;
+}
+
+.vault-crt-overlay {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
+              linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  background-size: 100% 3px, 4px 100%;
+  pointer-events: none;
+}
+
+

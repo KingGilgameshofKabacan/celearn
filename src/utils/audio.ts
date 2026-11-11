@@ -155,6 +155,26 @@ class SoundEffectManager {
     const now = ctx.currentTime;
 
     switch (theme) {
+      case 'vault-tec': {
+        // Vault-Tec heavy relay click / Pip-Boy CRT phosphor toggle
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1250, now);
+        filter.Q.setValueAtTime(3.5, now);
+        osc.frequency.setValueAtTime(1400, now);
+        osc.frequency.exponentialRampToValueAtTime(350, now + 0.04);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.045);
+        break;
+      }
       case 'midnight-strategist': {
         // Precise digital sine click, 980Hz fast decay
         const osc = ctx.createOscillator();
@@ -277,7 +297,9 @@ class SoundEffectManager {
     }
 
     const notes =
-      theme === 'zen-scholar'
+      theme === 'vault-tec'
+        ? [440, 554.37, 659.25, 880] // Vault-Tec Pip-Boy terminal boot arpeggio
+        : theme === 'zen-scholar'
         ? [330, 440]
         : theme === 'cyber-engineer'
         ? [440, 880, 1320]
@@ -288,7 +310,7 @@ class SoundEffectManager {
     notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = theme === 'cyber-engineer' ? 'sawtooth' : 'sine';
+      osc.type = theme === 'vault-tec' || theme === 'cyber-engineer' ? 'sawtooth' : 'sine';
       osc.frequency.setValueAtTime(freq, now + idx * 0.08);
       gain.gain.setValueAtTime(0, now + idx * 0.08);
       gain.gain.linearRampToValueAtTime(0.14, now + idx * 0.08 + 0.02);
@@ -356,6 +378,28 @@ class SoundEffectManager {
     const now = ctx.currentTime;
 
     switch (theme) {
+      case 'vault-tec': {
+        // Pip-Boy Quest Notification / Positive Terminal Fanfare [587.33 (D5), 880.0 (A5), 1174.66 (D6)]
+        [587.33, 880.0, 1174.66].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+          osc.type = 'square';
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(freq * 1.5, now + idx * 0.06);
+          filter.Q.setValueAtTime(2.0, now + idx * 0.06);
+          osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+          gain.gain.setValueAtTime(0, now + idx * 0.06);
+          gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.06 + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.26);
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.masterGain!);
+          osc.start(now + idx * 0.06);
+          osc.stop(now + idx * 0.06 + 0.28);
+        });
+        break;
+      }
       case 'midnight-strategist': {
         // Dual cool electronic pulse E5 -> B5
         [659.25, 987.77].forEach((freq, idx) => {
@@ -487,9 +531,31 @@ class SoundEffectManager {
     if (!this.enabled || this.muted) return;
     const ctx = this.getAudioContext();
     if (!ctx || !this.masterGain) return;
-
     const theme = themeOverride || this.activeThemeId;
     const now = ctx.currentTime;
+
+    if (theme === 'vault-tec') {
+      // Vault-Tec Approved Triumphant Brass Fanfare (Pip-Boy Level Up)
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2400, now + idx * 0.09);
+        osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+        gain.gain.setValueAtTime(0, now + idx * 0.09);
+        gain.gain.linearRampToValueAtTime(0.15, now + idx * 0.09 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.4);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain!);
+        osc.start(now + idx * 0.09);
+        osc.stop(now + idx * 0.09 + 0.42);
+      });
+      return;
+    }
 
     if (theme === 'deep-work') {
       // Quiet, dignified completion tone
@@ -771,6 +837,47 @@ class SoundEffectManager {
 
   public playWaterDrop(): void {
     this.playClick();
+  }
+
+  // Vault-Tec Bottle Caps Currency Jingle
+  public playCapsJingle(): void {
+    if (!this.enabled || this.muted) return;
+    const ctx = this.getAudioContext();
+    if (!ctx || !this.masterGain) return;
+    const now = ctx.currentTime;
+    [2400, 3200, 4400, 3000].forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.035);
+      gain.gain.setValueAtTime(0.08, now + idx * 0.035);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.035 + 0.07);
+      osc.connect(gain);
+      gain.connect(this.masterGain!);
+      osc.start(now + idx * 0.035);
+      osc.stop(now + idx * 0.035 + 0.08);
+    });
+  }
+
+  // Vault-Tec Geiger Counter clicks
+  public playGeigerCrackle(): void {
+    if (!this.enabled || this.muted) return;
+    const ctx = this.getAudioContext();
+    if (!ctx || !this.masterGain) return;
+    const now = ctx.currentTime;
+    for (let i = 0; i < 4; i++) {
+      const delay = Math.random() * 0.12;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(750 + Math.random() * 500, now + delay);
+      gain.gain.setValueAtTime(0.05, now + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.008);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.01);
+    }
   }
 }
 

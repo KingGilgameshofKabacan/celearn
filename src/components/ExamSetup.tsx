@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import {
   CEArea,
   ExamConfig,
-  CEQuestion
+  CEQuestion,
+  ActiveExamSession
 } from '../types';
 import {
   CE_AREAS,
@@ -10,7 +11,10 @@ import {
   SUBTOPICS_BY_AREA
 } from '../data/questions';
 import {
-  Play
+  Play,
+  RotateCcw,
+  Clock,
+  AlertCircle
 } from 'lucide-react';
 
 interface ExamSetupProps {
@@ -19,6 +23,9 @@ interface ExamSetupProps {
   setConfig: React.Dispatch<React.SetStateAction<ExamConfig>>;
   onStartExam: () => void;
   onQuickPreset: (preset: Partial<ExamConfig>) => void;
+  interruptedSession?: ActiveExamSession | null;
+  onResumeSession?: () => void;
+  onDiscardSession?: () => void;
 }
 
 export const ExamSetup: React.FC<ExamSetupProps> = ({
@@ -26,7 +33,10 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
   config,
   setConfig,
   onStartExam,
-  onQuickPreset
+  onQuickPreset,
+  interruptedSession,
+  onResumeSession,
+  onDiscardSession
 }) => {
   const availableSubtopics = useMemo(() => {
     if (config.area === 'ALL') {
@@ -48,18 +58,90 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto w-full my-6 p-4 sm:p-6 lg:p-8 space-y-6">
+
+      {/* Resume Interrupted Session Card */}
+      {interruptedSession && (
+        <div className="bg-gradient-to-r from-orange-500/15 via-amber-500/10 to-orange-500/5 dark:from-orange-950/50 dark:via-amber-950/40 dark:to-stone-900 border-2 border-orange-500/50 rounded-3xl p-6 sm:p-7 shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <span className="px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-orange-500 text-white animate-pulse">
+                Unfinished Exam Found
+              </span>
+              <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">
+                {new Date(interruptedSession.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            </div>
+
+            <h3 className="text-lg sm:text-xl font-bold text-stone-900 dark:text-stone-100">
+              Resume Your Interrupted Assessment
+            </h3>
+
+            <p className="text-xs text-stone-600 dark:text-stone-300 max-w-xl leading-relaxed">
+              You have an active exam session with{' '}
+              <strong className="text-stone-900 dark:text-stone-100 font-mono">
+                {Object.keys(interruptedSession.userAnswers).length} of {interruptedSession.questions.length} answered
+              </strong>{' '}
+              ({interruptedSession.config.area === 'ALL' ? 'All Areas' : interruptedSession.config.area}). Resuming will restore your exact questions, answers, and remaining time.
+            </p>
+
+            <div className="flex items-center space-x-3 text-xs font-mono text-stone-500 dark:text-stone-400 pt-1">
+              <span>Item {interruptedSession.currentIndex + 1} of {interruptedSession.questions.length}</span>
+              <span>·</span>
+              <span>{Math.floor(interruptedSession.secondsRemaining / 60)} mins left</span>
+              {interruptedSession.flaggedIds.length > 0 && (
+                <>
+                  <span>·</span>
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">
+                    {interruptedSession.flaggedIds.length} Flagged
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-3 shrink-0">
+            {onDiscardSession && (
+              <button
+                type="button"
+                onClick={onDiscardSession}
+                className="px-4 py-2.5 text-xs font-semibold text-stone-600 hover:text-rose-600 dark:text-stone-400 dark:hover:text-rose-400 transition cursor-pointer"
+              >
+                Discard
+              </button>
+            )}
+
+            {onResumeSession && (
+              <button
+                type="button"
+                onClick={onResumeSession}
+                className="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs sm:text-sm font-extrabold rounded-2xl shadow-md flex items-center space-x-2 transition cursor-pointer active:scale-95"
+              >
+                <Play className="w-4 h-4 fill-white" />
+                <span>Resume Last Session</span>
+              </button>
+            )}
+          </div>
+        </div>
+      )}
       
-      {/* Setup Card */}
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs text-stone-900 dark:text-stone-100 transition-colors">
-        
+      {/* Setup Card (Vault-Tec G.O.A.T. Console) */}
+      <div className="bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm text-stone-900 dark:text-stone-100 transition-colors relative overflow-hidden">
+        {/* Vault Hazard Chevrons Top Accent */}
+        <div className="h-2 w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] vault-tec-hazard-stripe -mt-6 -mx-6 sm:-mt-8 sm:-mx-8 mb-6" />
+
         {/* Title Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-[#2B447A] pb-5">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              Mock Exam Setup
-            </h2>
-            <div className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-              {matchingQuestionsCount} items available in bank
+            <div className="flex items-center space-x-2">
+              <h2 className="text-2xl font-black tracking-tight font-mono text-stone-900 dark:text-amber-400">
+                G.O.A.T. Assessment Setup
+              </h2>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-500 dark:text-amber-300 font-extrabold border border-amber-500/30 uppercase">
+                Vault-Tec PRC Standard
+              </span>
+            </div>
+            <div className="text-xs text-stone-500 dark:text-sky-300 mt-1 font-mono">
+              Generalized Occupational Aptitude Test for Civil Engineers · {matchingQuestionsCount} items available
             </div>
           </div>
 
@@ -288,19 +370,19 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
         </div>
 
         {/* Start Button */}
-        <div className="pt-4 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between">
-          <div className="text-xs text-stone-500 dark:text-stone-400">
-            Selected: <strong className="text-orange-600 dark:text-orange-400">{effectiveCount}</strong> questions
+        <div className="pt-4 border-t border-stone-200 dark:border-[#2B447A] flex items-center justify-between">
+          <div className="text-xs text-stone-500 dark:text-sky-300 font-mono">
+            Selected: <strong className="text-amber-500 dark:text-amber-400">{effectiveCount}</strong> assessment items
           </div>
 
           <button
             type="button"
             onClick={onStartExam}
             disabled={matchingQuestionsCount === 0}
-            className="px-8 py-3.5 bg-orange-600 hover:bg-orange-500 disabled:opacity-40 text-white font-bold rounded-2xl shadow-sm transition flex items-center space-x-2 text-sm"
+            className="px-8 py-3.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 disabled:opacity-40 text-stone-950 font-black rounded-2xl shadow-sm transition flex items-center space-x-2 text-sm font-mono cursor-pointer active:scale-95"
           >
-            <span>Start Assessment</span>
-            <Play className="w-4 h-4 fill-current" />
+            <span>Initiate G.O.A.T. Protocol</span>
+            <Play className="w-4 h-4 fill-stone-950" />
           </button>
         </div>
 

@@ -12,6 +12,8 @@ import { MSTE_TOS_QUESTIONS } from './questions_mste_tos';
 import { PDF_TOS_QUESTIONS } from './questions_pdf_tos';
 import { SCANNED_PDF_QUESTIONS } from './questions_scanned_pdf';
 import { HIGHWAY_PORTS_QUESTIONS } from './questions_highway_ports';
+import { QUESTIONS_BOARD_SERIES } from './questions_board_series';
+import { QUESTIONS_REFRESHER_SERIES } from './questions_refresher_series';
 
 // Pool of authentic Table of Specifications (TOS) board exam questions
 export const ALL_SOURCE_QUESTIONS: CEQuestion[] = [
@@ -19,6 +21,8 @@ export const ALL_SOURCE_QUESTIONS: CEQuestion[] = [
   ...HPGE_TOS_QUESTIONS,
   ...MSTE_TOS_QUESTIONS,
   ...PDF_TOS_QUESTIONS,
+  ...QUESTIONS_BOARD_SERIES,
+  ...QUESTIONS_REFRESHER_SERIES,
   ...SCANNED_PDF_QUESTIONS,
   ...HIGHWAY_PORTS_QUESTIONS,
   ...PSAD_QUESTIONS,

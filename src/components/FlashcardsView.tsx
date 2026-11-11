@@ -4,7 +4,8 @@ import {
   CEArea,
   FlashcardProgress,
   FlashcardMasteryStatus,
-  StudyMode
+  StudyMode,
+  SRSRating
 } from '../types';
 import {
   CE_AREAS,
@@ -39,12 +40,15 @@ import {
 import { soundManager } from '../utils/audio';
 import {
   scheduleGraduatedFlashcard,
+  scheduleSRSFlashcard,
+  calculateSRSIntervals,
   incrementDailyQuestionsAnswered,
   setDailyTaskCompleted,
   isCardDue,
   isCardNew,
   getDueCards,
-  getNewCards
+  getNewCards,
+  addBottleCaps
 } from '../utils/storage';
 import confetti from 'canvas-confetti';
 
@@ -190,6 +194,11 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
   const currentCard = currentItem?.question || null;
   const isBookmarked = currentCard ? bookmarks.includes(currentCard.id) : false;
 
+  const currentCardProgress = currentCard ? flashcardProgress[currentCard.id] : undefined;
+  const currentCardIntervals = useMemo(() => {
+    return currentCard ? calculateSRSIntervals(flashcardProgress[currentCard.id]) : null;
+  }, [currentCard, flashcardProgress]);
+
   // Handle option selection
   const handleSelectOption = (choice: string) => {
     if (!currentItem || currentItem.isAnswered) return;
@@ -256,9 +265,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
 
     switch (rating) {
       case 'bad': {
-        // Bad: The user forgot it entirely.
-        // Re-insert this exact card into the sessionQueue array exactly 4 positions away from current index
-        // (so it appears after 4 other cards). If fewer than 4 remaining, goes to end.
+        // Bad (Again): The user forgot it entirely.
+        const updated = scheduleSRSFlashcard(qid, 'again');
+        onUpdateStatus(qid, updated.status);
         card.selectedAnswer = null;
         card.isAnswered = false;
         card.isCorrect = false;
@@ -270,8 +279,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       }
 
       case 'ok': {
-        // Ok (1st time): The user struggled. Push this card to the very end of the current sessionQueue.
-        // Ok (2nd time): The user still struggled. Push it to the end of the queue again. (Stays in today queue until Good or Perfect).
+        // Ok (Hard): The user struggled.
+        const updated = scheduleSRSFlashcard(qid, 'hard');
+        onUpdateStatus(qid, updated.status);
         card.timesOk += 1;
         card.selectedAnswer = null;
         card.isAnswered = false;
@@ -283,8 +293,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       }
 
       case 'good': {
-        // Good (1st time): The user got it, but needs reinforcement. Push this card to the very end of current sessionQueue.
-        // Good (2nd time): The user has learned it for today. Remove it from sessionQueue. Schedule for next day (Date + 1 day).
+        // Good: The user recalled correctly.
         if (card.timesGood === 0) {
           card.timesGood = 1;
           card.selectedAnswer = null;
@@ -295,7 +304,8 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           soundManager.playClick();
         } else {
           // 2nd Good: Graduated!
-          scheduleGraduatedFlashcard(qid, false);
+          const updated = scheduleSRSFlashcard(qid, 'good');
+          onUpdateStatus(qid, updated.status);
           wasGraduated = true;
           setGraduatedCount(prev => prev + 1);
           soundManager.playCompleteTask();
@@ -304,8 +314,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       }
 
       case 'perfect': {
-        // Perfect: The card was too easy. Immediately remove from sessionQueue and schedule for future review (stacked interval).
-        scheduleGraduatedFlashcard(qid, true);
+        // Perfect (Easy): Too easy. Immediately graduate with high interval.
+        const updated = scheduleSRSFlashcard(qid, 'easy');
+        onUpdateStatus(qid, updated.status);
         wasGraduated = true;
         setGraduatedCount(prev => prev + 1);
         soundManager.playCompleteTopic();
@@ -327,40 +338,37 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     soundManager.playCardFlip();
   };
 
-  // Rating in Flashcard Mode: Needs Review (repeats at end of current session)
-  const handleRateNeedsReview = (e?: React.MouseEvent) => {
+  // Spaced Repetition Rating in Flashcard Mode (Vaia SRS 4-Rating System)
+  const handleRateSRS = (rating: SRSRating, e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
     if (!currentItem || !currentCard) return;
+
     incrementDailyQuestionsAnswered(1);
-    soundManager.playClick();
-
-    const newQueue = [...sessionQueue];
-    const card = newQueue.shift()!;
-    card.selectedAnswer = null;
-    card.isAnswered = false;
-    card.isCorrect = false;
-    newQueue.push(card);
-
-    setIsFlipped(false);
-    setCardSessionIndex(prev => prev + 1);
-    setSessionQueue(newQueue);
-  };
-
-  // Rating in Flashcard Mode: Mastered (graduates card)
-  const handleRateMastered = (e?: React.MouseEvent) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    if (!currentItem || !currentCard) return;
-    incrementDailyQuestionsAnswered(1);
-    soundManager.playCompleteTask();
-
     const qid = currentCard.id;
-    scheduleGraduatedFlashcard(qid, false);
-    setGraduatedCount(prev => prev + 1);
+    const updated = scheduleSRSFlashcard(qid, rating);
+    onUpdateStatus(qid, updated.status);
 
     const newQueue = [...sessionQueue];
-    newQueue.shift();
+    const current = newQueue.shift()!;
+
+    if (rating === 'again') {
+      // Again: Keep in session! Re-queue at the end of sessionQueue for same-session reinforcement
+      soundManager.playClick();
+      current.selectedAnswer = null;
+      current.isAnswered = false;
+      current.isCorrect = false;
+      newQueue.push(current);
+    } else {
+      // Hard, Good, Easy: Card graduates from current session
+      addBottleCaps(10);
+      if (updated.status === 'mastered') {
+        setGraduatedCount(prev => prev + 1);
+        soundManager.playCompleteTopic();
+      } else {
+        soundManager.playCompleteTask();
+      }
+    }
 
     setIsFlipped(false);
     setCardSessionIndex(prev => prev + 1);
@@ -450,8 +458,10 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           e.preventDefault();
           handleFlipCard();
         } else if (isFlipped) {
-          if (e.key === '1' || key === 'R') handleRateNeedsReview();
-          if (e.key === '2' || key === 'M') handleRateMastered();
+          if (e.key === '1' || key === 'R' || e.key === 'ArrowLeft') handleRateSRS('again');
+          if (e.key === '2' || key === 'H' || e.key === 'ArrowDown') handleRateSRS('hard');
+          if (e.key === '3' || key === 'G' || e.key === 'ArrowUp') handleRateSRS('good');
+          if (e.key === '4' || key === 'E' || e.key === 'ArrowRight') handleRateSRS('easy');
         }
       } else {
         if (!currentItem.isAnswered) {
@@ -478,21 +488,29 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
   if (viewState === 'setup') {
     return (
       <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
-        {/* Header Banner */}
-        <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 dark:from-amber-950/40 dark:via-orange-950/30 dark:to-stone-900 border border-orange-500/30 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xs">
+        {/* Header Banner (Vault-Tec S.P.E.C.I.A.L. Training Console) */}
+        <div className="bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm relative overflow-hidden">
+          {/* Top Hazard Chevrons */}
+          <div className="h-2 w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] vault-tec-hazard-stripe -mt-6 -mx-6 sm:-mt-8 sm:-mx-8 mb-6" />
+
           <div className="flex items-start space-x-4">
-            <div className="p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md">
+            <div className="p-3 rounded-2xl bg-amber-500 text-stone-950 shadow-md">
               <Layers className="w-8 h-8" />
             </div>
             <div>
-              <span className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">
-                Interactive Study System
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight mt-0.5">
-                Spaced Repetition Flashcards
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-mono font-black text-amber-500 uppercase tracking-wider">
+                  Vault-Tec Directive 101-B
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase font-bold">
+                  S.P.E.C.I.A.L. Deck
+                </span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-amber-400 font-mono tracking-tight mt-0.5">
+                S.P.E.C.I.A.L. Terminology Deck
               </h1>
               <p className="text-sm text-stone-600 dark:text-stone-300 mt-1 max-w-xl">
-                Master authentic civil engineering terminologies and Table of Specifications (TOS) definitions with smart Leitner spaced repetition.
+                Condition your civil engineering recall through Vault-Tec's 4-stage spaced repetition memory reactor across all 1,296 board terms.
               </p>
             </div>
           </div>
@@ -500,9 +518,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           {onNavigateHome && (
             <button
               onClick={onNavigateHome}
-              className="px-4 py-2 text-xs font-bold rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 transition"
+              className="px-4 py-2 text-xs font-mono font-bold rounded-xl border border-stone-300 dark:border-[#2B447A] hover:bg-stone-100 dark:hover:bg-[#162852] text-stone-700 dark:text-sky-300 transition cursor-pointer"
             >
-              Back to Dashboard
+              Overseer Deck
             </button>
           )}
         </div>
@@ -971,42 +989,93 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                   </div>
                 </div>
 
-                {/* Rating Buttons in Flashcard Mode: Mastered or Needs Review */}
-                <div className="pt-4 border-t border-stone-100 dark:border-stone-800 space-y-2">
-                  <span className="text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider block text-center">
-                    Rate your recall for this term:
-                  </span>
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* Needs Review */}
+                {/* Rating Buttons in Flashcard Mode: Vaia Spaced Repetition (Again, Hard, Good, Easy) */}
+                <div className="pt-4 border-t border-stone-100 dark:border-stone-800 space-y-3">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
+                    <span className="text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">
+                      Rate your recall (Vaia SRS Engine):
+                    </span>
+                    {currentCardProgress && (
+                      <span className="text-[11px] font-mono text-stone-400">
+                        Ease: {(currentCardProgress.easeFactor || 2.5).toFixed(2)} • Reps: {currentCardProgress.repetitions || 0}
+                      </span>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    {/* 1. Again */}
                     <button
                       type="button"
-                      onClick={(e) => handleRateNeedsReview(e)}
-                      className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/60 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-800 dark:text-rose-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1 relative z-20"
+                      onClick={(e) => handleRateSRS('again', e)}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/60 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-800 dark:text-rose-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1 relative z-20 group"
                     >
-                      <div className="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900 text-rose-600 dark:text-rose-300 flex items-center justify-center">
-                        <RotateCcw className="w-4 h-4" />
+                      <div className="w-7 h-7 rounded-full bg-rose-100 dark:bg-rose-900 text-rose-600 dark:text-rose-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <RotateCcw className="w-3.5 h-3.5" />
                       </div>
-                      <div className="font-extrabold text-sm sm:text-base">Needs Review</div>
-                      <div className="text-[10px] text-rose-600 dark:text-rose-400 leading-tight">
-                        Keep studying (repeats at end of session)
+                      <div className="font-extrabold text-xs sm:text-sm">Again</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200/80 dark:bg-rose-900/80 text-rose-900 dark:text-rose-200">
+                        {currentCardIntervals?.again.label || '<10m'}
+                      </span>
+                      <div className="text-[9px] text-rose-600 dark:text-rose-400 leading-tight">
+                        Re-queue in session
                       </div>
-                      <span className="text-[9px] font-mono text-rose-400">[Press 1 or R]</span>
+                      <span className="text-[9px] font-mono text-rose-400">[Key 1]</span>
                     </button>
 
-                    {/* Mastered */}
+                    {/* 2. Hard */}
                     <button
                       type="button"
-                      onClick={(e) => handleRateMastered(e)}
-                      className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-900/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1 relative z-20"
+                      onClick={(e) => handleRateSRS('hard', e)}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900/60 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1 relative z-20 group"
                     >
-                      <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 flex items-center justify-center">
-                        <CheckCircle2 className="w-4 h-4" />
+                      <div className="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <AlertCircle className="w-3.5 h-3.5" />
                       </div>
-                      <div className="font-extrabold text-sm sm:text-base">Mastered</div>
-                      <div className="text-[10px] text-emerald-600 dark:text-emerald-400 leading-tight">
-                        Learned! Graduate & schedule future review
+                      <div className="font-extrabold text-xs sm:text-sm">Hard</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-200/80 dark:bg-amber-900/80 text-amber-900 dark:text-amber-200">
+                        {currentCardIntervals?.hard.label || '1d'}
+                      </span>
+                      <div className="text-[9px] text-amber-600 dark:text-amber-400 leading-tight">
+                        Difficult recall
                       </div>
-                      <span className="text-[9px] font-mono text-emerald-400">[Press 2 or M]</span>
+                      <span className="text-[9px] font-mono text-amber-400">[Key 2]</span>
+                    </button>
+
+                    {/* 3. Good */}
+                    <button
+                      type="button"
+                      onClick={(e) => handleRateSRS('good', e)}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-300 dark:border-blue-900/60 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-800 dark:text-blue-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1 relative z-20 group"
+                    >
+                      <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Check className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="font-extrabold text-xs sm:text-sm">Good</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-200/80 dark:bg-blue-900/80 text-blue-900 dark:text-blue-200">
+                        {currentCardIntervals?.good.label || '3d'}
+                      </span>
+                      <div className="text-[9px] text-blue-600 dark:text-blue-400 leading-tight">
+                        Solid recall
+                      </div>
+                      <span className="text-[9px] font-mono text-blue-400">[Key 3]</span>
+                    </button>
+
+                    {/* 4. Easy */}
+                    <button
+                      type="button"
+                      onClick={(e) => handleRateSRS('easy', e)}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-900/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1 relative z-20 group"
+                    >
+                      <div className="w-7 h-7 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="font-extrabold text-xs sm:text-sm">Easy</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200/80 dark:bg-emerald-900/80 text-emerald-900 dark:text-emerald-200">
+                        {currentCardIntervals?.easy.label || '7d'}
+                      </span>
+                      <div className="text-[9px] text-emerald-600 dark:text-emerald-400 leading-tight">
+                        Instant recall
+                      </div>
+                      <span className="text-[9px] font-mono text-emerald-400">[Key 4]</span>
                     </button>
                   </div>
                 </div>
@@ -1154,11 +1223,14 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     {/* 1. Bad */}
                     <button
                       onClick={() => handleRate('bad')}
-                      className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/60 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-800 dark:text-rose-300 transition text-center shadow-xs cursor-pointer active:scale-95"
+                      className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/60 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-800 dark:text-rose-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1"
                     >
-                      <div className="font-extrabold text-sm sm:text-base">Bad</div>
-                      <div className="text-[10px] text-rose-600 dark:text-rose-400 mt-0.5 leading-tight">
-                        Forgot (repeats in 4 cards)
+                      <div className="font-extrabold text-sm sm:text-base">Again</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200/80 dark:bg-rose-900/80 text-rose-900 dark:text-rose-200">
+                        {currentCardIntervals?.again.label || '<10m'}
+                      </span>
+                      <div className="text-[10px] text-rose-600 dark:text-rose-400 leading-tight">
+                        Forgot (repeats in queue)
                       </div>
                       <span className="text-[9px] font-mono text-rose-400 block mt-1">[Key 1]</span>
                     </button>
@@ -1166,10 +1238,13 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     {/* 2. Ok */}
                     <button
                       onClick={() => handleRate('ok')}
-                      className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900/60 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 transition text-center shadow-xs cursor-pointer active:scale-95"
+                      className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900/60 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1"
                     >
-                      <div className="font-extrabold text-sm sm:text-base">Ok</div>
-                      <div className="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5 leading-tight">
+                      <div className="font-extrabold text-sm sm:text-base">Hard</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-200/80 dark:bg-amber-900/80 text-amber-900 dark:text-amber-200">
+                        {currentCardIntervals?.hard.label || '1d'}
+                      </span>
+                      <div className="text-[10px] text-amber-600 dark:text-amber-400 leading-tight">
                         Struggled (repeats at end)
                       </div>
                       <span className="text-[9px] font-mono text-amber-400 block mt-1">[Key 2]</span>
@@ -1178,11 +1253,14 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     {/* 3. Good */}
                     <button
                       onClick={() => handleRate('good')}
-                      className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-300 dark:border-blue-900/60 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-800 dark:text-blue-300 transition text-center shadow-xs cursor-pointer active:scale-95"
+                      className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-300 dark:border-blue-900/60 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-800 dark:text-blue-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1"
                     >
                       <div className="font-extrabold text-sm sm:text-base">Good</div>
-                      <div className="text-[10px] text-blue-600 dark:text-blue-400 mt-0.5 leading-tight">
-                        {currentItem.timesGood === 0 ? 'Got it (1 more to graduate)' : 'Learned (+1 day interval)'}
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-200/80 dark:bg-blue-900/80 text-blue-900 dark:text-blue-200">
+                        {currentCardIntervals?.good.label || '3d'}
+                      </span>
+                      <div className="text-[10px] text-blue-600 dark:text-blue-400 leading-tight">
+                        {currentItem.timesGood === 0 ? 'Got it (1 more to graduate)' : 'Learned (graduates)'}
                       </div>
                       <span className="text-[9px] font-mono text-blue-400 block mt-1">[Key 3]</span>
                     </button>
@@ -1190,11 +1268,14 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     {/* 4. Perfect */}
                     <button
                       onClick={() => handleRate('perfect')}
-                      className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-900/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 transition text-center shadow-xs cursor-pointer active:scale-95"
+                      className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-900/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 transition text-center shadow-xs cursor-pointer active:scale-95 flex flex-col items-center justify-center space-y-1"
                     >
-                      <div className="font-extrabold text-sm sm:text-base">Perfect</div>
-                      <div className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 leading-tight">
-                        Too easy (graduates & stacks)
+                      <div className="font-extrabold text-sm sm:text-base">Easy</div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200/80 dark:bg-emerald-900/80 text-emerald-900 dark:text-emerald-200">
+                        {currentCardIntervals?.easy.label || '7d'}
+                      </span>
+                      <div className="text-[10px] text-emerald-600 dark:text-emerald-400 leading-tight">
+                        Instant recall (graduates & stacks)
                       </div>
                       <span className="text-[9px] font-mono text-emerald-400 block mt-1">[Key 4]</span>
                     </button>

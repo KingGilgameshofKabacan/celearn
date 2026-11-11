@@ -1,2747 +1,4900 @@
 import { CEQuestion } from '../types';
 
-/**
- * Authentic Board Examination Questions & Terminologies
- * Extracted and compiled from the official PRC Civil Engineering Licensure Examination
- * Table of Specifications (TOS), syllabi, and board review modules for PSAD, HPGE, and MSTE.
- * 
- * Total terms: 171 comprehensive, authentic, non-repeated terminologies.
- */
 export const PDF_TOS_QUESTIONS: CEQuestion[] = [
   {
-    "id": 501,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "id": 5001,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
     "difficulty": "Medium",
-    "question": "The minimum embedment length of a reinforcing bar required to develop its design yield strength without pullout failure in concrete.",
-    "answer": "DEVELOPMENT LENGTH",
+    "question": "Harbors can be broadly classified into which categories?",
+    "answer": "Natural harbors, Semi-natural harbors, and Artificial harbors",
     "choices": [
-      "DEVELOPMENT LENGTH",
-      "SPLICE OVERLAP",
-      "ANCHORAGE RADIUS",
-      "BOND GAP"
+      "Natural harbors, Semi-natural harbors, and Artificial harbors",
+      "Commercial harbors only",
+      "Inland and oceanic ports only",
+      "Deep water ports only"
     ],
-    "explanation": "Development length (ld) provides sufficient mechanical bond and interlock to transfer the full yield stress fy from the rebar into surrounding concrete (NSCP 2015 Sec. 425).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Harbors are classified based on natural shelter into natural harbors (protected by natural land configuration), semi-natural harbors (natural shelter improved by breakwaters), and artificial harbors (wholly protected by breakwaters).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
   },
   {
-    "id": 502,
+    "id": 5002,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A port is a harbor in which terminal facilities are provided. What are the recognized classifications of ports based on location and trade?",
+    "answer": "All of the above (Ocean port, Inland port, Entry port, Free port)",
+    "choices": [
+      "All of the above (Ocean port, Inland port, Entry port, Free port)",
+      "Ocean port and Inland port only",
+      "Commercial and military ports only",
+      "Domestic container ports only"
+    ],
+    "explanation": "Ports are categorized by functional role into ocean ports, inland ports on rivers/canals, ports of entry (customs clearance), and free ports (duty-free trade zones).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5003,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Where should the entrance of a harbor ideally be located to ensure vessel maneuvering safety during heavy seas?",
+    "answer": "Lee side",
+    "choices": [
+      "Lee side",
+      "Windward end",
+      "Outer end",
+      "Inner end"
+    ],
+    "explanation": "Harbor entrances should ideally be oriented on the lee side (sheltered side away from prevailing winds and storm wave approach) to prevent heavy waves from rolling through the entrance navigation channel.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5004,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What is the recommended design width for a harbor entrance navigation channel?",
+    "answer": "Between 0.7 to 1.0 times the length of the design ship",
+    "choices": [
+      "Between 0.7 to 1.0 times the length of the design ship",
+      "30 m",
+      "Between 2 to 6 times the beam of the design ship",
+      "50 m"
+    ],
+    "explanation": "Standard maritime navigation criteria specify that harbor entrance channel widths should be between 0.7 and 1.0 times the overall length of the design vessel (LOA).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5005,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What is the maximum allowable tidal and current velocity through a harbor entrance channel for safe vessel navigation?",
+    "answer": "1.5 m/s or 3 knots",
+    "choices": [
+      "1.5 m/s or 3 knots",
+      "2.5 m/s or 4 knots",
+      "3 m/s or 5 knots",
+      "1 m/s or 1.5 knots"
+    ],
+    "explanation": "Cross and longitudinal currents at harbor entrances should not exceed 1.5 m/s (approx. 3 knots) to allow vessels to maintain rudder steerage without risk of yawing into breakwaters.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5006,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What is the typical stopping distance required for a fully loaded cargo vessel depending on ship speed, displacement, and engine horsepower?",
+    "answer": "7 to 8 times the ship's length",
+    "choices": [
+      "7 to 8 times the ship's length",
+      "100 m",
+      "150 m",
+      "10 to 12 times the ship's length"
+    ],
+    "explanation": "A loaded vessel coasting or using reverse propeller thrust typically requires a stopping distance of 7 to 8 times its overall length in open harbor approaches.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5007,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "When more than one ship must be accommodated along a continuous berthing face, what clearance length should be provided between adjacent moored vessels?",
+    "answer": "0.1 times the length of the largest ship",
+    "choices": [
+      "0.1 times the length of the largest ship",
+      "20 m",
+      "40 m",
+      "60 m"
+    ],
+    "explanation": "The safety clearance between adjacent moored ships along a continuous quay or wharf is generally specified as 10% (0.1) of the length of the larger vessel (typically 15 to 25 meters).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5008,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "For a single-berth finger pier, what is the clear water area width required between two adjacent piers to permit tugboat maneuvering and assistance?",
+    "answer": "2 times the beam of the largest ship plus 30 m",
+    "choices": [
+      "2 times the beam of the largest ship plus 30 m",
+      "2 times the beam of the largest ship plus 50 m",
+      "200 m",
+      "2 times the length of the ship plus 30 m"
+    ],
+    "explanation": "For single-berth piers with tug assistance, the minimum slip clearance width between adjacent pier structures is twice the beam of the design ship plus 30 meters.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5009,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "For harbor turning basins, what is the minimum diameter/width required to permit a ship to swing freely into a berth with tug assistance at a 45-degree berthing angle?",
+    "answer": "1.5 times the length of the ship",
+    "choices": [
+      "1.5 times the length of the ship",
+      "2 times the length of the ship",
+      "8 times the beam of the ship plus 30 m",
+      "6 times the beam of the ship plus 180 m"
+    ],
+    "explanation": "A harbor turning basin accommodating 45-degree approaches with tug assistance requires a clear diameter of at least 1.5 times the ship's length (LOA).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5010,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "For harbor basins where vessels must swing freely into a berth at a 90-degree angle (perpendicular berthing), what basin width is required?",
+    "answer": "2 times the length of the ship",
+    "choices": [
+      "2 times the length of the ship",
+      "1.5 times the length of the ship",
+      "8 times the beam of the ship plus 30 m",
+      "6 times the beam of the ship plus 180 m"
+    ],
+    "explanation": "When berthing at right angles (90 degrees), the turning basin diameter must provide at least 2.0 times the ship's length to allow safe swinging without tug fouling.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5011,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What is the recommended safety clearance distance between a moored oil tanker and a passing vessel in a harbor fairway?",
+    "answer": "From 50 - 150 m",
+    "choices": [
+      "From 50 - 150 m",
+      "From 30 - 50 m",
+      "From 150 - 200 m",
+      "From 50 - 100 m"
+    ],
+    "explanation": "Due to hydrodynamic suction interaction and volatile hazardous cargo, safe fairway clearance between a moored tanker and passing traffic is maintained between 50 m and 150 m.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5012,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "In commercial harbor anchorages, the water depth should preferably not exceed what range due to the practical length and handling of standard anchor chains?",
+    "answer": "50 - 60 m",
+    "choices": [
+      "50 - 60 m",
+      "30 - 50 m",
+      "25 - 50 m",
+      "60 - 80 m"
+    ],
+    "explanation": "Anchorages deeper than 50 to 60 meters require excessively long chain scopes (typically 5 to 7 times depth) that exceed standard windlass capacity and weight ratings.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5013,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What wind speed threshold in km/h corresponds to a wind speed where waves continue to grow at a decreasing rate after reaching a velocity equal to 1/3 of the wind speed (wave speed 48.67 km/h)?",
+    "answer": "146 kph",
+    "choices": [
+      "146 kph",
+      "36.5 kph",
+      "48.67 kph",
+      "32.6 kph"
+    ],
+    "explanation": "At a wind velocity of 146 kph, the wave phase speed reaches 1/3 of wind speed (48.67 kph), beyond which whitecapping and friction attenuate additional growth.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5014,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "For ocean waves generated in deep water, the ratio of wave length to wave height (L/H) typically ranges between:",
+    "answer": "17 and 33",
+    "choices": [
+      "17 and 33",
+      "9 and 15",
+      "12 and 18",
+      "20 and 34"
+    ],
+    "explanation": "In deep-water oceanic storm swells, the ratio of wave length to wave height (steepness reciprocal L/H) is commonly observed between 17 and 33.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5015,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A very long standing wave on a large but limited body of water (such as a bay, harbor, or lake) occurring when a storm subsides after producing wind tilt is called a:",
+    "answer": "Seiche",
+    "choices": [
+      "Seiche",
+      "Shoal",
+      "Ebb",
+      "Skewd"
+    ],
+    "explanation": "A seiche is a resonant standing wave oscillation in an enclosed or semi-enclosed basin triggered by wind stresses, pressure gradients, or seismic disturbances.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5016,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Ocean waves generated by storms that have traveled out of their generating area and propagated outside the field of observation are called:",
+    "answer": "Swells",
+    "choices": [
+      "Swells",
+      "Shoals",
+      "Wakes",
+      "Ebbs"
+    ],
+    "explanation": "Swells are mature, long-period, regular gravity waves that propagate beyond the fetch and stormy weather systems that created them.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5017,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What standardized meteorological scale is used to measure and classify the intensity and force of wind based on sea and terrestrial observations?",
+    "answer": "Beaufort scale",
+    "choices": [
+      "Beaufort scale",
+      "Buchanan's scale",
+      "Fibonacci scale",
+      "Antwerp scale"
+    ],
+    "explanation": "The Beaufort Wind Force Scale (devised by Sir Francis Beaufort) classifies wind speeds from Force 0 (calm) to Force 12 (hurricane) based on observed physical sea effects.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5018,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "When an ocean wave propagates from deep water into shoaling water, what happens to its wave period?",
+    "answer": "Remains constant",
+    "choices": [
+      "Remains constant",
+      "Increases",
+      "Decreases",
+      "Fluctuates erratically"
+    ],
+    "explanation": "As waves enter shoaling shallow water, their wave length decreases and height increases due to seabed friction, but the wave period (T) remains strictly constant.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5019,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "An open body of navigable water through which ships travel safely along an established channel route is called a:",
+    "answer": "Fairway",
+    "choices": [
+      "Fairway",
+      "Shoal",
+      "Skewd",
+      "Significant depth"
+    ],
+    "explanation": "A fairway is the main navigable deep-water channel through a harbor, bay, or river designated for safe vessel transit.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5020,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves formed by the frictional drag of wind over the water surface, where water particles are displaced and gravity acts as the restoring force, are classified as:",
+    "answer": "Gravity waves",
+    "choices": [
+      "Gravity waves",
+      "Deep water waves",
+      "Significant waves",
+      "Equivalent depth water waves"
+    ],
+    "explanation": "Surface gravity waves are waves generated by wind whose dominant restoring force returning the water surface to equilibrium is gravity (as opposed to capillary waves governed by surface tension).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5021,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The standing wave phenomenon characterized by non-breaking wave reflection producing pure vertical oscillation and hydrodynamic pressure against a vertical sea wall is known as:",
+    "answer": "Clapotis",
+    "choices": [
+      "Clapotis",
+      "Wave decay",
+      "Dynamic pressure",
+      "Rankine's active pressure"
+    ],
+    "explanation": "Clapotis (French for 'lapping') is a non-breaking standing wave pattern formed by the complete reflection of traveling ocean waves against a vertical boundary like a seawall or breakwater.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5022,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The change in the direction of wave travel as waves enter shallow water, causing wave crests to align parallel to seabed depth contours and distributing wave energy unevenly, is called:",
+    "answer": "Wave refraction",
+    "choices": [
+      "Wave refraction",
+      "Wave diffraction",
+      "Wave reflection",
+      "Wave frequency"
+    ],
+    "explanation": "Wave refraction occurs when different segments of a wave crest travel over different depths; the section in shallower water slows down first, bending the wave crest toward bathymetric contours.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5023,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves generated by local wind blowing directly over the sea surface bordering or adjacent to a port site are called:",
+    "answer": "Wind waves",
+    "choices": [
+      "Wind waves",
+      "Ocean waves",
+      "Breaking waves",
+      "Depth water wave"
+    ],
+    "explanation": "Wind waves (or 'sea') are irregular, short-crested waves actively growing under the local action of wind in the immediate observation vicinity.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5024,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Wind-generated waves formed in the deep ocean at a distance from a port site that have traveled past the wind field that generated them are termed:",
+    "answer": "Swell waves",
+    "choices": [
+      "Swell waves",
+      "Seiching waves",
+      "Breaking waves",
+      "Wakes"
+    ],
+    "explanation": "Swell waves are smooth, long-crested waves characterized by uniform periods that have traveled hundreds or thousands of kilometers away from their generating storm centers.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5025,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Long-period waves having natural periods ranging from 30 seconds up to 12 hours and 25 minutes occurring in enclosed or semi-enclosed harbor basins are termed:",
+    "answer": "Seiching waves",
+    "choices": [
+      "Seiching waves",
+      "Swell waves",
+      "Breaking waves",
+      "Wakes"
+    ],
+    "explanation": "Seiching waves (basin resonance) exhibit periods from half a minute up to tidal periods, causing dangerous surging motions in moored vessels.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5026,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Massive water waves created by sudden, violent seabed vertical displacements such as submarine earthquakes, volcanic caldera collapses, or underwater landslides are called:",
+    "answer": "Tsunamis",
+    "choices": [
+      "Tsunamis",
+      "Storm surge",
+      "Swell waves",
+      "Clapotis"
+    ],
+    "explanation": "Tsunamis are catastrophic long-wavelength water waves initiated by impulsive geological disturbances of the sea floor.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5027,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "In coastal engineering, water waves are classified as 'Deep Water Waves' when the ratio of water depth (d) to wave length (L) is:",
+    "answer": "Greater than 0.50 (d/L > 0.50)",
+    "choices": [
+      "Greater than 0.50 (d/L > 0.50)",
+      "Less than 0.04 (d/L < 0.04)",
+      "Between 0.04 and 0.50",
+      "Equal to 1.0"
+    ],
+    "explanation": "When d/L > 0.50, seabed bathymetry exerts virtually no influence on the surface wave kinematics, defining deep water (short wave) regime.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5028,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves in which the ratio of water depth to wave length (d/L) is less than 0.50 but greater than 0.04 (or 1/25) are classified as:",
+    "answer": "Transitional or intermediate water waves",
+    "choices": [
+      "Transitional or intermediate water waves",
+      "Breaking waves",
+      "Shallow-water waves",
+      "Deep water waves"
+    ],
+    "explanation": "Transitional (intermediate depth) waves have 0.04 <= d/L <= 0.50, where orbital water particle trajectories flatten into ellipses under seafloor influence.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5029,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves in which the ratio of water depth to wave length (d/L) is equal to or less than 0.04 (or 1/25) are classified as:",
+    "answer": "Shallow-water waves",
+    "choices": [
+      "Shallow-water waves",
+      "Intermediate water waves",
+      "Breaking waves",
+      "Deep water waves"
+    ],
+    "explanation": "Shallow-water (long) waves satisfy d/L <= 0.04; their phase propagation velocity depends strictly on water depth: c = sqrt(g*d).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5030,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What type of wave occurs when the forward orbital velocity of crest water particles exceeds the wave phase speed (usually when wave length L < 7H in deep water or depth d ~ 1.25H in shallow water)?",
+    "answer": "Breaking waves",
+    "choices": [
+      "Breaking waves",
+      "Intermediate water waves",
+      "Shallow-water waves",
+      "Deep water waves"
+    ],
+    "explanation": "Breaking waves occur when wave steepness limits (H/L > 1/7) or depth limits (H/d ~ 0.78) are exceeded, causing the crest to curl, plunge, or spill forward.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5031,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The continuous horizontal distance over open water over which wind blows in a constant direction to generate waves is known as the:",
+    "answer": "Fetch",
+    "choices": [
+      "Fetch",
+      "Clapotis",
+      "Wakes",
+      "Seiche"
+    ],
+    "explanation": "Fetch (or fetch length) is the unobstructed open water distance over which a steady wind transfers energy to form wave trains.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5032,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The dimensionless ratio of wave height to wave length (H/L) is called:",
+    "answer": "Wave steepness",
+    "choices": [
+      "Wave steepness",
+      "Wave period",
+      "Wave propagation",
+      "Slope"
+    ],
+    "explanation": "Wave steepness is the ratio H/L; theoretical maximum steepness before breaking in deep water is 1/7 (~0.142).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5033,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average height of the highest one-third (33.3%) of all waves in a wave record over a stated observation interval is defined as:",
+    "answer": "Significant wave height",
+    "choices": [
+      "Significant wave height",
+      "Average wave height",
+      "Critical wave height",
+      "Intermediate wave height"
+    ],
+    "explanation": "Significant wave height (Hs or H1/3) closely matches the visual wave height estimate reported by experienced mariners.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5034,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "An abnormal rise in sea level above the astronomical tide generated by intense tropical cyclones or typhoons due to atmospheric pressure drop and wind shear is called a:",
+    "answer": "Storm surge",
+    "choices": [
+      "Storm surge",
+      "Hurricane",
+      "Tsunami",
+      "Tornado"
+    ],
+    "explanation": "Storm surge is the elevated mound of ocean water pushed ashore by hurricane/typhoon low barometric pressure and sustained onshore hurricane winds.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5035,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves with extremely long periods that propagate across oceans following sudden seabed fault rupture during shallow-focus earthquakes are:",
+    "answer": "Tsunamis",
+    "choices": [
+      "Tsunamis",
+      "Significant waves",
+      "Storm surge",
+      "Deep water waves"
+    ],
+    "explanation": "Tsunamis are seismic sea waves exhibiting wavelengths of hundreds of kilometers and speeds exceeding 700 to 800 km/h in deep water.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5036,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The period in the astronomical tidal cycle during which the sea level is descending or receding is called the:",
+    "answer": "Ebb tide",
+    "choices": [
+      "Ebb tide",
+      "Flood tide",
+      "Neap tide",
+      "Diurnal tide"
+    ],
+    "explanation": "Ebb tide refers to the receding seaward flow from high water toward low water.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5037,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The horizontal extension of the open water generating area in the direction of wind blow is the:",
+    "answer": "Fetch",
+    "choices": [
+      "Fetch",
+      "Trough",
+      "Shoal",
+      "Seiche"
+    ],
+    "explanation": "Fetch is the unbroken geographical extent of the wave generation zone aligned with wind vector.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5038,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical difference in height between the Mean Higher High Water (MHHW) and the Mean Lower Low Water (MLLW) is termed:",
+    "answer": "Diurnal range",
+    "choices": [
+      "Diurnal range",
+      "Mean sea level",
+      "Mean range",
+      "Residual water level"
+    ],
+    "explanation": "The diurnal range of tide is the difference in elevation between the higher high water and lower low water occurring in a tidal day.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5039,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The exceptionally high tides that occur twice each lunar month when the moon, earth, and sun align at new and full moon (syzygy) are:",
+    "answer": "Spring tides",
+    "choices": [
+      "Spring tides",
+      "Semi-lunar tides",
+      "Semi-diurnal tides",
+      "Ebb tides"
+    ],
+    "explanation": "Spring tides (from German 'springen', to rise) occur at syzygy when gravitational pulls of the sun and moon reinforce each other.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5040,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What tidal datum is standardly adopted as the chart datum for the design of port and navigation facilities by the Philippine Ports Authority (PPA)?",
+    "answer": "Mean Lower Low Water (MLLW)",
+    "choices": [
+      "Mean Lower Low Water (MLLW)",
+      "Low Water Level (LWL)",
+      "Residual Water Level (RWL)",
+      "High Water Level (HWL)"
+    ],
+    "explanation": "The Philippine Ports Authority (PPA) standardly adopts Mean Lower Low Water (MLLW) as the zero vertical datum for bathymetric navigation charts and harbor bed dredging.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5041,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Tides occurring near the times of new and full moon where the lunar and solar tide-generating gravitational forces reinforce additively are called:",
+    "answer": "Spring tides",
+    "choices": [
+      "Spring tides",
+      "Lunar tides",
+      "Diurnal tides",
+      "Ebb tides"
+    ],
+    "explanation": "Spring tides produce the maximum tidal range with the highest high waters and lowest low waters.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5042,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The Philippine Ports Authority (PPA) requires what safety underkeel clearance allowance for ship berthing below the Mean Lower Low Water (MLLW)?",
+    "answer": "0.15 m to 0.40 m",
+    "choices": [
+      "0.15 m to 0.40 m",
+      "0.15 m to 0.30 m",
+      "0.12 m to 0.40 m",
+      "0.12 m to 0.50 m"
+    ],
+    "explanation": "PPA design manuals prescribe an additional safety depth allowance of 0.15 m to 0.40 m below MLLW to account for vessel squat, roll, and sediment siltation.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5043,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "When the moon is in its first or third quarter (quadrature) and lines from earth to sun and moon form a right angle, what tides of minimum range occur?",
+    "answer": "Neap tides",
+    "choices": [
+      "Neap tides",
+      "Lunar tides",
+      "Diurnal tides",
+      "Ebb tides"
+    ],
+    "explanation": "Neap tides occur at quadrature when solar and lunar tides oppose each other, producing minimum tidal ranges.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5044,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The time interval (which may amount to up to two and a half days) between the syzygy alignment of the sun and moon and the arrival of highest spring tides due to oceanic inertia is called the:",
+    "answer": "Age of the tide",
+    "choices": [
+      "Age of the tide",
+      "Diurnal tide",
+      "Lunar tide",
+      "Semi-diurnal tide"
+    ],
+    "explanation": "The age of the tide represents the phase lag between astronomical peak gravitational alignment and oceanic physical response.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5045,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What is the average time interval between successive passages of the moon across a meridian (successive high tides in a semidiurnal regime)?",
+    "answer": "12 hrs. and 25 min.",
+    "choices": [
+      "12 hrs. and 25 min.",
+      "12 hrs. and 15 min.",
+      "11 hrs. and 45 min.",
+      "12 hrs"
+    ],
+    "explanation": "Because the moon advances in orbit, a lunar day lasts 24 hours and 50 minutes, yielding semidiurnal high tide intervals of approximately 12 hours and 25 minutes.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5046,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "In many parts of the world, high waters reach their greatest heights soon after the time of full and new moon. These tides are:",
+    "answer": "Spring tides",
+    "choices": [
+      "Spring tides",
+      "Flood tides",
+      "Neap tides",
+      "Ebb tides"
+    ],
+    "explanation": "Syzygy tides with amplified amplitudes are termed spring tides.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5047,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The difference in height between high water and low water at a tidal observation station is termed:",
+    "answer": "Tidal range",
+    "choices": [
+      "Tidal range",
+      "Diurnal range",
+      "Mean range",
+      "Extreme range"
+    ],
+    "explanation": "Tidal range is the vertical difference in water elevation between consecutive high and low waters.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5048,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "When daily high waters are at their lowest height and daily low waters are at their highest height soon after quadrature, these tides are called:",
+    "answer": "Neap tides",
+    "choices": [
+      "Neap tides",
+      "Spring tides",
+      "Flood tides",
+      "Ebb tides"
+    ],
+    "explanation": "Neap tides exhibit the smallest amplitude and minimum tidal exchange of the lunar month.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5049,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Disturbances and diverging waves formed in water by moving vessels or boats are known as:",
+    "answer": "Wakes",
+    "choices": [
+      "Wakes",
+      "Swells",
+      "Breaking waves",
+      "Seiching"
+    ],
+    "explanation": "Vessel wakes consist of divergent and transverse wave patterns generated by ship hulls moving through water.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5050,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Catastrophic oceanic water waves generated by tectonic earthquake disturbances on the seabed are called:",
+    "answer": "Tsunamis",
+    "choices": [
+      "Tsunamis",
+      "Storm surges",
+      "Breaking waves",
+      "Wakes"
+    ],
+    "explanation": "Seismic sea waves caused by tectonic seafloor displacement are tsunamis.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5051,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Tides formed by the gravitational attraction of the moon and sun acting upon the earth's oceans are called:",
+    "answer": "Tides (Astronomical tides)",
+    "choices": [
+      "Tides (Astronomical tides)",
+      "Seiching",
+      "Swell",
+      "Wakes"
+    ],
+    "explanation": "Astronomical tides are periodic sea level oscillations produced by the differential gravitational pulls of the celestial bodies.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5052,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The lateral transfer and dispersion of wave energy along a wave crest past an obstruction or breakwater barrier is called:",
+    "answer": "Wave diffraction",
+    "choices": [
+      "Wave diffraction",
+      "Wave refraction",
+      "Wave reflection",
+      "Wave shoaling"
+    ],
+    "explanation": "Wave diffraction is the phenomenon whereby wave energy spreads laterally into sheltered water behind an obstacle such as a breakwater head.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5053,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The bending of waves as they slow down upon entering progressively shallower water is called:",
+    "answer": "Wave refraction",
+    "choices": [
+      "Wave refraction",
+      "Wave reflection",
+      "Shoaling",
+      "Diffraction"
+    ],
+    "explanation": "Refraction is the angular bending of wave fronts due to differential phase speeds across variable water depths.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5054,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves actively under the direct generating influence of the winds that created them are called:",
+    "answer": "Sea",
+    "choices": [
+      "Sea",
+      "Wakes",
+      "Swell",
+      "Seiching"
+    ],
+    "explanation": "A 'sea' refers to choppy, chaotic wind waves currently growing under the direct action of local winds.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5055,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves that have propagated beyond their initial wind-generating area are called:",
+    "answer": "Swell",
+    "choices": [
+      "Swell",
+      "Wakes",
+      "Shoal",
+      "Seiche"
+    ],
+    "explanation": "Swells are regular waves that travel far away from the storm winds that birthed them.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5056,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The distance that wind blows across open water to generate waves is called the:",
+    "answer": "Fetch",
+    "choices": [
+      "Fetch",
+      "Off-shore",
+      "Shoal",
+      "On-shore"
+    ],
+    "explanation": "Fetch is the unimpeded distance over water across which wind acts.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5057,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The continuous time duration that a wind blows across the water surface during wave generation is called the:",
+    "answer": "Duration",
+    "choices": [
+      "Duration",
+      "Diffraction",
+      "Refraction",
+      "Period"
+    ],
+    "explanation": "Duration is the continuous time during which wind blows at a given speed and direction over the fetch.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5058,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average height of the highest one-third of the waves in a given wave spectrum is called:",
+    "answer": "Significant wave height",
+    "choices": [
+      "Significant wave height",
+      "Average wave height",
+      "Critical wave height",
+      "Intermediate wave height"
+    ],
+    "explanation": "Significant wave height (H1/3) represents the top 33.3% wave height average.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5059,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The highest tides occurring at intervals of half a lunar month when the sun, moon, and earth fall into line are:",
+    "answer": "Spring tides",
+    "choices": [
+      "Spring tides",
+      "Neap tides",
+      "Flood tides",
+      "Ebb tides"
+    ],
+    "explanation": "Spring tides occur semi-monthly during full and new moons.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5060,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The lowest tides of the month occurring when lines connecting the earth with the sun and moon form a right angle (quadrature) are:",
+    "answer": "Neap tides",
+    "choices": [
+      "Neap tides",
+      "Spring tides",
+      "Diurnal tides",
+      "Semi-diurnal tides"
+    ],
+    "explanation": "Neap tides represent the monthly minimum tidal ranges.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5061,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Tides that occur twice every lunar day, having two approximately equal high waters and two low waters daily, are called:",
+    "answer": "Semi-diurnal tides",
+    "choices": [
+      "Semi-diurnal tides",
+      "Neap tides",
+      "Ebb tides",
+      "Diurnal tides"
+    ],
+    "explanation": "Semi-diurnal tides produce two high tides and two low tides each lunar day of 24h 50m.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5062,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "High created waves caused by the rush of flood tide surging up a narrowing river estuary or meeting river currents are called:",
+    "answer": "Tidal bores",
+    "choices": [
+      "Tidal bores",
+      "Storm surges",
+      "Swells",
+      "Shoals"
+    ],
+    "explanation": "A tidal bore is a steep hydraulic jump or wave that travels up an estuary against the natural direction of river flow.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5063,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The circulation of masses of air more or less parallel to the earth's surface is termed:",
+    "answer": "Wind",
+    "choices": [
+      "Wind",
+      "Monsoon",
+      "Wind pressure",
+      "Breeze"
+    ],
+    "explanation": "Wind is the horizontal movement of air across the earth's surface driven by pressure differentials.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5064,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Prevailing winds that blow seasonally in one direction over part of the year and in the opposite direction during the remainder are called:",
+    "answer": "Monsoon",
+    "choices": [
+      "Monsoon",
+      "Winds in inter-tropical zone",
+      "Windward side",
+      "Leeward side"
+    ],
+    "explanation": "Monsoons are large-scale seasonal wind reversals (e.g., Habagat and Amihan in the Philippines).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5065,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The side of a marine or port structure facing the direction from which the wind comes is the:",
+    "answer": "Windward side",
+    "choices": [
+      "Windward side",
+      "Forward side",
+      "Backward side",
+      "Leeward side"
+    ],
+    "explanation": "Windward is the side exposed directly to oncoming wind.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5066,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The sheltered side of a structure facing away from the direction from which the wind comes is the:",
+    "answer": "Leeward side",
+    "choices": [
+      "Leeward side",
+      "Forward side",
+      "Backward side",
+      "Windward side"
+    ],
+    "explanation": "Leeward is the side sheltered from wind and waves.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5067,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A graphical circular diagram representing the distribution of wind directions, velocities, and frequencies at a particular location over a period of time is known as a:",
+    "answer": "Wind rose",
+    "choices": [
+      "Wind rose",
+      "Tropical wind gauge",
+      "Wind intensity gauge",
+      "Wind index"
+    ],
+    "explanation": "A wind rose diagram plots the percentage frequency and velocity of winds blowing from each compass quadrant.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5068,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A standardized empirical scale used by mariners and engineers to measure the intensity and force of wind is the:",
+    "answer": "Beaufort's Scale",
+    "choices": [
+      "Beaufort's Scale",
+      "Antwerp Scale",
+      "Richter Scale",
+      "Buchanan's Scale"
+    ],
+    "explanation": "Beaufort's Scale quantifies wind forces from 0 to 12 based on observable sea state.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5069,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The periodic vertical rise and fall of oceanic waters produced by the gravitational attraction of the moon and sun is called:",
+    "answer": "Tides",
+    "choices": [
+      "Tides",
+      "Ebb",
+      "Wave",
+      "Wake"
+    ],
+    "explanation": "Tides are the rhythmic planetary rises and falls of the sea.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5070,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Tides which exhibit only one high water and one low water per lunar day are classified as:",
+    "answer": "Diurnal tides",
+    "choices": [
+      "Diurnal tides",
+      "Neap tides",
+      "Spring tides",
+      "Semi-diurnal tides"
+    ],
+    "explanation": "Diurnal tides feature a single high tide and single low tide each tidal day.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5071,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "If one of the two daily tides in a tidal cycle is incomplete and does not reach the height of the previous tide, the tides are classified as:",
+    "answer": "Mixed diurnal tides",
+    "choices": [
+      "Mixed diurnal tides",
+      "Neap tides",
+      "Diurnal tides",
+      "Semi-diurnal tides"
+    ],
+    "explanation": "Mixed tides feature substantial inequalities in tidal heights and durations between morning and afternoon cycles.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5072,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Where in the world are the highest tides recorded, where tidal rises exceeding 100 ft (up to 16 to 21 meters) have been measured?",
+    "answer": "Bay of Fundy",
+    "choices": [
+      "Bay of Fundy",
+      "Miami, Florida",
+      "San Francisco Bay",
+      "Venice, Italy"
+    ],
+    "explanation": "The Bay of Fundy (Canada) features extreme natural resonance with the semi-diurnal oceanic tidal wave, creating world-record tidal ranges.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5073,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average of the high water levels observed over a standard 19-year National Tidal Datum Epoch is known as:",
+    "answer": "Mean high water",
+    "choices": [
+      "Mean high water",
+      "Mean higher high water",
+      "Higher high water",
+      "Highest high water"
+    ],
+    "explanation": "Mean High Water (MHW) is the arithmetic average of all high water levels observed over a complete 19-year Metonic cycle.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5074,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average of only the higher high waters of each tidal day observed over a 19-year period is known as:",
+    "answer": "Mean higher high water",
+    "choices": [
+      "Mean higher high water",
+      "Higher high water",
+      "Highest high water",
+      "Mean high water"
+    ],
+    "explanation": "Mean Higher High Water (MHHW) averages only the higher of the two daily high waters in mixed or semidiurnal regimes.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5075,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average of all the low water levels observed over a standard 19-year period is called:",
+    "answer": "Mean low water",
+    "choices": [
+      "Mean low water",
+      "Lowest low water",
+      "Lower low water",
+      "Mean lower low water"
+    ],
+    "explanation": "Mean Low Water (MLW) is the 19-year average of all observed low water stages.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5076,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The higher of the two daily high water elevations occurring in any mixed tidal day is the:",
+    "answer": "Higher high water",
+    "choices": [
+      "Higher high water",
+      "Mean higher high water",
+      "Highest high water",
+      "Mean high water"
+    ],
+    "explanation": "Higher High Water (HHW) is the higher of the two daily peaks.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5077,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The lower of the two daily low water elevations occurring in any mixed tidal day is the:",
+    "answer": "Lower low water",
+    "choices": [
+      "Lower low water",
+      "Lowest low water",
+      "Mean low water",
+      "Mean lower low water"
+    ],
+    "explanation": "Lower Low Water (LLW) is the lower of the two daily troughs.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5078,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average height of only the lower low waters observed each day over a 19-year tidal epoch is:",
+    "answer": "Mean lower low water",
+    "choices": [
+      "Mean lower low water",
+      "Lowest low water",
+      "Lower low water",
+      "Mean low water"
+    ],
+    "explanation": "Mean Lower Low Water (MLLW) is the official chart datum used in the Philippines and USA for maritime navigation.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5079,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The highest elevation reached by water during spring tides is termed:",
+    "answer": "Highest high water",
+    "choices": [
+      "Highest high water",
+      "Mean higher high water",
+      "Higher high water",
+      "Mean high water"
+    ],
+    "explanation": "Highest High Water denotes the maximum spring tidal crest recorded in a station's epoch.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5080,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The lowest elevation reached by water during spring tides is termed:",
+    "answer": "Lowest low water",
+    "choices": [
+      "Lowest low water",
+      "Lower low water",
+      "Mean low water",
+      "Mean lower low water"
+    ],
+    "explanation": "Lowest Low Water represents the lowest astronomical spring tide trough.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5081,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical height of the mean high water level above the mean low water level is called the:",
+    "answer": "Mean range",
+    "choices": [
+      "Mean range",
+      "Mean higher high water",
+      "Higher high water",
+      "Mean high water"
+    ],
+    "explanation": "Mean range of tide is the difference in elevation between Mean High Water and Mean Low Water.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5082,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The mean of the height of mean high water above mean low water is referred to as:",
+    "answer": "Mean sea level",
+    "choices": [
+      "Mean sea level",
+      "Mean lower low water",
+      "Mean range",
+      "Mean high water"
+    ],
+    "explanation": "Mean Sea Level (MSL) represents the average sea surface height halfway between mean high water and mean low water over an epoch.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5083,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical difference in height between the mean higher high water and the mean lower low water is the:",
+    "answer": "Diurnal range",
+    "choices": [
+      "Diurnal range",
+      "Mean sea level",
+      "Mean lower low water",
+      "Mean range"
+    ],
+    "explanation": "Diurnal range is MHHW minus MLLW, representing the full daily envelope of mixed tides.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5084,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A regular occurrence at certain river estuaries where a solitary steep wave is caused by the rush of flood tide surging up a narrowing river channel is a:",
+    "answer": "Tidal bore",
+    "choices": [
+      "Tidal bore",
+      "Shallow water wave",
+      "Deep water wave",
+      "Solitary wave"
+    ],
+    "explanation": "A tidal bore is a steep tidal wave surging upstream into a river mouth.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5085,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A wave at a point where the water depth (d) is equal to 1/2 of the wavelength (d = L/2) or greater is classified as a (CE Board May 2016):",
+    "answer": "Deep water wave",
+    "choices": [
+      "Deep water wave",
+      "Equivalent depth water wave height",
+      "Highest wave",
+      "Significant wave"
+    ],
+    "explanation": "When d >= L/2, water depth is sufficient that seabed friction has negligible effect on wave mechanics.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5086,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A hypothetical design wave having a wave height and period equal respectively to the average values of the height and period of the largest 1/3 of all waves in a train is the:",
+    "answer": "Significant wave",
+    "choices": [
+      "Significant wave",
+      "Deep water wave",
+      "Equivalent depth water wave height",
+      "Highest wave"
+    ],
+    "explanation": "The significant wave (H1/3, Ts) characterizes the statistical upper third of irregular wave records.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5087,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The single highest wave height and its associated period in a measured wave train is the:",
+    "answer": "Highest wave",
+    "choices": [
+      "Highest wave",
+      "Deep water wave",
+      "Equivalent depth water wave height",
+      "Significant wave"
+    ],
+    "explanation": "The highest wave (Hmax) is the maximum individual wave peak-to-trough height recorded in a sea spectrum.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5088,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Waves occurring in water having a depth less than one half of the wave length (d < L/2) where bottom influence flattens orbital water particle motion from circular to elliptical are:",
+    "answer": "Shallow water wave (Transitional to shallow)",
+    "choices": [
+      "Shallow water wave (Transitional to shallow)",
+      "Deep water wave",
+      "Significant wave",
+      "Highest wave"
+    ],
+    "explanation": "When d < L/2, bottom boundary shear deforms circular particle orbits into flattened ellipses.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5089,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Ocean waves break under which of the following physical conditions?",
+    "answer": "All of the above (Crest particle velocity exceeds wave speed; wave height exceeds 1/7 of length in deep water; depth is ~1.25 of wave height)",
+    "choices": [
+      "All of the above (Crest particle velocity exceeds wave speed; wave height exceeds 1/7 of length in deep water; depth is ~1.25 of wave height)",
+      "Only when depth equals wave height",
+      "Only in deep water",
+      "Only during ebb tides"
+    ],
+    "explanation": "Wave breaking occurs by kinematic instability (u > c), deep-water geometric steepness limit (H/L > 1/7), or shallow water limiting depth (d ~ 1.25H).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5090,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The horizontal distance between two consecutive wave crests (or two consecutive troughs) is called the:",
+    "answer": "Wave length",
+    "choices": [
+      "Wave length",
+      "Wave period",
+      "Wave amplitude",
+      "Frequency"
+    ],
+    "explanation": "Wave length (L) is the spatial distance between successive crests.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5091,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical distance from the still water level to the crest of a wave (or half the total wave height) is the:",
+    "answer": "Wave amplitude",
+    "choices": [
+      "Wave amplitude",
+      "Period",
+      "Oscillation",
+      "Frequency"
+    ],
+    "explanation": "Wave amplitude (a) is the displacement of the crest above still water level (a = H/2).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5092,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The elapsed time required for two consecutive wave crests to pass a fixed stationary observation point is called the:",
+    "answer": "Wave period",
+    "choices": [
+      "Wave period",
+      "Oscillation",
+      "Amplitude",
+      "Frequency"
+    ],
+    "explanation": "Wave period (T) is the temporal duration of one complete wave cycle.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5093,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The speed at which an individual wave form travels through the water is the:",
+    "answer": "Velocity of wave propagation (Celerity)",
+    "choices": [
+      "Velocity of wave propagation (Celerity)",
+      "Steepness of wave",
+      "Instantaneous velocity",
+      "Average velocity of wave"
+    ],
+    "explanation": "Wave celerity (c = L/T) is the phase velocity of the wave profile.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5094,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The water level that guarantees about 98% of tides are safe for vessel navigation according to the International Water Wave Congress (0.15 m - 0.40 m below MLLW) is:",
+    "answer": "Design Low Tide (DLT)",
+    "choices": [
+      "Design Low Tide (DLT)",
+      "Low Water Level (LWL)",
+      "Residual Water Level (RWL)",
+      "High Water Level (HWL)"
+    ],
+    "explanation": "Design Low Tide (DLT) provides a 98% probability of adequate water depth for deep-draft harbor berthing.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5095,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "In harbor design, Residual Water Level (RWL) for gravity quay walls is expressed as:",
+    "answer": "1/3(hwl - Lwl) + Lwl",
+    "choices": [
+      "1/3(hwl - Lwl) + Lwl",
+      "2/3(hwl - Lwl) + Lwl",
+      "1/3(hwl - Lwl)",
+      "2/3(hwl - Lwl)"
+    ],
+    "explanation": "Residual Water Level (RWL) for massive gravity quay walls accounts for delayed groundwater drawdown behind the wall, taken at 1/3 the tidal range above LWL.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5096,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Residual Water Level (RWL) for flexible sheet pile wharf walls is standardly expressed as:",
+    "answer": "2/3(hwl - Lwl) + Lwl",
+    "choices": [
+      "2/3(hwl - Lwl) + Lwl",
+      "1/3(hwl - Lwl) + Lwl",
+      "1/3(hwl - Lwl)",
+      "2/3(hwl - Lwl)"
+    ],
+    "explanation": "Because sheet piles drain more slowly, RWL is positioned higher at 2/3 of the tidal range above LWL.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5097,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The shape and propagation speed of ocean waves are primarily governed by the displacement of water particles and which two key variables?",
+    "answer": "Wave length and Water depth",
+    "choices": [
+      "Wave length and Water depth",
+      "Wave motion and Wave shoals",
+      "Water temperature and salinity",
+      "Wind gust and air density"
+    ],
+    "explanation": "Classical wave mechanics demonstrates that wave form and phase speed c = sqrt((g*L/2*pi)*tanh(2*pi*d/L)) depend on wave length L and water depth d.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5098,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical distance between the highest point (crest) and lowest point (trough) of a wave is the:",
+    "answer": "Wave height",
+    "choices": [
+      "Wave height",
+      "Wave length",
+      "Wave shoals",
+      "Wave period"
+    ],
+    "explanation": "Wave height (H) is the total vertical crest-to-trough distance.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5099,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The reciprocal of wave period, representing the number of wave crests passing a fixed point per unit of time, is:",
+    "answer": "Wave frequency",
+    "choices": [
+      "Wave frequency",
+      "2 seconds",
+      "3 seconds",
+      "Wave period"
+    ],
+    "explanation": "Wave frequency (f = 1/T) is the number of cycles per second (Hz).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5100,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Large waves with long periods can be generated only when wind blows over an extensive fetch. Wave growth begins to decelerate when wave speed reaches what fraction of wind speed?",
+    "answer": "1/3 of wind speed",
+    "choices": [
+      "1/3 of wind speed",
+      "2/3 of wind speed",
+      "1/2 of wind speed",
+      "3/4 of wind speed"
+    ],
+    "explanation": "Wave growth rate decreases significantly once wave phase speed exceeds approximately 1/3 of wind velocity.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5101,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The process whereby wave energy spreads laterally along a wave crest into the geometric shadow zone behind a breakwater is called:",
+    "answer": "Wave diffraction",
+    "choices": [
+      "Wave diffraction",
+      "Reflection",
+      "Deflection",
+      "Refraction"
+    ],
+    "explanation": "Diffraction transmits wave energy around the ends of breakwaters into protected harbors.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5102,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A water wave in a depth where 1/25 < d/L < 1/2 is classified as a:",
+    "answer": "Transitional or intermediate water wave",
+    "choices": [
+      "Transitional or intermediate water wave",
+      "Shallow water wave",
+      "High water wave",
+      "Deep water wave"
+    ],
+    "explanation": "Intermediate (transitional) water waves exist where 0.04 < d/L < 0.50.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5103,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A water wave in a depth where d/L <= 1/25 (0.04) is classified as a:",
+    "answer": "Shallow water wave",
+    "choices": [
+      "Shallow water wave",
+      "Transitional water wave",
+      "High water wave",
+      "Deep water wave"
+    ],
+    "explanation": "Long or shallow water waves operate where depth is less than 1/25 of wave length.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5104,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The highest elevation point along an individual wave profile is called the:",
+    "answer": "Wave crest",
+    "choices": [
+      "Wave crest",
+      "Wave trough",
+      "Wave height",
+      "Wave length"
+    ],
+    "explanation": "The crest is the peak of the wave.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5105,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The lowest depression point along an individual wave profile is called the:",
+    "answer": "Wave trough",
+    "choices": [
+      "Wave trough",
+      "Wave crest",
+      "Wave height",
+      "Wave length"
+    ],
+    "explanation": "The trough is the lowest point between successive crests.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5106,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical distance from the lowest point of a wave (trough) to the highest point (crest) is:",
+    "answer": "Wave height",
+    "choices": [
+      "Wave height",
+      "Wave crest",
+      "Wave trough",
+      "Wave length"
+    ],
+    "explanation": "Wave height is the vertical distance between trough and crest.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5107,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The vertical distance of the wave crest above the wave trough is called:",
+    "answer": "Wave height",
+    "choices": [
+      "Wave height",
+      "Wave crest",
+      "Wave trough",
+      "Wave length"
+    ],
+    "explanation": "Wave height measures total crest-to-trough amplitude.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5108,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average height of the sea surface for all stages of tide over a complete 19-year tidal epoch is:",
+    "answer": "Mean sea level",
+    "choices": [
+      "Mean sea level",
+      "Mean low water",
+      "Mean lower low water",
+      "Mean ocean level"
+    ],
+    "explanation": "Mean Sea Level (MSL) serves as the primary vertical control datum for national topographic surveys.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5109,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The process of widening, enlarging, cleaning, or deepening navigation channels, harbors, and rivers to maintain safe depth against siltation is known as:",
+    "answer": "Dredging",
+    "choices": [
+      "Dredging",
+      "Disiltation",
+      "Meandering",
+      "Excavation"
+    ],
+    "explanation": "Dredging removes bottom sediments to maintain authorized navigation drafts.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5110,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The periodic rise and fall of sea level produced by the gravitational attraction of celestial bodies modified by earth rotation is:",
+    "answer": "Astronomical tide",
+    "choices": [
+      "Astronomical tide",
+      "Rotational tide",
+      "Storm surge",
+      "Gravitational tide"
+    ],
+    "explanation": "Astronomical tides are predictable gravitational sea oscillations.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5111,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A localized harbor phenomenon involving abnormal oscillations of water level with periods from a few minutes to tens of minutes triggered by barometric fronts and resonant harbor amplification is a:",
+    "answer": "Seiche",
+    "choices": [
+      "Seiche",
+      "Storm surge",
+      "Tsunami",
+      "Astronomical tide"
+    ],
+    "explanation": "Harbor seiching creates standing oscillations when meteorological wave frequencies match harbor basin resonance.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5112,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The horizontal flow of seawater in and out of coastal bays and estuaries that accompanies the vertical rise and fall of the tide is the:",
+    "answer": "Tidal current",
+    "choices": [
+      "Tidal current",
+      "Seiche",
+      "Storm surge",
+      "Tsunami"
+    ],
+    "explanation": "Tidal currents are horizontal water movements driven by tidal gradients.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5113,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The rotational period of the earth with respect to the moon (lunar day) is approximately:",
+    "answer": "24 hours and 50 minutes",
+    "choices": [
+      "24 hours and 50 minutes",
+      "Highest astronomical tide",
+      "Lowest astronomical tide",
+      "Ebb tidal day"
+    ],
+    "explanation": "A tidal day (lunar day) is 24 hours, 50 minutes, and 28 seconds.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5114,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The standard bathymetric chart datum used internationally for harbor engineering works is generally referenced to the:",
+    "answer": "Lowest astronomical tide (or MLLW)",
+    "choices": [
+      "Lowest astronomical tide (or MLLW)",
+      "Lowest observed water level",
+      "Mean tidal-high water level",
+      "Mean tidal-low water level"
+    ],
+    "explanation": "Lowest Astronomical Tide (LAT) or MLLW ensures charted soundings represent the absolute minimum depth mariners will encounter.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5115,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The projected rise of global sea level due to climate change between years 2000 and 2050 is assumed in coastal design criteria to be approximately:",
+    "answer": "0.25 m to 0.30 m",
+    "choices": [
+      "0.25 m to 0.30 m",
+      "0.12 m to 0.20 m",
+      "0.06 m to 0.2 m",
+      "0.16 m to 0.25 m"
+    ],
+    "explanation": "Standard port engineering risk guidelines adopt a mid-century sea level rise allowance of 0.25 to 0.30 meters.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5116,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The inverted barometer effect states that for every 1 millibar (hPa) fall or rise in atmospheric barometric pressure, sea level will rise or fall by approximately:",
+    "answer": "0.9 cm rise or fall",
+    "choices": [
+      "0.9 cm rise or fall",
+      "0.30 cm rise or fall",
+      "0.25 cm rise or fall",
+      "0.6 cm rise or fall"
+    ],
+    "explanation": "Hydrostatic pressure equilibrium causes the ocean surface to rise by approximately 0.9 cm to 1.0 cm for each 1 mb drop in atmospheric pressure.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5117,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Wind-generated waves formed in the deep ocean that propagate far away from the storm area that created them are called:",
+    "answer": "Swell",
+    "choices": [
+      "Swell",
+      "Long waves",
+      "Wind waves",
+      "Sieching"
+    ],
+    "explanation": "Swells are mature wave trains propagating outside the storm fetch.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5118,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Ocean waves having very long periods (from 30 seconds up to 12 hr 24 min) found in enclosed or semi-enclosed harbor basins are termed:",
+    "answer": "Seiching waves",
+    "choices": [
+      "Seiching waves",
+      "Ocean waves",
+      "Swell waves",
+      "Wind waves"
+    ],
+    "explanation": "Seiching waves cause dangerous surge and sway motions in moored vessels.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5119,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The regular periodic rise and fall of the surface of the seas observable along ocean shorelines is called the:",
+    "answer": "Tide",
+    "choices": [
+      "Tide",
+      "Wave",
+      "Period of wave",
+      "Current"
+    ],
+    "explanation": "Tides are the regular gravitational sea oscillations.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5120,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average height of all low waters observed at any coastal station over an extended 19-year period is the:",
+    "answer": "Mean low water",
+    "choices": [
+      "Mean low water",
+      "Spring range",
+      "Diurnal range",
+      "Extreme range"
+    ],
+    "explanation": "Mean Low Water (MLW) averages all daily low water soundings over 19 years.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5121,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The tidal current setting and flowing into bays, harbors, and estuaries along the coast during a rising tide is the:",
+    "answer": "Flood current",
+    "choices": [
+      "Flood current",
+      "Ebb current",
+      "Lunitidal current",
+      "Slack water current"
+    ],
+    "explanation": "Flood current flows landward/inshore as water level rises.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5122,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The return tidal current flowing seaward toward the open sea during a falling tide is the:",
+    "answer": "Ebb current",
+    "choices": [
+      "Ebb current",
+      "Lunitidal current",
+      "Flood current",
+      "Slack water current"
+    ],
+    "explanation": "Ebb current flows seaward as water level recedes toward low water.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5123,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The period of momentary transition between flood and ebb tidal currents during which velocity is negligible (less than 0.1 knot or 0.169 fps) is called:",
+    "answer": "Slack water",
+    "choices": [
+      "Slack water",
+      "Turn of the current",
+      "Spring water",
+      "Diurnal time"
+    ],
+    "explanation": "Slack water is the interval of zero or near-zero current velocity when the tidal flow reverses direction.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5124,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The average time interval in solar hours between the transit of the moon across a meridian and the next succeeding high water is the:",
+    "answer": "High water lunitidal interval",
+    "choices": [
+      "High water lunitidal interval",
+      "Upper meridian transit",
+      "Higher high water interval",
+      "Higher water slack"
+    ],
+    "explanation": "High water lunitidal interval measures the characteristic time lag of high water following lunar transit.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5125,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The maximum water elevation reached by each rising tide cycle is called:",
+    "answer": "High water",
+    "choices": [
+      "High water",
+      "Trough",
+      "Ebb",
+      "Crest"
+    ],
+    "explanation": "High water (HW) is the peak level of a tidal cycle.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5126,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The maximum water depression reached by each falling tide cycle is called:",
+    "answer": "Low water",
+    "choices": [
+      "Low water",
+      "Trough",
+      "Neap",
+      "Ebb"
+    ],
+    "explanation": "Low water (LW) is the lowest stage reached by a falling tide.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5127,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The straight-line stretch of open water available for wave growth without the interruption of land barriers is the:",
+    "answer": "Fetch",
+    "choices": [
+      "Fetch",
+      "Wave length",
+      "Neap",
+      "Ebb"
+    ],
+    "explanation": "Fetch is the unbroken over-water distance over which wind generates waves.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5128,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The interval of time between the passage of two successive wave crests past a stationary reference point is the:",
+    "answer": "Wave period",
+    "choices": [
+      "Wave period",
+      "Amplitude",
+      "High-water lunitidal interval",
+      "Lunitidal period"
+    ],
+    "explanation": "Wave period is the temporal period between successive wave crests.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5129,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A hypothetical deep-water wave height corrected for seabed bathymetric changes (refraction and shoaling) but excluding local breaking is the:",
+    "answer": "Equivalent deep-water wave",
+    "choices": [
+      "Equivalent deep-water wave",
+      "Deep-water wave",
+      "Highest wave",
+      "Significant wave"
+    ],
+    "explanation": "The equivalent deep-water wave height (H0') represents the unrefracted offshore equivalent used in coastal transformation calculations.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5130,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The statistically determined maximum wave height expected in a wave train during a certain observation period is designated:",
+    "answer": "Max. wave height (Hmax)",
+    "choices": [
+      "Max. wave height (Hmax)",
+      "Highest wave height",
+      "H1/10 significant wave height",
+      "H1/3"
+    ],
+    "explanation": "Hmax is the maximum expected individual wave height in an ocean storm record (typically 1.6 to 1.8 times Hs).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5131,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "The height and period of ocean waves resulting from wind energy transfer are governed by which three fundamental factors?",
+    "answer": "Wind velocity, Fetch distance, and Wind duration",
+    "choices": [
+      "Wind velocity, Fetch distance, and Wind duration",
+      "Velocity, Frequency, and Amplitude",
+      "Depth, Temperature, and Salinity",
+      "Tidal current, Coriolis effect, and Pressure"
+    ],
+    "explanation": "Wave dimensions are governed by wind speed (U), uninterrupted fetch length (F), and wind duration (t).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5132,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Ocean waves continue to grow after reaching a phase velocity equal to 1/3 of wind speed, but at a decreasing rate. What is this threshold fraction?",
+    "answer": "1/3 of wind speed",
+    "choices": [
+      "1/3 of wind speed",
+      "2/3",
+      "1/2",
+      "3/4"
+    ],
+    "explanation": "Wave growth rate slows markedly once wave velocity reaches one-third of the generating wind speed.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5133,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "When ocean waves propagate into progressively shallower water, which wave characteristics change?",
+    "answer": "Wave speed decreases, wave length decreases, and wave height increases (Wave period stays constant)",
+    "choices": [
+      "Wave speed decreases, wave length decreases, and wave height increases (Wave period stays constant)",
+      "All parameters increase",
+      "Wave speed increases while height drops",
+      "Period decreases and wavelength increases"
+    ],
+    "explanation": "As waves enter shallow water, bottom friction decreases celerity and wavelength, forcing wave energy to compress vertically (increasing wave height until breaking), while period T remains strictly invariant.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5134,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "What are the primary recognized physical types of breaking waves classified in coastal engineering?",
+    "answer": "Spilling, Plunging, Collapsing, and Surging breakers",
+    "choices": [
+      "Spilling, Plunging, Collapsing, and Surging breakers",
+      "Heaving and Pitching breakers only",
+      "Deep and shallow breakers only",
+      "Refracted and reflected breakers only"
+    ],
+    "explanation": "Galvin's breaker classification identifies spilling (flat beaches), plunging (steep crest curl), collapsing (face collapses), and surging (steep beaches, no free-fall).",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5135,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "In seismic design of port facilities using the seismic coefficient method, if A is dead weight, B is surcharge, and C is seismic coefficient, the lateral seismic force is computed as:",
+    "answer": "(a + B/2) * C",
+    "choices": [
+      "(a + B/2) * C",
+      "((a + B) / 2) * C",
+      "(a/2 + B) * C",
+      "(a + 2b) * C"
+    ],
+    "explanation": "Under standard port engineering design codes (e.g. OCDI), lateral seismic inertia is evaluated using the dead weight plus 50% of the live surcharge: F = (A + B/2)*C.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5136,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "In port design during earthquake conditions, what proportion of the design surcharge load is considered to act concurrently with seismic inertia?",
+    "answer": "1/2 of the surcharge (50%)",
+    "choices": [
+      "1/2 of the surcharge (50%)",
+      "Double the surcharge",
+      "3 times the surcharge",
+      "1/3 of the surcharge"
+    ],
+    "explanation": "Because live surcharges (containers, cargo) do not move completely in phase with ground acceleration, 50% (1/2) is standardly considered.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5137,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A general term used to describe a marine berthing structure for mooring vessels to load and unload cargo or embark passengers is:",
+    "answer": "All of the above (Dock, Pier, Wharf)",
+    "choices": [
+      "All of the above (Dock, Pier, Wharf)",
+      "Dock only",
+      "Pier only",
+      "Wharf only"
+    ],
+    "explanation": "Maritime berthing infrastructure encompasses docks (enclosed water basins or quays), finger piers, and marginal wharves.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5138,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A berthing structure built parallel to the shore or bank, where vessels can dock on one side only and the rear is retained or backed by land, is called a:",
+    "answer": "Wharf (or Quay)",
+    "choices": [
+      "Wharf (or Quay)",
+      "Bulkhead",
+      "Pier",
+      "Jetty"
+    ],
+    "explanation": "A wharf or quay runs parallel to the shoreline and features berthing facilities on the seaward face only.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5139,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A berthing structure that projects out into the water perpendicular or oblique to the shoreline, enabling vessels to dock on both sides, is called a:",
+    "answer": "Pier",
+    "choices": [
+      "Pier",
+      "Bulkhead",
+      "Wharf",
+      "Breakwater"
+    ],
+    "explanation": "A pier (or finger pier) projects into navigable water allowing two-sided vessel docking.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5140,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "An artificial marine basin provided with gates that can be pumped dry to allow construction, painting, and repair of ship hulls is a:",
+    "answer": "Dry dock (Graving dock)",
+    "choices": [
+      "Dry dock (Graving dock)",
+      "Wet dock",
+      "Quay",
+      "Jetty"
+    ],
+    "explanation": "A dry dock is an enclosed basin fitted with a caisson gate that is dewatered to expose ship hulls.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5141,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A marine wall structure similar to a wharf whose primary structural function is to retain earth fill behind it while preventing soil slumping into the waterway is a:",
+    "answer": "Bulkhead",
+    "choices": [
+      "Bulkhead",
+      "Groin",
+      "Jetty",
+      "Breakwater"
+    ],
+    "explanation": "A bulkhead is primarily an earth-retaining structure along a waterfront, though it may occasionally berth shallow-draft vessels.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5142,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Isolated marine structures or clusters of piles built in harbors to moor vessels, assist in berthing alignment, or secure breasting lines are called:",
+    "answer": "Dolphins",
+    "choices": [
+      "Dolphins",
+      "Groins",
+      "Jetties",
+      "Breakwaters"
+    ],
+    "explanation": "Dolphins are independent offshore marine structures used for vessel berthing, breasting, and mooring.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5143,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "Dolphins designed with heavy elastomeric fenders to absorb the impact energy of a vessel during berthing and hold the ship against broadside winds are called:",
+    "answer": "Breasting dolphins",
+    "choices": [
+      "Breasting dolphins",
+      "Mooring dolphins",
+      "Fixed mooring berth",
+      "Bollards"
+    ],
+    "explanation": "Breasting dolphins take direct vessel berthing impacts and prevent ships from striking piers; mooring dolphins only handle mooring lines.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5144,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A massive marine barrier structure built to protect a harbor basin from ocean waves and create tranquil waters for shipping operations is a:",
+    "answer": "Breakwater",
+    "choices": [
+      "Breakwater",
+      "Dock",
+      "Wharf",
+      "Jetty"
+    ],
+    "explanation": "Breakwaters dissipate wave energy through reflection and wave breaking to shelter harbor basins.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5145,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A coastal engineering structure built perpendicular to the shore into the sea to prevent sediment littoral drift from shoaling harbor entrance channels is a:",
+    "answer": "Jetty",
+    "choices": [
+      "Jetty",
+      "Dock",
+      "Wharf",
+      "Breakwater"
+    ],
+    "explanation": "Jetties are built at harbor entrances and river mouths to maintain navigation depth and prevent sand shoaling.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5146,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A paved platform structure built in a harbor parallel to the shore and backed directly by ground or reclaimed earth fill is called a:",
+    "answer": "Quay",
+    "choices": [
+      "Quay",
+      "Dock",
+      "Wharf",
+      "Jetty"
+    ],
+    "explanation": "A quay is a solid stone, concrete, or sheet pile berthing platform backed by solid ground.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5147,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A marine platform built parallel to the shore or to a breakwater within a harbor basin to berth vessels is called a:",
+    "answer": "Wharf",
+    "choices": [
+      "Wharf",
+      "Dock",
+      "Quay",
+      "Jetty"
+    ],
+    "explanation": "Wharves are marginal structures built parallel to shorelines or inner breakwaters for vessel berthing.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5148,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A rubble-mound or concrete barrier structure that protects a harbor basin from oceanic wave attack is a:",
+    "answer": "Breakwater",
+    "choices": [
+      "Breakwater",
+      "Groin",
+      "Bulkhead",
+      "Jetty"
+    ],
+    "explanation": "Rubble-mound breakwaters use heavy quarrystone armor or concrete tetrapods to absorb storm wave forces.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5149,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A marine retaining structure built primarily to retain earth fill and prevent soil from sliding into navigable water is a:",
+    "answer": "Bulkhead",
+    "choices": [
+      "Bulkhead",
+      "Breasting dolphin",
+      "Breakwater",
+      "Berth structure"
+    ],
+    "explanation": "Bulkheads are vertical earth retaining waterfront walls.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5150,
+    "area": "MSTE",
+    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "difficulty": "Medium",
+    "question": "A strong cast iron or steel post securely anchored to a wharf, pier, or quay to which a ship's mooring eye lines are fastened is a:",
+    "answer": "Bollard",
+    "choices": [
+      "Bollard",
+      "Dolphin",
+      "Gravity wall",
+      "Tetrapod"
+    ],
+    "explanation": "Bollards are heavy steel/iron posts anchored to berth decks for securing ship mooring hawsers.",
+    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+  },
+  {
+    "id": 5151,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "The energy stored in a structural material or member due to its elastic deformation under applied loads.",
+    "answer": "Strain Energy",
+    "choices": [
+      "Strain Energy",
+      "Kinetic Energy",
+      "Potential Energy",
+      "Thermal Energy"
+    ],
+    "explanation": "Strain energy equals the internal work done by stresses acting through strains during load application.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5152,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "The ratio of shear stress to shear strain within the linear elastic proportional limit of a material.",
+    "answer": "Modulus of Rigidity (Shear Modulus)",
+    "choices": [
+      "Modulus of Rigidity (Shear Modulus)",
+      "Modulus of Elasticity",
+      "Poisson's Ratio",
+      "Bulk Modulus"
+    ],
+    "explanation": "Modulus of rigidity (G) quantifies a material's elastic resistance to shearing deformation and torsional twist.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5153,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "The absolute ratio of lateral (transverse) strain to longitudinal (axial) strain in a material subjected to uniaxial stress.",
+    "answer": "Poisson's Ratio",
+    "choices": [
+      "Poisson's Ratio",
+      "Modulus of Rigidity",
+      "Modulus of Elasticity",
+      "Bulk Ratio"
+    ],
+    "explanation": "Poisson's ratio (nu) for civil engineering steel is approx. 0.30 and for concrete ranges from 0.15 to 0.20.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5154,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "The maximum amount of strain energy per unit volume that a structural material can absorb just before it fractures, represented by the total area under the complete engineering stress-strain curve from zero stress to rupture.",
+    "answer": "Modulus of Toughness",
+    "choices": [
+      "Modulus of Toughness",
+      "Modulus of Resilience",
+      "Yield Strength",
+      "Ultimate Tensile Strength"
+    ],
+    "explanation": "Modulus of toughness measures total energy absorption capacity through both elastic and large plastic deformations.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5155,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "The maximum internal strain energy per unit volume that a material can absorb without causing any permanent plastic deformation, represented by the area under the stress-strain curve up to the elastic yield point.",
+    "answer": "Modulus of Resilience",
+    "choices": [
+      "Modulus of Resilience",
+      "Modulus of Toughness",
+      "Proportional Limit",
+      "Rupture Modulus"
+    ],
+    "explanation": "Modulus of resilience (ur = sigma_y^2 / 2E) measures the capacity of a material to withstand shock and impact within its elastic range.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5156,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "The ability of a structural member or element to resist deformation within its linear range, defined as the force required to produce unit deformation (the inverse of flexibility).",
+    "answer": "Stiffness",
+    "choices": [
+      "Stiffness",
+      "Strength",
+      "Toughness",
+      "Hardness"
+    ],
+    "explanation": "Stiffness depends on elastic modulus E and member cross-sectional geometric properties (moment of inertia I, area A).",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5157,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "A material that exhibits identical physical, chemical, and mechanical properties throughout its entire volume, possessing uniform composition at every point.",
+    "answer": "Homogeneous Material",
+    "choices": [
+      "Homogeneous Material",
+      "Isotropic Material",
+      "Orthotropic Material",
+      "Anisotropic Material"
+    ],
+    "explanation": "Homogeneity refers to point-to-point uniformity in composition regardless of direction.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5158,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "A material that possesses identical physical and mechanical properties (elastic modulus, Poisson's ratio, thermal expansion) in all spatial directions at any given point.",
+    "answer": "Isotropic Material",
+    "choices": [
+      "Isotropic Material",
+      "Homogeneous Material",
+      "Orthotropic Material",
+      "Heterogeneous Material"
+    ],
+    "explanation": "Structural steel is isotropic; structural wood is anisotropic/orthotropic.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5159,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "A material that has distinct mechanical properties at a given point that differ along three mutually orthogonal axes of symmetry (such as timber grain directions).",
+    "answer": "Orthotropic Material",
+    "choices": [
+      "Orthotropic Material",
+      "Isotropic Material",
+      "Homogeneous Material",
+      "Prismatic Material"
+    ],
+    "explanation": "Wood and fiber-reinforced composites exhibit different stiffnesses along longitudinal, radial, and tangential axes.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5160,
+    "area": "PSAD",
+    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
+    "difficulty": "Medium",
+    "question": "A structural member characterized by having an identical, uniform cross-sectional shape and area throughout its entire longitudinal length.",
+    "answer": "Prismatic Member",
+    "choices": [
+      "Prismatic Member",
+      "Tapered Member",
+      "Haunched Member",
+      "Stepped Member"
+    ],
+    "explanation": "Standard rolled W-beams and uniform reinforced concrete columns are prismatic members.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5161,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "The progressive structural degradation and fracture of a material caused by repeated, cyclical applications of fluctuating stress or strain below the static yield strength.",
+    "answer": "Structural Fatigue",
+    "choices": [
+      "Structural Fatigue",
+      "Creep",
+      "Relaxation",
+      "Necking"
+    ],
+    "explanation": "Fatigue failure begins with microscopic stress concentrations in bridge girders, crane runways, and offshore towers.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5162,
     "area": "PSAD",
     "subtopic": "Structural Mechanics & Statics",
-    "difficulty": "Hard",
-    "question": "A localized yielding zone in a structural flexural member where large inelastic rotations take place under a constant or near-constant plastic moment.",
-    "answer": "PLASTIC HINGE",
-    "choices": [
-      "ELASTIC KNEE",
-      "PLASTIC HINGE",
-      "SHEAR PIN",
-      "YIELD SEAM"
-    ],
-    "explanation": "A plastic hinge develops when the cross-section reaches its fully plastic moment capacity (Mp), allowing redistribution of moments in statically indeterminate structures.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 503,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Hard",
-    "question": "An out-of-plane instability failure mode of unbraced beams in bending where the compression flange buckles sideways while the section twists.",
-    "answer": "LATERAL-TORSIONAL BUCKLING",
-    "choices": [
-      "LOCAL FLANGE CRIPPLING",
-      "LATERAL-TORSIONAL BUCKLING",
-      "WEB SHEAR YIELDING",
-      "FLEXURAL RUPTURE"
-    ],
-    "explanation": "Lateral-torsional buckling (LTB) occurs in flexural members when unsupported compressive flange length Lb exceeds the limiting unbraced length Lp (AISC 360 / NSCP 2015).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 504,
-    "area": "PSAD",
-    "subtopic": "Seismic Engineering & NSCP Provisions",
-    "difficulty": "Hard",
-    "question": "An earthquake engineering technique that decouples a superstructure from horizontal ground vibrations using flexible elastomeric or sliding bearings.",
-    "answer": "BASE ISOLATION",
-    "choices": [
-      "TUNED MASS DAMPING",
-      "MOMENT RESISTANCE",
-      "BASE ISOLATION",
-      "SHEAR WALL COUPLING"
-    ],
-    "explanation": "Base isolation drastically lengthens the fundamental natural period of the building, shifting it away from the dominant high-frequency destructive seismic ground energy.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 505,
-    "area": "PSAD",
-    "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Medium",
-    "question": "The classical moment distribution method invented in 1930 for analyzing continuous beams and rigid frames by successively relaxing joints.",
-    "answer": "HARDY CROSS METHOD",
+    "question": "The sudden lateral deflection and geometric instability that occurs when a long, slender structural member is subjected to axial compressive forces before material yield stress is reached.",
+    "answer": "Buckling",
     "choices": [
-      "CASTIGLIANO METHOD",
-      "HARDY CROSS METHOD",
-      "NEWMARK METHOD",
-      "SOUTHWELL METHOD"
+      "Buckling",
+      "Yielding",
+      "Necking",
+      "Rupture"
     ],
-    "explanation": "The Hardy Cross moment distribution method distributes fixed-end unbalanced moments according to member relative stiffnesses until joint equilibrium is satisfied.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Euler's critical buckling formula Pcr = pi^2*E*I / (K*L)^2 governs slender compression members.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 506,
-    "area": "PSAD",
-    "subtopic": "Structural Mechanics & Statics",
-    "difficulty": "Medium",
-    "question": "In moment distribution analysis of prismatic flexural members with far end fixed, the fraction of applied moment transmitted to the opposite support.",
-    "answer": "CARRY-OVER FACTOR",
-    "choices": [
-      "DISTRIBUTION FACTOR",
-      "CARRY-OVER FACTOR",
-      "ROTATIONAL RATIO",
-      "STIFFNESS MODIFIER"
-    ],
-    "explanation": "For a uniform prismatic beam with a far fixed end, the carry-over factor (COF) is exactly +1/2 (+0.50).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 507,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Hard",
-    "question": "Energy theorem stating that the partial derivative of total strain energy with respect to an applied concentrated force gives the deflection at that point in the direction of the force.",
-    "answer": "CASTIGLIANO'S FIRST THEOREM",
-    "choices": [
-      "CASTIGLIANO'S FIRST THEOREM",
-      "CASTIGLIANO'S SECOND THEOREM",
-      "ENGESSER THEOREM",
-      "CROTTI THEOREM"
-    ],
-    "explanation": "Castigliano's theorems apply energy methods to compute deflections, rotations, and redundant reactions in elastic linear structural frameworks.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 508,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Medium",
-    "question": "The equivalent rectangular concrete compressive stress distribution model replacing parabolic stress curves, with uniform intensity 0.85 fc and depth a = beta1 * c.",
-    "answer": "WHITNEY STRESS BLOCK",
-    "choices": [
-      "RANKINE STRESS PRISM",
-      "WHITNEY STRESS BLOCK",
-      "HOGNESTAD CURVE",
-      "PARABOLIC-RECTANGULAR PRISM"
-    ],
-    "explanation": "Proposed by Charles S. Whitney and codified in ACI 318 / NSCP 2015, the equivalent rectangular stress block simplifies flexural capacity calculations.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 509,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Medium",
-    "question": "In ultimate strength design of reinforced concrete beams, the theoretical tension reinforcement ratio at which concrete reaches crushing strain 0.003 simultaneously as steel yields.",
-    "answer": "BALANCED STEEL RATIO",
-    "choices": [
-      "MODULAR REBAR RATIO",
-      "BALANCED STEEL RATIO",
-      "CRITICAL YIELD RATIO",
-      "MAXIMUM CODE PERCENTAGE"
-    ],
-    "explanation": "The balanced reinforcement ratio (ρb) marks the transition boundary between ductile tension failure and brittle sudden compression concrete crushing.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 510,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Medium",
-    "question": "A reinforced concrete flexural member design condition where net tensile strain in extreme tension rebar is at least 0.005 at nominal strength, ensuring ductile warning.",
-    "answer": "TENSION-CONTROLLED SECTION",
-    "choices": [
-      "COMPRESSION-CONTROLLED SECTION",
-      "TENSION-CONTROLLED SECTION",
-      "BALANCED CROSS-SECTION",
-      "TRANSITION FLEXURAL SECTION"
-    ],
-    "explanation": "Under NSCP 2015 Section 421, tension-controlled members have εt ≥ 0.005, permitting the maximum strength reduction factor φ = 0.90.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 511,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Hard",
-    "question": "A limit state in bolted steel connections where a chunk of the material tears out along both a tension plane and an intersecting shear plane.",
-    "answer": "BLOCK SHEAR RUPTURE",
-    "choices": [
-      "BEARING YIELDING",
-      "BLOCK SHEAR RUPTURE",
-      "GROSS SECTION TEAR",
-      "PULL-THROUGH SHEAR"
-    ],
-    "explanation": "Block shear rupture strength Rn = 0.60*Fu*Anv + Ubs*Fu*Ant ≤ 0.60*Fy*Agv + Ubs*Fu*Ant governs gusset plates, coped beam webs, and angle tension members (AISC 360 / NSCP 2015).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 512,
+    "id": 5163,
     "area": "PSAD",
     "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Medium",
-    "question": "The elastic modulus relating shear stress to shear strain in a material, also known as the modulus of rigidity.",
-    "answer": "SHEAR MODULUS",
+    "question": "The fundamental elastic principle stating that up to the proportional limit, the stress in a material is directly proportional to the strain produced (sigma = E * epsilon).",
+    "answer": "Hooke's Law",
     "choices": [
-      "BULK MODULUS",
-      "SHEAR MODULUS",
-      "YOUNG'S MODULUS",
-      "SECANT MODULUS"
+      "Hooke's Law",
+      "Coulomb's Law",
+      "Bernoulli's Principle",
+      "Pascal's Law"
     ],
-    "explanation": "Shear modulus G = E / [2*(1 + ν)] measures the material stiffness against torsional deformation and angular shear distortion.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Hooke's law defines linear elasticity and constant modulus of elasticity E.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 513,
+    "id": 5164,
     "area": "PSAD",
     "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Medium",
-    "question": "A graphical two-dimensional circle representation of normal and shear stresses acting on any inclined plane through a stressed point.",
-    "answer": "MOHR'S CIRCLE",
+    "question": "The physical stage in ductile metal stress-strain behavior occurring immediately after yielding ends, where an increase in applied load is required to cause further plastic strain up to the ultimate tensile stress.",
+    "answer": "Strain Hardening",
     "choices": [
-      "MOHR'S CIRCLE",
-      "CREMONA DIAGRAM",
-      "WILLIOT-HERSCHEL DIAGRAM",
-      "YIELD ELLIPSOID"
+      "Strain Hardening",
+      "Elastic Region",
+      "Yield Plateau",
+      "Necking Stage"
     ],
-    "explanation": "Developed by Christian Otto Mohr, Mohr's circle displays normal stress σ on the abscissa and shear stress τ on the ordinate, identifying principal planes.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Dislocation entanglement in crystal lattices strengthens the metal during strain hardening.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 514,
+    "id": 5165,
     "area": "PSAD",
     "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Medium",
-    "question": "Planes within a stressed structural element on which shear stresses are identically zero and normal stresses reach maximum and minimum values.",
-    "answer": "PRINCIPAL PLANES",
+    "question": "The localized cross-sectional area reduction that begins in a tensile specimen immediately after the ultimate tensile stress is reached, continuing until tensile fracture occurs.",
+    "answer": "Necking",
     "choices": [
-      "OCTAHEDRAL PLANES",
-      "PRINCIPAL PLANES",
-      "SLIP BANDS",
-      "NEUTRAL SURFACES"
+      "Necking",
+      "Yielding",
+      "Strain Hardening",
+      "Buckling"
     ],
-    "explanation": "Principal planes are mutually perpendicular; the normal stresses acting on them are termed principal stresses (σ1, σ2).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Necking marks the onset of ductile tensile instability in steel rebar tests.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 515,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Hard",
-    "question": "The theoretical flexural tensile stress at which an unreinforced concrete beam experiences first cracking in a standard rupture test.",
-    "answer": "MODULUS OF RUPTURE",
-    "choices": [
-      "MODULUS OF ELASTICITY",
-      "MODULUS OF RUPTURE",
-      "COMPRESSIVE PEAK",
-      "TENSILE TOUGHNESS"
-    ],
-    "explanation": "Under NSCP 2015 Section 419.2.3, the modulus of rupture for normal-weight concrete is fr = 0.62 * λ * √f'c (in MPa).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 516,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Medium",
-    "question": "In slender column stability analysis, the geometric distance from the cross-sectional centroidal axis to a point where all area could theoretically be concentrated with identical moment of inertia.",
-    "answer": "RADIUS OF GYRATION",
-    "choices": [
-      "ECCENTRICITY RADIUS",
-      "RADIUS OF GYRATION",
-      "SECTIONAL RADIAN",
-      "EQUIVALENT DIAMETER"
-    ],
-    "explanation": "Radius of gyration r = √(I / A) is used directly in calculating column slenderness ratio KL/r.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 517,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Hard",
-    "question": "In timber mechanics, the specific moisture content (typically 25% to 30%) at which all free water in cell cavities has evaporated while cell walls remain completely saturated.",
-    "answer": "FIBER SATURATION POINT",
-    "choices": [
-      "EQUILIBRIUM MOISTURE POINT",
-      "FIBER SATURATION POINT",
-      "SWELLING LIMIT",
-      "HYGROSCOPIC BOUNDARY"
-    ],
-    "explanation": "Above the fiber saturation point (FSP), timber strength and dimensions remain constant; below FSP, drying causes shrinkage and increased structural strength.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 518,
+    "id": 5166,
     "area": "PSAD",
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Medium",
-    "question": "A building structural irregularity defined by NSCP 2015 when the lateral stiffness of a story is less than 70% of that in the story immediately above.",
-    "answer": "SOFT STORY IRREGULARITY",
+    "question": "A relatively thin, stiff horizontal or nearly horizontal structural floor or roof plane used to transmit lateral seismic and wind forces to vertical resisting elements (shear walls and frames).",
+    "answer": "Diaphragm",
     "choices": [
-      "WEAK STORY IRREGULARITY",
-      "SOFT STORY IRREGULARITY",
-      "TORSIONAL IRREGULARITY",
-      "RE-ENTRANT CORNER"
+      "Diaphragm",
+      "Shear Wall",
+      "Truss",
+      "Spandrel Beam"
     ],
-    "explanation": "Soft stories (Type 1 vertical irregularity) concentrate seismic lateral drift and collapse risk, requiring dynamic lateral response analysis.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Rigid concrete slabs act as horizontal diaphragms distributing lateral base shear based on vertical element relative stiffness.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 519,
+    "id": 5167,
     "area": "PSAD",
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Medium",
-    "question": "A vertical structural irregularity where the story lateral strength is less than 80% of that of the story immediately above.",
-    "answer": "WEAK STORY IRREGULARITY",
+    "question": "A structural reinforced concrete or masonry wall designed to resist in-plane lateral shear, bending, and overturning forces produced by wind and earthquake excitations.",
+    "answer": "Shear Wall",
     "choices": [
-      "SOFT STORY IRREGULARITY",
-      "WEAK STORY IRREGULARITY",
-      "DISCONTINUOUS SHEAR IRREGULARITY",
-      "IN-PLANE OFFSET"
+      "Shear Wall",
+      "Bearing Wall",
+      "Curtain Wall",
+      "Retaining Wall"
     ],
-    "explanation": "Weak stories (Type 5 vertical irregularity) under NSCP Section 208.4.5 are prohibited in structures over 2 stories or 9 meters in height in Zone 4.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Shear walls provide immense lateral stiffness to high-rise building structures.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 520,
+    "id": 5168,
     "area": "PSAD",
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Medium",
-    "question": "The structural system performance factor (R) that reduces elastic seismic base shear forces to account for inherent framing ductility, damping, and overstrength.",
-    "answer": "RESPONSE MODIFICATION FACTOR",
+    "question": "The point on a building floor plate through which the resultant inertial seismic force acts during earthquake ground shaking.",
+    "answer": "Center of Mass",
     "choices": [
-      "IMPORTANCE COEFFICIENT",
-      "RESPONSE MODIFICATION FACTOR",
-      "SEISMIC INTENSITY FACTOR",
-      "NEAR-SOURCE AMPLIFIER"
+      "Center of Mass",
+      "Center of Rigidity",
+      "Shear Center",
+      "Center of Buoyancy"
     ],
-    "explanation": "Special Moment Resisting Frames (SMRF) have R = 8.5 under NSCP 2015, whereas ordinary moment frames have lower R values due to limited ductility.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Center of mass is computed as the weighted centroid of all floor dead loads and permanent equipment.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 521,
+    "id": 5169,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The total design lateral force assumed to act at the base of a structure due to earthquake ground motions, computed as V = (Cv*I / (R*T)) * W in NSCP 2015.",
+    "answer": "Design Seismic Base Shear",
+    "choices": [
+      "Design Seismic Base Shear",
+      "Overturning Moment",
+      "Story Shear",
+      "Story Drift"
+    ],
+    "explanation": "Base shear V is distributed vertically across all story levels in equivalent lateral force procedures.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5170,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The lateral displacement of one floor level of a building relative to the floor level immediately above or below it.",
+    "answer": "Story Drift",
+    "choices": [
+      "Story Drift",
+      "Total Story Displacement",
+      "Torsional Drift",
+      "Chord Rotation"
+    ],
+    "explanation": "NSCP 2015 limits maximum inelastic design story drift (Delta_M) to prevent structural and partition collapse.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5171,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "A structural irregularity in which the lateral force path has vertical elements offset horizontally out-of-plane, creating severe overturning demands on supporting columns or beams.",
+    "answer": "Out-of-Plane Offsets",
+    "choices": [
+      "Out-of-Plane Offsets",
+      "Soft Story",
+      "Weak Story",
+      "Torsional Irregularity"
+    ],
+    "explanation": "Out-of-plane vertical framing offsets constitute a severe plan structural irregularity penalized in seismic codes.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5172,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The additional shear stress and twisting induced in lateral force-resisting elements when the building's center of mass does not coincide with its center of rigidity.",
+    "answer": "Torsional Shear Stress",
+    "choices": [
+      "Torsional Shear Stress",
+      "Flexural Shear Stress",
+      "Punching Shear Stress",
+      "Direct Shear Stress"
+    ],
+    "explanation": "Eccentricity creates an inherent twisting moment M_t = V * e in the floor diaphragm.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5173,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The dangerous structural dynamic condition that occurs when the natural vibration period of a building coincides closely with the predominant period of earthquake ground shaking.",
+    "answer": "Resonance",
+    "choices": [
+      "Resonance",
+      "Damping",
+      "Attenuation",
+      "Decoupling"
+    ],
+    "explanation": "Resonance triggers drastic amplification of lateral building displacement and interstory drift.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5174,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The time period (in seconds) required for an undamped single-degree-of-freedom structure to complete one full cycle of free vibration.",
+    "answer": "Natural Period of Vibration",
+    "choices": [
+      "Natural Period of Vibration",
+      "Damping Ratio",
+      "Frequency",
+      "Peak Acceleration"
+    ],
+    "explanation": "Approximate fundamental building period T can be estimated in NSCP using Ct * (hn)^3/4.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5175,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The rate at which the energy of natural mechanical vibration is absorbed and dissipated in a structure through internal material friction, micro-cracking, and foundation interaction.",
+    "answer": "Structural Damping",
+    "choices": [
+      "Structural Damping",
+      "Resonance",
+      "Stiffness",
+      "Inertia"
+    ],
+    "explanation": "Civil structures typically exhibit 2% to 5% of critical viscous damping during seismic events.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5176,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The geographical point on the earth's surface located vertically directly above the underground focus (hypocenter) where earthquake fault rupture originates.",
+    "answer": "Earthquake Epicenter",
+    "choices": [
+      "Earthquake Epicenter",
+      "Hypocenter (Focus)",
+      "Fault Scarp",
+      "Seismic Zone"
+    ],
+    "explanation": "Epicentral distance is the surface distance from a seismic monitoring station to the epicenter.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5177,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The exact subsurface geological point of origin along a tectonic fault rupture from which seismic energy and elastic waves are released.",
+    "answer": "Earthquake Focus (Hypocenter)",
+    "choices": [
+      "Earthquake Focus (Hypocenter)",
+      "Epicenter",
+      "Fault Trace",
+      "Subduction Axis"
+    ],
+    "explanation": "Hypocenter depth classifies earthquakes into shallow (<70 km), intermediate, or deep.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5178,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "A qualitative measure of the severity and strength of earthquake ground shaking at a specific geographical location based on observed human reactions and building damage (e.g. PEIS scale).",
+    "answer": "Earthquake Intensity",
+    "choices": [
+      "Earthquake Intensity",
+      "Earthquake Magnitude",
+      "Base Shear",
+      "Peak Spectral Displacement"
+    ],
+    "explanation": "Intensity varies with distance from epicenter and local soil conditions; magnitude is a single global energy value.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5179,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "A quantitative instrumental measure of the total seismic energy released at the source of an earthquake, measured on logarithmic scales like Moment Magnitude (Mw) or Richter scale.",
+    "answer": "Earthquake Magnitude",
+    "choices": [
+      "Earthquake Magnitude",
+      "Earthquake Intensity",
+      "Ground Acceleration",
+      "Spectral Velocity"
+    ],
+    "explanation": "Each whole number increase in moment magnitude corresponds to an approximate 32-fold increase in radiated seismic energy.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5180,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The vertical structural stiffness irregularity where a story's lateral stiffness is less than 70 percent of that of the story above, or less than 80 percent of the average stiffness of the three stories above.",
+    "answer": "Soft Story Irregularity",
+    "choices": [
+      "Soft Story Irregularity",
+      "Weak Story Irregularity",
+      "Weight Irregularity",
+      "Geometric Irregularity"
+    ],
+    "explanation": "Soft stories (often created by tall ground-floor parking or lobby columns without walls) concentrate severe drift demands.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5181,
+    "area": "PSAD",
+    "subtopic": "Seismic Engineering & NSCP Provisions",
+    "difficulty": "Medium",
+    "question": "The vertical structural strength irregularity where a story's total lateral strength is less than 80 percent of that of the story immediately above.",
+    "answer": "Weak Story Irregularity",
+    "choices": [
+      "Weak Story Irregularity",
+      "Soft Story Irregularity",
+      "Mass Irregularity",
+      "Diaphragm Discontinuity"
+    ],
+    "explanation": "Weak stories produce plastic collapse mechanisms under extreme lateral seismic shear.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5182,
     "area": "PSAD",
     "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Hard",
-    "question": "In prestressed concrete design, a tendon trajectory profile that produces zero secondary parasitic hyperstatic moments in continuous prestressed beams.",
-    "answer": "CONCORDANT TENDON PROFILE",
+    "difficulty": "Medium",
+    "question": "A load amplification factor that accounts for deviations of the actual load from nominal service values, uncertainties in structural analysis, and the probability of simultaneous extreme load combinations.",
+    "answer": "Load Factor",
     "choices": [
-      "CONCORDANT TENDON PROFILE",
-      "PARABOLIC CATENARY",
-      "TRANSFORMATION PROFILE",
-      "EQUILIBRIUM TRAJECTORY"
+      "Load Factor",
+      "Strength Reduction Factor",
+      "Factor of Safety",
+      "Resistance Factor"
     ],
-    "explanation": "A concordant tendon profile creates line of pressure (C-line) that coincides exactly with the tendon center of gravity without secondary hyperstatic support reactions.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "NSCP 2015 specifies load factors such as 1.2D + 1.6L in Ultimate Strength Design.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 522,
+    "id": 5183,
     "area": "PSAD",
     "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Hard",
-    "question": "The central geometric region of a structural cross-section within which an applied compressive load produces only compressive stresses across the entire cross-section without tension.",
-    "answer": "KERN OF A SECTION",
+    "difficulty": "Medium",
+    "question": "A capacity reduction factor (phi <= 1.0) that accounts for statistical variations in material strengths, dimensional tolerances, and the consequence and ductility of failure modes.",
+    "answer": "Strength Reduction Factor (Phi)",
     "choices": [
-      "CENTROIDAL ELLIPSE",
-      "KERN OF A SECTION",
-      "SHEAR CORE",
-      "MOMENT ENVELOPE"
+      "Strength Reduction Factor (Phi)",
+      "Load Factor",
+      "Overstrength Factor",
+      "Impact Factor"
     ],
-    "explanation": "For a rectangular cross-section of width b and depth h, the kern is a diamond region with dimensions b/3 and h/3 (the middle-third rule).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "In NSCP 2015, phi = 0.90 for tension-controlled flexure, 0.75 for shear, and 0.65 for tied compression members.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
   },
   {
-    "id": 523,
+    "id": 5184,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The calculated theoretical tensile stress in the extreme outer fibers of a plain concrete beam subjected to flexure at the instant of first flexural tensile cracking (fr = 0.62 * lambda * sqrt(fc') in MPa).",
+    "answer": "Modulus of Rupture",
+    "choices": [
+      "Modulus of Rupture",
+      "Direct Tensile Strength",
+      "Splitting Tensile Strength",
+      "Compressive Strength"
+    ],
+    "explanation": "Modulus of rupture defines cracking moment Mcr in concrete slab and beam serviceability analysis.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5185,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The method of prestressing concrete where high-strength steel tendons or strands are stressed against external anchor abutments prior to placing the concrete, and released after concrete hardens to transfer prestress by bond.",
+    "answer": "Pre-Tensioning",
+    "choices": [
+      "Pre-Tensioning",
+      "Post-Tensioning",
+      "External Post-Tensioning",
+      "Chemical Prestressing"
+    ],
+    "explanation": "Pre-tensioning is standard in precast casting beds for double-tees, hollow-core slabs, and bridge girders.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5186,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The method of prestressing concrete where high-strength steel tendons placed in hollow metal or plastic ducts inside the member are tensioned and anchored against the hardened concrete after it has reached specified compressive strength.",
+    "answer": "Post-Tensioning",
+    "choices": [
+      "Post-Tensioning",
+      "Pre-Tensioning",
+      "Steam Curing",
+      "Shotcreting"
+    ],
+    "explanation": "Post-tensioning enables long-span cast-in-place floor slabs, transfer plates, and segmental box girder bridges.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5187,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The temporary tensile force exerted by a hydraulic calibration jack that introduces tension into prestressing steel tendons during prestressing operations.",
+    "answer": "Jacking Force",
+    "choices": [
+      "Jacking Force",
+      "Effective Prestress",
+      "Elastic Shortening Force",
+      "Anchor Seating Force"
+    ],
+    "explanation": "Jacking force is carefully monitored alongside tendon elongation measurements during stressing.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5188,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The permanent residual stress remaining in prestressed concrete tendons after all immediate and long-term prestress losses have taken place.",
+    "answer": "Effective Prestress",
+    "choices": [
+      "Effective Prestress",
+      "Jacking Prestress",
+      "Initial Prestress",
+      "Yield Prestress"
+    ],
+    "explanation": "Effective prestress accounts for losses from elastic shortening, anchor slip, creep, shrinkage, and tendon relaxation.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5189,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The long-term, time-dependent loss of tensile stress in prestressing steel maintained under constant high sustained elongation over time.",
+    "answer": "Tendon Relaxation",
+    "choices": [
+      "Tendon Relaxation",
+      "Concrete Creep",
+      "Concrete Shrinkage",
+      "Elastic Shortening"
+    ],
+    "explanation": "Low-relaxation strands (ASTM A416) are standardly specified to minimize relaxation prestress losses.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5190,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "The time-dependent, continuous inelastic deformation and strain that hardened concrete undergoes when subjected to sustained compressive loading over time.",
+    "answer": "Concrete Creep",
+    "choices": [
+      "Concrete Creep",
+      "Concrete Shrinkage",
+      "Tendon Relaxation",
+      "Elastic Deflection"
+    ],
+    "explanation": "Creep in prestressed concrete leads to progressive camber changes and prestress loss.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5191,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "In reinforced concrete flexural member design, the distance measured from the extreme compression fiber to the centroid of the longitudinal tension reinforcement.",
+    "answer": "Effective Depth (d)",
+    "choices": [
+      "Effective Depth (d)",
+      "Total Depth (h)",
+      "Clear Cover",
+      "Shear Span"
+    ],
+    "explanation": "Effective depth d governs internal resisting moment arm (d - a/2) in beam flexure.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5192,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "A standard hook on a stirrup, hoop, or crosstie having a bend of not less than 135 degrees with at least a 6-diameter (and not less than 75 mm) extension that engages longitudinal rebar and projects into member core concrete.",
+    "answer": "Seismic Hook",
+    "choices": [
+      "Seismic Hook",
+      "Standard 90-degree Hook",
+      "180-degree Bend",
+      "J-Hook"
+    ],
+    "explanation": "Seismic 135-degree hooks prevent ties from popping open when outer cover concrete spalls during severe earthquake cyclic loading.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5193,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "A closed or continuously wound tie made up of one or several rebar elements, each having standard seismic hooks at both ends, providing confinement to core concrete in seismic ductile members.",
+    "answer": "Hoop",
+    "choices": [
+      "Hoop",
+      "Longitudinal Bar",
+      "Spacer Tie",
+      "Dowelled Splice"
+    ],
+    "explanation": "Seismic hoops prevent longitudinal bar buckling and preserve compressive strain capacity in plastic hinge zones.",
+    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+  },
+  {
+    "id": 5194,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "It refers to the contractual arrangement under which a specialized firm supplies professional construction management services to an owner.",
+    "answer": "Construction Management",
+    "choices": [
+      "Construction Management",
+      "General Contracting",
+      "Design-Build Contracting",
+      "Procurement Management"
+    ],
+    "explanation": "Construction management involves professional coordination of schedule, cost, quality, and safety on behalf of the project owner.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5195,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "In construction, this includes activities such as specification development, process control, product acceptance, laboratory and technician certification, training, and communication.",
+    "answer": "Quality Management",
+    "choices": [
+      "Quality Management",
+      "Cost Accounting",
+      "Field Surveying",
+      "Procurement Logistics"
+    ],
+    "explanation": "Quality management encompasses the overarching policies, testing standards, and certifications ensuring built work meets contract specifications.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5196,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The operational techniques and activities that are primarily concerned with the process control function during construction.",
+    "answer": "Quality Control (QC)",
+    "choices": [
+      "Quality Control (QC)",
+      "Quality Assurance (QA)",
+      "Value Engineering",
+      "Risk Management"
+    ],
+    "explanation": "Quality control (QC) is the contractor's internal operational process control ensuring materials and workmanship conform to standards.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5197,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The process of moving soil or rock from one location to another and processing it so that it meets construction requirements of location, elevation, density, and moisture content.",
+    "answer": "Earthmoving",
+    "choices": [
+      "Earthmoving",
+      "Soil Leaching",
+      "Subgrade Infiltration",
+      "Quarry Blasting"
+    ],
+    "explanation": "Earthmoving includes excavation, hauling, dumping, spreading, grading, and compaction of earth or rock materials.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5198,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The ability of a soil to support the weight of construction vehicles under repeated traffic passes without excessive rutting or sinking.",
+    "answer": "Trafficability",
+    "choices": [
+      "Trafficability",
+      "Loadability",
+      "Plasticity Index",
+      "Moisture Ratio"
+    ],
+    "explanation": "Trafficability determines whether heavy haulers, scrapers, and trucks can traverse site terrain repeatedly.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5199,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A measure of the difficulty in excavating and loading a soil into hauling units.",
+    "answer": "Loadability",
+    "choices": [
+      "Loadability",
+      "Trafficability",
+      "Compressibility",
+      "Optimum Moisture"
+    ],
+    "explanation": "Loadability reflects soil stiffness, boulder content, and cohesion that influence excavator cycle times.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5200,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The bucket volume contained within an excavator or loader bucket when following the outline of the bucket sides.",
+    "answer": "Plate Line Capacity",
+    "choices": [
+      "Plate Line Capacity",
+      "Struck Capacity",
+      "Heaped Volume",
+      "Water Line Capacity"
+    ],
+    "explanation": "Plate line capacity is the geometric volume bounded by bucket plates and side cutters.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5201,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The bucket capacity of an earthmoving excavator or loader when the load is struck off perfectly flush with the bucket sides.",
+    "answer": "Struck Capacity",
+    "choices": [
+      "Struck Capacity",
+      "Plate Line Capacity",
+      "Heaped Volume",
+      "Water Line Capacity"
+    ],
+    "explanation": "Struck capacity represents the flat, level volume with no surcharge above bucket edges.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5202,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The bucket capacity that assumes a level of fluid material flush with the lowest edge of the bucket opening.",
+    "answer": "Water Line Capacity",
+    "choices": [
+      "Water Line Capacity",
+      "Struck Capacity",
+      "Plate Line Capacity",
+      "Heaped Volume"
+    ],
+    "explanation": "Water line capacity is used for watery slurry, wet muck, and dredging buckets.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5203,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The maximum volume that can be placed in an earthmoving bucket without spillage based on a specified angle of repose (usually 1:1 or 2:1 slope) for the material.",
+    "answer": "Heaped Volume",
+    "choices": [
+      "Heaped Volume",
+      "Struck Capacity",
+      "Plate Line Capacity",
+      "Water Line Capacity"
+    ],
+    "explanation": "Heaped volume includes the heaped surcharge resting on top of the bucket at the material's natural angle of repose.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5204,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A very versatile crane-shovel machine equipped with a long lattice boom and drag cable that has the longest reach for digging and dumping of any member of the crane shovel family.",
+    "answer": "Dragline",
+    "choices": [
+      "Dragline",
+      "Clamshell",
+      "Hydraulic Backhoe",
+      "Skid-steer Loader"
+    ],
+    "explanation": "Draglines excavate below ground level at long distances from the machine, commonly used in canals and deep quarries.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5205,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "Construction equipment primarily used for lifting, lowering, and transporting heavy suspended loads horizontally by swinging or traveling.",
+    "answer": "Cranes",
+    "choices": [
+      "Cranes",
+      "Dozers",
+      "Motor Graders",
+      "Scrapers"
+    ],
+    "explanation": "Cranes utilize wire rope hoist lines, sheaves, and lattice/telescoping booms to position heavy loads.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5206,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The component of vehicle gravitational weight acting parallel to an inclined surface that opposes uphill motion or assists downhill travel.",
+    "answer": "Grade Resistance",
+    "choices": [
+      "Grade Resistance",
+      "Rolling Resistance",
+      "Drawbar Pull",
+      "Rimpull"
+    ],
+    "explanation": "Grade resistance is approx. 20 lb per ton of gross vehicle weight for each 1% of adverse incline (grade).",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5207,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The resistance to vehicle travel caused primarily by tire flexing and penetration of the vehicle tires into the road surface.",
+    "answer": "Rolling Resistance",
+    "choices": [
+      "Rolling Resistance",
+      "Grade Resistance",
+      "Inertial Resistance",
+      "Wind Resistance"
+    ],
+    "explanation": "Rolling resistance depends on tire diameter, pressure, tread pattern, and subgrade firmness.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5208,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "In hauling operations, those components of total haul cycle time other than travel time, including loading, turning, dumping, and waiting time.",
+    "answer": "Fixed Time",
+    "choices": [
+      "Fixed Time",
+      "Variable Time",
+      "Travel Time",
+      "Idling Time"
+    ],
+    "explanation": "Fixed time includes spotting at the excavator, loading time, turning at the dump, and dumping time.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5209,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The travel time required for a haul unit to travel from the loading area to the unloading dump site and return empty.",
+    "answer": "Variable Time",
+    "choices": [
+      "Variable Time",
+      "Fixed Time",
+      "Spotting Time",
+      "Delay Time"
+    ],
+    "explanation": "Variable time fluctuates directly with haul distance, haul road grade, and truck speed.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5210,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "A deep soil densification technique that involves repeatedly dropping a heavy steel or concrete tamper weight (10 to 40 tons) from a crane from heights of 10 to 30 meters onto the ground surface.",
+    "answer": "Dynamic Compaction",
+    "choices": [
+      "Dynamic Compaction",
+      "Vibratory Compaction",
+      "Surcharging",
+      "Pneumatic Rolling"
+    ],
+    "explanation": "Dynamic compaction (deep compaction) imparts high-energy shock waves that densify loose granular soils and fills at depths up to 10 meters.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5211,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "The process of densifying cohesionless, granular soils by inserting a heavy vibrating probe (vibroflot) into the ground accompanied by water jetting and backfill.",
+    "answer": "Vibratory Compaction (Vibroflotation)",
+    "choices": [
+      "Vibratory Compaction (Vibroflotation)",
+      "Dynamic Compaction",
+      "Surcharging",
+      "Vacuum Dewatering"
+    ],
+    "explanation": "Vibroflotation liquefies loose sand surrounding the probe, allowing sand grains to rearrange into a dense state.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5212,
+    "area": "MSTE",
+    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
+    "difficulty": "Medium",
+    "question": "The process of placing temporary additional weight (such as a large soil embankment surcharge) on the ground surface to accelerate the consolidation of cohesive clay soils.",
+    "answer": "Surcharging",
+    "choices": [
+      "Surcharging",
+      "Dynamic Compaction",
+      "Electroosmosis",
+      "Vibrocompaction"
+    ],
+    "explanation": "Surcharging pre-compresses soft clay deposits before building construction, eliminating post-construction settlement.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5213,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "The improvement of the engineering properties of a soil (bearing strength, shear resistance, and compressibility) by the use of physical compaction, blending, or chemical admixtures (cement, lime, fly ash).",
+    "answer": "Soil Stabilization",
+    "choices": [
+      "Soil Stabilization",
+      "Soil Scarification",
+      "Soil Liquefaction",
+      "Soil Leaching"
+    ],
+    "explanation": "Soil stabilization improves subgrade load-bearing capacity and reduces moisture-induced swelling.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5214,
+    "area": "MSTE",
+    "subtopic": "Highway Geometric Design & Sight Distances",
+    "difficulty": "Medium",
+    "question": "The process of smoothing slopes, shaping roadside ditches, and bringing the earthwork to the precise elevation and profile required by the plans and specifications.",
+    "answer": "Finish Grading",
+    "choices": [
+      "Finish Grading",
+      "Rough Excavation",
+      "Balancing",
+      "Scarifying"
+    ],
+    "explanation": "Finish grading is executed using precision motor graders to establish final subgrade tolerance prior to paving.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5215,
+    "area": "MSTE",
+    "subtopic": "Highway Geometric Design & Sight Distances",
+    "difficulty": "Medium",
+    "question": "In highway earthwork construction, the process of cutting down high spots and filling in adjacent low spots of each roadway layer to minimize haul distance.",
+    "answer": "Balancing",
+    "choices": [
+      "Balancing",
+      "Trimming",
+      "Borrowing",
+      "Wasting"
+    ],
+    "explanation": "Balancing equates cut and fill volumes within economic haul limits along roadway profiles.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5216,
+    "area": "MSTE",
+    "subtopic": "Highway Geometric Design & Sight Distances",
+    "difficulty": "Medium",
+    "question": "The fine construction process of bringing each roadway subgrade or aggregate base layer to its final design grade within tight millimetric tolerances.",
+    "answer": "Trimming",
+    "choices": [
+      "Trimming",
+      "Balancing",
+      "Rough Grading",
+      "Screeding"
+    ],
+    "explanation": "Trimming prepares the final stable surface upon which asphalt or concrete pavement is placed.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5217,
     "area": "PSAD",
     "subtopic": "Construction Materials & Testing",
-    "difficulty": "Easy",
-    "question": "Standard ASTM C143 test measuring the consistency and workability of freshly mixed Portland cement concrete using a truncated conical mold.",
-    "answer": "SLUMP TEST",
-    "choices": [
-      "SLUMP TEST",
-      "VEBE TEST",
-      "FLOW TABLE TEST",
-      "PENETRATION TEST"
-    ],
-    "explanation": "The slump cone (300 mm high, 200 mm base diameter, 100 mm top diameter) measures true, zero, shear, or collapse slump to ensure concrete placement workability.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 524,
-    "area": "PSAD",
-    "subtopic": "Construction Materials & Testing",
-    "difficulty": "Easy",
-    "question": "ASTM standard test procedure for evaluating the resistance of coarse aggregate to abrasion, degradation, and impact using a rotating steel drum and steel balls.",
-    "answer": "LOS ANGELES ABRASION TEST",
-    "choices": [
-      "LOS ANGELES ABRASION TEST",
-      "DEVAL TEST",
-      "DORRY ABRASION TEST",
-      "MICRO-DEVAL TEST"
-    ],
-    "explanation": "ASTM C131 (Los Angeles Machine) assesses aggregate durability for highway concrete and asphalt wearing surfaces (typically max 40% loss).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 525,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Medium",
-    "question": "The circumferential tensile stress induced in the cylindrical shell of a thin-walled pressure vessel subjected to internal fluid pressure.",
-    "answer": "HOOP STRESS",
+    "question": "Concrete having a measured slump of 1 inch (25 mm) or less, often used in slipform paving, roller-compacted concrete, and precast production.",
+    "answer": "No-Slump Concrete",
     "choices": [
-      "LONGITUDINAL STRESS",
-      "HOOP STRESS",
-      "RADIAL STRESS",
-      "TORSIONAL SHEAR"
+      "No-Slump Concrete",
+      "High-Slump Concrete",
+      "Self-Consolidating Concrete",
+      "Flowing Concrete"
     ],
-    "explanation": "Hoop stress (circumferential stress) is given by σh = p * D / (2 * t), which is exactly twice the longitudinal stress σL = p * D / (4 * t).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "No-slump concrete has extremely stiff consistency requiring intense mechanical vibration to consolidate.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 526,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Hard",
-    "question": "The product of modulus of elasticity (E) and moment of inertia (I), representing a structural flexural member resistance to bending deformation.",
-    "answer": "FLEXURAL RIGIDITY",
-    "choices": [
-      "TORSIONAL RIGIDITY",
-      "AXIAL STIFFNESS",
-      "FLEXURAL RIGIDITY",
-      "PLASTIC MODULUS"
-    ],
-    "explanation": "Flexural rigidity (EI) appears in the Euler-Bernoulli beam differential equation d²y/dx² = M / (EI).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 527,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Medium",
-    "question": "The highest stress on a material stress-strain curve up to which deformation remains strictly linear and Hooke’s law applies: sigma = E * epsilon.",
-    "answer": "PROPORTIONAL LIMIT",
-    "choices": [
-      "ELASTIC LIMIT",
-      "PROPORTIONAL LIMIT",
-      "YIELD POINT",
-      "ULTIMATE STRENGTH"
-    ],
-    "explanation": "The proportional limit marks the upper boundary of linear elastic behavior where stress is directly proportional to strain (Hooke's Law).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 528,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Medium",
-    "question": "The maximum stress that a structural material can withstand without undergoing any permanent residual plastic deformation upon complete unloading.",
-    "answer": "ELASTIC LIMIT",
-    "choices": [
-      "PROPORTIONAL LIMIT",
-      "ELASTIC LIMIT",
-      "YIELD POINT",
-      "RUPTURE STRENGTH"
-    ],
-    "explanation": "Beyond the elastic limit, a material sustains permanent irreversible set or plastic strain.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 529,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Medium",
-    "question": "The point on a stress-strain curve where a material exhibits a noticeable increase in strain without any corresponding increase in applied stress.",
-    "answer": "YIELD POINT",
-    "choices": [
-      "PROPORTIONAL LIMIT",
-      "YIELD POINT",
-      "BREAKING POINT",
-      "NECKING THRESHOLD"
-    ],
-    "explanation": "Mild structural carbon steel displays a distinct upper and lower yield point, beyond which plastic yielding occurs.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 530,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Hard",
-    "question": "Thermal stress developed in a homogeneous structural member when temperature changes by delta_T while longitudinal expansion or contraction is completely restrained: sigma = E * alpha * delta_T.",
-    "answer": "THERMAL STRESS",
-    "choices": [
-      "RESIDUAL STRESS",
-      "THERMAL STRESS",
-      "CONFINEMENT PRESSURE",
-      "CREEP RELAXATION"
-    ],
-    "explanation": "When thermal expansion or contraction is prevented, temperature change induces axial thermal stress equal to E * α * ΔT.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 531,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Medium",
-    "question": "The ratio of the moment of inertia (I) of a beam cross-section about its neutral axis to the distance (c) from the neutral axis to the extreme fiber: S = I / c.",
-    "answer": "SECTION MODULUS",
-    "choices": [
-      "PLASTIC MODULUS",
-      "SECTION MODULUS",
-      "RADIUS OF GYRATION",
-      "TORSIONAL CONSTANT"
-    ],
-    "explanation": "Elastic section modulus S relates maximum bending moment M to maximum flexural stress fb = M / S (Navier’s flexural formula).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 532,
-    "area": "PSAD",
-    "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
-    "difficulty": "Medium",
-    "question": "The geometric property of a shaft cross-section measuring its resistance to torsional twist about its longitudinal axis: J = integral of rho^2 dA.",
-    "answer": "POLAR MOMENT OF INERTIA",
-    "choices": [
-      "FIRST MOMENT OF AREA",
-      "POLAR MOMENT OF INERTIA",
-      "PRODUCT OF INERTIA",
-      "WARPING CONSTANT"
-    ],
-    "explanation": "For a solid circular shaft of diameter D, polar moment of inertia J = π * D⁴ / 32, which appears in torsion formula τ = T * r / J.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 533,
-    "area": "PSAD",
-    "subtopic": "Structural Mechanics & Statics",
-    "difficulty": "Medium",
-    "question": "The ratio of the number of unknown reaction and internal member forces to the available equations of static equilibrium, indicating degree of redundant forces.",
-    "answer": "DEGREE OF STATIC INDETERMINACY",
-    "choices": [
-      "KINEMATIC DEGREES OF FREEDOM",
-      "DEGREE OF STATIC INDETERMINACY",
-      "STABILITY FACTOR",
-      "REDUNDANCY COEFFICIENT"
-    ],
-    "explanation": "For a planar frame, degree of indeterminacy is 3m + r - 3j; if positive, member forces cannot be determined by static equilibrium equations alone.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 534,
-    "area": "PSAD",
-    "subtopic": "Structural Mechanics & Statics",
-    "difficulty": "Hard",
-    "question": "In structural analysis of indeterminate beams, an imaginary beam of the same span whose load is the M/(EI) diagram of the real beam, where shear gives real slope and moment gives real deflection.",
-    "answer": "CONJUGATE BEAM METHOD",
-    "choices": [
-      "VIRTUAL WORK METHOD",
-      "CONJUGATE BEAM METHOD",
-      "SLOPE-DEFLECTION METHOD",
-      "COLUMN ANALOGY METHOD"
-    ],
-    "explanation": "Developed by Heinrich Müller-Breslau and Christian Otto Mohr, conjugate beam boundaries transform pinned supports to pinned and fixed supports to free.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 535,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Medium",
-    "question": "The dimensionless ratio of the modulus of elasticity of reinforcing steel to the modulus of elasticity of concrete: n = Es / Ec.",
-    "answer": "MODULAR RATIO",
-    "choices": [
-      "STIFFNESS RATIO",
-      "MODULAR RATIO",
-      "EQUIVALENT REBAR RATIO",
-      "HOMOGENIZING FACTOR"
-    ],
-    "explanation": "Under Working Stress Design (WSD), modular ratio n transforms concrete cross-sectional areas into equivalent steel areas.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 536,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Hard",
-    "question": "The theoretical ratio of the plastic section modulus (Z) to the elastic section modulus (S) of a structural beam cross-section, which equals 1.5 for a solid rectangle.",
-    "answer": "SHAPE FACTOR",
-    "choices": [
-      "PLASTIC EFFICIENCY FACTOR",
-      "SHAPE FACTOR",
-      "DUCTILITY RATIO",
-      "MODULUS RATIO"
-    ],
-    "explanation": "Shape factor (Mp / My = Z / S) reflects the reserve flexural capacity of a section between initial yielding and full plastic hinge formation (typically 1.10 to 1.15 for I-beams).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 537,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Medium",
-    "question": "In prestressed concrete, the gradual loss of prestressing tendon tension over time resulting from the long-term time-dependent sustained compressive deformation of concrete under stress.",
-    "answer": "CREEP LOSS",
-    "choices": [
-      "SHRINKAGE LOSS",
-      "CREEP LOSS",
-      "RELAXATION LOSS",
-      "ELASTIC SHORTENING"
-    ],
-    "explanation": "Concrete creep under sustained prestress continues for years, causing prestress force losses calculated under PCI and AASHTO design guidelines.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 538,
-    "area": "PSAD",
-    "subtopic": "Reinforced Concrete & Prestressed Design",
-    "difficulty": "Hard",
-    "question": "The time-dependent loss of tensile stress in a prestressing steel strand held at a constant elongation strain over an extended duration.",
-    "answer": "RELAXATION LOSS",
-    "choices": [
-      "WOBBLE LOSS",
-      "RELAXATION LOSS",
-      "ANCHORAGE DRAW",
-      "FRICTIONAL DRAG"
-    ],
-    "explanation": "Steel relaxation occurs at high stress levels (above 0.50 fpu); low-relaxation strands (ASTM A416) are specified to minimize this loss.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 539,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Hard",
-    "question": "In post-tensioned prestressed concrete, unintentional accidental horizontal or vertical wobble/deviation of tendon duct alignment along the span.",
-    "answer": "WOBBLE EFFECT",
-    "choices": [
-      "CURVATURE DRAG",
-      "WOBBLE EFFECT",
-      "CREEP EXCURSION",
-      "TOLERANCE DRIFT"
-    ],
-    "explanation": "Tendon friction loss includes both intentional curvature friction (μ * α) and unintentional duct wobble friction (K * L).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 540,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Medium",
-    "question": "The theoretical effective throat thickness (te) of an equal-leg fillet weld of leg size w with a 45-degree face: te = 0.707 * w.",
-    "answer": "EFFECTIVE THROAT",
-    "choices": [
-      "ROOT PENETRATION",
-      "EFFECTIVE THROAT",
-      "FUSION PROFILE",
-      "SHEAR LEG DEPTH"
-    ],
-    "explanation": "Fillet weld design is governed by shear along the minimum theoretical throat dimension equal to w * sin(45°) = 0.707 * w (AISC 360 / NSCP 2015).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 541,
-    "area": "PSAD",
-    "subtopic": "Structural Steel & Timber Design",
-    "difficulty": "Medium",
-    "question": "A structural timber design adjustment factor (CD) that increases allowable timber stresses for short-duration loadings such as wind or seismic loads (CD = 1.60).",
-    "answer": "LOAD DURATION FACTOR",
-    "choices": [
-      "REPETITIVE MEMBER FACTOR",
-      "LOAD DURATION FACTOR",
-      "WET SERVICE FACTOR",
-      "TEMPERATURE COEFFICIENT"
-    ],
-    "explanation": "Wood can withstand significantly higher stresses under rapid short-duration loads than under permanent sustained dead loads (National Design Specification / NSCP).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 542,
-    "area": "PSAD",
-    "subtopic": "Seismic Engineering & NSCP Provisions",
-    "difficulty": "Hard",
-    "question": "A building seismic framing system incorporating diagonal steel braces that contain a steel core yielding in both tension and compression without buckling, surrounded by a concrete-filled steel casing.",
-    "answer": "BUCKLING-RESTRAINED BRACED FRAME",
-    "choices": [
-      "ECCENTRICALLY BRACED FRAME",
-      "BUCKLING-RESTRAINED BRACED FRAME",
-      "MOMENT RESISTING TRUSS",
-      "OUTRIGGER SPIDER FRAME"
-    ],
-    "explanation": "Buckling-Restrained Braced Frames (BRBF) exhibit stable, symmetric, hysteretic energy dissipation during major earthquakes without brace buckling degradation.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 543,
-    "area": "PSAD",
-    "subtopic": "Seismic Engineering & NSCP Provisions",
-    "difficulty": "Hard",
-    "question": "A dynamic vibration absorber mounted at the upper stories of tall buildings consisting of a large suspended mass connected via springs and dampers tuned to match the building natural frequency.",
-    "answer": "TUNED MASS DAMPER",
-    "choices": [
-      "VISCOUS DAMPER BRACE",
-      "TUNED MASS DAMPER",
-      "SHEAR FRICTION WALL",
-      "SLOSHING BAFFLE"
-    ],
-    "explanation": "Tuned Mass Dampers (TMD), such as the 660-tonne pendulum in Taipei 101, counteract wind oscillations and seismic swaying.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 544,
+    "id": 5218,
     "area": "PSAD",
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "ASTM standard apparatus using a weighted needle with a 1.0 mm diameter tip to determine the initial and final setting times of hydraulic cement paste.",
-    "answer": "VICAT APPARATUS",
+    "question": "A standard test procedure for measuring concrete consistency and workability by determining the decrease in height of a compacted concrete cone after the mold is lifted.",
+    "answer": "Slump Test (ASTM C143)",
     "choices": [
-      "GILMORE NEEDLES",
-      "VICAT APPARATUS",
-      "LE CHATELIER FLASK",
-      "BLAINE AIR PERMEABILITY"
+      "Slump Test (ASTM C143)",
+      "Kelly Ball Test",
+      "Vee-Bee Consistometer",
+      "Air Content Test"
     ],
-    "explanation": "The Vicat needle test (ASTM C191) measures the penetration depth into cement paste to establish when setting begins and completes.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "ASTM C143 standardizes the slump test measuring consistency in millimeters or inches.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 545,
+    "id": 5219,
     "area": "PSAD",
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "ASTM standard fineness testing apparatus that measures the specific surface area of dry Portland cement powder in square centimeters per gram using air airflow resistance.",
-    "answer": "BLAINE AIR PERMEABILITY APPARATUS",
+    "question": "Special concrete made with calcium aluminate cement and heat-resistant aggregates suitable for high-temperature industrial applications such as boilers and furnaces.",
+    "answer": "Refractory Concrete",
     "choices": [
-      "WAGNER TURBIDIMETER",
-      "BLAINE AIR PERMEABILITY APPARATUS",
-      "SIEVE NO 200",
-      "SEDIMENTATION HYDROMETER"
+      "Refractory Concrete",
+      "Mass Concrete",
+      "Architectural Concrete",
+      "Heavyweight Concrete"
     ],
-    "explanation": "ASTM C204 uses the Blaine air permeability apparatus to evaluate cement fineness (minimum 2800 cm²/g for Type I Portland cement).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Refractory concrete withstands service temperatures exceeding 1000°C without loss of integrity.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 546,
-    "area": "HPGE",
-    "subtopic": "Fluid Statics & Buoyancy",
+    "id": 5220,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
-    "question": "The theoretical point of intersection of the vertical line of action of the buoyant force through the tilted center of buoyancy with the original vertical center line of a floating vessel.",
-    "answer": "METACENTER",
+    "question": "Concrete elements that have been cast, cured, and finished in a controlled plant or off-site yard prior to transport and final erection in a structure.",
+    "answer": "Precast Concrete",
     "choices": [
-      "HYDROCENTROID",
-      "METACENTER",
-      "KEEL REFERENCE",
-      "FLOTATION APEX"
+      "Precast Concrete",
+      "Cast-in-Place Concrete",
+      "Shotcrete",
+      "Roller Compacted Concrete"
     ],
-    "explanation": "A floating vessel is in stable equilibrium when the metacenter M is located above its center of gravity G (positive metacentric height GM > 0).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Precast concrete offers superior quality control and accelerated on-site construction schedules.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 547,
-    "area": "HPGE",
-    "subtopic": "Fluid Statics & Buoyancy",
+    "id": 5221,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "The distance between the center of gravity (G) and metacenter (M) of a floating vessel, which serves as the primary index of initial static stability.",
-    "answer": "METACENTRIC HEIGHT",
+    "question": "Concrete that will remain permanently exposed to view and therefore utilizes special architectural forms, patterns, color pigments, or textured surface finishes.",
+    "answer": "Architectural Concrete",
     "choices": [
-      "BUOYANCY LEVER",
-      "METACENTRIC HEIGHT",
-      "DRAFT DEPTH",
-      "FREEBOARD CLEARANCE"
+      "Architectural Concrete",
+      "Structural Concrete",
+      "Mass Concrete",
+      "Refractory Concrete"
     ],
-    "explanation": "Metacentric height GM = MB ± GB, where MB is the metacentric radius (I / V_displaced) and GB is distance between centers of gravity and buoyancy.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Architectural concrete fulfills both structural load-bearing and aesthetic exterior facade functions.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 548,
-    "area": "HPGE",
-    "subtopic": "Fluid Dynamics & Energy/Continuity",
+    "id": 5222,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "In fluid mechanics, a graphical line representing the sum of piezometric head and velocity head (p/gamma + z + v^2/2g) along a pipeline or conduit.",
-    "answer": "ENERGY GRADE LINE",
+    "question": "Normal, general-purpose portland cement suitable for all construction uses where special sulfate resistance or low heat of hydration is not required.",
+    "answer": "Type I Portland Cement",
     "choices": [
-      "HYDRAULIC GRADE LINE",
-      "ENERGY GRADE LINE",
-      "PIEZOMETRIC DATUM",
-      "POTENTIAL ENERGY PROFILE"
+      "Type I Portland Cement",
+      "Type II Portland Cement",
+      "Type III Portland Cement",
+      "Type IV Portland Cement"
     ],
-    "explanation": "The Energy Grade Line (EGL) is always higher than the Hydraulic Grade Line (HGL) by the velocity head quantity v² / (2g).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "ASTM C150 Type I is standard cement used in buildings, pavements, and general structures.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 549,
-    "area": "HPGE",
-    "subtopic": "Fluid Dynamics & Energy/Continuity",
+    "id": 5223,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "A graphical profile representing total piezometric head (elevation head plus pressure head, z + p/gamma) along a flowing fluid system.",
-    "answer": "HYDRAULIC GRADE LINE",
+    "question": "Modified moderate-sulfate-resistant portland cement that produces lower heat of hydration at a slower rate than Type I cement.",
+    "answer": "Type II Portland Cement",
     "choices": [
-      "ENERGY GRADE LINE",
-      "HYDRAULIC GRADE LINE",
-      "TOTAL ENERGY PROFILE",
-      "SURFACE SLOPE LINE"
+      "Type II Portland Cement",
+      "Type I Portland Cement",
+      "Type III Portland Cement",
+      "Type V Portland Cement"
     ],
-    "explanation": "The Hydraulic Grade Line (HGL) represents the height to which liquid would rise in an open vertical piezometer tube.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Type II cement is ideal for moderate mass concrete structures, piers, and retaining walls.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 550,
-    "area": "HPGE",
-    "subtopic": "Fluid Dynamics & Energy/Continuity",
-    "difficulty": "Easy",
-    "question": "A classic fluid flow theorem stating that velocity of efflux of an ideal liquid through a small orifice under head h equals the velocity of a body falling freely from height h: v = sqrt(2gh).",
-    "answer": "TORRICELLI'S LAW",
-    "choices": [
-      "BERNOULLI'S PRINCIPLE",
-      "TORRICELLI'S LAW",
-      "PASCAL'S LAW",
-      "STOKES' LAW"
-    ],
-    "explanation": "Torricelli's theorem (1643) derives directly from Bernoulli's equation by neglecting viscous head loss and assuming atmosphere pressure at liquid surface and orifice jet.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 551,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
+    "id": 5224,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "Dimensionless parameter in open channel hydraulics defined as the ratio of flow velocity to the speed of a shallow gravity wave: Fr = v / sqrt(g * D).",
-    "answer": "FROUDE NUMBER",
+    "question": "High early strength portland cement that provides 190% of Type I strength after 1 day of curing and produces about 150% of normal heat of hydration in the first 7 days.",
+    "answer": "Type III Portland Cement",
     "choices": [
-      "REYNOLDS NUMBER",
-      "FROUDE NUMBER",
-      "MACH NUMBER",
-      "WEBER NUMBER"
+      "Type III Portland Cement",
+      "Type I Portland Cement",
+      "Type IV Portland Cement",
+      "Type V Portland Cement"
     ],
-    "explanation": "Flow is subcritical when Fr < 1, critical when Fr = 1, and supercritical (shooting flow) when Fr > 1.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Type III cement accelerates formwork stripping in precast plants and cold-weather construction.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 552,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Hard",
-    "question": "The water depth in an open channel cross-section at which total specific energy (E = y + v^2/2g) reaches an absolute minimum for a given volumetric discharge.",
-    "answer": "CRITICAL DEPTH",
-    "choices": [
-      "NORMAL DEPTH",
-      "CRITICAL DEPTH",
-      "SEQUENT DEPTH",
-      "ALTERNATE DEPTH"
-    ],
-    "explanation": "At critical depth yc = (q² / g)^(1/3) for rectangular channels, the Froude number equals exactly 1.0 and specific energy is minimized.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 553,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
+    "id": 5225,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "A sharp-crested trapezoidal weir whose side slopes are inclined 1 horizontal to 4 vertical to automatically compensate for side contractions.",
-    "answer": "CIPOLLETTI WEIR",
+    "question": "Low heat of hydration portland cement producing only 40% to 60% of Type I heat during the first 7 days, developing strength at a slower rate (55% of normal at 7 days).",
+    "answer": "Type IV Portland Cement",
     "choices": [
-      "SUTRO WEIR",
-      "CIPOLLETTI WEIR",
-      "FRANCIS WEIR",
-      "THOMSON WEIR"
+      "Type IV Portland Cement",
+      "Type II Portland Cement",
+      "Type III Portland Cement",
+      "Type V Portland Cement"
     ],
-    "explanation": "Designed by Cesare Cipolletti, the 1:4 side slope creates triangular end adjustments that balance the end contractions of a rectangular weir, yielding Q = 1.86 * L * H^(3/2).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Type IV cement prevents thermal cracking in massive gravity concrete dams.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 554,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Hard",
-    "question": "A destructive hydraulic surge phenomenon occurring in closed conduits when a valve is suddenly closed, converting fluid kinetic energy into severe elastic pressure shock waves.",
-    "answer": "WATER HAMMER",
-    "choices": [
-      "HYDRAULIC COUPLING",
-      "WATER HAMMER",
-      "CAVITATION BURST",
-      "SLOSHING RESONANCE"
-    ],
-    "explanation": "Water hammer pressure surge ΔP = ρ * c * Δv (Joukowsky equation) can burst pipelines unless mitigated by surge tanks, air chambers, or slow closure.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 555,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
+    "id": 5226,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "A vertical open surge reservoir or standpipe installed along a high-pressure penstock or pipeline to absorb pressure shock waves and supply water during sudden valve operations.",
-    "answer": "SURGE TANK",
+    "question": "High sulfate-resistant portland cement providing maximum protection against severe alkaline and sulfate attacks from soils and groundwater.",
+    "answer": "Type V Portland Cement",
     "choices": [
-      "AIR RELEASE VALVE",
-      "SURGE TANK",
-      "EXPANSION BELLOWS",
-      "CHECK BASIN"
+      "Type V Portland Cement",
+      "Type I Portland Cement",
+      "Type II Portland Cement",
+      "Type III Portland Cement"
     ],
-    "explanation": "Surge tanks relieve water hammer pressures by converting rapid acoustic kinetic surges into gentle water level oscillations.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Type V cement has low tricalcium aluminate (C3A <= 5%) to prevent ettringite expansion in sulfate soils.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 556,
-    "area": "HPGE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
-    "difficulty": "Easy",
-    "question": "The classic empirical hydrology formula estimating peak surface runoff discharge from small urban or rural catchments: Q = C * I * A.",
-    "answer": "RATIONAL METHOD",
-    "choices": [
-      "SCS CURVE METHOD",
-      "RATIONAL METHOD",
-      "SNYDER METHOD",
-      "MUSKINGUM EQUATION"
-    ],
-    "explanation": "The Rational Formula Q = C*I*A (or Q = 0.278*C*I*A in SI) calculates peak flow using runoff coefficient C, rainfall intensity I, and catchment area A.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 557,
-    "area": "HPGE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "id": 5227,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "The time required for stormwater surface runoff to travel from the most hydrologically remote point of a watershed to the catchment outlet or design point.",
-    "answer": "TIME OF CONCENTRATION",
+    "question": "The exothermic chemical reaction between portland cement compounds and water that produces the crystalline hydration products of hardened cement paste.",
+    "answer": "Hydration",
     "choices": [
-      "LAG INTERVAL",
-      "TIME OF CONCENTRATION",
-      "PEAK RUNOFF TIME",
-      "RECESSION DURATION"
+      "Hydration",
+      "Calcination",
+      "Carbonation",
+      "Oxidation"
     ],
-    "explanation": "Time of concentration (tc) governs the design rainfall duration; at t = tc, the entire catchment area is contributing runoff to the outlet.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Hydration transforms liquid water and cement grains into calcium silicate hydrate (C-S-H) gel.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 558,
-    "area": "HPGE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
-    "difficulty": "Hard",
-    "question": "A direct surface runoff hydrograph resulting from one unit (e.g., 1 mm or 1 inch) of excess rainfall generated uniformly over a watershed at a constant rate for a specified duration.",
-    "answer": "UNIT HYDROGRAPH",
-    "choices": [
-      "SYNTHETIC FLOODGRAM",
-      "UNIT HYDROGRAPH",
-      "BASEFLOW RATING",
-      "ISOHYETAL GRAPH"
-    ],
-    "explanation": "Developed by LeRoy Sherman in 1932, the Unit Hydrograph is the cornerstone of rainfall-to-runoff flood estimation for ungauged and gauged basins.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 559,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
+    "id": 5228,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "The numerical difference between the Liquid Limit (LL) and Plastic Limit (PL) of a fine-grained cohesive soil: PI = LL - PL.",
-    "answer": "PLASTICITY INDEX",
+    "question": "Concrete containing billions of microscopic, evenly distributed air bubbles that provide expansion room for freezing water, drastically increasing freeze-thaw and deicing resistance.",
+    "answer": "Air-Entrained Concrete",
     "choices": [
-      "LIQUIDITY INDEX",
-      "PLASTICITY INDEX",
-      "CONSISTENCY INDEX",
-      "ACTIVITY COEFFICIENT"
+      "Air-Entrained Concrete",
+      "Non-Shrink Concrete",
+      "Heavyweight Concrete",
+      "Refractory Concrete"
     ],
-    "explanation": "Plasticity Index (PI) measures the range of water content over which the soil exhibits plastic behavioral traits (Atterberg limits).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Air entrainment (typically 4% to 7% air content) prevents frost spalling and scaling in cold climates.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 560,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
+    "id": 5229,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "Ratio of the plasticity index to the percentage of clay-sized particles (finer than 0.002 mm) by weight, indicating the mineral swelling potential of clay.",
-    "answer": "ACTIVITY OF CLAY",
+    "question": "Admixtures that increase the slump or workability of concrete at a constant water content, or allow water reduction of 5% to 12% without loss of slump.",
+    "answer": "Water-Reducing Admixtures (Plasticizers)",
     "choices": [
-      "SWELL RATIO",
-      "ACTIVITY OF CLAY",
-      "EXPANSIVE INDEX",
-      "THIXOTROPY INDEX"
+      "Water-Reducing Admixtures (Plasticizers)",
+      "Accelerators",
+      "Retarders",
+      "Expansive Agents"
     ],
-    "explanation": "Defined by Skempton, Activity A = PI / (% < 2 μm); clays with A > 1.25 (such as sodium montmorillonite) are highly active and expansive.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Water reducers lower the water-cement ratio, significantly increasing compressive strength and durability.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 561,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
+    "id": 5230,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "In grain size analysis of granular soils, the ratio of D60 to D10 representing the spread of grain sizes across the gradation curve.",
-    "answer": "COEFFICIENT OF UNIFORMITY",
+    "question": "Admixtures that slow down the rate of cement hydration and prolong setting time, especially useful in hot weather and massive concrete placements.",
+    "answer": "Retarders",
     "choices": [
-      "COEFFICIENT OF CURVATURE",
-      "COEFFICIENT OF UNIFORMITY",
-      "SORTING COEFFICIENT",
-      "FINENESS MODULUS"
+      "Retarders",
+      "Accelerators",
+      "Superplasticizers",
+      "Air Entrainers"
     ],
-    "explanation": "Coefficient of uniformity Cu = D60 / D10; a sand is well-graded (SW) if Cu ≥ 6 and a gravel is well-graded (GW) if Cu ≥ 4.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Retarders prevent cold joints during hot-weather trucking and prolonged placing times.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 562,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
+    "id": 5231,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "The moisture content at which a compacted soil achieves its maximum dry unit weight under a standardized compaction energy.",
-    "answer": "OPTIMUM MOISTURE CONTENT",
+    "question": "Admixtures (such as calcium chloride) that increase the early rate of hydration, shortening setting time and accelerating early compressive strength gain.",
+    "answer": "Accelerators",
     "choices": [
-      "SATURATION LIMIT",
-      "OPTIMUM MOISTURE CONTENT",
-      "PLASTIC THRESHOLD",
-      "HYGROSCOPIC CONTENT"
+      "Accelerators",
+      "Retarders",
+      "Pozzolans",
+      "Plasticizers"
     ],
-    "explanation": "In Standard or Modified Proctor testing (ASTM D698 / D1557), dry density peaks at the Optimum Moisture Content (OMC).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Accelerators permit earlier formwork removal and prevent freezing in cold-weather concrete work.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 563,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Hard",
-    "question": "A severe boiling or quick condition in cohesionless saturated soils where upward seepage drag forces equal the submerged unit weight of soil, reducing effective stress to zero.",
-    "answer": "QUICK CONDITION",
-    "choices": [
-      "SOIL SLAKING",
-      "QUICK CONDITION",
-      "DESICCATION",
-      "CREEP CONVERGENCE"
-    ],
-    "explanation": "Quick condition (quicksand) occurs at the critical hydraulic gradient icr = (Gs - 1) / (1 + e), causing total loss of shear strength.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 564,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
+    "id": 5232,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
-    "question": "A graphical grid composed of intersecting flow lines and equipotential lines used to calculate seepage discharge and pore water pressure distributions under hydraulic structures.",
-    "answer": "FLOW NET",
+    "question": "Siliceous or siliceous/aluminous materials (fly ash, silica fume, slag) that react with calcium hydroxide in the presence of water to reduce heat of hydration, improve workability, and boost long-term strength.",
+    "answer": "Pozzolans",
     "choices": [
-      "MOLLIER DIAGRAM",
-      "FLOW NET",
-      "CONTOUR GRID",
-      "STREAMLINE WEB"
+      "Pozzolans",
+      "Coarse Aggregates",
+      "Retarders",
+      "Accelerators"
     ],
-    "explanation": "Flow nets satisfy Laplace equation for 2D steady seepage; total seepage discharge is q = k * H * (Nf / Nd).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Pozzolanic reaction consumes free lime, creating additional durable C-S-H binder.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 565,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Hard",
-    "question": "Fundamental principle of soil mechanics formulated by Karl Terzaghi stating that all measurable effects of loading on soil are caused by changes in effective stress: sigma_eff = sigma_total - u.",
-    "answer": "EFFECTIVE STRESS PRINCIPLE",
-    "choices": [
-      "TOTAL STRESS LAW",
-      "EFFECTIVE STRESS PRINCIPLE",
-      "COULOMB'S LAW",
-      "DARCY'S POSTULATE"
-    ],
-    "explanation": "Terzaghi's effective stress principle (1925) explains that soil compression, distortion, and shear strength depend solely on intergranular skeletal effective stress σ'.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 566,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Hard",
-    "question": "The maximum past effective overburden pressure to which a geological soil layer has ever been subjected in its geological history.",
-    "answer": "PRECONSOLIDATION PRESSURE",
-    "choices": [
-      "COLLAPSE PRESSURE",
-      "PRECONSOLIDATION PRESSURE",
-      "CRITICAL GEOSTATIC STRESS",
-      "AT-REST EQUILIBRIUM"
-    ],
-    "explanation": "Preconsolidation pressure (σc') is determined from an e-log σ' consolidation curve using Casagrande's graphical construction method.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 567,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
+    "id": 5233,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
-    "question": "The ratio of the preconsolidation pressure to the current existing in-situ effective overburden pressure: OCR = sigma_c / sigma_0.",
-    "answer": "OVERCONSOLIDATION RATIO",
+    "question": "A construction method of continuously moving a form upward on jacks for vertical structures (such as silos, chimney stacks, and elevator cores) as new concrete is placed.",
+    "answer": "Slip Forming",
     "choices": [
-      "CONSOLIDATION INDEX",
-      "OVERCONSOLIDATION RATIO",
-      "STIFFNESS RATIO",
-      "SWELLING COEFFICIENT"
+      "Slip Forming",
+      "Flying Forms",
+      "Climbing Forms",
+      "Tunnel Forms"
     ],
-    "explanation": "Soil is normally consolidated if OCR = 1.0, and overconsolidated if OCR > 1.0 (indicating greater strength and lower settlement).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Slipform construction operates non-stop 24 hours a day until the vertical structure reaches final elevation.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 568,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Hard",
-    "question": "In one-dimensional consolidation theory, the slope of the virgin loading portion of the void ratio versus logarithm of effective stress curve: Cc = delta_e / delta_log(sigma).",
-    "answer": "COMPRESSION INDEX",
-    "choices": [
-      "SWELLING INDEX",
-      "COMPRESSION INDEX",
-      "RECOMPRESSION FACTOR",
-      "COEFFICIENT OF VOLUME CHANGE"
-    ],
-    "explanation": "Compression index (Cc) directly controls primary consolidation settlement calculations: Sc = [Cc * H / (1 + e0)] * log[(σ0 + Δσ)/σ0].",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 569,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Hard",
-    "question": "A triaxial laboratory shear test where the soil specimen is completely consolidated under all-around confining pressure, followed by shearing under undrained conditions with pore pressure measurement.",
-    "answer": "CONSOLIDATED-UNDRAINED TEST",
-    "choices": [
-      "UNCONSOLIDATED-UNDRAINED TEST",
-      "CONSOLIDATED-UNDRAINED TEST",
-      "CONSOLIDATED-DRAINED TEST",
-      "VANE ROTATION TEST"
-    ],
-    "explanation": "The CU triaxial test (ASTM D4767) provides both total stress parameters and effective stress parameters (c', φ') along with Skempton pore pressure parameters.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 570,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
+    "id": 5234,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
-    "question": "In-situ geotechnical field shear test using a four-bladed vane rotated in soft saturated cohesive soil to measure undisturbed and remolded undrained shear strength.",
-    "answer": "VANE SHEAR TEST",
+    "question": "Large, reusable floor formwork assemblies supported on deep trusses and jacks that are stripped and craned intact out of one floor level to the floor above.",
+    "answer": "Flying Forms",
     "choices": [
-      "STANDARD PENETRATION TEST",
-      "VANE SHEAR TEST",
-      "CONE PENETROMETER",
-      "PRESSUREMETER TEST"
+      "Flying Forms",
+      "Slip Forms",
+      "Ganged Forms",
+      "Coffered Forms"
     ],
-    "explanation": "The field vane shear test (ASTM D2573) is particularly reliable for soft clays where extracting undisturbed laboratory samples causes disturbance.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Flying form tables drastically reduce cycle times in multi-story reinforced concrete building construction.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 571,
-    "area": "HPGE",
+    "id": 5235,
+    "area": "PSAD",
+    "subtopic": "Reinforced Concrete & Prestressed Design",
+    "difficulty": "Medium",
+    "question": "Preformed flexible rubber, PVC, or hydrophilic vinyl strips cast across concrete expansion or construction joints to prevent groundwater penetration.",
+    "answer": "Waterstops",
+    "choices": [
+      "Waterstops",
+      "Dowels",
+      "Flashings",
+      "Tie Rods"
+    ],
+    "explanation": "Waterstops create a tortuous waterproof path across construction joints in basements, pools, and tunnels.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5236,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The upward migration and displacement of mixing water to the top surface of freshly placed concrete caused by the settlement of heavier solid aggregates and cement particles.",
+    "answer": "Bleeding",
+    "choices": [
+      "Bleeding",
+      "Laitance",
+      "Segregation",
+      "Honeycombing"
+    ],
+    "explanation": "Excessive bleeding weakens the top concrete surface and creates porous laitance layers.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5237,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The initial finishing step where freshly placed concrete is struck off level with formwork tops using a straightedge moved in a sawlike motion.",
+    "answer": "Screeding (Strike-off)",
+    "choices": [
+      "Screeding (Strike-off)",
+      "Floating",
+      "Troweling",
+      "Brooming"
+    ],
+    "explanation": "Screeding establishes the primary grade and planar surface of fresh concrete slabs.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5238,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The concrete finishing process performed after water sheen disappears to embed coarse aggregates, eliminate bumps and hollows, and prepare the surface for troweling.",
+    "answer": "Floating",
+    "choices": [
+      "Floating",
+      "Screeding",
+      "Troweling",
+      "Edging"
+    ],
+    "explanation": "Floating brings up sufficient mortar paste and closes surface voids without over-compacting.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5239,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The final smoothing process performed with hard steel blades on concrete slabs intended to receive resilient tile, carpet, or remain exposed, creating a dense, hard surface.",
+    "answer": "Troweling",
+    "choices": [
+      "Troweling",
+      "Floating",
+      "Screeding",
+      "Brooming"
+    ],
+    "explanation": "Steel troweling produces a dense, glossy, wear-resistant concrete floor surface.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5240,
+    "area": "PSAD",
+    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "difficulty": "Medium",
+    "question": "Texturing steel-troweled concrete surfaces by drawing a specialized stiff-bristle broom across the wet slab to produce a non-skid, slip-resistant surface.",
+    "answer": "Broom Finishing",
+    "choices": [
+      "Broom Finishing",
+      "Floating",
+      "Power Troweling",
+      "Screeding"
+    ],
+    "explanation": "Broom texturing is standard for exterior sidewalks, ramps, bridge decks, and driveways.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5241,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The surface flaking, peeling, or breaking away of hardened concrete slab surfaces to a depth of 1/6 to 3/16 in. (1.6 to 4.8 mm), often caused by premature finishing or freeze-thaw cycles.",
+    "answer": "Scaling",
+    "choices": [
+      "Scaling",
+      "Crazing",
+      "Dusting",
+      "Honeycombing"
+    ],
+    "explanation": "Scaling occurs when excessive bleed water is worked into the surface during premature finishing.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5242,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The occurrence of an interconnected network of numerous fine hairline surface cracks in a newly hardened concrete slab caused by rapid surface moisture evaporation and shrinkage.",
+    "answer": "Crazing",
+    "choices": [
+      "Crazing",
+      "Scaling",
+      "Dusting",
+      "Spalling"
+    ],
+    "explanation": "Crazing cracks are shallow and do not impair structural load-bearing capacity.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5243,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The development of a powdery chalk-like material on the surface of a hardened concrete slab caused by finishing while bleed water is still present or inadequate wet curing.",
+    "answer": "Dusting",
+    "choices": [
+      "Dusting",
+      "Scaling",
+      "Crazing",
+      "Efflorescence"
+    ],
+    "explanation": "Dusting indicates a weak, unhydrated surface matrix subject to continuous abrasion.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5244,
+    "area": "PSAD",
+    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "difficulty": "Medium",
+    "question": "Liquid asphalt produced by blending asphalt cement with volatile petroleum distillates (such as gasoline, kerosene, or diesel fuel) to make it fluid at room temperature.",
+    "answer": "Asphalt Cutback",
+    "choices": [
+      "Asphalt Cutback",
+      "Asphalt Emulsion",
+      "Polymer Asphalt",
+      "Bitumen Mastic"
+    ],
+    "explanation": "Cutback asphalt cures as the volatile petroleum solvent evaporates into the atmosphere.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5245,
+    "area": "PSAD",
+    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "difficulty": "Medium",
+    "question": "A dispersion of minute microscopic droplets of asphalt cement in water held in suspension by an emulsifying chemical surfactant.",
+    "answer": "Asphalt Emulsion",
+    "choices": [
+      "Asphalt Emulsion",
+      "Cutback Asphalt",
+      "Fluxed Asphalt",
+      "Tar Primer"
+    ],
+    "explanation": "Asphalt emulsions eliminate volatile organic hydrocarbon emissions associated with petroleum cutbacks.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5246,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "The lowest temperature at which an asphalt liquid produces sufficient volatile vapors to flash or ignite momentarily in the presence of air and an open flame.",
+    "answer": "Flash Point",
+    "choices": [
+      "Flash Point",
+      "Fire Point",
+      "Boiling Point",
+      "Softening Point"
+    ],
+    "explanation": "The Cleveland Open Cup flash point test determines critical handling safety temperatures for hot liquid asphalts.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5247,
+    "area": "PSAD",
+    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "difficulty": "Medium",
+    "question": "A very thin, uniform application of light bituminous material (diluted asphalt emulsion) applied to an existing paved surface to ensure a strong adhesive bond with a new overlay layer.",
+    "answer": "Tack Coat",
+    "choices": [
+      "Tack Coat",
+      "Prime Coat",
+      "Fog Seal",
+      "Seal Coat"
+    ],
+    "explanation": "Tack coats prevent slippage failure between new asphalt overlays and old pavement surfaces.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5248,
+    "area": "PSAD",
+    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "difficulty": "Medium",
+    "question": "An application of low-viscosity liquid asphalt applied to an untreated absorbent gravel or crushed stone base course to penetrate and bond the loose surface particles.",
+    "answer": "Prime Coat",
+    "choices": [
+      "Prime Coat",
+      "Tack Coat",
+      "Slurry Seal",
+      "Chip Seal"
+    ],
+    "explanation": "Prime coats waterproof absorbent sub-base aggregates and provide traction for paving equipment.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5249,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A chemical or bituminous substance sprayed on an unpaved haul road or dirt surface to suppress and control fugitive dust caused by traffic and wind.",
+    "answer": "Dust Palliative",
+    "choices": [
+      "Dust Palliative",
+      "Fog Seal",
+      "Slurry Seal",
+      "Tack Coat"
+    ],
+    "explanation": "Dust palliatives (calcium chloride, lignin, asphalt emulsions) stabilize unpaved haul roads.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5250,
+    "area": "MSTE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
-    "question": "The minimum coefficient of lateral earth pressure occurring when a retaining wall yields or moves outward away from the backfill soil mass.",
-    "answer": "ACTIVE EARTH PRESSURE COEFFICIENT",
+    "question": "The simplest and most common type of shallow foundation that spreads concentrated building column loads over an adequate area of underlying soil.",
+    "answer": "Spread Footing",
     "choices": [
-      "PASSIVE PRESSURE COEFFICIENT",
-      "ACTIVE EARTH PRESSURE COEFFICIENT",
-      "AT-REST EARTH COEFFICIENT",
-      "SURCHARGE PRESSURE FACTOR"
+      "Spread Footing",
+      "Driven Pile",
+      "Caisson",
+      "Rock Anchor"
     ],
-    "explanation": "Rankine active coefficient Ka = (1 - sin φ) / (1 + sin φ) = tan²(45° - φ/2).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Spread footings include isolated column pads, wall strip footings, and combined footings.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 572,
-    "area": "HPGE",
+    "id": 5251,
+    "area": "MSTE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
-    "question": "The maximum lateral earth resistance developed when a retaining structure is pushed inward horizontally against a soil mass.",
-    "answer": "PASSIVE EARTH PRESSURE COEFFICIENT",
+    "question": "A continuous, heavily reinforced concrete slab extending under an entire building structure designed to distribute high total building loads over a large soil footprint.",
+    "answer": "Mat (Raft) Foundation",
     "choices": [
-      "ACTIVE EARTH COEFFICIENT",
-      "PASSIVE EARTH PRESSURE COEFFICIENT",
-      "HYDROSTATIC COEFFICIENT",
-      "ANCHOR FORCE MULTIPLIER"
+      "Mat (Raft) Foundation",
+      "Isolated Footing",
+      "Strap Footing",
+      "Grade Beam"
     ],
-    "explanation": "Rankine passive earth pressure coefficient Kp = (1 + sin φ) / (1 - sin φ) = tan²(45° + φ/2).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Mat foundations are used when column footings would cover more than 50% of the building footprint or in low-bearing soils.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 573,
-    "area": "HPGE",
-    "subtopic": "Fluid Statics & Buoyancy",
-    "difficulty": "Easy",
-    "question": "Fundamental law of fluid statics stating that pressure applied to an enclosed static fluid is transmitted undiminished in all directions throughout the fluid.",
-    "answer": "PASCAL'S PRINCIPLE",
-    "choices": [
-      "ARCHIMEDES' PRINCIPLE",
-      "PASCAL'S PRINCIPLE",
-      "BERNOULLI'S THEOREM",
-      "HOOKE'S LAW"
-    ],
-    "explanation": "Discovered by Blaise Pascal in 1653, Pascal's principle governs hydraulic jacks, vehicle brakes, and hydrostatic presses.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 574,
-    "area": "HPGE",
-    "subtopic": "Fluid Statics & Buoyancy",
-    "difficulty": "Easy",
-    "question": "Fundamental hydrostatic principle stating that a body immersed wholly or partly in a fluid is buoyed up by a force equal to the weight of the fluid displaced by the body.",
-    "answer": "ARCHIMEDES' PRINCIPLE",
-    "choices": [
-      "PASCAL'S LAW",
-      "ARCHIMEDES' PRINCIPLE",
-      "EULER'S BUOYANCY THEOREM",
-      "NEWTON'S THIRD LAW"
-    ],
-    "explanation": "Archimedes' principle establishes that buoyant force Fb = γ_fluid * V_displaced acting through the center of buoyancy.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 575,
-    "area": "HPGE",
-    "subtopic": "Fluid Statics & Buoyancy",
-    "difficulty": "Medium",
-    "question": "The geometric centroid of the submerged volume of a floating or submerged body, through which the resultant upward buoyant force acts.",
-    "answer": "CENTER OF BUOYANCY",
-    "choices": [
-      "CENTER OF MASS",
-      "CENTER OF BUOYANCY",
-      "METACENTER",
-      "CENTER OF FLOTATION"
-    ],
-    "explanation": "When a vessel lists or tilts, the center of buoyancy shifts toward the immersed side, creating a righting moment.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 576,
-    "area": "HPGE",
-    "subtopic": "Fluid Dynamics & Energy/Continuity",
-    "difficulty": "Easy",
-    "question": "Fundamental fluid principle expressing conservation of mass in steady fluid flow through a conduit: Q = A1 * v1 = A2 * v2 = constant.",
-    "answer": "CONTINUITY EQUATION",
-    "choices": [
-      "MOMENTUM EQUATION",
-      "CONTINUITY EQUATION",
-      "BERNOULLI EQUATION",
-      "ENERGY CONSERVATION"
-    ],
-    "explanation": "For incompressible fluids, continuity states that volumetric discharge Q remains identical at every cross-section of a stream tube.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 577,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Medium",
-    "question": "Dimensionless ratio of fluid inertial forces to viscous forces used to determine whether pipe flow is laminar, transitional, or turbulent: Re = rho * v * D / mu.",
-    "answer": "REYNOLDS NUMBER",
-    "choices": [
-      "FROUDE NUMBER",
-      "REYNOLDS NUMBER",
-      "PRANDTL NUMBER",
-      "WEBER NUMBER"
-    ],
-    "explanation": "Introduced by Osborne Reynolds (1883), flow in circular pipes is laminar when Re < 2000 and fully turbulent when Re > 4000.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 578,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Medium",
-    "question": "The fundamental theoretical pipe friction head loss equation expressing head loss as a function of friction factor f, length L, diameter D, and velocity v: hf = f * (L / D) * (v^2 / 2g).",
-    "answer": "DARCY-WEISBACH EQUATION",
-    "choices": [
-      "HAZEN-WILLIAMS FORMULA",
-      "DARCY-WEISBACH EQUATION",
-      "MANNING EQUATION",
-      "CHEZY FORMULA"
-    ],
-    "explanation": "The Darcy-Weisbach equation applies universally to all fluids and flow regimes in pipes when friction factor f is determined from the Moody diagram.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 579,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Hard",
-    "question": "Theoretical laminar pipe flow equation relating volumetric flow rate directly to the fourth power of pipe radius and inversely to dynamic viscosity: Q = pi * delta_P * r^4 / (8 * mu * L).",
-    "answer": "HAGEN-POISEUILLE EQUATION",
-    "choices": [
-      "STOKES EQUATION",
-      "HAGEN-POISEUILLE EQUATION",
-      "COLEBROOK FORMULA",
-      "NAVIER EQUATION"
-    ],
-    "explanation": "Derived independently by Gotthilf Hagen and Jean Poiseuille, it describes laminar viscous flow where friction factor f = 64 / Re.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 580,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Medium",
-    "question": "An empirical formula widely used in water supply network engineering for calculating pipe head loss due to friction, utilizing roughness coefficient C: v = 0.849 * C * R^0.63 * S^0.54.",
-    "answer": "HAZEN-WILLIAMS FORMULA",
-    "choices": [
-      "DARCY-WEISBACH FORMULA",
-      "HAZEN-WILLIAMS FORMULA",
-      "MANNING FORMULA",
-      "PRANDTL-KARMAN FORMULA"
-    ],
-    "explanation": "The Hazen-Williams formula is designed specifically for water flow at ordinary temperatures in pipes larger than 50 mm diameter.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 581,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Easy",
-    "question": "The ratio of cross-sectional flow area (A) to wetted perimeter (P) of an open channel or non-full conduit: R = A / P.",
-    "answer": "HYDRAULIC RADIUS",
-    "choices": [
-      "HYDRAULIC DEPTH",
-      "HYDRAULIC RADIUS",
-      "WETTED DIAMETER",
-      "EQUIVALENT DIAMETER"
-    ],
-    "explanation": "Hydraulic radius R measures the efficiency of a channel cross-section in resisting frictional drag against boundary surfaces.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 582,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Easy",
-    "question": "The length of the line of contact between the flowing fluid and the solid boundary of an open channel or closed conduit cross-section.",
-    "answer": "WETTED PERIMETER",
-    "choices": [
-      "HYDRAULIC RADIUS",
-      "WETTED PERIMETER",
-      "CHANNEL SPREAD",
-      "TOP BOUNDARY"
-    ],
-    "explanation": "Wetted perimeter P represents the surface boundary generating shear resistance against the flowing fluid.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 583,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Medium",
-    "question": "A 90-degree triangular sharp-crested weir particularly suitable for measuring very low discharge rates accurately: Q = 1.4 * H^(5/2).",
-    "answer": "V-NOTCH WEIR",
-    "choices": [
-      "RECTANGULAR FRANCIS WEIR",
-      "V-NOTCH WEIR",
-      "CIPOLLETTI WEIR",
-      "BROAD-CRESTED WEIR"
-    ],
-    "explanation": "The V-notch (triangular Thomson) weir maintains a geometric shape proportional to depth, ensuring high measurement precision across small discharge ranges.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 584,
-    "area": "HPGE",
-    "subtopic": "Open Channels, Weirs & Pipe Flow",
-    "difficulty": "Hard",
-    "question": "In hydraulic machinery, the total suction head margin available above liquid vapor pressure to prevent boiling and bubble collapse inside a centrifugal pump.",
-    "answer": "NET POSITIVE SUCTION HEAD",
-    "choices": [
-      "STATIC SUCTION LIFT",
-      "NET POSITIVE SUCTION HEAD",
-      "PRIMING MARGIN",
-      "CAVITATION INDEX"
-    ],
-    "explanation": "To prevent cavitation damage in centrifugal pumps, available Net Positive Suction Head (NPSHa) must exceed the pump manufacturer required NPSHr.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 585,
-    "area": "HPGE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
-    "difficulty": "Medium",
-    "question": "A graphical hydrological weighting method that computes mean basin rainfall by constructing perpendicular bisectors between adjacent rain gauge stations.",
-    "answer": "THIESSEN POLYGON METHOD",
-    "choices": [
-      "ISOHYETAL METHOD",
-      "THIESSEN POLYGON METHOD",
-      "ARITHMETIC MEAN METHOD",
-      "HYPSOMETRIC METHOD"
-    ],
-    "explanation": "Developed by Alfred Thiessen, polygons define areas of influence around each gauge station to compute weighted average watershed precipitation.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 586,
-    "area": "HPGE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
-    "difficulty": "Medium",
-    "question": "An advanced hydrological method for computing mean areal basin precipitation using contour lines of equal rainfall depth.",
-    "answer": "ISOHYETAL METHOD",
-    "choices": [
-      "THIESSEN METHOD",
-      "ISOHYETAL METHOD",
-      "CHOROPLETH METHOD",
-      "RECIPROCAL DISTANCE METHOD"
-    ],
-    "explanation": "Isohyets are lines connecting points of equal rainfall; this method is the most accurate as it accounts for topographic and orographic effects.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 587,
-    "area": "HPGE",
-    "subtopic": "Soil Physical Properties & Phase Relationships",
-    "difficulty": "Easy",
-    "question": "The ratio of the weight of water contained in a soil specimen to the oven-dried weight of the solid soil particles: w = Ww / Ws.",
-    "answer": "MOISTURE CONTENT",
-    "choices": [
-      "DEGREE OF SATURATION",
-      "MOISTURE CONTENT",
-      "VOID RATIO",
-      "SPECIFIC RETENTION"
-    ],
-    "explanation": "Moisture content (water content w) is determined in the laboratory by oven drying soil at 105°C - 110°C (ASTM D2216).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 588,
-    "area": "HPGE",
-    "subtopic": "Soil Physical Properties & Phase Relationships",
-    "difficulty": "Easy",
-    "question": "The weight of solid soil mineral matter per unit of total bulk soil volume: gamma_d = Ws / V.",
-    "answer": "DRY UNIT WEIGHT",
-    "choices": [
-      "TOTAL BULK DENSITY",
-      "DRY UNIT WEIGHT",
-      "SATURATED DENSITY",
-      "BUOYANT UNIT WEIGHT"
-    ],
-    "explanation": "Dry unit weight γd = γ / (1 + w) is the primary density metric used to verify field compaction quality control.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 589,
-    "area": "HPGE",
-    "subtopic": "Soil Physical Properties & Phase Relationships",
-    "difficulty": "Medium",
-    "question": "The effective submerged unit weight of soil when completely immersed below the groundwater table: gamma_sub = gamma_sat - gamma_water.",
-    "answer": "BUOYANT UNIT WEIGHT",
-    "choices": [
-      "DRY DENSITY",
-      "BUOYANT UNIT WEIGHT",
-      "TOTAL BULK WEIGHT",
-      "SWELLING DENSITY"
-    ],
-    "explanation": "Buoyant unit weight γ' (submerged unit weight) accounts for the upward Archimedean buoyant force reducing intergranular contact pressures.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 590,
-    "area": "HPGE",
-    "subtopic": "Soil Physical Properties & Phase Relationships",
-    "difficulty": "Medium",
-    "question": "A dimensionless index evaluating the compaction state of a cohesionless granular soil relative to its loosest (emax) and densest (emin) states: Dr = (emax - e) / (emax - emin).",
-    "answer": "RELATIVE DENSITY",
-    "choices": [
-      "DEGREE OF COMPACTION",
-      "RELATIVE DENSITY",
-      "SPECIFIC GRAVITY",
-      "PACKING FACTOR"
-    ],
-    "explanation": "Relative density (Dr) characterizes sand deposits: very loose (<15%), loose (15-35%), medium (35-65%), dense (65-85%), and very dense (>85%).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 591,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Easy",
-    "question": "The moisture content threshold defining the boundary between the liquid state and plastic state of a fine-grained cohesive soil (measured with Casagrande cup).",
-    "answer": "LIQUID LIMIT",
-    "choices": [
-      "PLASTIC LIMIT",
-      "LIQUID LIMIT",
-      "SHRINKAGE LIMIT",
-      "FLOW THRESHOLD"
-    ],
-    "explanation": "The Liquid Limit (LL) corresponds to the water content at which a trapezoidal groove cut in soil closes along 12.7 mm after 25 standard blows.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 592,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Easy",
-    "question": "The moisture content threshold below which soil crumbles when rolled into threads 3.2 mm (1/8 inch) in diameter.",
-    "answer": "PLASTIC LIMIT",
-    "choices": [
-      "LIQUID LIMIT",
-      "PLASTIC LIMIT",
-      "SHRINKAGE LIMIT",
-      "CRUMBLING LIMIT"
-    ],
-    "explanation": "The Plastic Limit (PL) marks the lower moisture limit of plastic consistency (ASTM D4318).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 593,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Medium",
-    "question": "The moisture content below which any further loss of water does not cause any decrease in the volume of the soil mass.",
-    "answer": "SHRINKAGE LIMIT",
-    "choices": [
-      "PLASTIC LIMIT",
-      "SHRINKAGE LIMIT",
-      "HYGROSCOPIC LIMIT",
-      "MINIMUM POROSITY"
-    ],
-    "explanation": "Below the Shrinkage Limit (SL), water is replaced by air in the voids without further soil shrinkage.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 594,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Medium",
-    "question": "The ratio of the difference between natural water content and plastic limit to the plasticity index: LI = (w - PL) / PI.",
-    "answer": "LIQUIDITY INDEX",
-    "choices": [
-      "CONSISTENCY INDEX",
-      "LIQUIDITY INDEX",
-      "ACTIVITY COEFFICIENT",
-      "PLASTIC FRACTION"
-    ],
-    "explanation": "Liquidity Index LI < 0 indicates hard, brittle soil; 0 < LI < 1 indicates plastic state; and LI > 1 indicates sensitive soil susceptible to liquefaction upon shear.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 595,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Medium",
-    "question": "Standard ASTM field sand displacement method used to determine the in-situ dry density and degree of compaction of compacted earth fills.",
-    "answer": "SAND CONE METHOD",
-    "choices": [
-      "RUBBER BALLOON TEST",
-      "SAND CONE METHOD",
-      "NUCLEAR GAUGE",
-      "CORE CUTTER TEST"
-    ],
-    "explanation": "ASTM D1556 (Sand Cone Method) uses calibrated Ottawa sand to determine test hole volume and field compaction percentage.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 596,
-    "area": "HPGE",
-    "subtopic": "Soil Classification, Compaction & Permeability",
-    "difficulty": "Hard",
-    "question": "Fundamental soil permeability law stating that apparent discharge velocity of water through porous soil is directly proportional to the hydraulic gradient: v = k * i.",
-    "answer": "DARCY'S LAW",
-    "choices": [
-      "POISEUILLE'S LAW",
-      "DARCY'S LAW",
-      "BERNOULLI'S PRINCIPLE",
-      "TERZAGHI'S LAW"
-    ],
-    "explanation": "Formulated by Henry Darcy (1856), Darcy's Law v = k * i governs 1D laminar flow through porous media, where k is hydraulic conductivity.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 597,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Medium",
-    "question": "Classical soil failure envelope equation stating that the shear strength of a soil consists of cohesive bond strength plus frictional sliding resistance: tau_f = c + sigma * tan(phi).",
-    "answer": "MOHR-COULOMB FAILURE CRITERION",
-    "choices": [
-      "TRESCA CRITERION",
-      "MOHR-COULOMB FAILURE CRITERION",
-      "VON MISES CRITERION",
-      "DRUCKER-PRAGER CRITERION"
-    ],
-    "explanation": "The Mohr-Coulomb failure criterion describes soil shear strength as a function of cohesion (c) and angle of internal friction (φ).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 598,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Medium",
-    "question": "The laboratory test measuring the unconfined compressive strength (qu) of a cylindrical cohesive soil specimen subjected to axial loading without lateral confinement.",
-    "answer": "UNCONFINED COMPRESSION TEST",
-    "choices": [
-      "DIRECT SHEAR TEST",
-      "UNCONFINED COMPRESSION TEST",
-      "BRAZILIAN SPLIT TEST",
-      "TRIAXIAL DRAINED TEST"
-    ],
-    "explanation": "For saturated clays under undrained conditions, unconfined compressive strength qu = 2 * cu, where cu is undrained shear strength (ASTM D2166).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 599,
-    "area": "HPGE",
-    "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
-    "difficulty": "Hard",
-    "question": "The property of certain fine-grained cohesive soils of losing shear strength upon remolding or disturbance and gradually regaining strength over time when left undisturbed at constant water content.",
-    "answer": "THIXOTROPY",
-    "choices": [
-      "DILATANCY",
-      "THIXOTROPY",
-      "ELASTIC REBOUND",
-      "LIQUEFACTION"
-    ],
-    "explanation": "Thixotropic regain of strength is caused by the gradual realignment and physicochemical re-attraction of clay platelets after disturbance.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 600,
-    "area": "HPGE",
+    "id": 5252,
+    "area": "MSTE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
-    "difficulty": "Hard",
-    "question": "The foundational ultimate bearing capacity equation for shallow strip footings formulated by Karl Terzaghi: qu = c * Nc + q * Nq + 0.5 * gamma * B * Ngamma.",
-    "answer": "TERZAGHI'S BEARING CAPACITY EQUATION",
+    "difficulty": "Medium",
+    "question": "A specialized deep mat or compensated basement foundation where the weight of soil excavated for the sub-basement approximately equals the total weight of the structure erected.",
+    "answer": "Floating Foundation",
     "choices": [
-      "MEYERHOF'S EQUATION",
-      "TERZAGHI'S BEARING CAPACITY EQUATION",
-      "VESIC'S FORMULA",
-      "HANSEN'S THEOREM"
+      "Floating Foundation",
+      "Friction Pile",
+      "End-bearing Pier",
+      "Caisson Foundation"
     ],
-    "explanation": "Terzaghi’s bearing capacity equation (1943) calculates ultimate bearing capacity using non-dimensional factors Nc, Nq, and Nγ as functions of soil friction angle.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Floating foundations result in zero net increase in effective stress on deep underlying compressible clay layers.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 601,
-    "area": "HPGE",
+    "id": 5253,
+    "area": "MSTE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
-    "difficulty": "Hard",
-    "question": "In geotechnical slope stability analysis of circular slip surfaces, a widely used limit equilibrium slice method that satisfies vertical force equilibrium and overall moment equilibrium.",
-    "answer": "BISHOP'S SIMPLIFIED METHOD",
-    "choices": [
-      "ORDINARY SLICES METHOD",
-      "BISHOP'S SIMPLIFIED METHOD",
-      "JANBU RIGOROUS METHOD",
-      "MORGENSTERN-PRICE METHOD"
-    ],
-    "explanation": "Bishop's simplified method provides accurate factors of safety for circular failure surfaces by considering interslice normal forces.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 602,
-    "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
     "difficulty": "Medium",
-    "question": "A sequence of numbers whose reciprocals form an arithmetic progression (e.g., 1/2, 1/4, 1/6, 1/8).",
-    "answer": "HARMONIC PROGRESSION",
+    "question": "A massive watertight retaining box or cylindrical hollow shaft sunk deep into the ground or ocean floor through water and unstable soils to construct deep bridge and dam foundations.",
+    "answer": "Caisson",
     "choices": [
-      "GEOMETRIC PROGRESSION",
-      "HARMONIC PROGRESSION",
-      "FIBONACCI SEQUENCE",
-      "ARITHMETIC SERIES"
+      "Caisson",
+      "Spread Footing",
+      "Trench Shield",
+      "Sheet Pile"
     ],
-    "explanation": "If a, b, c are in harmonic progression, then 1/a, 1/b, 1/c are in arithmetic progression and b = 2ac / (a + c).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Caissons can be open dredged or pressurized pneumatic shafts sunk to sound bedrock.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 603,
+    "id": 5254,
     "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
+    "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
-    "question": "Calculus rule for evaluating indeterminate limits of the form 0/0 or infinity/infinity by differentiating the numerator and denominator independently.",
-    "answer": "L'HÔPITAL'S RULE",
+    "question": "The dangerous phenomenon in saturated cohesionless sand or silt deposits where earthquake shaking causes pore water pressure to equal overburden pressure, reducing effective shear strength to zero so the soil acts like a viscous liquid.",
+    "answer": "Liquefaction",
     "choices": [
-      "TAYLOR'S THEOREM",
-      "L'HÔPITAL'S RULE",
-      "MACLAURIN'S EXPANSION",
-      "EULER'S IDENTITY"
+      "Liquefaction",
+      "Consolidation",
+      "Subsidence",
+      "Quick Clay"
     ],
-    "explanation": "Named after Guillaume de l'Hôpital, the rule states that lim[f(x)/g(x)] = lim[f'(x)/g'(x)] provided the limit exists.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Liquefaction leads to severe bearing capacity failure, ground spreading, and floatation of buried pipes.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 604,
+    "id": 5255,
     "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
+    "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
-    "question": "A point on a smooth curve where the concavity changes from concave upward to concave downward (or vice versa), where d^2y/dx^2 = 0.",
-    "answer": "POINT OF INFLECTION",
+    "question": "The unstable hydraulic condition occurring at the base of an open excavation where upward seepage water pressure overcomes the submerged weight of the soil, causing sand grains to boil upward.",
+    "answer": "Boiling (Piping)",
     "choices": [
-      "SADDLE POINT",
-      "POINT OF INFLECTION",
-      "CRITICAL VERTEX",
-      "CUSP SINGULARITY"
+      "Boiling (Piping)",
+      "Liquefaction",
+      "Slumping",
+      "Erosion"
     ],
-    "explanation": "At an inflection point, the second derivative of the function changes sign and the tangent line crosses through the curve.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Piping undermines sheet pile cutoffs and excavation trenches unless dewatering wells lower the hydraulic gradient.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 605,
-    "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
-    "difficulty": "Hard",
-    "question": "Geometric theorem stating that the volume of a solid of revolution generated by revolving a plane area about an external axis equals the area multiplied by the distance traveled by its centroid.",
-    "answer": "PAPPUS-GULDURINUS THEOREM",
-    "choices": [
-      "CAUCHY'S RESIDUE THEOREM",
-      "PAPPUS-GULDURINUS THEOREM",
-      "GREEN'S THEOREM",
-      "STOKES' THEOREM"
-    ],
-    "explanation": "The First Theorem of Pappus gives surface area A * (2π * y_bar) and the Second Theorem gives volume V = Area * (2π * y_bar).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 606,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "In engineering economics, the constant rate of interest which, when compounded once per year, yields the exact same annual total return as a nominal rate compounded m times per year.",
-    "answer": "EFFECTIVE ANNUAL RATE",
-    "choices": [
-      "NOMINAL DISCOUNT RATE",
-      "EFFECTIVE ANNUAL RATE",
-      "INTERNAL RETURN RATE",
-      "CONTINUOUS BASE RATE"
-    ],
-    "explanation": "Effective annual interest rate is given by ieff = (1 + r/m)^m - 1.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 607,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "A uniform series of equal payments made at the end of each consecutive compounding period for a specified duration.",
-    "answer": "ORDINARY ANNUITY",
-    "choices": [
-      "ANNUITY DUE",
-      "ORDINARY ANNUITY",
-      "DEFERRED ANNUITY",
-      "PERPETUITY"
-    ],
-    "explanation": "In an ordinary annuity, payments occur at the end of periods; in an annuity due, payments occur at the beginning of each period.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 608,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "An annuity whose periodic cash flows continue indefinitely forever into the future without an ending date.",
-    "answer": "PERPETUITY",
-    "choices": [
-      "AMORTIZED LOAN",
-      "PERPETUITY",
-      "SINKING BOND",
-      "BALLOON CONTRACT"
-    ],
-    "explanation": "The present value of a uniform perpetuity is simply P = A / i, where A is the periodic payment and i is the interest rate.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 609,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "The present worth of a long-term engineering asset or public works project that is assumed to provide service perpetually, including initial cost and perpetual renewals.",
-    "answer": "CAPITALIZED COST",
-    "choices": [
-      "NET SALVAGE VALUE",
-      "CAPITALIZED COST",
-      "BOOK VALUE PROFILE",
-      "EQUIVALENT UNIFORM COST"
-    ],
-    "explanation": "Capitalized Cost CC = First Cost + (Annual O&M) / i + Replacement Cost / [(1+i)^k - 1].",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 610,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "A fund formed by periodically setting aside equal cash sums at compound interest to accumulate a predetermined amount to replace an asset at the end of its useful life.",
-    "answer": "SINKING FUND",
-    "choices": [
-      "ESCROW RESERVE",
-      "SINKING FUND",
-      "REVOLVING CREDIT",
-      "DEPRECIATION SURPLUS"
-    ],
-    "explanation": "The sinking fund factor [i / ((1+i)^n - 1)] calculates the periodic uniform deposit required to yield a future target sum F.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 611,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "An accelerated depreciation method where the depreciation fraction in year m has denominator equal to the sum of the digits from 1 to useful life n.",
-    "answer": "SUM-OF-THE-YEARS-DIGITS METHOD",
-    "choices": [
-      "STRAIGHT LINE METHOD",
-      "SUM-OF-THE-YEARS-DIGITS METHOD",
-      "DECLINING BALANCE METHOD",
-      "SERVICE OUTPUT METHOD"
-    ],
-    "explanation": "SOYD depreciation charges higher depreciation during earlier asset years, with denominator sum S = n*(n + 1)/2.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 612,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "The discount interest rate at which the present value of all cash inflows equals exactly the present value of all cash outflows (Net Present Value = 0).",
-    "answer": "INTERNAL RATE OF RETURN",
-    "choices": [
-      "MINIMUM ATTRACTIVE RATE",
-      "INTERNAL RATE OF RETURN",
-      "BENEFIT-COST QUOTIENT",
-      "RETURN ON EQUITY"
-    ],
-    "explanation": "Internal Rate of Return (IRR) evaluates project financial feasibility; an investment is acceptable if IRR ≥ MARR (Minimum Attractive Rate of Return).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 613,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Easy",
-    "question": "The production sales volume or operational capacity at which total project revenues exactly equal total combined fixed and variable costs.",
-    "answer": "BREAKEVEN POINT",
-    "choices": [
-      "PAYBACK THRESHOLD",
-      "BREAKEVEN POINT",
-      "MARGIN OF SAFETY",
-      "PROFIT RATIO LIMIT"
-    ],
-    "explanation": "At the breakeven point Q = Fixed Costs / (Price per Unit - Variable Cost per Unit), net operational profit is zero.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 614,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Easy",
-    "question": "In pacing and reconnaissance field surveying, the ratio of a known measured distance to the number of paces taken by an individual surveyor.",
-    "answer": "PACE FACTOR",
-    "choices": [
-      "STRIDE COEFFICIENT",
-      "PACE FACTOR",
-      "STEP INDEX",
-      "WALKING CONSTANT"
-    ],
-    "explanation": "Pace factor (meters per pace) calibrated over a measured course of 50-100 meters allows rapid distance estimation in civil reconnaissance.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 615,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Medium",
-    "question": "A surveying rod reading taken on a benchmark or turning point of known elevation to determine the height of the instrument line of sight: HI = Elev + BS.",
-    "answer": "BACKSIGHT",
-    "choices": [
-      "FORESIGHT",
-      "BACKSIGHT",
-      "INTERMEDIATE SHOT",
-      "BENCHMARK SHOT"
-    ],
-    "explanation": "Backsight (plus sight) added to point elevation establishes Height of Instrument (HI); Foresight (minus sight) is subtracted from HI to find unknown elevations.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 616,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Medium",
-    "question": "A rod reading taken on a point of unknown elevation to determine its elevation prior to moving the leveling instrument: Elev = HI - FS.",
-    "answer": "FORESIGHT",
-    "choices": [
-      "BACKSIGHT",
-      "FORESIGHT",
-      "DATUM INDEX",
-      "CONTROL SIGHT"
-    ],
-    "explanation": "Foresight (minus sight) closes the leveling observation at a station or turning point before instrument relocation.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 617,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Hard",
-    "question": "The classical mathematical rule for balancing a closed traverse which distributes errors in latitude and departure in proportion to the lengths of the individual traverse courses.",
-    "answer": "COMPASS RULE",
-    "choices": [
-      "TRANSIT RULE",
-      "COMPASS RULE",
-      "CRANDALL METHOD",
-      "LEAST SQUARES ADJUSTMENT"
-    ],
-    "explanation": "Also known as the Bowditch Rule, the Compass Rule assumes angular and linear errors are of equal precision and proportional to √L.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 618,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Hard",
-    "question": "A traverse adjustment method that distributes errors in latitude and departure in proportion to the latitudes and departures of the individual courses, favored when angular measurements are more precise than linear measurements.",
-    "answer": "TRANSIT RULE",
-    "choices": [
-      "COMPASS RULE",
-      "TRANSIT RULE",
-      "GRAPHICAL BOWDITCH",
-      "COLLIMATION ADJUSTMENT"
-    ],
-    "explanation": "The Transit Rule prevents changes in course bearings for north-south or east-west lines by weighting corrections according to coordinate components.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 619,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Medium",
-    "question": "The projection of a traverse course onto the reference true north-south meridian line, calculated as course length multiplied by the cosine of its bearing: Lat = L * cos(theta).",
-    "answer": "LATITUDE",
-    "choices": [
-      "DEPARTURE",
-      "LATITUDE",
-      "AZIMUTH",
-      "PARALLEL OFFSET"
-    ],
-    "explanation": "Latitudes are positive (northing) for courses heading north and negative (southing) for courses heading south.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 620,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Medium",
-    "question": "The projection of a traverse line onto the reference east-west parallel axis, calculated as course length multiplied by the sine of its bearing: Dep = L * sin(theta).",
-    "answer": "DEPARTURE",
-    "choices": [
-      "LATITUDE",
-      "DEPARTURE",
-      "MERIDIAN DISTANCE",
-      "EASTING DEFLECTION"
-    ],
-    "explanation": "Departures are positive (easting) for courses heading east and negative (westing) for courses heading west.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 621,
-    "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
-    "difficulty": "Medium",
-    "question": "A transitional curve of continuously varying radius (such as a clothoid or Euler spiral) introduced between a straight highway tangent and a circular curve to ensure gradual introduction of centrifugal acceleration.",
-    "answer": "SPIRAL TRANSITION CURVE",
-    "choices": [
-      "COMPOUND REVERSE CURVE",
-      "SPIRAL TRANSITION CURVE",
-      "PARABOLIC VERTICAL SPLINE",
-      "BROKEN-BACK CURVE"
-    ],
-    "explanation": "Spiral transition curves provide a comfortable, gradual transition of centrifugal force and allow uniform runoff development of road superelevation.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 622,
-    "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
-    "difficulty": "Easy",
-    "question": "The minimum roadway distance required by a motor vehicle driver traveling at design speed to perceive an unexpected stationary road hazard and bring the vehicle to a complete safe stop.",
-    "answer": "STOPPING SIGHT DISTANCE",
-    "choices": [
-      "PASSING SIGHT DISTANCE",
-      "STOPPING SIGHT DISTANCE",
-      "DECISION SIGHT DISTANCE",
-      "INTERSECTION CLEARANCE DISTANCE"
-    ],
-    "explanation": "Stopping Sight Distance SSD = 0.278 * V * t + V² / [254 * (f ± G)], accounting for driver perception-reaction time (2.5 seconds) and braking friction.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 623,
-    "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
-    "difficulty": "Medium",
-    "question": "The banking or lateral cross-slope provided along circular highway curves to counterbalance centripetal acceleration and prevent vehicle skidding: e + f = v^2 / (127 * R).",
-    "answer": "SUPERELEVATION",
-    "choices": [
-      "CROWN SLOPE",
-      "SUPERELEVATION",
-      "CAMBER PROFILE",
-      "SIDE FRICTION TILT"
-    ],
-    "explanation": "Superelevation (e) combined with side friction coefficient (f) counteracts lateral centrifugal overturning forces on curved roads.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 624,
-    "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
-    "difficulty": "Medium",
-    "question": "In earthwork computations, the exact volumetric prismoidal formula for calculating volume between two cross-sections of areas A1 and A2 with mid-section area Am: V = (L / 6) * (A1 + 4Am + A2).",
-    "answer": "PRISMOIDAL FORMULA",
-    "choices": [
-      "END-AREA FORMULA",
-      "PRISMOIDAL FORMULA",
-      "TRAPEZOIDAL VOLUME RULE",
-      "SIMPSON SOLID RULE"
-    ],
-    "explanation": "The Prismoidal formula calculates exact earthwork volume for geometric solids whose cross-sectional areas vary linearly or quadratically along length L.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 625,
-    "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
-    "difficulty": "Medium",
-    "question": "The total haul distance at which the total financial cost of hauling excavated earth equals the cost of wasting the excavated cut and borrowing new fill material from a nearby pit.",
-    "answer": "ECONOMIC LIMIT OF HAUL",
-    "choices": [
-      "FREE HAUL RANGE",
-      "ECONOMIC LIMIT OF HAUL",
-      "BALANCE HAUL REACH",
-      "OPTIMAL BORROW RADIUS"
-    ],
-    "explanation": "Economic Limit of Haul ELH = Free Haul Distance + (Cost of Borrow / Cost of Overhaul); beyond ELH, borrowing is more economical than hauling.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 626,
-    "area": "MSTE",
-    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
-    "difficulty": "Medium",
-    "question": "In AASHTO flexible pavement design, an empirical index number expressing the required structural strength of a pavement pavement structure as a combination of layer thicknesses and layer coefficients: SN = a1*D1 + a2*D2*m2 + a3*D3*m3.",
-    "answer": "STRUCTURAL NUMBER",
-    "choices": [
-      "MODULUS OF SUBGRADE",
-      "STRUCTURAL NUMBER",
-      "SERVICEABILITY INDEX",
-      "RESILIENT CAPACITY"
-    ],
-    "explanation": "The Structural Number (SN) accounts for cumulative 18-kip (80 kN) Equivalent Single Axle Loads (ESALs), subgrade resilient modulus, and reliability.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 627,
-    "area": "MSTE",
-    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
-    "difficulty": "Easy",
-    "question": "A severe fatigue pavement distress pattern in flexible asphalt pavements characterized by interconnected polygonal cracks resembling the skin of a reptile.",
-    "answer": "ALLIGATOR CRACKING",
-    "choices": [
-      "TRANSVERSE THERMAL CRACKING",
-      "ALLIGATOR CRACKING",
-      "BLOCK CRACKING",
-      "EDGE RAVELING"
-    ],
-    "explanation": "Alligator cracking (fatigue cracking) results from repeated heavy traffic wheel loadings over weakened, poorly drained, or inadequate subgrade layers.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 628,
-    "area": "MSTE",
-    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
-    "difficulty": "Medium",
-    "question": "Smooth round steel dowels placed across transverse contraction joints in Portland Cement Concrete Pavement (PCCP) to transfer wheel shear loads while allowing longitudinal thermal expansion.",
-    "answer": "DOWEL BARS",
-    "choices": [
-      "TIE BARS",
-      "DOWEL BARS",
-      "KEYWAY KEYS",
-      "REINFORCING STIRRUPS"
-    ],
-    "explanation": "Dowel bars prevent joint faulting by transferring vehicle axle shear loads between adjacent concrete slab panels without restricting joint opening/closing.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 629,
-    "area": "MSTE",
-    "subtopic": "Traffic Engineering, Markings & Signs",
-    "difficulty": "Medium",
-    "question": "The ratio of total traffic volume during the peak hour to four times the volume during the peak 15-minute interval within that hour: PHF = PHV / (4 * V15).",
-    "answer": "PEAK HOUR FACTOR",
-    "choices": [
-      "CAPACITY FACTOR",
-      "PEAK HOUR FACTOR",
-      "TRAFFIC CONGESTION INDEX",
-      "EXPANSION FACTOR"
-    ],
-    "explanation": "Peak Hour Factor (PHF) measures traffic flow uniformity during the peak hour; typical values range from 0.80 to 0.98.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 630,
-    "area": "MSTE",
-    "subtopic": "Traffic Engineering, Markings & Signs",
-    "difficulty": "Hard",
-    "question": "The classic macroscopic traffic flow model postulating a linear relationship between vehicle speed and traffic density from free-flow speed to jam density.",
-    "answer": "GREENSHIELDS MODEL",
-    "choices": [
-      "GREENBERG MODEL",
-      "GREENSHIELDS MODEL",
-      "UNDERWOOD MODEL",
-      "PIPES MODEL"
-    ],
-    "explanation": "Proposed by Bruce Greenshields in 1935: v = vf * (1 - k/kj); maximum flow capacity occurs at exactly half free-flow speed and half jam density.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 631,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "In PERT project management, the weighted average statistical duration calculated from optimistic (a), most likely (m), and pessimistic (b) estimates: te = (a + 4m + b) / 6.",
-    "answer": "EXPECTED DURATION",
-    "choices": [
-      "MEDIAN INTERVAL",
-      "EXPECTED DURATION",
-      "STANDARD TIME",
-      "PROBABLE SLACK"
-    ],
-    "explanation": "The beta distribution approximation te = (a + 4m + b)/6 assigns 4x weighting to the most likely time estimate.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 632,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Hard",
-    "question": "In project schedule compression, the additional financial cost incurred per unit of time saved by crashing an activity on the critical path: (Crash Cost - Normal Cost) / (Normal Time - Crash Time).",
-    "answer": "CRASH COST SLOPE",
-    "choices": [
-      "ACCELERATION PREMIUM",
-      "CRASH COST SLOPE",
-      "TIME VARIANCE MULTIPLIER",
-      "EXPEDITE COEFFICIENT"
-    ],
-    "explanation": "Crash cost slope identifies the most cost-effective critical activities to shorten in order to reduce overall project duration at minimum extra cost.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 633,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Hard",
-    "question": "In Earned Value Management (EVM), the schedule performance metric defined as the ratio of Earned Value to Planned Value: SPI = EV / PV.",
-    "answer": "SCHEDULE PERFORMANCE INDEX",
-    "choices": [
-      "COST PERFORMANCE INDEX",
-      "SCHEDULE PERFORMANCE INDEX",
-      "SCHEDULE VARIANCE INDEX",
-      "TIMELINE METRIC"
-    ],
-    "explanation": "SPI > 1.0 indicates project progress is ahead of schedule; SPI < 1.0 indicates schedule slippage and project delays.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 634,
-    "area": "MSTE",
-    "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
-    "difficulty": "Easy",
-    "question": "Philippine Department of Labor and Employment (DOLE) Department Order No. 13 which promulgates mandatory Guidelines Governing Occupational Safety and Health in the Construction Industry.",
-    "answer": "DOLE DO 13",
-    "choices": [
-      "DOLE DO 13",
-      "DPWH BLUE BOOK",
-      "PD 1096",
-      "RA 9184"
-    ],
-    "explanation": "DO 13 s. 1998 requires all construction projects to formulate an approved Construction Safety and Health Program (CSHP) with qualified safety officers and first aiders.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 635,
+    "id": 5256,
     "area": "MSTE",
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
-    "question": "Under Philippine Republic Act No. 9184 (Government Procurement Reform Act), the statutory body within a government agency responsible for public advertising, bidding, and contract award evaluation.",
-    "answer": "BIDS AND AWARDS COMMITTEE",
+    "question": "A temporary structural system of vertical sheeting, horizontal wales, and cross-struts designed to provide lateral earth support to deep excavation walls.",
+    "answer": "Shoring",
     "choices": [
-      "PROJECT MONITORING TEAM",
-      "BIDS AND AWARDS COMMITTEE",
-      "INFRASTRUCTURE TENDER BOARD",
-      "PROCUREMENT OVERSIGHT COMMISSION"
+      "Shoring",
+      "Dewatering",
+      "Underpinning",
+      "Grouting"
     ],
-    "explanation": "The BAC consists of at least 5 but not more than 7 members and oversees competitive public bidding, post-qualification, and contract recommendations.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Shoring prevents cave-ins and protects adjacent buildings during deep trenching operations.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 636,
+    "id": 5257,
     "area": "MSTE",
-    "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
+    "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
-    "question": "Under RA 9184, the ceiling price established by a procuring government agency beyond which no bid price shall be accepted during competitive bidding.",
-    "answer": "APPROVED BUDGET FOR THE CONTRACT",
+    "question": "Horizontal heavy timber planks or precast concrete slabs placed between vertical steel soldier piles (H-piles) to retain soil in deep excavation shoring systems.",
+    "answer": "Lagging",
     "choices": [
-      "ESTIMATED DIRECT COST",
-      "APPROVED BUDGET FOR THE CONTRACT",
-      "ALLOWABLE TENDER LIMIT",
-      "BENCHMARK CONTRACT SUM"
+      "Lagging",
+      "Sheet Piling",
+      "Wales",
+      "Struts"
     ],
-    "explanation": "Bids exceeding the Approved Budget for the Contract (ABC) are automatically disqualified under Philippine government procurement rules.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Soldier pile and lagging systems provide rapid, cost-effective excavation support above the water table.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 637,
+    "id": 5258,
     "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
-    "difficulty": "Easy",
-    "question": "A mathematical sequence in which the ratio of any term to its preceding term is a constant non-zero value called the common ratio (e.g., 2, 6, 18, 54).",
-    "answer": "GEOMETRIC PROGRESSION",
-    "choices": [
-      "ARITHMETIC PROGRESSION",
-      "GEOMETRIC PROGRESSION",
-      "HARMONIC SEQUENCE",
-      "POWER SERIES"
-    ],
-    "explanation": "In a geometric progression with first term a and ratio r, the nth term is an = a * r^(n-1) and sum Sn = a * (1 - r^n) / (1 - r).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 638,
-    "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
-    "difficulty": "Easy",
-    "question": "The mathematical theorem that provides the algebraic expansion of powers of a binomial expression (x + y)^n using combination coefficients.",
-    "answer": "BINOMIAL THEOREM",
-    "choices": [
-      "TAYLOR EXPANSION",
-      "BINOMIAL THEOREM",
-      "POLYNOMIAL FACTOR THEOREM",
-      "DE MOIVRE THEOREM"
-    ],
-    "explanation": "The Binomial Theorem expands (x + y)^n = Σ [n! / (k! * (n-k)!)] * x^(n-k) * y^k.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 639,
-    "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
+    "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
-    "question": "In differential calculus of curves, the radius (R) of the osculating circle that best approximates the curve at a given point: R = [1 + (dy/dx)^2]^(3/2) / |d^2y/dx^2|.",
-    "answer": "RADIUS OF CURVATURE",
+    "question": "Interlocking rolled steel, vinyl, or concrete sheet sections driven continuously into the ground to form an impermeable retaining wall against earth and water pressure.",
+    "answer": "Sheet Piling",
     "choices": [
-      "CENTROIDAL RADIUS",
-      "RADIUS OF CURVATURE",
-      "CHORD RADIUS",
-      "EVOLUTE SPAN"
+      "Sheet Piling",
+      "Lagging",
+      "Trench Shield",
+      "Soldier Pile"
     ],
-    "explanation": "The reciprocal of the radius of curvature is curvature κ = 1 / R, measuring the instantaneous rate of direction change of the tangent line.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Interlocking sheet piles create cofferdams and marine bulkheads with high watertightness.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 640,
+    "id": 5259,
     "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
+    "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
-    "question": "In differential equations, an algebraic function mu(x) by which a non-exact first-order linear differential equation is multiplied to make its left-hand side an exact derivative.",
-    "answer": "INTEGRATING FACTOR",
+    "question": "A dewatering system consisting of a series of small-diameter perforated well screen points driven into water-bearing soil connected to a common header pipe evacuated by a vacuum pump.",
+    "answer": "Wellpoint System",
     "choices": [
-      "AUXILIARY MULTIPLIER",
-      "INTEGRATING FACTOR",
-      "WRONSKIAN",
-      "HOMOGENIZING SCALAR"
+      "Wellpoint System",
+      "Electroosmosis",
+      "Deep Well Sump",
+      "French Drain"
     ],
-    "explanation": "For dy/dx + P(x)y = Q(x), the integrating factor is μ(x) = e^(∫ P(x) dx).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Wellpoint systems lower groundwater tables up to 5 to 6 meters per stage in sandy subsoils.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 641,
+    "id": 5260,
     "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
-    "difficulty": "Easy",
-    "question": "In probability and statistics, a dimensionless relative dispersion metric defined as the ratio of standard deviation to sample mean: CV = s / x_bar.",
-    "answer": "COEFFICIENT OF VARIATION",
-    "choices": [
-      "STANDARD ERROR",
-      "COEFFICIENT OF VARIATION",
-      "VARIANCE SPREAD",
-      "CONFIDENCE INTERVAL"
-    ],
-    "explanation": "The Coefficient of Variation (CV) allows direct comparison of variability between datasets measured in different units.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 642,
-    "area": "MSTE",
-    "subtopic": "Engineering Mathematics & Geometry",
+    "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
-    "question": "In standard normal Gaussian probability distribution, the number of standard deviations a given raw data point x lies above or below the population mean: z = (x - mu) / sigma.",
-    "answer": "STANDARD NORMAL Z-SCORE",
+    "question": "A specialized dewatering process of accelerating the flow and drainage of water through tight, low-permeability clay soils by applying a direct electrical current (DC) between anodes and cathodes.",
+    "answer": "Electroosmosis",
     "choices": [
-      "STUDENT T-VALUE",
-      "STANDARD NORMAL Z-SCORE",
-      "F-RATIO STATISTIC",
-      "CHI-SQUARE INDEX"
+      "Electroosmosis",
+      "Vacuum Wells",
+      "Wellpoints",
+      "Pressure Grouting"
     ],
-    "explanation": "The Z-score standardizes normal random variables to a standard normal distribution with mean 0 and standard deviation 1.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Water ions migrate from positive anodes to negative cathode wellpoints where water is pumped out.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 643,
+    "id": 5261,
+    "area": "MSTE",
+    "subtopic": "Foundations, Retaining Walls & Slope Stability",
+    "difficulty": "Medium",
+    "question": "The process of injecting a fluid chemical or cement slurry under pressure into soil or fractured rock to increase shear strength, reduce permeability, or seal foundation leaks.",
+    "answer": "Pressure Grouting",
+    "choices": [
+      "Pressure Grouting",
+      "Jet Grouting",
+      "Slurry Trenching",
+      "Hydro-demolition"
+    ],
+    "explanation": "Pressure grouting seals porous foundation rock beneath concrete dams and stabilizes sinkholes.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5262,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "A continuously reinforced horizontal beam built within masonry walls using special open-bottom U-block units filled with grout and steel rebar to resist lateral wind and seismic loads.",
+    "answer": "Bond Beam",
+    "choices": [
+      "Bond Beam",
+      "Lintel",
+      "Pilaster",
+      "Parapet"
+    ],
+    "explanation": "Bond beams tie masonry walls together horizontally at floor and roof diaphragm levels.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5263,
+    "area": "PSAD",
+    "subtopic": "Construction Materials & Testing",
+    "difficulty": "Medium",
+    "question": "Thin, continuous layers of impervious sheet metal, plastic, or rubber membrane built into walls and roof joints to prevent water penetration and direct moisture back to the exterior.",
+    "answer": "Flashing",
+    "choices": [
+      "Flashing",
+      "Caulking",
+      "Weep Hole",
+      "Grout Seal"
+    ],
+    "explanation": "Wall flashings placed above window lintels and floor slabs channel intruding water to weep holes.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5264,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "A masonry pattern bond that uses only stretcher courses with vertical head joints centered over stretchers in the course below.",
+    "answer": "Running Bond",
+    "choices": [
+      "Running Bond",
+      "Common Bond",
+      "Flemish Bond",
+      "English Bond"
+    ],
+    "explanation": "Running bond is the simplest, most widely used brick and block pattern bond.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5265,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "A masonry pattern bond that uses a header course repeated at regular intervals, usually every fifth, sixth, or seventh stretcher course, to tie wythes together.",
+    "answer": "Common Bond",
+    "choices": [
+      "Common Bond",
+      "Running Bond",
+      "Stack Bond",
+      "Flemish Bond"
+    ],
+    "explanation": "Common bond provides structural cross-tying between multi-wythe masonry walls.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5266,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "A masonry pattern bond that alternates stretchers and headers in each course, with each header centered horizontally over the stretcher in the course below.",
+    "answer": "Flemish Bond",
+    "choices": [
+      "Flemish Bond",
+      "English Bond",
+      "Running Bond",
+      "Stack Bond"
+    ],
+    "explanation": "Flemish bond provides classic aesthetic appeal and balanced interlocking.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5267,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "A masonry pattern bond made up of completely alternating courses of all headers and all stretchers, with headers centered on stretchers.",
+    "answer": "English Bond",
+    "choices": [
+      "English Bond",
+      "Flemish Bond",
+      "Common Bond",
+      "Running Bond"
+    ],
+    "explanation": "English bond is one of the strongest traditional multi-wythe pattern bonds.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5268,
+    "area": "PSAD",
+    "subtopic": "Structural Steel & Timber Design",
+    "difficulty": "Medium",
+    "question": "A masonry pattern bond in which all vertical head joints align continuously in straight lines from course to course, providing no mechanical interlock and used purely for architectural effect.",
+    "answer": "Stack Bond",
+    "choices": [
+      "Stack Bond",
+      "Running Bond",
+      "Flemish Bond",
+      "English Bond"
+    ],
+    "explanation": "Because stack bond has no mechanical overlapping, continuous horizontal joint reinforcement is structurally required.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5269,
     "area": "MSTE",
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Easy",
-    "question": "In financial arithmetic, interest earned solely on the initial principal amount over a given time duration without compounding: I = P * i * n.",
-    "answer": "SIMPLE INTEREST",
+    "difficulty": "Medium",
+    "question": "In Arrow Diagramming Method (ADM) project network scheduling, an imaginary activity that consumes zero duration and zero resources, used solely to show logical precedence relationships.",
+    "answer": "Dummy Activity",
     "choices": [
-      "COMPOUND INTEREST",
-      "SIMPLE INTEREST",
-      "EFFECTIVE ANNUAL YIELD",
-      "CONTINUOUS INTEREST"
+      "Dummy Activity",
+      "Critical Activity",
+      "Milestone Activity",
+      "Lag Activity"
     ],
-    "explanation": "Simple interest accrues linearly without interest reinvestment, whereas compound interest generates interest upon accumulated interest.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Dummy activities are drawn as dashed arrows in activity-on-arrow networks to prevent ambiguous dual-node numbering.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 644,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Easy",
-    "question": "In financial mathematics, interest calculated on both the initial principal deposit and the accumulated interest from prior compounding periods: F = P * (1 + i)^n.",
-    "answer": "COMPOUND INTEREST",
-    "choices": [
-      "SIMPLE INTEREST",
-      "COMPOUND INTEREST",
-      "NOMINAL DISCOUNT",
-      "ADD-ON CHARGE"
-    ],
-    "explanation": "Compound interest generates exponential financial growth over multi-period engineering investment horizons.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 645,
+    "id": 5270,
     "area": "MSTE",
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "A uniform series of equal periodic payments where each payment is made at the beginning of each payment period (such as advance lease or insurance payments).",
-    "answer": "ANNUITY DUE",
+    "question": "In CPM network analysis, that continuous sequence of connected activities through the network from start to finish which establishes the absolute minimum total project duration.",
+    "answer": "Critical Path",
     "choices": [
-      "ORDINARY ANNUITY",
-      "ANNUITY DUE",
-      "DEFERRED ANNUITY",
-      "PERPETUITY"
+      "Critical Path",
+      "Subcritical Path",
+      "Slack Route",
+      "Float Path"
     ],
-    "explanation": "Because payments in an annuity due occur at the start of each period, its present value is (1 + i) times greater than that of an ordinary annuity.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Activities on the critical path have zero total float; any delay on the critical path directly delays project completion.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 646,
+    "id": 5271,
     "area": "MSTE",
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "The simplest depreciation method where equal annual depreciation amounts are charged throughout an asset useful life: D = (First Cost - Salvage Value) / n.",
-    "answer": "STRAIGHT-LINE DEPRECIATION",
+    "question": "The total amount of scheduling leeway or time by which an activity can be delayed without delaying the overall project completion date.",
+    "answer": "Total Float (Slack)",
     "choices": [
-      "DECLINING BALANCE",
-      "STRAIGHT-LINE DEPRECIATION",
-      "SUM-OF-THE-YEARS-DIGITS",
-      "SINKING FUND DEPRECIATION"
+      "Total Float (Slack)",
+      "Free Float",
+      "Independent Float",
+      "Interfering Float"
     ],
-    "explanation": "Straight-line depreciation assumes an asset loses value uniformly and linearly across each year of service life.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Total Float = Late Finish - Early Finish (or Late Start - Early Start).",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 647,
+    "id": 5272,
     "area": "MSTE",
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "An accelerated depreciation method in which a constant annual percentage rate (equal to 2/n for double-declining) is multiplied by the undepreciated book value at the start of each year.",
-    "answer": "DOUBLE DECLINING BALANCE METHOD",
+    "question": "An activity-on-node (AON) project scheduling format that allows incorporation of lead and lag factors and four types of precedence relationships (FS, SS, FF, SF).",
+    "answer": "Precedence Diagram Method (PDM)",
     "choices": [
-      "STRAIGHT LINE METHOD",
-      "DOUBLE DECLINING BALANCE METHOD",
-      "SOYD METHOD",
-      "UNIT-OF-PRODUCTION METHOD"
+      "Precedence Diagram Method (PDM)",
+      "Arrow Diagramming Method (ADM)",
+      "Bar Chart",
+      "Line of Balance"
     ],
-    "explanation": "Double Declining Balance (DDB) does not subtract salvage value in initial depreciation calculations, but book value cannot drop below salvage value.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "PDM is the universal standard format in modern scheduling software (Primavera, MS Project).",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 648,
+    "id": 5273,
     "area": "MSTE",
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "The ratio of present worth of net project benefits to present worth of project costs, used extensively to evaluate public works civil infrastructure: B/C = PW(Benefits) / PW(Costs).",
-    "answer": "BENEFIT-COST RATIO",
+    "question": "Fixed construction equipment costs that are incurred every year whether the equipment is operated or sits idle, composed of depreciation, investment interest, insurance, taxes, and storage.",
+    "answer": "Owning Costs",
     "choices": [
-      "INTERNAL RATE OF RETURN",
-      "BENEFIT-COST RATIO",
-      "RETURN ON INVESTMENT",
-      "PAYBACK QUOTIENT"
+      "Owning Costs",
+      "Operating Costs",
+      "Consumable Costs",
+      "Marginal Costs"
     ],
-    "explanation": "A public infrastructure project is economically justifiable if Benefit-Cost Ratio B/C ≥ 1.0.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Owning costs continue to accrue even during seasonal shutdowns and bad weather.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 649,
+    "id": 5274,
     "area": "MSTE",
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Easy",
-    "question": "The time required for cumulative net cash inflows from an engineering project to equal the initial capital investment cost.",
-    "answer": "PAYBACK PERIOD",
-    "choices": [
-      "INTERNAL HORIZON",
-      "PAYBACK PERIOD",
-      "AMORTIZATION TIME",
-      "BREAKEVEN INTERVAL"
-    ],
-    "explanation": "Payback period measures liquidity risk, though simple payback ignores cash flows occurring after the payback horizon and time value of money.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 650,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Medium",
-    "question": "A surveying leveling error caused by combined effects of earth curvature and atmospheric light refraction over long horizontal sights: h_cr = 0.0675 * K^2 (in meters for K in km).",
-    "answer": "CURVATURE AND REFRACTION CORRECTION",
+    "question": "Variable construction equipment costs that are incurred only when the equipment is physically operated, including fuel, lubricants, filters, tires, and routine maintenance labor.",
+    "answer": "Operating Costs",
     "choices": [
-      "COLLIMATION BIAS",
-      "CURVATURE AND REFRACTION CORRECTION",
-      "INDEX PARALLAX",
-      "ROD INCLINATION ERROR"
+      "Operating Costs",
+      "Owning Costs",
+      "Capital Costs",
+      "Overhead Costs"
     ],
-    "explanation": "Curvature causes the true level surface to drop below line of sight, while atmospheric refraction bends sight lines downward (net effect: hcr = 0.0675 * K²).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Operating costs vary directly with engine operating hours and site working severity.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 651,
+    "id": 5275,
     "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "Tape correction applied to steel surveying tapes when field measurement temperature differs from standardized tape calibration temperature: Ct = alpha * L * (T - T0).",
-    "answer": "TEMPERATURE CORRECTION",
+    "question": "The progressive decline in the market value and economic serviceability of a construction machine over time due to age, wear, physical deterioration, and technological obsolescence.",
+    "answer": "Depreciation",
     "choices": [
-      "PULL CORRECTION",
-      "TEMPERATURE CORRECTION",
-      "SAG CORRECTION",
-      "SLOPE CORRECTION"
+      "Depreciation",
+      "Amortization",
+      "Depletion",
+      "Salvage Value"
     ],
-    "explanation": "Steel tape thermal expansion coefficient α is 0.0000116 / °C; tapes expand in hot weather, reading short and requiring a positive correction.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Straight-line and MACRS depreciation methods allocate equipment capital write-off over useful life.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 652,
+    "id": 5276,
     "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "Tension correction applied when pulling tension (P) on a steel tape differs from standard calibration tension (P0): Cp = (P - P0) * L / (A * E).",
-    "answer": "PULL CORRECTION",
+    "question": "A surety bond guaranteeing that a bidding contractor, if awarded the contract, will enter into the contract and furnish the required performance and payment bonds.",
+    "answer": "Bid Bond",
     "choices": [
-      "SAG CORRECTION",
-      "PULL CORRECTION",
-      "TEMPERATURE CORRECTION",
-      "CATENARY FACTOR"
+      "Bid Bond",
+      "Performance Bond",
+      "Payment Bond",
+      "Maintenance Bond"
     ],
-    "explanation": "Derived directly from Hooke’s elastic deformation formula ΔL = P*L / (A*E).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "If the winning bidder reneges, the surety forfeits the bid bond penalty (usually 5% to 10% of bid amount).",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 653,
+    "id": 5277,
     "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "In closed traverse surveying, the linear distance between the true initial starting station point and the unclosed final closing point: Ec = sqrt((sum_Lat)^2 + (sum_Dep)^2).",
-    "answer": "LINEAR ERROR OF CLOSURE",
+    "question": "A surety bond that guarantees to the owner that the contractor will perform and complete the construction project in accordance with all contract plans and specifications.",
+    "answer": "Performance Bond",
     "choices": [
-      "RELATIVE PRECISION",
-      "LINEAR ERROR OF CLOSURE",
-      "ANGULAR MISCLOSE",
-      "MERIDIAN RESIDUAL"
+      "Performance Bond",
+      "Bid Bond",
+      "Payment Bond",
+      "Advance Payment Bond"
     ],
-    "explanation": "Linear error of closure (LEC) measures cumulative traverse field error; dividing LEC by traverse perimeter gives the relative precision ratio (e.g., 1:10,000).",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "If the contractor defaults, the surety steps in to finance or arrange project completion.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 654,
+    "id": 5278,
     "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "A classic coordinate geometry method (also known as Gauss area formula or shoelace algorithm) for calculating the interior area of a closed traverse polygon.",
-    "answer": "COORDINATE METHOD",
+    "question": "A surety bond that guarantees that the prime contractor will pay all subcontractors, laborers, and material suppliers, protecting the owner against mechanic's liens.",
+    "answer": "Payment Bond",
     "choices": [
-      "DOUBLE MERIDIAN METHOD",
-      "COORDINATE METHOD",
-      "STADIA CROSS METHOD",
-      "SIMPSON RULE"
+      "Payment Bond",
+      "Performance Bond",
+      "Bid Bond",
+      "Guaranty Bond"
     ],
-    "explanation": "Area equals half the absolute sum of cross-products of coordinate vertices: Area = 0.5 * |Σ (X_i * Y_{i+1} - X_{i+1} * Y_i)|.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Payment bonds ensure suppliers and workers receive timely payment without encumbering owner property.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 655,
+    "id": 5279,
     "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Hard",
-    "question": "In traverse area calculations, the distance from the midpoint of a course to the reference meridian, where Double Meridian Distance (DMD) of course n equals DMD(n-1) + Dep(n-1) + Dep(n).",
-    "answer": "DOUBLE MERIDIAN DISTANCE",
-    "choices": [
-      "DOUBLE PARALLEL DISTANCE",
-      "DOUBLE MERIDIAN DISTANCE",
-      "LATITUDE PRODUCT",
-      "COORDINATE OFFSET"
-    ],
-    "explanation": "Total traverse area equals half the algebraic sum of products of each course DMD multiplied by its adjusted latitude.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 656,
-    "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
-    "question": "An electronic surveying instrument combining an electronic theodolite, an electronic distance measurement (EDM) unit, and an onboard microprocessor for recording coordinates.",
-    "answer": "TOTAL STATION",
+    "question": "A predetermined contractual sum specified in the construction contract to be paid by the contractor to the owner for each calendar day of unexcused delay beyond the agreed completion date.",
+    "answer": "Liquidated Damages",
     "choices": [
-      "OPTICAL TRANSIT",
-      "TOTAL STATION",
-      "DUMPY LEVEL",
-      "AUTO-COLLIMATOR"
+      "Liquidated Damages",
+      "Compensatory Damages",
+      "Consequential Damages",
+      "Punitive Damages"
     ],
-    "explanation": "Total stations measure horizontal angles, zenith angles, and slope distances to prisms, automatically calculating 3D northing, easting, and elevation coordinates.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Liquidated damages represent a genuine pre-estimate of owner losses (loss of revenue, rental costs) resulting from late handover.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 657,
+    "id": 5280,
     "area": "MSTE",
-    "subtopic": "Surveying, Leveling & Errors",
-    "difficulty": "Hard",
-    "question": "An advanced satellite positioning technique where carrier-phase differential corrections transmitted from a stationary GNSS base station allow mobile rovers to achieve centimeter-level positioning accuracy.",
-    "answer": "REAL-TIME KINEMATIC GNSS",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A percentage (commonly 10% in the Philippines under RA 9184) withheld from each progress payment to a contractor as a guarantee against defective work and to ensure project completion.",
+    "answer": "Retainage (Retention)",
     "choices": [
-      "PSEUDORANGE DGPS",
-      "REAL-TIME KINEMATIC GNSS",
-      "TRILATERATION RADAR",
-      "DILUTION OF PRECISION"
+      "Retainage (Retention)",
+      "Mobilization Fee",
+      "Escalation Reserve",
+      "Contingency Fund"
     ],
-    "explanation": "Real-Time Kinematic (RTK) GNSS resolves carrier phase ambiguities in real time, delivering sub-2cm horizontal and vertical survey coordinates.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Retainage is released upon final inspection, issuance of certificate of completion, and warranty bond posting.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
   },
   {
-    "id": 658,
+    "id": 5281,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A written document authorized and issued by the owner or engineer ordering an addition, deletion, or modification within the general scope of the contract, adjusting contract price and time.",
+    "answer": "Change Order",
+    "choices": [
+      "Change Order",
+      "Punch List",
+      "Shop Drawing",
+      "Field Memo"
+    ],
+    "explanation": "A formal change order binds both parties to agreed alterations in cost and completion schedule.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5282,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A comprehensive list of deficient, incomplete, or unacceptable items of work prepared by the architect or engineer during the final inspection prior to substantial completion.",
+    "answer": "Punch List",
+    "choices": [
+      "Punch List",
+      "Bill of Quantities",
+      "Addendum",
+      "Transmittal"
+    ],
+    "explanation": "Contractors must rectify all punch list items before final handover and release of retainage.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5283,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The systematic analysis of a construction design with the objective of accomplishing required functions and quality at the lowest total life-cycle cost without sacrificing safety.",
+    "answer": "Value Engineering (VE)",
+    "choices": [
+      "Value Engineering (VE)",
+      "Cost Overrun Analysis",
+      "Quality Audit",
+      "Earned Value Management"
+    ],
+    "explanation": "Value engineering eliminates unnecessary capital and maintenance expenses by evaluating alternative materials and methods.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5284,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "An intelligent 3D model-based digital process that integrates design data, specifications, structural parameters, schedule (4D), cost (5D), and facilities management data into a single collaborative project platform.",
+    "answer": "Building Information Modeling (BIM)",
+    "choices": [
+      "Building Information Modeling (BIM)",
+      "Computer-Aided Drafting (CAD)",
+      "Geographic Information System (GIS)",
+      "Critical Path Method (CPM)"
+    ],
+    "explanation": "BIM facilitates clash detection, prefabrication scheduling, and multi-disciplinary coordination.",
+    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+  },
+  {
+    "id": 5285,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The major division of the construction industry that involves the erection of residential, commercial, and institutional building structures.",
+    "answer": "Building Construction (Vertical Construction)",
+    "choices": [
+      "Building Construction (Vertical Construction)",
+      "Heavy Construction (Horizontal Construction)",
+      "Industrial Construction",
+      "Municipal Infrastructure"
+    ],
+    "explanation": "Construction is broadly divided into vertical construction (buildings) and horizontal/heavy construction (highways, dams, ports).",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5286,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "The major division of the construction industry that includes highways, airports, railroads, bridges, canals, harbors, dams, and other major public civil works.",
+    "answer": "Heavy Construction (Horizontal Construction)",
+    "choices": [
+      "Heavy Construction (Horizontal Construction)",
+      "Building Construction (Vertical Construction)",
+      "Residential Framing",
+      "Interior Fit-out"
+    ],
+    "explanation": "Heavy construction requires large fleets of earthmoving, grading, paving, and marine equipment.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5287,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "Municipal ordinances that control land use, building heights, population density, and types of structures permitted in designated geographical zones.",
+    "answer": "Zoning Regulations",
+    "choices": [
+      "Zoning Regulations",
+      "Environmental Regulations",
+      "Building Codes",
+      "Safety Standards"
+    ],
+    "explanation": "Zoning laws prevent industrial factories from encroaching into low-density residential subdivisions.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5288,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "Soil or rock material in its natural, undisturbed state before excavation or blasting takes place in cut areas.",
+    "answer": "Bank Cubic Yard (BCM / BCY)",
+    "choices": [
+      "Bank Cubic Yard (BCM / BCY)",
+      "Loose Cubic Yard (LCM / LCY)",
+      "Compacted Cubic Yard (CCM / CCY)",
+      "Pay Yard"
+    ],
+    "explanation": "Bank volume represents the in-situ density of natural soil before loosening.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5289,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "Soil or rock material after it has been excavated or blasted, where soil grains have loosened and air voids have filled the expanded space.",
+    "answer": "Loose Cubic Yard (LCM / LCY)",
+    "choices": [
+      "Loose Cubic Yard (LCM / LCY)",
+      "Bank Cubic Yard (BCM / BCY)",
+      "Compacted Cubic Yard (CCM / CCY)",
+      "Swell Yard"
+    ],
+    "explanation": "Loose volume dictates the required capacity and number of haul trucks.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5290,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "Soil or rock material after mechanical rolling, tamping, or vibration has expelled air voids and compressed the particles into fill embankments.",
+    "answer": "Compacted Cubic Yard (CCM / CCY)",
+    "choices": [
+      "Compacted Cubic Yard (CCM / CCY)",
+      "Bank Cubic Yard (BCM / BCY)",
+      "Loose Cubic Yard (LCM / LCY)",
+      "Shrink Yard"
+    ],
+    "explanation": "Compacted volume is almost always smaller than bank volume due to compaction to high target relative densities.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5291,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "The volumetric expansion phenomenon in which a soil increases in volume when excavated because soil grains are loosened and air enters the void spaces.",
+    "answer": "Soil Swell",
+    "choices": [
+      "Soil Swell",
+      "Soil Shrinkage",
+      "Soil Consolidation",
+      "Soil Subsidence"
+    ],
+    "explanation": "Percent swell = ((Bank density / Loose density) - 1) * 100%.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5292,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "The reverse of the soil swell phenomenon, occurring when soil is compacted mechanically into an embankment, forcing air out of void spaces so it occupies less volume than in its bank state.",
+    "answer": "Soil Shrinkage",
+    "choices": [
+      "Soil Shrinkage",
+      "Soil Swell",
+      "Soil Expansion",
+      "Soil Slaking"
+    ],
+    "explanation": "Percent shrinkage = (1 - (Bank density / Compacted density)) * 100%.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5293,
     "area": "MSTE",
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
-    "question": "The angle subtended at the center of a circular curve by an arc of 20 meters (arc basis) or chord of 20 meters (chord basis): D = 1145.916 / R.",
-    "answer": "DEGREE OF CURVE",
+    "question": "A continuous graphical curve representing the cumulative accumulated volume of earthwork plotted against roadway stationing along a linear highway alignment.",
+    "answer": "Mass Diagram",
     "choices": [
-      "CENTRAL DEFLECTION ANGLE",
-      "DEGREE OF CURVE",
-      "RADIUS OF CURVATURE",
-      "CHORD INCLINATION"
+      "Mass Diagram",
+      "Haul Chart",
+      "Bar Schedule",
+      "Flow Diagram"
     ],
-    "explanation": "Degree of curve (D) expresses curve sharpness; sharper circular curves have larger degrees of curve and smaller radii.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Mass diagrams indicate balance points, economic haul directions, and borrow/waste locations.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 659,
-    "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
-    "difficulty": "Easy",
-    "question": "The straight-line distance along a circular horizontal highway curve connecting the Point of Curvature (PC) to the Point of Tangency (PT): C = 2 * R * sin(I / 2).",
-    "answer": "LONG CHORD",
-    "choices": [
-      "TANGENT DISTANCE",
-      "LONG CHORD",
-      "EXTERNAL DISTANCE",
-      "MIDDLE ORDINATE"
-    ],
-    "explanation": "The long chord (C) forms the base of the isosceles triangle formed by the two radii meeting the deflection angle I.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 660,
+    "id": 5294,
     "area": "MSTE",
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
-    "question": "The distance from the Point of Intersection (PI) to the midpoint of a horizontal circular curve along the external radial line: E = R * [sec(I / 2) - 1].",
-    "answer": "EXTERNAL DISTANCE",
+    "question": "The distance from the center of gravity of an earth excavation cut to the center of gravity of the corresponding fill embankment.",
+    "answer": "Haul Distance",
     "choices": [
-      "MIDDLE ORDINATE",
-      "EXTERNAL DISTANCE",
-      "TANGENT OFFSET",
-      "LONG CHORD"
+      "Haul Distance",
+      "Free Haul Distance",
+      "Overhaul Distance",
+      "Economic Limit of Haul"
     ],
-    "explanation": "External distance (E) indicates clearance between PI and curve apex, vital when designing roads in tight mountainous switchbacks.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Haul distance determines whether scrapers, articulated trucks, or highway dumpers are the optimal hauling equipment.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 661,
+    "id": 5295,
     "area": "MSTE",
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
-    "question": "The radial distance from the midpoint of the long chord to the midpoint of the circular curve arc: M = R * [1 - cos(I / 2)].",
-    "answer": "MIDDLE ORDINATE",
+    "question": "The maximum distance specified in standard road contracts over which excavated material is moved without additional payment beyond the contract unit price per cubic meter.",
+    "answer": "Free Haul Distance",
     "choices": [
-      "EXTERNAL DISTANCE",
-      "MIDDLE ORDINATE",
-      "SUBCHORD DEFLECTION",
-      "CENTRAL TANGENT"
+      "Free Haul Distance",
+      "Overhaul Distance",
+      "Economic Haul Distance",
+      "Limit of Economical Haul"
     ],
-    "explanation": "Middle ordinate (M) is used to check required lateral sight distance clearance around horizontal curve obstructions like trees or rock cuts.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Under DPWH specifications, free haul distance is typically 600 meters or as defined in the contract.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 662,
+    "id": 5296,
     "area": "MSTE",
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
-    "question": "The minimum sight distance required on a two-lane two-way highway to allow a driver to safely pass a slower-moving vehicle without interfering with oncoming traffic.",
-    "answer": "PASSING SIGHT DISTANCE",
+    "question": "The product of the volume of excavated material moved beyond the specified free haul distance multiplied by the excess distance moved, measured in station-meters or cubic-meter-kilometers.",
+    "answer": "Overhaul",
     "choices": [
-      "STOPPING SIGHT DISTANCE",
-      "PASSING SIGHT DISTANCE",
-      "DECISION SIGHT DISTANCE",
-      "INTERSECTION SIGHT DISTANCE"
+      "Overhaul",
+      "Free Haul",
+      "Borrow Pit Haul",
+      "Waste Haul"
     ],
-    "explanation": "Passing Sight Distance (PSD) is significantly longer than Stopping Sight Distance and governs no-passing zone solid pavement markings.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Overhaul is paid as a supplementary unit price when haul distances exceed free haul allowances.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 663,
+    "id": 5297,
     "area": "MSTE",
-    "subtopic": "Highway Geometric Design & Sight Distances",
+    "subtopic": "Soil Physical Properties & Phase Relationships",
     "difficulty": "Medium",
-    "question": "In earthwork computations, the standard formula approximating volume between two adjacent cross-sectional areas A1 and A2 spaced distance L apart: V = (A1 + A2) / 2 * L.",
-    "answer": "AVERAGE END-AREA METHOD",
+    "question": "The steepest angle with the horizontal at which a loose, granular sloping heap of soil or aggregate will naturally remain stable without sliding downward.",
+    "answer": "Angle of Repose",
     "choices": [
-      "PRISMOIDAL METHOD",
-      "AVERAGE END-AREA METHOD",
-      "SIMPSON METHOD",
-      "TRAPEZOIDAL SOLID METHOD"
+      "Angle of Repose",
+      "Friction Angle",
+      "Slope Angle",
+      "Batter Angle"
     ],
-    "explanation": "The average end-area method is the standard earthwork estimation method used by highway departments, giving slightly larger volumes than prismoidal.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Angle of repose varies with particle shape, gradation, and surface moisture content.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 664,
+    "id": 5298,
     "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "An elongated ridge-like pile of excavated earth or rock material dumped continuously along an excavation trench or canal cut.",
+    "answer": "Spoil Bank",
+    "choices": [
+      "Spoil Bank",
+      "Spoil Pile",
+      "Borrow Pit",
+      "Retention Berm"
+    ],
+    "explanation": "Spoil banks are formed by draglines casting material in linear strips along canals.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5299,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A conical pile of excavated material dumped from a single fixed dumping location (such as from a conveyor head or boom tip).",
+    "answer": "Spoil Pile",
+    "choices": [
+      "Spoil Pile",
+      "Spoil Bank",
+      "Berm",
+      "Talus"
+    ],
+    "explanation": "Spoil piles assume conical geometry bounded by the material's angle of repose.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5300,
+    "area": "MSTE",
+    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
+    "difficulty": "Medium",
+    "question": "A crane-mounted excavator equipped with a bucket formed of two hinged jaws that close horizontally, primarily used for vertical digging in deep shafts, cofferdams, and handling bulk aggregates.",
+    "answer": "Clamshell",
+    "choices": [
+      "Clamshell",
+      "Dragline",
+      "Backhoe",
+      "Skimmer"
+    ],
+    "explanation": "Clamshell buckets operate vertically supported by holding and closing wire ropes.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5301,
+    "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "A static or vibratory compaction roller equipped with numerous steel protruding pads or feet that compact cohesive clay soils from the bottom of the lift upward.",
+    "answer": "Tamping Foot (Sheepsfoot) Roller",
+    "choices": [
+      "Tamping Foot (Sheepsfoot) Roller",
+      "Smooth Drum Roller",
+      "Pneumatic Tire Roller",
+      "Grid Roller"
+    ],
+    "explanation": "Sheepsfoot rollers knead and aerate wet cohesive clays to achieve high target densities.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5302,
+    "area": "PSAD",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
-    "question": "Deformed longitudinal depressions or ruts formed in the wheelpaths of flexible asphalt pavements resulting from permanent shear displacement of asphalt under heavy axle loads.",
-    "answer": "RUTTING",
+    "question": "A compaction machine equipped with multiple closely spaced rubber tires that delivers kneading action and uniform pressure over irregular surfaces, used for asphalt finishing and subgrade sealing.",
+    "answer": "Pneumatic-Tired Roller",
     "choices": [
-      "CORRUGATION",
-      "RUTTING",
-      "RAVELING",
-      "POTHOLE DISRUPTION"
+      "Pneumatic-Tired Roller",
+      "Sheepsfoot Roller",
+      "Smooth Drum Roller",
+      "Impact Roller"
     ],
-    "explanation": "Rutting creates hazardous hydroplaning conditions during rainstorms; it is mitigated using polymer-modified asphalt binders and high-stability aggregate.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Pneumatic rolling kneads aggregates into interlock without crushing soft stones.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 665,
+    "id": 5303,
     "area": "MSTE",
+    "subtopic": "Soil Classification, Compaction & Permeability",
+    "difficulty": "Medium",
+    "question": "A compaction roller equipped with an open heavy steel mesh or grid drum that fragments soft rocks, breaks oversize aggregate, and compacts dry granular soils.",
+    "answer": "Grid (Mesh) Roller",
+    "choices": [
+      "Grid (Mesh) Roller",
+      "Smooth Steel Roller",
+      "Pneumatic Roller",
+      "Tamping Foot Roller"
+    ],
+    "explanation": "Grid rollers produce high contact stresses along grid bars to crush oversized friable stone.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5304,
+    "area": "MSTE",
+    "subtopic": "Highway Geometric Design & Sight Distances",
+    "difficulty": "Medium",
+    "question": "One of the most versatile pieces of earthmoving equipment, equipped with a long moldboard blade positioned between front and rear axles used for precision grading, shaping ditches, and spreading materials.",
+    "answer": "Motor Grader",
+    "choices": [
+      "Motor Grader",
+      "Bulldozer",
+      "Scraper",
+      "Backhoe"
+    ],
+    "explanation": "Motor graders establish accurate subgrade elevations, crowns, and superelevated road curves.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
+  },
+  {
+    "id": 5305,
+    "area": "PSAD",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
-    "question": "The ejection of water and fine subgrade or subbase soil particles through joints and cracks in concrete pavements under repetitive heavy wheel axle loads.",
-    "answer": "PUMPING OF PAVEMENT",
+    "question": "A zero-slump, stiff concrete mix placed with asphalt pavers and compacted using heavy vibratory steel drum rollers, widely used in rapid dam construction and heavy-duty industrial pavements.",
+    "answer": "Roller-Compacted Concrete (RCC)",
     "choices": [
-      "BLOWUP",
-      "PUMPING OF PAVEMENT",
-      "FAULTING",
-      "SPALLING"
+      "Roller-Compacted Concrete (RCC)",
+      "Precast Concrete",
+      "Shotcrete",
+      "Structural Lightweight Concrete"
     ],
-    "explanation": "Pumping removes subgrade support under concrete slab edges and corners, leading to slab faulting and structural cracking.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "RCC combines the economy of rapid earthfill placement with the strength and durability of conventional concrete.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   },
   {
-    "id": 666,
-    "area": "MSTE",
-    "subtopic": "Traffic Engineering, Markings & Signs",
-    "difficulty": "Easy",
-    "question": "The total volume of traffic passing a given road section in both directions over a full calendar year divided by 365 days: AADT = Annual Volume / 365.",
-    "answer": "ANNUAL AVERAGE DAILY TRAFFIC",
-    "choices": [
-      "AVERAGE DAILY TRAFFIC",
-      "ANNUAL AVERAGE DAILY TRAFFIC",
-      "DESIGN HOURLY VOLUME",
-      "PEAK DAY VOLUME"
-    ],
-    "explanation": "Annual Average Daily Traffic (AADT) is the primary traffic metric used to plan highway classifications, design lanes, and justify funding.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 667,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Medium",
-    "question": "In CPM project scheduling, a network diagramming format where activities are represented on nodes and precedence logic dependencies are represented by connecting arrows.",
-    "answer": "ACTIVITY-ON-NODE DIAGRAM",
-    "choices": [
-      "ACTIVITY-ON-ARROW DIAGRAM",
-      "ACTIVITY-ON-NODE DIAGRAM",
-      "GANTT BAR CHART",
-      "LINE OF BALANCE"
-    ],
-    "explanation": "Activity-on-Node (AON / Precedence Diagramming Method PDM) eliminates the need for dummy activities required by older Activity-on-Arrow systems.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 668,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Hard",
-    "question": "In Earned Value Management (EVM), the cost variance metric expressing the difference between Earned Value and Actual Cost: CV = EV - AC.",
-    "answer": "COST VARIANCE",
-    "choices": [
-      "SCHEDULE VARIANCE",
-      "COST VARIANCE",
-      "BUDGET VARIANCE",
-      "EXPENDITURE VARIATION"
-    ],
-    "explanation": "Positive CV indicates project cost savings (under budget); negative CV indicates cost overruns.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 669,
-    "area": "MSTE",
-    "subtopic": "Project Management, CPM/PERT & Equipment Economics",
-    "difficulty": "Hard",
-    "question": "In Earned Value Management, the difference between Earned Value and Planned Value: SV = EV - PV.",
-    "answer": "SCHEDULE VARIANCE",
-    "choices": [
-      "COST VARIANCE",
-      "SCHEDULE VARIANCE",
-      "FLOAT DELAY",
-      "CRITICAL DIFFERENTIAL"
-    ],
-    "explanation": "Positive SV indicates project schedule progress is ahead of plan; negative SV indicates schedule slippage.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 670,
-    "area": "MSTE",
-    "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
-    "difficulty": "Easy",
-    "question": "Philippine Republic Act No. 11058 which strengthens compliance with Occupational Safety and Health (OSH) standards and provides strict penalties for violations.",
-    "answer": "RA 11058",
-    "choices": [
-      "RA 9184",
-      "RA 11058",
-      "PD 1096",
-      "RA 544"
-    ],
-    "explanation": "RA 11058 mandates safe workplaces, protective equipment, safety officers, workers’ right to refuse unsafe work, and administrative fines of up to ₱100,000/day for non-compliance.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
-  },
-  {
-    "id": 671,
+    "id": 5306,
     "area": "MSTE",
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
-    "question": "Under Philippine civil engineering law (RA 544 as amended), the state law that governs and regulates the practice of civil engineering in the Philippines.",
-    "answer": "RA 544",
+    "question": "A rigid prefabricated steel or aluminum box structure placed in an excavation to protect trench workers from unexpected cave-ins or wall collapses.",
+    "answer": "Trench Shield (Trench Box)",
     "choices": [
-      "RA 544",
-      "RA 9184",
-      "PD 1594",
-      "PD 223"
+      "Trench Shield (Trench Box)",
+      "Sheet Piling",
+      "Lagging Wall",
+      "Underpinning"
     ],
-    "explanation": "Republic Act 544 (The Civil Engineering Law of 1950) defines the scope, examination requirements, and registration of civil engineers in the Philippines.",
-    "reference": "Official PRC CELE Table of Specifications (TOS) & Reviewer"
+    "explanation": "Trench boxes protect personnel inside deep pipe trenches without supporting the trench walls themselves.",
+    "reference": "GERTC Refresher — Construction Methods Compilation"
   }
 ];

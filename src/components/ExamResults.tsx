@@ -6,9 +6,12 @@ import {
 import {
   RotateCcw,
   Printer,
-  ArrowRight
+  ArrowRight,
+  Award,
+  Sparkles
 } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { addBottleCaps } from '../utils/storage';
 
 interface ExamResultsProps {
   result: ExamSessionResult;
@@ -35,14 +38,17 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
   const incorrect = total - correct;
   const percentage = result.percentage;
   const isPassed = percentage >= 70;
+  const capsEarned = isPassed ? 100 : 25;
 
   useEffect(() => {
+    addBottleCaps(capsEarned);
     if (isPassed) {
       soundManager.playPassed();
+      setTimeout(() => soundManager.playCapsJingle(), 400);
     } else {
       soundManager.playFailed();
     }
-  }, [isPassed]);
+  }, [isPassed, capsEarned]);
 
   const areaBreakdown: Record<string, { total: number; correct: number }> = {};
   result.questionIds.forEach(qid => {
@@ -67,26 +73,37 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
   return (
     <div className="max-w-4xl mx-auto w-full my-6 p-4 sm:p-6 lg:p-8 space-y-6">
       
-      {/* Score Card */}
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl overflow-hidden shadow-xs text-stone-900 dark:text-stone-100 transition-colors">
-        <div className="p-6 sm:p-8 border-b border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-800/50">
+      {/* Score Card (Vault-Tec G.O.A.T. Certified Report) */}
+      <div className="bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] rounded-3xl overflow-hidden shadow-sm text-stone-900 dark:text-stone-100 transition-colors relative">
+        {/* Top Hazard Chevrons Accent */}
+        <div className="h-2.5 w-full vault-tec-hazard-stripe" />
+
+        <div className="p-6 sm:p-8 border-b border-stone-200 dark:border-[#2B447A] bg-stone-50/50 dark:bg-[#101F42]/60">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <span
-                className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${
-                  isPassed
-                    ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-400'
-                    : 'bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-400'
-                }`}
-              >
-                {isPassed ? 'Passed (≥70%)' : 'Needs Review (<70%)'}
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                Assessment Results
+              <div className="flex items-center space-x-2 mb-2">
+                <span
+                  className={`inline-block px-3 py-1 rounded-full text-xs font-mono font-black uppercase tracking-wider ${
+                    isPassed
+                      ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-600 dark:text-emerald-400'
+                      : 'bg-rose-500/15 border border-rose-500/40 text-rose-600 dark:text-rose-400'
+                  }`}
+                >
+                  {isPassed ? '✓ Vault-Tec Approved (≥70%)' : '⚠ Radiation Alert (<70%)'}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-500 dark:text-amber-300 text-[10px] font-mono font-bold border border-amber-500/30">
+                  +{capsEarned} Caps Rewarded
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tight font-mono text-stone-900 dark:text-amber-400">
+                G.O.A.T. Assessment Report
               </h2>
+              <p className="text-xs text-stone-500 dark:text-sky-300 font-mono mt-0.5">
+                Generalized Occupational Aptitude Test for Civil Engineers · PRC Board Calibration
+              </p>
             </div>
 
-            <div className="flex items-center space-x-6 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 p-4 rounded-2xl shadow-xs">
+            <div className="flex items-center space-x-6 bg-white dark:bg-[#162852] border border-stone-200 dark:border-[#2B447A] p-4 rounded-2xl shadow-xs">
               <div className="text-center">
                 <div className="text-2xl sm:text-3xl font-black font-mono">
                   {correct} / {total}

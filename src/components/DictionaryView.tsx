@@ -192,7 +192,7 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
           <Search className="absolute left-4 top-3.5 w-4 h-4 text-stone-400" />
           <input
             type="text"
-            placeholder="Search questions, terms, codes, or formulas..."
+            placeholder="Search questions, terms, codes, or definitions..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-2xl pl-11 pr-4 py-3 text-sm text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:ring-2 focus:ring-orange-500 outline-none"

@@ -204,7 +204,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       } else if (avgSecondsPerQ > 108) {
         list.push({
           title: `Pacing Warning (${avgSecondsPerQ}s / question)`,
-          desc: 'Averaging slower than the 108s per question PRC limit. Practice speed drilling formulas in Flashcard mode.',
+          desc: 'Averaging slower than the 108s per question PRC limit. Practice speed drilling terms and concepts in Flashcard mode.',
           type: 'warning'
         });
       }

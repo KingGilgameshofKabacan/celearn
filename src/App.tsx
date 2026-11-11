@@ -5,7 +5,8 @@ import {
   ExamSessionResult,
   FlashcardProgress,
   FlashcardMasteryStatus,
-  UserProfile
+  UserProfile,
+  ActiveExamSession
 } from './types';
 import { CE_QUESTIONS_MASTER } from './data/questions';
 import {
@@ -37,7 +38,9 @@ import {
   getNewCards,
   setDailyTaskCompleted,
   incrementDailyQuestionsAnswered,
-  requestPersistentStorage
+  requestPersistentStorage,
+  getActiveExamSession,
+  clearActiveExamSession
 } from './utils/storage';
 import { Header, AppTab } from './components/Header';
 import { HomeScreen } from './components/HomeScreen';
@@ -45,7 +48,6 @@ import { ExamSetup } from './components/ExamSetup';
 import { ExamActive } from './components/ExamActive';
 import { ExamResults } from './components/ExamResults';
 import { FlashcardsView } from './components/FlashcardsView';
-import { FormulasView } from './components/FormulasView';
 import { DictionaryView } from './components/DictionaryView';
 import { AnalyticsView } from './components/AnalyticsView';
 import { AchievementsView } from './components/AchievementsView';
@@ -56,6 +58,7 @@ import { WaterRippleEffect } from './components/WaterRippleEffect';
 import { LiveBackground } from './components/LiveBackground';
 import { PdfScannerModal } from './components/PdfScannerModal';
 import { RecentlyAddedModal } from './components/RecentlyAddedModal';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { AlertTriangle } from 'lucide-react';
 
 export default function App() {
@@ -91,6 +94,24 @@ export default function App() {
   const [latestResult, setLatestResult] = useState<ExamSessionResult | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [pendingTabSwitch, setPendingTabSwitch] = useState<AppTab | null>(null);
+
+  // Interrupted exam session state for 'Resume Last Session'
+  const [interruptedSession, setInterruptedSession] = useState<ActiveExamSession | null>(getActiveExamSession);
+  const [sessionSecondsRemaining, setSessionSecondsRemaining] = useState<number | undefined>(undefined);
+  const [sessionSecondsElapsed, setSessionSecondsElapsed] = useState<number | undefined>(undefined);
+
+  // Sync interrupted session state on tab focus and storage updates
+  useEffect(() => {
+    const handleSyncSession = () => {
+      setInterruptedSession(getActiveExamSession());
+    };
+    window.addEventListener('storage', handleSyncSession);
+    window.addEventListener('focus', handleSyncSession);
+    return () => {
+      window.removeEventListener('storage', handleSyncSession);
+      window.removeEventListener('focus', handleSyncSession);
+    };
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -311,6 +332,12 @@ export default function App() {
 
   // Start Exam with Fisher-Yates uniform shuffle
   const handleStartExam = () => {
+    // Clear any previous interrupted session before starting fresh
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
+
     let pool = allQuestions.filter(q => {
       if (config.area !== 'ALL' && q.area !== config.area) return false;
       if (config.subtopic !== 'ALL' && q.subtopic !== config.subtopic) return false;
@@ -333,6 +360,34 @@ export default function App() {
     setExamStage('active');
   };
 
+  // Resume interrupted exam session
+  const handleResumeSession = () => {
+    const session = interruptedSession || getActiveExamSession();
+    if (!session || !session.questions || session.questions.length === 0) {
+      showToast('No interrupted exam session found to resume.');
+      return;
+    }
+    setConfig(session.config);
+    setActiveQuestions(session.questions);
+    setCurrentQuestionIndex(session.currentIndex);
+    setUserAnswers(session.userAnswers || {});
+    setFlaggedIds(session.flaggedIds || []);
+    setSessionSecondsRemaining(session.secondsRemaining);
+    setSessionSecondsElapsed(session.secondsElapsed);
+    setExamStage('active');
+    setActiveTab('exam');
+    showToast(`Resumed exam (Item ${session.currentIndex + 1} of ${session.questions.length})`);
+  };
+
+  // Discard interrupted exam session
+  const handleDiscardSession = () => {
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
+    showToast('Interrupted session discarded.');
+  };
+
   // Quick preset trigger
   const handleQuickPreset = (preset: Partial<ExamConfig>) => {
     setConfig(prev => ({ ...prev, ...preset }));
@@ -340,6 +395,10 @@ export default function App() {
 
   // Start Quick Exam from Home Screen
   const handleStartQuickExam = (area: 'ALL' | 'PSAD' | 'HPGE' | 'MSTE') => {
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
     setConfig({
       area,
       subtopic: 'ALL',
@@ -354,6 +413,12 @@ export default function App() {
 
   // Finish exam
   const handleFinishExam = (timeSpentSeconds: number) => {
+    // Clear persisted active session upon completion
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
+
     let correctCount = 0;
     activeQuestions.forEach(q => {
       if (userAnswers[q.id] === q.answer) {
@@ -396,6 +461,11 @@ export default function App() {
   // Retake missed questions only
   const handleRetakeMissed = () => {
     if (!latestResult) return;
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
+
     const missedQuestions = activeQuestions.filter(
       q => latestResult.userAnswers[q.id] !== q.answer
     );
@@ -415,6 +485,10 @@ export default function App() {
 
   // Retake full exam
   const handleRetakeAll = () => {
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
     setCurrentQuestionIndex(0);
     setUserAnswers({});
     setFlaggedIds([]);
@@ -519,6 +593,11 @@ export default function App() {
               onOpenPdfScanner={() => setIsPdfScannerOpen(true)}
               onOpenRecentlyAdded={() => setIsRecentlyAddedOpen(true)}
               recentlyAddedCount={recentlyAddedQuestions.length}
+              themeId={previewThemeId || activeThemeId}
+              themeMode={themeMode}
+              interruptedSession={interruptedSession}
+              onResumeExamSession={handleResumeSession}
+              onDiscardExamSession={handleDiscardSession}
             />
           )}
 
@@ -531,6 +610,9 @@ export default function App() {
                 setConfig={setConfig}
                 onStartExam={handleStartExam}
                 onQuickPreset={handleQuickPreset}
+                interruptedSession={interruptedSession}
+                onResumeSession={handleResumeSession}
+                onDiscardSession={handleDiscardSession}
               />
             )}
 
@@ -546,6 +628,9 @@ export default function App() {
                 feedbackMode={config.feedbackMode}
                 timeLimitMinutes={config.timeLimitMinutes}
                 onFinishExam={handleFinishExam}
+                config={config}
+                initialSecondsRemaining={sessionSecondsRemaining}
+                initialSecondsElapsed={sessionSecondsElapsed}
               />
             )}
 
@@ -571,10 +656,6 @@ export default function App() {
             initialMode={flashcardsInitialMode}
             onNavigateHome={() => setActiveTab('home')}
           />
-        )}
-
-        {activeTab === 'formulas' && (
-          <FormulasView onNavigateHome={() => setActiveTab('home')} />
         )}
 
         {activeTab === 'dictionary' && (
@@ -654,7 +735,7 @@ export default function App() {
               <h3 className="text-base font-bold">Exam In Progress</h3>
             </div>
             <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-              An assessment session is currently active. Leaving now will discard your current progress. Do you want to leave or stay?
+              An assessment session is currently active. Your current question, selected answers, flags, and remaining time are automatically saved so you can resume anytime from the Home or Exam tab.
             </p>
             <div className="flex items-center justify-end space-x-2 pt-2">
               <button
@@ -667,12 +748,16 @@ export default function App() {
                 onClick={() => {
                   const target = pendingTabSwitch;
                   setPendingTabSwitch(null);
-                  setActiveTab(target);
+                  if (target) {
+                    setActiveTab(target);
+                  }
                   setExamStage('setup');
+                  setInterruptedSession(getActiveExamSession());
+                  showToast('Exam paused. You can resume it anytime.');
                 }}
                 className="px-4 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold transition shadow-xs"
               >
-                Leave Exam
+                Pause & Leave
               </button>
             </div>
           </div>
@@ -685,6 +770,9 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
+
+      {/* Real-time Offline & Blackout Indicator */}
+      <OfflineIndicator />
 
       {/* Footer - Middle Center */}
       <footer className="border-t border-stone-200 dark:border-stone-800 py-6 text-xs text-stone-500 dark:text-stone-400 no-print transition-colors bg-white/70 dark:bg-stone-900/70 backdrop-blur-sm text-center">

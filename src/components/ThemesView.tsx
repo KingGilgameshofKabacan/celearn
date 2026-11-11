@@ -62,6 +62,8 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
   // Helper for theme icons
   const getThemeIcon = (id: ThemeId) => {
     switch (id) {
+      case 'vault-tec':
+        return <Award className="w-5 h-5 text-amber-400" />;
       case 'midnight-strategist':
         return <Terminal className="w-5 h-5" />;
       case 'zen-scholar':
@@ -603,7 +605,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
             </div>
 
             <p className="text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed">
-              Hides ambient floating background shapes, confetti, and decorative indicators while preserving all crucial timer controls, formulas, and board exam calculation features.
+              Hides ambient floating background shapes, confetti, and decorative indicators while preserving all crucial timer controls, flashcards, and board exam simulation features.
             </p>
           </div>
         </div>

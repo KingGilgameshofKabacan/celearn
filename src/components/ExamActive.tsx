@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   CEQuestion,
-  FeedbackMode
+  FeedbackMode,
+  ExamConfig
 } from '../types';
 import {
   Clock,
@@ -15,10 +16,16 @@ import {
   AlertTriangle,
   CheckCircle2,
   XCircle,
-  Flame
+  Flame,
+  Minimize2,
+  Maximize2
 } from 'lucide-react';
 import { soundManager } from '../utils/audio';
-import { incrementDailyQuestionsAnswered } from '../utils/storage';
+import {
+  incrementDailyQuestionsAnswered,
+  saveActiveExamSession,
+  clearActiveExamSession
+} from '../utils/storage';
 
 interface ExamActiveProps {
   questions: CEQuestion[];
@@ -31,6 +38,9 @@ interface ExamActiveProps {
   feedbackMode: FeedbackMode;
   timeLimitMinutes: number;
   onFinishExam: (timeSpentSeconds: number) => void;
+  config?: ExamConfig;
+  initialSecondsRemaining?: number;
+  initialSecondsElapsed?: number;
 }
 
 export const ExamActive: React.FC<ExamActiveProps> = ({
@@ -43,14 +53,61 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
   setFlaggedIds,
   feedbackMode,
   timeLimitMinutes,
-  onFinishExam
+  onFinishExam,
+  config,
+  initialSecondsRemaining,
+  initialSecondsElapsed
 }) => {
   const currentQ = questions[currentIndex];
-  const [secondsRemaining, setSecondsRemaining] = useState<number>(timeLimitMinutes * 60);
-  const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(() => {
+    if (initialSecondsRemaining !== undefined && initialSecondsRemaining >= 0) {
+      return initialSecondsRemaining;
+    }
+    return timeLimitMinutes * 60;
+  });
+  const [secondsElapsed, setSecondsElapsed] = useState<number>(() => {
+    if (initialSecondsElapsed !== undefined && initialSecondsElapsed >= 0) {
+      return initialSecondsElapsed;
+    }
+    return 0;
+  });
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
+  const [isTimerMinimized, setIsTimerMinimized] = useState<boolean>(false);
+
+  // Auto-persist active exam state to localStorage so examinees can resume if interrupted
+  useEffect(() => {
+    if (!questions || questions.length === 0) return;
+    saveActiveExamSession({
+      id: 'active_exam_session',
+      timestamp: Date.now(),
+      config: config || {
+        area: 'ALL',
+        subtopic: 'ALL',
+        difficulty: 'ALL',
+        count: questions.length,
+        timeLimitMinutes,
+        feedbackMode
+      },
+      questions,
+      currentIndex,
+      userAnswers,
+      flaggedIds,
+      secondsRemaining,
+      secondsElapsed
+    });
+  }, [
+    config,
+    questions,
+    currentIndex,
+    userAnswers,
+    flaggedIds,
+    secondsRemaining,
+    secondsElapsed,
+    timeLimitMinutes,
+    feedbackMode
+  ]);
 
   // Timer effect
   useEffect(() => {
@@ -61,6 +118,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
           if (prev <= 1) {
             clearInterval(timer);
             soundManager.playWrong();
+            clearActiveExamSession();
             onFinishExam(timeLimitMinutes * 60);
             return 0;
           }
@@ -72,28 +130,128 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
     return () => clearInterval(timer);
   }, [timeLimitMinutes, onFinishExam]);
 
-  // Keyboard navigation shortcuts
+  // Comprehensive Global Keyboard shortcuts in ExamActive
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (showSubmitModal) return;
+      // Don't intercept if focus is inside text input, textarea, or contentEditable
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
 
-      if (e.key === 'ArrowLeft' && currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
-      } else if (e.key === 'ArrowRight' && currentIndex < questions.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-      } else if (['1', '2', '3', '4'].includes(e.key) && currentQ) {
-        const optIndex = parseInt(e.key) - 1;
-        if (currentQ.choices[optIndex]) {
-          handleSelectOption(currentQ.choices[optIndex]);
+      // If submit confirmation modal is active, Enter submits and Escape cancels
+      if (showSubmitModal) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          setShowSubmitModal(false);
+          onFinishExam(secondsElapsed);
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          setShowSubmitModal(false);
         }
-      } else if (e.key.toLowerCase() === 'f' && currentQ) {
+        return;
+      }
+
+      // Number keys 1-4 and Numpad keys 1-4 to select answers
+      const numKeys = ['1', '2', '3', '4'];
+      const numpadKeys: Record<string, number> = {
+        Numpad1: 0,
+        Numpad2: 1,
+        Numpad3: 2,
+        Numpad4: 3
+      };
+      // Letter keys A-D to select answers
+      const letterKeys: Record<string, number> = {
+        a: 0,
+        b: 1,
+        c: 2,
+        d: 3,
+        A: 0,
+        B: 1,
+        C: 2,
+        D: 3
+      };
+
+      if (currentQ) {
+        let optionIndex: number | null = null;
+        if (numKeys.includes(e.key)) {
+          optionIndex = parseInt(e.key, 10) - 1;
+        } else if (e.code in numpadKeys) {
+          optionIndex = numpadKeys[e.code];
+        } else if (e.key in letterKeys) {
+          optionIndex = letterKeys[e.key];
+        }
+
+        if (optionIndex !== null && currentQ.choices[optionIndex] !== undefined) {
+          e.preventDefault();
+          handleSelectOption(currentQ.choices[optionIndex]);
+          return;
+        }
+      }
+
+      // ArrowRight: Next question
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (currentIndex < questions.length - 1) {
+          setCurrentIndex(currentIndex + 1);
+        } else {
+          setShowSubmitModal(true);
+        }
+        return;
+      }
+
+      // ArrowLeft: Previous question
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (currentIndex > 0) {
+          setCurrentIndex(currentIndex - 1);
+        }
+        return;
+      }
+
+      // Spacebar: Advance to next question (or finish) without scrolling the page
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        if (currentIndex < questions.length - 1) {
+          setCurrentIndex(currentIndex + 1);
+        } else {
+          setShowSubmitModal(true);
+        }
+        return;
+      }
+
+      // Key 'f' or 'F': Toggle Flag
+      if ((e.key === 'f' || e.key === 'F') && currentQ) {
+        e.preventDefault();
         toggleFlag();
+        return;
+      }
+
+      // Key 'c' or 'C': Clear answer
+      if ((e.key === 'c' || e.key === 'C') && currentQ) {
+        e.preventDefault();
+        clearCurrentAnswer();
+        return;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, questions, showSubmitModal, currentQ]);
+  }, [
+    currentIndex,
+    questions,
+    showSubmitModal,
+    currentQ,
+    feedbackMode,
+    userAnswers,
+    currentStreak,
+    secondsElapsed
+  ]);
 
   // Web Speech API
   const handleSpeak = () => {
@@ -163,29 +321,84 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
   };
 
   const formatTime = (totalSeconds: number) => {
-    const mins = Math.floor(totalSeconds / 60);
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
     const secs = totalSeconds % 60;
+    if (hrs > 0) {
+      return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const answeredCount = Object.keys(userAnswers).length;
   const unansweredCount = questions.length - answeredCount;
+  const progressPercentage = questions.length > 0 ? (answeredCount / questions.length) * 100 : 0;
   const isFlagged = flaggedIds.includes(currentQ.id);
   const selectedAnswer = userAnswers[currentQ.id];
 
   return (
     <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col space-y-6">
       
+      {/* Thin Animated Horizontal Progress Bar (Pinned at top of ExamActive session) */}
+      <div
+        className="sticky top-16 -mt-6 -mx-4 sm:-mx-6 lg:-mx-8 z-30 bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border-b border-stone-200/60 dark:border-stone-800/60 transition-colors shadow-xs"
+        role="progressbar"
+        aria-valuenow={answeredCount}
+        aria-valuemin={0}
+        aria-valuemax={questions.length}
+        aria-label={`${unansweredCount} questions remaining out of ${questions.length}`}
+        title={`${unansweredCount} questions remaining in this session (${Math.round(progressPercentage)}% completed)`}
+      >
+        {/* Thin 3px Progress Track with animated gradient fill */}
+        <div className="relative h-1 sm:h-1.5 w-full bg-stone-100 dark:bg-stone-800/80 overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-orange-500 via-amber-500 to-orange-400 transition-all duration-500 ease-out relative"
+            style={{ width: `${progressPercentage}%` }}
+          >
+            {/* Luminous Shimmer Effect */}
+            <div className="absolute inset-0 bg-white/25 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Compact Remaining Questions Tracker Line */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-stone-500 dark:text-stone-400">
+          <div className="flex items-center space-x-2">
+            <span className="font-bold text-orange-600 dark:text-orange-400 tabular-nums">
+              {answeredCount}/{questions.length} Answered
+            </span>
+            <span className="text-stone-300 dark:text-stone-700">·</span>
+            <span className="tabular-nums font-semibold text-stone-700 dark:text-stone-300">
+              {unansweredCount} {unansweredCount === 1 ? 'Question' : 'Questions'} Remaining
+            </span>
+          </div>
+          <span className="tabular-nums font-bold text-stone-700 dark:text-stone-300">
+            {Math.round(progressPercentage)}%
+          </span>
+        </div>
+      </div>
+
       {/* Top Status Bar */}
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 flex items-center justify-between shadow-xs text-stone-800 dark:text-stone-200 transition-colors">
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 flex items-center justify-between shadow-xs text-stone-800 dark:text-stone-200 transition-colors relative overflow-hidden">
+        {/* Subtle top indicator bar */}
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-stone-100 dark:bg-stone-800">
+          <div
+            className="h-full bg-orange-500 transition-all duration-300 ease-out"
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </div>
+
         <div className="flex items-center space-x-3 text-xs">
           <span className="font-mono font-bold text-stone-600 dark:text-stone-400">
             Item <span className="text-orange-600 dark:text-orange-400 font-bold text-sm">{currentIndex + 1}</span> of{' '}
             <span className="font-bold">{questions.length}</span>
           </span>
           <span className="text-stone-300 dark:text-stone-700">·</span>
-          <span className="text-stone-500 dark:text-stone-400 hidden sm:inline">
+          <span className="text-stone-500 dark:text-stone-400 hidden sm:inline tabular-nums">
             Answered: {answeredCount}
+          </span>
+          <span className="text-stone-300 dark:text-stone-700 hidden sm:inline">·</span>
+          <span className="text-orange-600 dark:text-orange-400 font-bold tabular-nums">
+            {unansweredCount} Left
           </span>
           {currentStreak >= 2 && feedbackMode === 'immediate' && (
             <span className="px-2.5 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950/70 border border-orange-300 dark:border-orange-800 text-orange-700 dark:text-orange-400 font-bold flex items-center space-x-1 animate-pulse">
@@ -343,10 +556,16 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
                     type="button"
                     onClick={() => handleSelectOption(choice)}
                     className={btnStyle}
+                    title={`Option ${choiceLetter} (Press ${idx + 1} or ${choiceLetter})`}
                   >
-                    <span className="w-7 h-7 rounded-lg bg-stone-200/80 dark:bg-stone-700 flex items-center justify-center font-bold text-xs text-stone-800 dark:text-stone-200 shrink-0 mt-0.5">
-                      {choiceLetter}
-                    </span>
+                    <div className="flex items-center space-x-1 shrink-0 mt-0.5">
+                      <span className="w-7 h-7 rounded-lg bg-stone-200/80 dark:bg-stone-700 flex items-center justify-center font-bold text-xs text-stone-800 dark:text-stone-200">
+                        {choiceLetter}
+                      </span>
+                      <kbd className="hidden sm:inline-block px-1 py-0.5 text-[10px] font-mono font-bold rounded bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 leading-none">
+                        {idx + 1}
+                      </kbd>
+                    </div>
                     <span className="flex-1 leading-snug pt-0.5">{choice}</span>
                   </button>
                 );
@@ -354,8 +573,26 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
             </div>
           </div>
 
+          {/* Keyboard Shortcuts Hint Bar */}
+          <div className="hidden sm:flex items-center justify-between text-[11px] font-mono text-stone-500 dark:text-stone-400 pt-3 px-1 border-t border-stone-100 dark:border-stone-800/60 mt-4">
+            <div className="flex items-center space-x-2">
+              <span className="font-sans text-[10px] uppercase font-bold text-stone-400 dark:text-stone-500">Shortcuts:</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold">1–4</kbd>
+              <span>Select</span>
+              <span className="text-stone-300 dark:text-stone-700">·</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold">Space / →</kbd>
+              <span>Next</span>
+              <span className="text-stone-300 dark:text-stone-700">·</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold">←</kbd>
+              <span>Prev</span>
+              <span className="text-stone-300 dark:text-stone-700">·</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold">F</kbd>
+              <span>Flag</span>
+            </div>
+          </div>
+
           {/* Bottom Actions */}
-          <div className="pt-6 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between mt-6">
+          <div className="pt-4 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between mt-4">
             <button
               type="button"
               onClick={clearCurrentAnswer}
@@ -459,6 +696,106 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
         </div>
       </div>
 
+      {/* Persistent Non-Intrusive Floating Countdown Timer HUD (Appears only during active exams) */}
+      <aside
+        aria-label="Active Exam Persistent Countdown Timer"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 no-print select-none"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
+        {isTimerMinimized ? (
+          /* Minimized Compact Chip */
+          <button
+            type="button"
+            onClick={() => setIsTimerMinimized(false)}
+            title="Expand countdown timer HUD"
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full border shadow-lg backdrop-blur-md transition-all cursor-pointer ${
+              timeLimitMinutes > 0 && secondsRemaining <= 120
+                ? 'bg-rose-500 text-white border-rose-400 shadow-rose-500/30 animate-pulse'
+                : timeLimitMinutes > 0 && secondsRemaining <= 300
+                ? 'bg-amber-500 text-white border-amber-400 shadow-amber-500/25'
+                : 'bg-white/95 dark:bg-stone-900/95 border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-200 shadow-stone-900/10 dark:shadow-black/40'
+            }`}
+          >
+            <Clock className="w-3.5 h-3.5 text-orange-500 dark:text-orange-400" />
+            <span className="font-mono font-bold text-xs sm:text-sm tabular-nums tracking-tight">
+              {timeLimitMinutes > 0 ? formatTime(secondsRemaining) : formatTime(secondsElapsed)}
+            </span>
+            <Maximize2 className="w-3 h-3 opacity-60 ml-0.5" />
+          </button>
+        ) : (
+          /* Full Non-Intrusive Floating HUD Pill */
+          <div
+            className={`flex items-center gap-2.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-2xl border shadow-lg backdrop-blur-md transition-all duration-200 ${
+              timeLimitMinutes > 0 && secondsRemaining <= 120
+                ? 'bg-rose-500/95 dark:bg-rose-600/95 border-rose-400 text-white shadow-rose-500/30 animate-pulse'
+                : timeLimitMinutes > 0 && secondsRemaining <= 300
+                ? 'bg-amber-500/90 dark:bg-amber-600/90 border-amber-300 text-white shadow-amber-500/25'
+                : 'bg-white/95 dark:bg-stone-900/95 border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-100 shadow-stone-900/10 dark:shadow-black/40'
+            }`}
+          >
+            {/* Clock Icon with Warning indicator */}
+            <div className="relative flex items-center justify-center shrink-0">
+              <Clock
+                className={`w-4 h-4 ${
+                  timeLimitMinutes > 0 && secondsRemaining <= 300
+                    ? 'text-white'
+                    : 'text-orange-500 dark:text-orange-400'
+                }`}
+              />
+              {timeLimitMinutes > 0 && secondsRemaining <= 120 && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-white animate-ping" />
+              )}
+            </div>
+
+            {/* Time Display with Tabular Numerics for jump-free ticking */}
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold uppercase tracking-wider opacity-75 leading-none">
+                {timeLimitMinutes > 0
+                  ? secondsRemaining <= 120
+                    ? 'Time Expiring'
+                    : 'Time Remaining'
+                  : 'Elapsed Time'}
+              </span>
+              <span className="font-mono font-bold text-sm sm:text-base tracking-tight tabular-nums leading-tight mt-0.5">
+                {timeLimitMinutes > 0 ? formatTime(secondsRemaining) : formatTime(secondsElapsed)}
+              </span>
+            </div>
+
+            {/* Progress Pill: Answered of Total */}
+            <div className="hidden xs:flex items-center px-2 py-0.5 rounded-md font-mono text-[11px] font-bold tabular-nums border border-current/20 bg-current/5">
+              <span>
+                {answeredCount}/{questions.length}
+              </span>
+            </div>
+
+            {/* Quick Finish Button */}
+            <button
+              type="button"
+              onClick={() => setShowSubmitModal(true)}
+              title="Submit assessment"
+              className={`px-2.5 py-1 rounded-xl text-xs font-bold transition flex items-center space-x-1 cursor-pointer shrink-0 ${
+                timeLimitMinutes > 0 && secondsRemaining <= 300
+                  ? 'bg-white text-rose-700 hover:bg-stone-100 shadow-xs'
+                  : 'bg-orange-600 hover:bg-orange-500 text-white shadow-xs'
+              }`}
+            >
+              <span>Finish</span>
+            </button>
+
+            {/* Minimize Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsTimerMinimized(true)}
+              title="Minimize timer"
+              className="p-1 rounded-lg opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer shrink-0"
+              aria-label="Minimize timer HUD"
+            >
+              <Minimize2 className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+      </aside>
+
       {/* Submit Confirmation Modal */}
       {showSubmitModal && (
         <div className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
@@ -491,6 +828,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
                 type="button"
                 onClick={() => {
                   setShowSubmitModal(false);
+                  clearActiveExamSession();
                   onFinishExam(secondsElapsed);
                 }}
                 className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white font-bold text-sm rounded-xl transition shadow-xs"
