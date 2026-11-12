@@ -446,8 +446,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               )}
             </div>
 
-            <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono tabular-nums mt-1 flex items-center space-x-1">
-              <Flame className="w-6 h-6 fill-current text-amber-500" />
+            <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono tabular-nums mt-1 flex items-center space-x-1.5">
+              <BottleCapIcon className="w-6 h-6 text-amber-500" />
               <span>{streakData.currentStreak} Days</span>
             </div>
           </div>
@@ -997,20 +997,21 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* Streak Check-In Celebration Modal */}
       {streakCelebration && (
-        <div className="fixed inset-0 z-50 bg-stone-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-900 border border-orange-500/30 rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 bg-gradient-to-tr from-orange-500 to-amber-400 rounded-2xl mx-auto flex items-center justify-center shadow-lg text-white">
-              <Flame className="w-9 h-9 fill-white" />
+        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#0E1B38] border-2 border-amber-500/50 rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl animate-in zoom-in-95 duration-200 vault-panel-rivets relative">
+            <div className="w-16 h-16 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-2xl mx-auto flex items-center justify-center shadow-lg text-stone-950 border border-amber-400">
+              <BottleCapIcon className="w-10 h-10 text-stone-950" />
             </div>
             <div>
-              <span className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">
-                Daily Check-In Recorded!
+              <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                Vault Daily Ration Claimed!
               </span>
-              <h3 className="text-2xl font-black text-stone-900 dark:text-stone-100 font-mono mt-1">
-                {streakCelebration.streakDays} Day Streak 🔥
+              <h3 className="text-2xl font-black text-stone-900 dark:text-stone-100 font-mono mt-1 flex items-center justify-center space-x-1.5">
+                <span>{streakCelebration.streakDays} Day Morale</span>
+                <BottleCapIcon className="w-6 h-6 text-amber-500 inline" />
               </h3>
-              <p className="text-xs text-stone-600 dark:text-stone-400 mt-2">
-                Great dedication, Engineer! Your streak has been updated. Next check-in will reappear right after midnight.
+              <p className="text-xs text-stone-600 dark:text-stone-300 mt-2">
+                Great dedication, Dweller! Your vault survival streak has been extended (+50 Caps awarded). Next ration unlocks at 00:00 midnight.
               </p>
             </div>
             <div className="pt-2">

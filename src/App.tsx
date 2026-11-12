@@ -59,6 +59,7 @@ import { LiveBackground } from './components/LiveBackground';
 import { PdfScannerModal } from './components/PdfScannerModal';
 import { RecentlyAddedModal } from './components/RecentlyAddedModal';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { VaultDwellerPet } from './components/VaultDwellerPet';
 import { AlertTriangle } from 'lucide-react';
 
 export default function App() {
@@ -773,6 +774,14 @@ export default function App() {
 
       {/* Real-time Offline & Blackout Indicator */}
       <OfflineIndicator />
+
+      {/* Fallout Shelter Vault Avatar */}
+      {examStage !== 'active' && (
+        <VaultDwellerPet
+          userName={profile.name}
+          onNavigateTab={handleTabSwitchRequest}
+        />
+      )}
 
       {/* Footer - Middle Center */}
       <footer className="border-t border-stone-200 dark:border-stone-800 py-6 text-xs text-stone-500 dark:text-stone-400 no-print transition-colors bg-white/70 dark:bg-stone-900/70 backdrop-blur-sm text-center">

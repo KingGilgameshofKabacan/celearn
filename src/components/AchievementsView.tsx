@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   Volume2
 } from 'lucide-react';
+import { BottleCapIcon } from './BottleCapIcon';
 import { soundManager } from '../utils/audio';
 
 interface AchievementsViewProps {
@@ -36,7 +37,7 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({ achievements
       case 'Moon': return <Moon className="w-5 h-5" />;
       case 'Award': return <Award className="w-5 h-5" />;
       case 'Zap': return <Zap className="w-5 h-5" />;
-      case 'Flame': return <Flame className="w-5 h-5" />;
+      case 'Flame': return <BottleCapIcon className="w-5 h-5 text-amber-500" />;
       case 'Crown': return <Crown className="w-5 h-5" />;
       default: return <Award className="w-5 h-5" />;
     }

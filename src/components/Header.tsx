@@ -17,11 +17,18 @@ import {
   Clock,
   ChevronRight,
   Palette,
-  Mail
+  Mail,
+  Radio,
+  Play,
+  Pause,
+  Disc,
+  Music
 } from 'lucide-react';
 import { CeLearnLogo } from './CeLearnLogo';
 import { BottleCapIcon } from './BottleCapIcon';
 import { soundManager } from '../utils/audio';
+import { vaultJukebox, JukeboxState } from '../utils/jukeboxPlayer';
+import { VaultJukeboxDrawerPlayer } from './VaultJukeboxDrawerPlayer';
 import {
   getStreakData,
   hasCheckedInToday,
@@ -62,6 +69,17 @@ export const Header: React.FC<HeaderProps> = ({
   const [streak, setStreak] = useState<StreakData>(getStreakData);
   const [checkedInToday, setCheckedInToday] = useState<boolean>(hasCheckedInToday);
   const [caps, setCaps] = useState<number>(getBottleCaps);
+  const [jukeboxState, setJukeboxState] = useState<JukeboxState>(() => vaultJukebox.getState());
+
+  useEffect(() => {
+    const handleJukebox = (e: Event) => {
+      const custom = e as CustomEvent<JukeboxState>;
+      if (custom.detail) setJukeboxState(custom.detail);
+      else setJukeboxState(vaultJukebox.getState());
+    };
+    window.addEventListener('cele_jukebox_state', handleJukebox);
+    return () => window.removeEventListener('cele_jukebox_state', handleJukebox);
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -481,6 +499,15 @@ export const Header: React.FC<HeaderProps> = ({
                       6 Packs
                     </span>
                   </button>
+
+                  {/* Vault-Tec 101 Jukebox Player (Fallout Shelter Broadcast Station) */}
+                  <div className="pt-1">
+                    <div className="flex items-center justify-between text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider px-1 mb-2">
+                      <span>Vault Jukebox</span>
+                      <span className="text-[10px] text-amber-500 font-mono font-bold">Fallout Shelter Radio</span>
+                    </div>
+                    <VaultJukeboxDrawerPlayer />
+                  </div>
 
                   <div className="flex items-center justify-between p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 text-xs">
                     <span className="text-stone-700 dark:text-stone-300 font-medium">Sound Effects</span>

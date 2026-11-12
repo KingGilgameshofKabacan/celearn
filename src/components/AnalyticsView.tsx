@@ -25,6 +25,7 @@ import {
   Calendar,
   Layers
 } from 'lucide-react';
+import { BottleCapIcon } from './BottleCapIcon';
 import {
   hasCheckedInToday,
   performDailyCheckIn,
@@ -372,8 +373,8 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
                 </span>
               )}
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-orange-600 dark:text-orange-400 font-mono mt-1 flex items-center space-x-1">
-              <Flame className="w-6 h-6 fill-current text-orange-500" />
+            <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono mt-1 flex items-center space-x-1.5">
+              <BottleCapIcon className="w-6 h-6 text-amber-500" />
               <span>{stats.streakDays}d</span>
             </div>
           </div>

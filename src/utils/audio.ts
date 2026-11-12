@@ -879,6 +879,50 @@ class SoundEffectManager {
       osc.stop(now + delay + 0.01);
     }
   }
+
+  // Vault Dweller Streak Pet click interaction (cheerful Pip-Boy talk chirp)
+  public playPetClick(): void {
+    if (!this.enabled || this.muted) return;
+    const ctx = this.getAudioContext();
+    if (!ctx || !this.masterGain) return;
+    const now = ctx.currentTime;
+
+    // Dual cheerful Pip-Boy tone arpeggio (659Hz -> 880Hz -> 1318Hz)
+    const notes = [659.25, 880, 1318.5];
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.045);
+      gain.gain.setValueAtTime(0.12, now + idx * 0.045);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.045 + 0.08);
+      osc.connect(gain);
+      gain.connect(this.masterGain!);
+      osc.start(now + idx * 0.045);
+      osc.stop(now + idx * 0.045 + 0.09);
+    });
+  }
+
+  // Vault Dweller Pet dialogue announcement (Pip-Boy terminal radio beep)
+  public playPetDialogue(): void {
+    if (!this.enabled || this.muted) return;
+    const ctx = this.getAudioContext();
+    if (!ctx || !this.masterGain) return;
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(987.77, now);
+    osc.frequency.setValueAtTime(1318.5, now + 0.05);
+    gain.gain.setValueAtTime(0.14, now);
+    gain.gain.setValueAtTime(0.14, now + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+    osc.connect(gain);
+    gain.connect(this.masterGain);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  }
 }
 
 export const soundManager = new SoundEffectManager();

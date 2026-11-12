@@ -20,6 +20,7 @@ import {
   Minimize2,
   Maximize2
 } from 'lucide-react';
+import { BottleCapIcon } from './BottleCapIcon';
 import { soundManager } from '../utils/audio';
 import {
   incrementDailyQuestionsAnswered,
@@ -401,8 +402,8 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
             {unansweredCount} Left
           </span>
           {currentStreak >= 2 && feedbackMode === 'immediate' && (
-            <span className="px-2.5 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950/70 border border-orange-300 dark:border-orange-800 text-orange-700 dark:text-orange-400 font-bold flex items-center space-x-1 animate-pulse">
-              <Flame className="w-3.5 h-3.5 fill-orange-500 text-orange-500" />
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-600 dark:text-amber-300 font-bold flex items-center space-x-1 animate-pulse font-mono text-xs">
+              <BottleCapIcon className="w-3.5 h-3.5 text-amber-500" />
               <span>{currentStreak} Streak!</span>
             </span>
           )}
