@@ -1,310 +1,544 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { soundManager } from '../utils/audio';
-import { getStreakData, getBottleCaps, addBottleCaps } from '../utils/storage';
-import { BottleCapIcon } from './BottleCapIcon';
 import {
-  X,
-  ChevronRight,
-  Compass,
-  EyeOff,
-  Radio,
-  Volume2
-} from 'lucide-react';
+  getStreakData,
+  addBottleCaps,
+  getAvatarConfig,
+  saveAvatarConfig,
+  getAvatarPosition,
+  saveAvatarPosition,
+  getAvatarMinimized,
+  saveAvatarMinimized
+} from '../utils/storage';
+import { COMPANION_OPTIONS, VaultAvatarConfig } from '../types/avatar';
+import { VaultAvatarSprite } from './VaultAvatarSprite';
+import { BottleCapIcon } from './BottleCapIcon';
+import { X, ChevronRight, Compass, EyeOff, Move } from 'lucide-react';
 
 interface VaultDwellerPetProps {
   userName?: string;
   onNavigateTab?: (tab: 'exam' | 'flashcards' | 'dictionary' | 'analytics' | 'achievements' | 'themes') => void;
 }
 
-// 25+ Authentic Vault-Tec x Civil Engineering Licensure Exam Dialogues
-const PET_DIALOGUES = [
+interface DialogueEntry {
+  category: string;
+  text: string;
+  actionLabel: string;
+  targetTab: 'exam' | 'flashcards' | 'dictionary' | 'analytics' | 'achievements' | 'themes';
+}
+
+const BASE_DIALOGUES: DialogueEntry[] = [
   {
     category: 'Vault Morale',
-    text: "Vault Morale is at peak efficiency! Keep this study streak unbroken, or rations get cut to irradiated cram!",
-    actionLabel: 'Check Morale',
-    targetTab: 'analytics' as const
+    text: "Vault Morale is holding strong! Keep this study streak unbroken so your daily Bottle Cap rations stay maxed.",
+    actionLabel: 'Check Telemetry',
+    targetTab: 'analytics'
   },
   {
     category: 'PSAD (Structural)',
-    text: "Overseer reports 0% deflection on the blast bulkhead! Remember: flexure $\\phi = 0.90$ for tension-controlled reinforced concrete!",
+    text: "Overseer confirms zero bulkhead deflection! Remember: flexure phi = 0.90 for tension-controlled reinforced concrete.",
     actionLabel: 'Train PSAD',
-    targetTab: 'exam' as const
+    targetTab: 'exam'
   },
   {
     category: 'HPGE (Hydraulics)',
-    text: "Vault 101 water purifiers run on Bernoulli's theorem: $P/\\gamma + v^2/2g + z = C$! Keep the flow steady, Engineer!",
-    actionLabel: 'Review HPGE',
-    targetTab: 'dictionary' as const
+    text: "Vault 101 water purifiers run on Bernoulli's theorem: P/gamma + v^2/(2g) + z = constant. Keep head losses low!",
+    actionLabel: 'Vault Glossary',
+    targetTab: 'dictionary'
   },
   {
     category: 'MSTE (Surveying)',
-    text: "Surveying protocol: Departure $= L \\sin(\\theta)$, Latitude $= L \\cos(\\theta)$! Don't misclose your traverse in the Wasteland!",
-    actionLabel: 'Study Math & Survey',
-    targetTab: 'flashcards' as const
+    text: "Surveying protocol: Departure = L sin(theta), Latitude = L cos(theta). Never misclose a traverse in the Wasteland!",
+    actionLabel: 'S.P.E.C.I.A.L. Deck',
+    targetTab: 'flashcards'
   },
   {
     category: 'PSAD (Mechanics)',
-    text: "Euler's Critical Buckling: $P_{cr} = \\pi^2 EI / (KL)^2$! That equation literally keeps our subterranean dome from caving in!",
-    actionLabel: 'Open Formulas',
-    targetTab: 'dictionary' as const
+    text: "Euler's Critical Buckling: Pcr = pi^2 EI / (KL)^2. That formula keeps our subterranean steel columns standing!",
+    actionLabel: 'Open Glossary',
+    targetTab: 'dictionary'
   },
   {
     category: 'HPGE (Geotech)',
-    text: "Terzaghi's bearing capacity formula: $q_{ult} = c N_c + q N_q + 0.5 \\gamma B N_\\gamma$. Solid foundation, solid Dweller!",
-    actionLabel: 'Drill Geotech',
-    targetTab: 'flashcards' as const
+    text: "Terzaghi's ultimate bearing capacity: q_ult = c Nc + q Nq + 0.5 gamma B N_gamma. Solid soil, solid shelter!",
+    actionLabel: 'Drill Flashcards',
+    targetTab: 'flashcards'
   },
   {
     category: 'MSTE (Management)',
-    text: "CPM / PERT directive: The critical path to passing the CE Licensure Exam has zero float! Don't delay your daily grind!",
-    actionLabel: 'Take G.O.A.T. Exam',
-    targetTab: 'exam' as const
-  },
-  {
-    category: 'Vault-Tec Wisdom',
-    text: "G.O.A.T. Question 10: Who is indisputably the most important person in Vault 101? The Registered Civil Engineer, obviously!",
+    text: "CPM / PERT directive: Activities on the critical path have zero total float. Stay on schedule for exam day!",
     actionLabel: 'Launch G.O.A.T.',
-    targetTab: 'exam' as const
-  },
-  {
-    category: 'Wasteland Alert',
-    text: "Rad-counter is ticking low (0.01 Rads), but your study stamina is glowing! Take a quick 5-minute coffee ration!",
-    actionLabel: 'Dweller Stats',
-    targetTab: 'analytics' as const
-  },
-  {
-    category: 'Caps & Rewards',
-    text: "Every flashcard you master earns +10 Bottle Caps! Trade them in your mind for that glorious PRC License card!",
-    actionLabel: 'Review Flashcards',
-    targetTab: 'flashcards' as const
+    targetTab: 'exam'
   },
   {
     category: 'PSAD (Steel)',
-    text: "AISC steel design reminder: Check for Lateral-Torsional Buckling ($L_b > L_r$) before placing girders over the reactor chamber!",
-    actionLabel: 'Steel Archive',
-    targetTab: 'dictionary' as const
+    text: "AISC steel reminder: Verify Lateral-Torsional Buckling (Lb vs Lp and Lr) before placing reactor overhead girders!",
+    actionLabel: 'Steel Specs',
+    targetTab: 'dictionary'
   },
   {
     category: 'HPGE (Open Channel)',
-    text: "Manning's equation: $Q = (1/n) A R^{2/3} S^{1/2}$! Even nuclear fallout runoff follows standard open channel hydraulics!",
+    text: "Manning's equation: Q = (1/n) A R^(2/3) S^(1/2). Even wasteland runoff follows open-channel hydraulics!",
     actionLabel: 'Hydraulics Deck',
-    targetTab: 'flashcards' as const
+    targetTab: 'flashcards'
   },
   {
     category: 'MSTE (Economy)',
-    text: "Capitalized Cost $= FC + OM/i$! Vault-Tec amortizes our heavy tunnel borers over 200 years of post-apocalypse stability!",
+    text: "Capitalized Cost = FC + OM/i. Vault-Tec amortizes tunnel borers across 200 years of bunker operations!",
     actionLabel: 'Econ Formulas',
-    targetTab: 'dictionary' as const
+    targetTab: 'dictionary'
   },
   {
     category: 'Vault-Tec Routine',
-    text: "Concrete compressive strength $f'_c$ grows over 28 days. Your licensure mastery grows every single day you check in!",
+    text: "Concrete compressive strength f'c cures over 28 days. Your CELE mastery compounds every single day you review.",
     actionLabel: 'View Progress',
-    targetTab: 'analytics' as const
+    targetTab: 'analytics'
   },
   {
     category: 'Overseer Notice',
-    text: "Pip-Boy telemetry shows top-tier focus! Keep this up and the PRC Board will issue your engineer seal with honors!",
-    actionLabel: 'Achievements',
-    targetTab: 'achievements' as const
+    text: "Pip-Boy telemetry shows high focus. Customize my look or switch Vault companions anytime in Terminal Skins!",
+    actionLabel: 'Customize Avatar',
+    targetTab: 'themes'
   }
 ];
+
+const COMPANION_DIALOGUES: Record<VaultAvatarConfig['companion'], DialogueEntry[]> = {
+  'vault-dweller': [
+    {
+      category: 'Dweller Gear',
+      text: "Jumpsuit pressed and Pip-Boy calibrated! Drag me to any side of your screen whenever you want a clear view.",
+      actionLabel: 'Customize Suit',
+      targetTab: 'themes'
+    }
+  ],
+  dogmeat: [
+    {
+      category: 'Dogmeat K-9',
+      text: "Woof! *Sniffs NSCP 2015 seismic provisions* Dogmeat found high-yield PSAD traps waiting in your G.O.A.T. queue!",
+      actionLabel: 'Start Exam',
+      targetTab: 'exam'
+    },
+    {
+      category: 'Dogmeat K-9',
+      text: "*Happy tail wag* Good engineer! Every mastered flashcard earns +10 Bottle Caps and keeps the shelter safe!",
+      actionLabel: 'Open Deck',
+      targetTab: 'flashcards'
+    }
+  ],
+  codsworth: [
+    {
+      category: 'Codsworth',
+      text: "Right you are! Shall I polish the slide rule while you compute moment distribution factors, Mum or Sir?",
+      actionLabel: 'Review Terms',
+      targetTab: 'dictionary'
+    },
+    {
+      category: 'Codsworth',
+      text: "210 years of waiting and not a spot of rust on my differential equations! Ready for your daily drill?",
+      actionLabel: 'Take G.O.A.T.',
+      targetTab: 'exam'
+    }
+  ],
+  eyebot: [
+    {
+      category: 'ED-E Telemetry',
+      text: "*Beeping battle telemetry* Detecting hydraulic jump ahead! Froude number Fr > 1 indicates supercritical flow.",
+      actionLabel: 'Check Telemetry',
+      targetTab: 'analytics'
+    }
+  ],
+  deathclaw: [
+    {
+      category: 'Bunker Mascot',
+      text: "*Rumbles softly in safety hardhat* Ultimate shear check passed! Nothing breaks this reinforced footing!",
+      actionLabel: 'Inspect Badges',
+      targetTab: 'achievements'
+    }
+  ],
+  'liberty-prime': [
+    {
+      category: 'Liberty Prime',
+      text: "COMMENCING BOARD EXAM ANNIHILATION! PROBABILITY OF CELE PASSAGE: 100 PERCENT! ENGAGE MOCK SIMULATION!",
+      actionLabel: 'Deploy G.O.A.T.',
+      targetTab: 'exam'
+    }
+  ]
+};
+
+const AVATAR_BOX_W = 112;
+const AVATAR_BOX_H = 128;
+const VIEWPORT_PADDING = 10;
+
+const clampPosition = (x: number, y: number): { x: number; y: number } => {
+  if (typeof window === 'undefined') return { x: 24, y: 24 };
+  const maxX = Math.max(VIEWPORT_PADDING, window.innerWidth - AVATAR_BOX_W - VIEWPORT_PADDING);
+  const maxY = Math.max(VIEWPORT_PADDING, window.innerHeight - AVATAR_BOX_H - VIEWPORT_PADDING);
+  return {
+    x: Math.round(Math.min(Math.max(VIEWPORT_PADDING, x), maxX)),
+    y: Math.round(Math.min(Math.max(VIEWPORT_PADDING, y), maxY))
+  };
+};
+
+const getDefaultPosition = (): { x: number; y: number } => {
+  if (typeof window === 'undefined') return { x: 800, y: 500 };
+  return clampPosition(
+    window.innerWidth - AVATAR_BOX_W - 24,
+    window.innerHeight - AVATAR_BOX_H - 18
+  );
+};
 
 export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
   userName = 'Dweller Dave',
   onNavigateTab
 }) => {
-  const [posX, setPosX] = useState<number>(85); // percentage of screen width (10 - 88)
+  const [avatarConfig, setAvatarConfig] = useState<VaultAvatarConfig>(getAvatarConfig);
+  const [pos, setPos] = useState<{ x: number; y: number }>(() => {
+    const saved = getAvatarPosition();
+    return saved ? clampPosition(saved.x, saved.y) : getDefaultPosition();
+  });
+  const [isCustomPlaced, setIsCustomPlaced] = useState<boolean>(() => {
+    return Boolean(getAvatarPosition()?.isCustomPlaced);
+  });
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [direction, setDirection] = useState<'left' | 'right'>('left');
   const [isWalking, setIsWalking] = useState<boolean>(false);
   const [isWinking, setIsWinking] = useState<boolean>(false);
-  // The pet dialogue should ONLY show if the user clicks them (initially false)
   const [showBubble, setShowBubble] = useState<boolean>(false);
   const [dialogueIndex, setDialogueIndex] = useState<number>(0);
-  const [isMinimized, setIsMinimized] = useState<boolean>(false);
-  const [patrolEnabled, setPatrolEnabled] = useState<boolean>(true);
+  const [isMinimized, setIsMinimized] = useState<boolean>(getAvatarMinimized);
   const [clickCount, setClickCount] = useState<number>(0);
   const [bonusCapsClaimed, setBonusCapsClaimed] = useState<boolean>(false);
 
-  // 5-second auto-dismiss timer ref
-  const autoDismissTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autoDismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const posRef = useRef<{ x: number; y: number }>(pos);
+  useEffect(() => {
+    posRef.current = pos;
+  }, [pos]);
+
+  const dragRef = useRef<{
+    active: boolean;
+    pointerId: number | null;
+    startX: number;
+    startY: number;
+    origX: number;
+    origY: number;
+    moved: boolean;
+  }>({
+    active: false,
+    pointerId: null,
+    startX: 0,
+    startY: 0,
+    origX: 0,
+    origY: 0,
+    moved: false
+  });
 
   const streak = getStreakData();
 
-  // Clear dismiss timer on unmount
+  // Merge companion-specific dialogues with core Vault CELE dialogues
+  const activeDialogues = useMemo(() => {
+    const extra = COMPANION_DIALOGUES[avatarConfig.companion] || [];
+    return [...extra, ...BASE_DIALOGUES];
+  }, [avatarConfig.companion]);
+
+  const activeCompanionMeta = useMemo(
+    () => COMPANION_OPTIONS.find(c => c.id === avatarConfig.companion) || COMPANION_OPTIONS[0],
+    [avatarConfig.companion]
+  );
+
+  // Listen to customization updates, position reset, and window resize
+  useEffect(() => {
+    const handleConfigUpdate = (e: Event) => {
+      const custom = e as CustomEvent<VaultAvatarConfig>;
+      setAvatarConfig(custom.detail || getAvatarConfig());
+      setDialogueIndex(0);
+    };
+    const handlePositionReset = () => {
+      const def = getDefaultPosition();
+      setPos(def);
+      setIsCustomPlaced(false);
+      setIsMinimized(false);
+    };
+    const handleMinimizedSync = (e: Event) => {
+      const custom = e as CustomEvent<boolean>;
+      if (typeof custom.detail === 'boolean') setIsMinimized(custom.detail);
+      else setIsMinimized(getAvatarMinimized());
+    };
+    const handleResize = () => {
+      setPos(prev => {
+        if (!isCustomPlaced) {
+          return getDefaultPosition();
+        }
+        return clampPosition(prev.x, prev.y);
+      });
+    };
+
+    window.addEventListener('cele_avatar_updated', handleConfigUpdate);
+    window.addEventListener('cele_avatar_position_reset', handlePositionReset);
+    window.addEventListener('cele_avatar_minimized_changed', handleMinimizedSync);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('cele_avatar_updated', handleConfigUpdate);
+      window.removeEventListener('cele_avatar_position_reset', handlePositionReset);
+      window.removeEventListener('cele_avatar_minimized_changed', handleMinimizedSync);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isCustomPlaced]);
+
   useEffect(() => {
     return () => {
-      if (autoDismissTimerRef.current) {
-        clearTimeout(autoDismissTimerRef.current);
-      }
+      if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
     };
   }, []);
 
-  // Display dialogue with sound effect and start 5-second disappearance interval
-  const triggerDialogue = useCallback((idx?: number) => {
-    // 1. Play dialogue announcement sound effect using soundManager
-    soundManager.playPetDialogue();
+  const triggerDialogue = useCallback(
+    (idx?: number) => {
+      soundManager.playPetDialogue();
+      if (idx !== undefined) {
+        setDialogueIndex(idx % activeDialogues.length);
+      } else {
+        setDialogueIndex(prev => (prev + 1) % activeDialogues.length);
+      }
+      setShowBubble(true);
+      setIsWinking(true);
+      setTimeout(() => setIsWinking(false), 900);
 
-    if (idx !== undefined) {
-      setDialogueIndex(idx);
-    } else {
-      setDialogueIndex(prev => (prev + 1) % PET_DIALOGUES.length);
-    }
+      if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
+      autoDismissTimerRef.current = setTimeout(() => {
+        setShowBubble(false);
+      }, 5000);
+    },
+    [activeDialogues.length]
+  );
 
-    setShowBubble(true);
-    setIsWinking(true);
-    setTimeout(() => setIsWinking(false), 900);
-
-    // 4. Reset & start 5-second interval before dialogue disappears
-    if (autoDismissTimerRef.current) {
-      clearTimeout(autoDismissTimerRef.current);
-    }
-    autoDismissTimerRef.current = setTimeout(() => {
-      setShowBubble(false);
-    }, 5000);
-  }, []);
-
-  // Next dialogue triggered by user interaction
   const handleNextDialogue = (e: React.MouseEvent) => {
     e.stopPropagation();
     soundManager.playClick();
     triggerDialogue();
   };
 
-  // Periodic subtle patrol walk along the bottom of the viewport (no auto-dialogues!)
+  // Gentle patrol pacing along user's chosen axis/position without stealing them away from their side
   useEffect(() => {
-    if (!patrolEnabled || isMinimized) return;
+    if (!avatarConfig.patrolEnabled || isMinimized || isDragging || showBubble) return;
 
     const walkInterval = setInterval(() => {
-      // 50% chance to take a few steps
-      if (Math.random() > 0.4) {
+      if (Math.random() > 0.45 && typeof window !== 'undefined') {
         setIsWalking(true);
-        setPosX(current => {
-          const moveDelta = (Math.random() * 12 + 6) * (Math.random() > 0.5 ? 1 : -1);
-          let target = current + moveDelta;
-          if (target < 12) {
-            target = 18;
-            setDirection('right');
-          } else if (target > 86) {
-            target = 80;
-            setDirection('left');
-          } else {
-            setDirection(moveDelta > 0 ? 'right' : 'left');
-          }
-          return Math.round(target);
-        });
+        const current = posRef.current;
+        const nearLeftEdge = current.x <= 48;
+        const nearRightEdge = current.x >= window.innerWidth - AVATAR_BOX_W - 48;
+
+        if (nearLeftEdge || nearRightEdge) {
+          const deltaY = (Math.random() * 48 + 20) * (Math.random() > 0.5 ? 1 : -1);
+          const nextPos = clampPosition(current.x, current.y + deltaY);
+          posRef.current = nextPos;
+          setDirection(nearLeftEdge ? 'right' : 'left');
+          setPos(nextPos);
+        } else {
+          const deltaX = (Math.random() * 64 + 28) * (Math.random() > 0.5 ? 1 : -1);
+          const nextPos = clampPosition(current.x + deltaX, current.y);
+          posRef.current = nextPos;
+          setDirection(deltaX > 0 ? 'right' : 'left');
+          setPos(nextPos);
+        }
 
         setTimeout(() => {
           setIsWalking(false);
-        }, 1600);
+        }, 1400);
       }
-    }, 7000);
+    }, 7500);
 
     return () => clearInterval(walkInterval);
-  }, [patrolEnabled, isMinimized]);
+  }, [avatarConfig.patrolEnabled, isMinimized, isDragging, showBubble]);
 
-  // Handle clicking the Vault Boy character: trigger sound effect, wink, and open dialogue
-  const handlePetClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    // 1. Interactive sound effect when pet is clicked
+  const handlePetClick = useCallback(() => {
     soundManager.playPetClick();
-
-    setClickCount(prev => prev + 1);
-    setIsWinking(true);
-    setTimeout(() => setIsWinking(false), 1200);
-
-    // Easter egg: every 5 clicks rewards +5 bonus caps!
-    if (clickCount > 0 && clickCount % 5 === 0 && !bonusCapsClaimed) {
+    const next = clickCount + 1;
+    setClickCount(next);
+    if (next > 0 && next % 5 === 0 && !bonusCapsClaimed) {
       addBottleCaps(5);
       soundManager.playCapsJingle();
       setBonusCapsClaimed(true);
-      setTimeout(() => setBonusCapsClaimed(false), 6000);
+      setTimeout(() => setBonusCapsClaimed(false), 5500);
     }
 
-    // Trigger dialogue and 5s timer
+    setIsWinking(true);
+    setTimeout(() => setIsWinking(false), 1200);
     triggerDialogue();
-  };
+  }, [clickCount, bonusCapsClaimed, triggerDialogue]);
 
-  // Hide pet function
-  const handleHidePet = (e?: React.MouseEvent) => {
+  const handleHidePet = (e?: React.MouseEvent | React.PointerEvent) => {
     if (e) e.stopPropagation();
     soundManager.playClick();
-    if (autoDismissTimerRef.current) {
-      clearTimeout(autoDismissTimerRef.current);
-    }
+    if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
     setShowBubble(false);
     setIsMinimized(true);
+    saveAvatarMinimized(true);
   };
 
-  const currentDialogue = PET_DIALOGUES[dialogueIndex];
+  // Pointer-based Drag Anywhere (supports Mouse + Touch on Top, Bottom, Left, Right sides)
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    // Ignore drags starting on interactive control buttons
+    if ((e.target as HTMLElement).closest('button')) return;
 
-  // Minimized state dock badge: easy to click to show again
+    dragRef.current = {
+      active: true,
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      origX: pos.x,
+      origY: pos.y,
+      moved: false
+    };
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active || dragRef.current.pointerId !== e.pointerId) return;
+
+    const dx = e.clientX - dragRef.current.startX;
+    const dy = e.clientY - dragRef.current.startY;
+    const distance = Math.hypot(dx, dy);
+
+    if (distance > 6) {
+      if (!dragRef.current.moved) {
+        dragRef.current.moved = true;
+        setIsDragging(true);
+        setIsWalking(false);
+      }
+
+      if (Math.abs(dx) > 4) {
+        setDirection(dx > 0 ? 'right' : 'left');
+      }
+
+      const nextPos = clampPosition(dragRef.current.origX + dx, dragRef.current.origY + dy);
+      posRef.current = nextPos;
+      setPos(nextPos);
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active || dragRef.current.pointerId !== e.pointerId) return;
+
+    const wasMoved = dragRef.current.moved;
+    dragRef.current.active = false;
+    dragRef.current.pointerId = null;
+
+    try {
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    } catch {}
+
+    setIsDragging(false);
+
+    if (wasMoved) {
+      setIsCustomPlaced(true);
+      saveAvatarPosition({ x: posRef.current.x, y: posRef.current.y, isCustomPlaced: true });
+    } else {
+      handlePetClick();
+    }
+  };
+
+  const handlePointerCancel = () => {
+    dragRef.current.active = false;
+    dragRef.current.pointerId = null;
+    setIsDragging(false);
+  };
+
+  const currentDialogue = activeDialogues[dialogueIndex % activeDialogues.length] || activeDialogues[0];
+
+  // Calculate smart bubble alignment so it never clips off top, bottom, left, or right screen sides
+  const viewportW = typeof window !== 'undefined' ? window.innerWidth : 1280;
+  const openBelow = pos.y < 245;
+  const horizontalAlignClass =
+    pos.x < 130
+      ? 'left-0'
+      : pos.x > viewportW - AVATAR_BOX_W - 140
+      ? 'right-0'
+      : 'left-1/2 -translate-x-1/2';
+
+  const pointerHorizontalClass =
+    pos.x < 130
+      ? 'left-8'
+      : pos.x > viewportW - AVATAR_BOX_W - 140
+      ? 'right-8'
+      : 'left-1/2 -translate-x-1/2';
+
+  // Minimized dock state
   if (isMinimized) {
     return (
-      <div className="fixed bottom-4 right-4 z-40 select-none animate-in fade-in zoom-in-90 duration-300">
+      <div className="fixed bottom-4 right-4 z-40 select-none animate-in fade-in zoom-in-90 duration-200">
         <button
           onClick={() => {
             soundManager.playPetClick();
             setIsMinimized(false);
+            saveAvatarMinimized(false);
           }}
-          title="Wake up and restore your Vault Avatar"
-          className="group relative flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-stone-950 px-3.5 py-2.5 rounded-2xl shadow-2xl border-2 border-stone-950 cursor-pointer transition active:scale-95 font-mono text-xs font-black"
+          title="Restore your Vault Avatar"
+          className="group relative flex items-center space-x-2 bg-[#0E1B38] hover:bg-[#162852] text-amber-300 px-3.5 py-2.5 rounded-2xl shadow-2xl border-2 border-amber-500 cursor-pointer transition active:scale-95 font-mono text-xs font-extrabold min-h-[44px]"
         >
-          {/* Mini Vault Boy head */}
-          <div className="w-6 h-6 rounded-full bg-blue-600 border border-stone-950 flex items-center justify-center overflow-hidden shrink-0">
-            <span className="text-xs">👷‍♂️</span>
+          <div className="w-7 h-7 rounded-xl bg-[#080E1E] border border-amber-500/60 flex items-center justify-center overflow-hidden shrink-0">
+            <VaultAvatarSprite config={avatarConfig} className="w-6 h-7" />
           </div>
-          <span>Show Vault Avatar</span>
-          <span className="flex items-center space-x-0.5 bg-stone-950 text-amber-400 px-1.5 py-0.5 rounded-md text-[10px]">
-            <BottleCapIcon className="w-3 h-3 text-amber-400" />
+          <span>Show {activeCompanionMeta.name}</span>
+          <span className="flex items-center space-x-0.5 bg-amber-500 text-stone-950 px-1.5 py-0.5 rounded-md text-[10px] font-black">
+            <BottleCapIcon className="w-3 h-3 text-stone-950" />
             <span>{streak.currentStreak}d</span>
           </span>
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-stone-950 animate-ping absolute -top-1 -right-1" />
         </button>
       </div>
     );
   }
 
+  const displayLabel =
+    avatarConfig.companion === 'vault-dweller'
+      ? userName.split(' ')[0]
+      : activeCompanionMeta.name.split(' ')[0];
+
   return (
     <div
-      className="fixed bottom-2 z-40 select-none pointer-events-none transition-all duration-1000 ease-out"
+      className="fixed top-0 left-0 z-40 select-none pointer-events-none"
       style={{
-        left: `${posX}%`,
-        transform: 'translateX(-50%)'
+        transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
+        transition: isDragging ? 'none' : 'transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)',
+        width: `${AVATAR_BOX_W}px`
       }}
     >
       <div className="relative pointer-events-auto flex flex-col items-center">
-        
-        {/* Dialogue Bubble: 100% Solid Background (Requirement 2 & 4) */}
+        {/* Smart-positioned Solid Dialogue Bubble (opens above or below depending on screen side) */}
         {showBubble && (
           <div
             onMouseEnter={() => {
-              // Pause auto-dismiss when hovering over the bubble to read long formulas
               if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
             }}
             onMouseLeave={() => {
-              // Resume 5s timer on mouse leave
               if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
               autoDismissTimerRef.current = setTimeout(() => setShowBubble(false), 5000);
             }}
-            className="mb-2 w-72 sm:w-80 bg-[#080F20] text-stone-100 border-2 border-amber-500 rounded-2xl p-3.5 shadow-[0_12px_40px_rgba(0,0,0,0.9)] relative font-mono text-xs animate-in fade-in slide-in-from-bottom-2 duration-200 z-50 select-text"
+            className={`absolute ${
+              openBelow ? 'top-full mt-2.5' : 'bottom-full mb-2.5'
+            } ${horizontalAlignClass} w-72 sm:w-80 bg-[#080F20] text-stone-100 border-2 border-amber-500 rounded-2xl p-3.5 shadow-[0_14px_40px_rgba(0,0,0,0.85)] font-mono text-xs z-50 select-text`}
           >
-            {/* Header row of speech bubble */}
-            <div className="flex items-center justify-between border-b border-amber-500/40 pb-1.5 mb-2 bg-[#050B17] -mx-3.5 -mt-3.5 px-3.5 pt-2.5 rounded-t-2xl">
-              <div className="flex items-center space-x-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-bold text-[10px] text-amber-400 uppercase tracking-wider">
-                  Vault-Tec // {currentDialogue.category}
+            {/* Header bar */}
+            <div className="flex items-center justify-between border-b border-amber-500/40 pb-2 mb-2 bg-[#050B17] -mx-3.5 -mt-3.5 px-3.5 pt-2.5 rounded-t-2xl">
+              <div className="flex items-center space-x-1.5 min-w-0">
+                <span className="font-bold text-[10px] text-amber-400 uppercase tracking-wider truncate">
+                  {activeCompanionMeta.name} · {currentDialogue.category}
                 </span>
               </div>
-              <div className="flex items-center space-x-1">
-                {/* 5s disappearance indicator bar */}
-                <span className="text-[9px] text-amber-400/80 font-mono px-1 py-0.2 rounded bg-amber-500/10 border border-amber-500/30">
-                  5s auto-hide
+              <div className="flex items-center space-x-1.5 shrink-0">
+                <span className="text-[9px] text-amber-300/80 font-mono px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30">
+                  5s
                 </span>
                 <button
-                  onClick={(e) => {
+                  type="button"
+                  onClick={e => {
                     e.stopPropagation();
                     setShowBubble(false);
                   }}
@@ -316,264 +550,167 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
               </div>
             </div>
 
-            {/* Bubble dialogue text with high-contrast emerald text on solid dark background */}
+            {/* Dialogue Copy */}
             <p className="text-emerald-300 font-medium text-[11px] leading-relaxed mb-3">
               "{currentDialogue.text}"
             </p>
 
-            {/* Footer action buttons */}
+            {/* Footer actions */}
             <div className="flex items-center justify-between pt-2 border-t border-amber-500/30 text-[10px]">
               <div className="flex items-center space-x-1.5 text-stone-300 font-bold">
                 <BottleCapIcon className="w-3.5 h-3.5 text-amber-400" />
-                <span>Morale: <strong className="text-amber-400 font-mono">{streak.currentStreak}d</strong></span>
+                <span>
+                  Streak: <strong className="text-amber-400 font-mono">{streak.currentStreak}d</strong>
+                </span>
               </div>
 
               <div className="flex items-center space-x-1.5">
                 {currentDialogue.targetTab && onNavigateTab && (
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={e => {
+                      e.stopPropagation();
                       soundManager.playClick();
                       onNavigateTab(currentDialogue.targetTab);
                     }}
-                    className="px-2 py-0.5 rounded-md bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold transition flex items-center space-x-0.5 cursor-pointer"
+                    className="px-2.5 py-1 rounded-md bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold transition flex items-center space-x-0.5 cursor-pointer"
                   >
                     <span>{currentDialogue.actionLabel}</span>
                     <ChevronRight className="w-3 h-3" />
                   </button>
                 )}
                 <button
+                  type="button"
                   onClick={handleNextDialogue}
                   title="Next Vault Tip"
-                  className="px-2 py-0.5 rounded-md bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/30 transition cursor-pointer font-bold"
+                  className="px-2.5 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/30 transition cursor-pointer font-bold"
                 >
                   Next
                 </button>
               </div>
             </div>
 
-            {/* Solid speech bubble pointer beak (Outer Amber triangle + Inner Solid Dark triangle) */}
-            <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[9px] border-t-amber-500" />
-            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[8px] border-t-[#080F20]" />
-          </div>
-        )}
-
-        {/* Bonus Caps Float Text when earned */}
-        {bonusCapsClaimed && (
-          <div className="absolute -top-10 font-mono font-black text-xs text-amber-300 bg-stone-950 border border-amber-500 px-2 py-0.5 rounded-full shadow-lg animate-bounce flex items-center space-x-1 z-50">
-            <BottleCapIcon className="w-3.5 h-3.5 text-amber-400" />
-            <span>+5 Caps Bonus!</span>
-          </div>
-        )}
-
-        {/* Quick Click-to-Hide Button Badge */}
-        <div className="flex items-center space-x-1.5 mb-1 opacity-80 hover:opacity-100 transition">
-          <button
-            onClick={handleHidePet}
-            title="Click to hide Vault Avatar into bottom dock"
-            className="flex items-center space-x-1 bg-stone-950/90 hover:bg-rose-950 text-stone-300 hover:text-rose-200 border border-stone-700 hover:border-rose-500 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold shadow-md cursor-pointer transition active:scale-95"
-          >
-            <X className="w-3 h-3 text-rose-400" />
-            <span>Hide Avatar</span>
-          </button>
-        </div>
-
-        {/* Vault Dweller Avatar Character */}
-        <div
-          onClick={handlePetClick}
-          onDoubleClick={handleHidePet}
-          title="Click to talk with your Vault Avatar! (Double click to hide)"
-          className={`cursor-pointer group relative flex flex-col items-center transition-transform active:scale-95 ${
-            isWalking ? 'animate-bounce' : ''
-          }`}
-          style={{
-            transform: direction === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
-          }}
-        >
-          {/* High-fidelity Vector Vault Boy / Vault Dweller */}
-          <svg
-            viewBox="0 0 100 130"
-            className="w-16 h-20 sm:w-20 sm:h-24 drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] transition-all hover:scale-105"
-            aria-label="Vault Dweller Pet Avatar"
-          >
-            {/* Shadow under feet */}
-            <ellipse cx="50" cy="122" rx="26" ry="6" fill="#000000" fillOpacity="0.45" />
-
-            {/* Blue Vault 101 Jumpsuit Boots */}
-            <path d="M 33 110 L 33 120 L 25 120 L 25 116 Z" fill="#2b2b2b" stroke="#000" strokeWidth="2" />
-            <path d="M 53 110 L 53 120 L 61 120 L 61 116 Z" fill="#2b2b2b" stroke="#000" strokeWidth="2" />
-
-            {/* Jumpsuit Legs (Vault Cobalt) */}
-            <path d="M 34 82 L 32 112 L 44 112 L 46 86 Z" fill="#1e3a8a" stroke="#0f172a" strokeWidth="2.5" />
-            <path d="M 52 82 L 50 112 L 62 112 L 60 86 Z" fill="#1e3a8a" stroke="#0f172a" strokeWidth="2.5" />
-
-            {/* Jumpsuit Torso (Cobalt blue) */}
-            <path
-              d="M 30 52 L 24 84 L 70 84 L 64 52 Z"
-              fill="#1d4ed8"
-              stroke="#0f172a"
-              strokeWidth="2.5"
-              strokeLinejoin="round"
-            />
-
-            {/* Vault 101 Yellow Piping / Collar / Zipper */}
-            <path d="M 47 52 L 47 84" stroke="#facc15" strokeWidth="3" strokeLinecap="round" />
-            <path d="M 34 52 Q 47 57 60 52" stroke="#facc15" strokeWidth="3.5" fill="none" />
-            <rect x="34" y="80" width="26" height="5" fill="#facc15" rx="1.5" stroke="#0f172a" strokeWidth="1" />
-            <rect x="44" y="79" width="6" height="7" fill="#e2e8f0" stroke="#0f172a" strokeWidth="1" />
-
-            {/* '101' printed on suit collar */}
-            <text x="47" y="73" fill="#fef08a" fontSize="6" fontWeight="900" fontFamily="monospace" textAnchor="middle">
-              101
-            </text>
-
-            {/* Left Arm (Relaxed) */}
-            <path
-              d="M 64 54 Q 74 68 70 80"
-              stroke="#1d4ed8"
-              strokeWidth="7"
-              strokeLinecap="round"
-              fill="none"
-            />
-            {/* Left Hand Glove */}
-            <circle cx="70" cy="81" r="4.5" fill="#e2e8f0" stroke="#0f172a" strokeWidth="1.5" />
-
-            {/* Right Arm (Classic Thumbs Up Pose!) */}
-            <path
-              d="M 30 54 Q 16 60 20 46"
-              stroke="#1d4ed8"
-              strokeWidth="7"
-              strokeLinecap="round"
-              fill="none"
-            />
-            {/* Pip-Boy 3000 on Right Forearm */}
-            <rect
-              x="17"
-              y="50"
-              width="8"
-              height="6"
-              rx="1.5"
-              fill="#22c55e"
-              stroke="#15803d"
-              strokeWidth="1.5"
-            />
-
-            {/* Thumbs-Up Hand Glove */}
-            <g transform="translate(18, 38)">
-              {/* Fist */}
-              <circle cx="3" cy="7" r="4.5" fill="#f8fafc" stroke="#0f172a" strokeWidth="1.5" />
-              {/* Thumb pointing up */}
-              <path
-                d="M 2 6 L 2 1 Q 4 0 6 2 L 5 7 Z"
-                fill="#f8fafc"
-                stroke="#0f172a"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-              />
-            </g>
-
-            {/* Neck */}
-            <rect x="43" y="44" width="8" height="10" fill="#fed7aa" stroke="#0f172a" strokeWidth="1.5" />
-
-            {/* Head / Face */}
-            <circle cx="47" cy="34" r="16" fill="#fed7aa" stroke="#0f172a" strokeWidth="2.5" />
-
-            {/* Rosy Cheeks */}
-            <circle cx="37" cy="38" r="3" fill="#fca5a5" fillOpacity="0.6" />
-            <circle cx="57" cy="38" r="3" fill="#fca5a5" fillOpacity="0.6" />
-
-            {/* Cheerful Smile */}
-            <path
-              d="M 40 38 Q 47 46 54 38"
-              stroke="#0f172a"
-              strokeWidth="2"
-              fill="#ffffff"
-              strokeLinecap="round"
-            />
-
-            {/* Eyes (Winking or Wide Cheerful) */}
-            {isWinking ? (
+            {/* Speech Bubble Pointer Beak (Up or Down) */}
+            {openBelow ? (
               <>
-                {/* Left eye winking line */}
-                <path d="M 37 31 Q 40 28 43 31" stroke="#0f172a" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-                {/* Right eye open */}
-                <ellipse cx="53" cy="30" rx="2.5" ry="3.5" fill="#0f172a" />
-                <circle cx="52" cy="29" r="1" fill="#ffffff" />
+                <div
+                  className={`absolute -top-2.5 ${pointerHorizontalClass} w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[9px] border-b-amber-500`}
+                />
+                <div
+                  className={`absolute -top-1.5 ${pointerHorizontalClass} w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[8px] border-b-[#050B17]`}
+                />
               </>
             ) : (
               <>
-                {/* Left eye */}
-                <ellipse cx="40" cy="30" rx="2.5" ry="3.5" fill="#0f172a" />
-                <circle cx="39" cy="29" r="1" fill="#ffffff" />
-                {/* Right eye */}
-                <ellipse cx="54" cy="30" rx="2.5" ry="3.5" fill="#0f172a" />
-                <circle cx="53" cy="29" r="1" fill="#ffffff" />
+                <div
+                  className={`absolute -bottom-2.5 ${pointerHorizontalClass} w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[9px] border-t-amber-500`}
+                />
+                <div
+                  className={`absolute -bottom-1.5 ${pointerHorizontalClass} w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[8px] border-t-[#080F20]`}
+                />
               </>
             )}
+          </div>
+        )}
 
-            {/* Eyebrows */}
-            <path d="M 37 25 Q 40 23 43 25" stroke="#854d0e" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-            <path d="M 51 25 Q 54 23 57 25" stroke="#854d0e" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+        {/* Bonus Caps Float Toast */}
+        {bonusCapsClaimed && (
+          <div className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono font-black text-xs text-amber-300 bg-stone-950 border border-amber-500 px-2.5 py-0.5 rounded-full shadow-lg animate-bounce flex items-center space-x-1 z-50">
+            <BottleCapIcon className="w-3.5 h-3.5 text-amber-400" />
+            <span>+5 Caps!</span>
+          </div>
+        )}
 
-            {/* Classic Fallout Vault Boy Blonde Swoop / Quiff Hair */}
-            <path
-              d="M 31 30 
-                 C 29 18 36 12 47 12 
-                 C 58 12 65 18 63 30 
-                 C 64 26 62 22 58 20 
-                 C 54 18 48 20 44 24 
-                 C 40 21 34 22 31 30 Z"
-              fill="#facc15"
-              stroke="#0f172a"
-              strokeWidth="2.2"
-              strokeLinejoin="round"
-            />
-            {/* Front Cowlick Quiff swirl */}
-            <path
-              d="M 44 21 Q 48 14 55 16 Q 59 18 56 22"
-              fill="#facc15"
-              stroke="#0f172a"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
+        {/* Draggable Interactive Avatar Container */}
+        <div
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
+          onDoubleClick={handleHidePet}
+          title="Click to talk • Drag to any side of the screen • Double-click to hide"
+          style={{ touchAction: 'none' }}
+          className={`group relative flex flex-col items-center ${
+            isDragging ? 'cursor-grabbing scale-105' : 'cursor-grab hover:scale-[1.03]'
+          } ${isWalking && !isDragging ? 'animate-bounce' : ''} transition-transform`}
+        >
+          {/* Quick Drag & Hide micro-bar visible on hover or touch */}
+          <div className="flex items-center space-x-1 mb-0.5 opacity-80 group-hover:opacity-100 transition">
+            <span
+              className="flex items-center space-x-0.5 bg-[#080F20]/90 text-amber-300 border border-amber-500/40 px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold shadow"
+              title="Drag to move anywhere on screen"
+            >
+              <Move className="w-2.5 h-2.5" />
+            </span>
+            <button
+              type="button"
+              onClick={handleHidePet}
+              title="Hide Vault Avatar"
+              className="flex items-center space-x-1 bg-[#080F20]/95 hover:bg-rose-950 text-stone-200 hover:text-rose-200 border border-stone-600 hover:border-rose-500 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold shadow cursor-pointer transition"
+            >
+              <X className="w-2.5 h-2.5 text-rose-400" />
+              <span>Hide</span>
+            </button>
+          </div>
 
-            {/* Civil Engineer Safety Hardhat / Delta Emblem Badge on chest */}
-            <g transform="translate(52, 60)">
-              <polygon points="0,8 5,0 10,8" fill="#f59e0b" stroke="#78350f" strokeWidth="0.8" />
-              <line x1="2" y1="5" x2="8" y2="5" stroke="#78350f" strokeWidth="0.6" />
-            </g>
-          </svg>
-
-          {/* Quick Pet Interaction Toolstrip */}
+          {/* Flippable Companion SVG with Stationary Idle Animation */}
           <div
-            className="flex items-center space-x-1.5 mt-1 bg-stone-950/90 border border-amber-500/50 px-2.5 py-0.5 rounded-full text-[10px] text-amber-300 font-mono font-bold shadow-lg"
             style={{
               transform: direction === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
             }}
+            className="transition-transform duration-200"
           >
-            <BottleCapIcon className="w-3 h-3 text-amber-400" />
-            <span>{userName.split(' ')[0]}</span>
-            <span className="text-stone-500">|</span>
-            <button
-              onClick={handleHidePet}
-              title="Click to hide pet"
-              className="text-stone-400 hover:text-rose-300 transition cursor-pointer flex items-center space-x-0.5"
+            <div
+              className={
+                !isWalking && !isDragging
+                  ? avatarConfig.companion === 'codsworth' || avatarConfig.companion === 'eyebot'
+                    ? 'vault-pet-idle vault-pet-idle-hover'
+                    : 'vault-pet-idle vault-pet-idle-stance'
+                  : ''
+              }
             >
-              <EyeOff className="w-3 h-3" />
-              <span>Hide</span>
-            </button>
+              <VaultAvatarSprite
+                config={avatarConfig}
+                isWinking={isWinking}
+                className="w-16 h-20 sm:w-20 sm:h-24"
+              />
+            </div>
+          </div>
+
+          {/* Compact Name & Patrol Toggle Strip */}
+          <div className="flex items-center space-x-1.5 mt-0.5 bg-[#080F20]/95 border border-amber-500/50 px-2.5 py-0.5 rounded-full text-[10px] text-amber-300 font-mono font-bold shadow-lg whitespace-nowrap">
+            <BottleCapIcon className="w-3 h-3 text-amber-400 shrink-0" />
+            <span className="truncate max-w-[54px]">{displayLabel}</span>
+            <span className="text-stone-600">|</span>
             <button
-              onClick={(e) => {
+              type="button"
+              onClick={e => {
                 e.stopPropagation();
-                setPatrolEnabled(p => !p);
+                soundManager.playClick();
+                const updated: VaultAvatarConfig = {
+                  ...avatarConfig,
+                  patrolEnabled: !avatarConfig.patrolEnabled
+                };
+                setAvatarConfig(updated);
+                saveAvatarConfig(updated);
               }}
-              title={patrolEnabled ? "Disable wandering patrol" : "Enable wandering patrol"}
-              className={`transition cursor-pointer ${patrolEnabled ? 'text-emerald-400' : 'text-stone-500'}`}
+              title={avatarConfig.patrolEnabled ? 'Pause roaming' : 'Enable roaming'}
+              className={`transition cursor-pointer ${
+                avatarConfig.patrolEnabled ? 'text-emerald-400' : 'text-stone-500 hover:text-stone-300'
+              }`}
             >
               <Compass className="w-3 h-3" />
             </button>
+            <button
+              type="button"
+              onClick={handleHidePet}
+              title="Minimize to dock"
+              className="text-stone-400 hover:text-rose-300 transition cursor-pointer"
+            >
+              <EyeOff className="w-3 h-3" />
+            </button>
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -9,20 +9,45 @@ import {
   Sliders,
   Sparkles,
   Zap,
-  BookOpen,
-  Terminal,
   Sun,
   Moon,
   Shield,
   RotateCcw,
   CheckCircle2,
   AlertCircle,
-  HelpCircle,
   Clock,
-  Layers,
-  Award
+  Award,
+  UserCheck,
+  Compass,
+  Move,
+  EyeOff,
+  Monitor
 } from 'lucide-react';
-import { ThemeId, THEMES_DATA, PersonalityTheme, DEFAULT_THEME_ID, getThemePalette } from '../types/theme';
+import { ThemeId, CrtIntensity, THEMES_DATA, getThemePalette } from '../types/theme';
+import { FalloutThemeIcon } from './FalloutThemeIcons';
+import {
+  VaultAvatarConfig,
+  CompanionId,
+  COMPANION_OPTIONS,
+  SUIT_COLOR_PRESETS,
+  HAIR_COLOR_PRESETS,
+  SKIN_TONE_PRESETS,
+  VAULT_NUMBER_OPTIONS,
+  HAIR_STYLE_OPTIONS,
+  ACCESSORY_OPTIONS,
+  SuitColorId,
+  HairColorId,
+  SkinToneId,
+  DEFAULT_AVATAR_CONFIG
+} from '../types/avatar';
+import {
+  getAvatarConfig,
+  saveAvatarConfig,
+  resetAvatarPosition,
+  getAvatarMinimized,
+  saveAvatarMinimized
+} from '../utils/storage';
+import { VaultAvatarSprite } from './VaultAvatarSprite';
 import { soundManager } from '../utils/audio';
 
 interface ThemesViewProps {
@@ -32,6 +57,10 @@ interface ThemesViewProps {
   onPreviewTheme: (themeId: ThemeId | null) => void;
   isDistractionFree: boolean;
   onToggleDistractionFree: (enabled: boolean) => void;
+  crtEnabled: boolean;
+  onToggleCrt: (enabled: boolean) => void;
+  crtIntensity: CrtIntensity;
+  onChangeCrtIntensity: (intensity: CrtIntensity) => void;
   onResetDefaults: () => void;
   themeMode: 'dark' | 'light';
   setThemeMode: (mode: 'dark' | 'light') => void;
@@ -44,6 +73,10 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
   onPreviewTheme,
   isDistractionFree,
   onToggleDistractionFree,
+  crtEnabled,
+  onToggleCrt,
+  crtIntensity,
+  onChangeCrtIntensity,
   onResetDefaults,
   themeMode,
   setThemeMode
@@ -55,29 +88,63 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
   const [playingThemeSound, setPlayingThemeSound] = useState<ThemeId | null>(null);
   const [testedSound, setTestedSound] = useState<string | null>(null);
 
+  // Vault Companion & Dweller Appearance state
+  const [avatarConfig, setAvatarConfig] = useState<VaultAvatarConfig>(getAvatarConfig);
+  const [isAvatarMinimized, setIsAvatarMinimized] = useState<boolean>(getAvatarMinimized);
+  const [previewWink, setPreviewWink] = useState<boolean>(false);
+  const [positionResetDone, setPositionResetDone] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleAvatarSync = (e: Event) => {
+      const custom = e as CustomEvent<VaultAvatarConfig>;
+      if (custom.detail) setAvatarConfig(custom.detail);
+      else setAvatarConfig(getAvatarConfig());
+    };
+    const handleMinSync = (e: Event) => {
+      const custom = e as CustomEvent<boolean>;
+      if (typeof custom.detail === 'boolean') setIsAvatarMinimized(custom.detail);
+      else setIsAvatarMinimized(getAvatarMinimized());
+    };
+    window.addEventListener('cele_avatar_updated', handleAvatarSync);
+    window.addEventListener('cele_avatar_minimized_changed', handleMinSync);
+    return () => {
+      window.removeEventListener('cele_avatar_updated', handleAvatarSync);
+      window.removeEventListener('cele_avatar_minimized_changed', handleMinSync);
+    };
+  }, []);
+
+  const updateAvatar = (updater: (prev: VaultAvatarConfig) => VaultAvatarConfig) => {
+    soundManager.playClick();
+    const next = updater(avatarConfig);
+    setAvatarConfig(next);
+    saveAvatarConfig(next);
+  };
+
+  const handleSelectCompanion = (companionId: CompanionId) => {
+    soundManager.playPetClick();
+    setPreviewWink(true);
+    setTimeout(() => setPreviewWink(false), 900);
+    const next: VaultAvatarConfig = { ...avatarConfig, companion: companionId };
+    setAvatarConfig(next);
+    saveAvatarConfig(next);
+  };
+
+  const handleResetAvatarLocation = () => {
+    soundManager.playCompleteTask();
+    resetAvatarPosition();
+    setIsAvatarMinimized(false);
+    setPositionResetDone(true);
+    setTimeout(() => setPositionResetDone(false), 2500);
+  };
+
   // Active theme under consideration (either currently applied or temporarily previewed)
   const effectiveThemeId = previewThemeId || currentThemeId;
   const effectiveTheme = THEMES_DATA.find(t => t.id === effectiveThemeId) || THEMES_DATA[0];
+  const selectedCompanionMeta =
+    COMPANION_OPTIONS.find(c => c.id === avatarConfig.companion) || COMPANION_OPTIONS[0];
 
-  // Helper for theme icons
-  const getThemeIcon = (id: ThemeId) => {
-    switch (id) {
-      case 'vault-tec':
-        return <Award className="w-5 h-5 text-amber-400" />;
-      case 'midnight-strategist':
-        return <Terminal className="w-5 h-5" />;
-      case 'zen-scholar':
-        return <BookOpen className="w-5 h-5" />;
-      case 'cyber-engineer':
-        return <Zap className="w-5 h-5" />;
-      case 'academic-classic':
-        return <Layers className="w-5 h-5" />;
-      case 'sunrise-momentum':
-        return <Sun className="w-5 h-5" />;
-      case 'deep-work':
-        return <Shield className="w-5 h-5" />;
-    }
-  };
+  // Helper for Fallout Shelter theme emblems
+  const getThemeIcon = (id: ThemeId) => <FalloutThemeIcon themeId={id} className="w-6 h-6" />;
 
   const handleSoundToggle = () => {
     const next = !soundEnabled;
@@ -182,21 +249,27 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                 <Palette className="w-6 h-6" />
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-stone-900 dark:text-stone-100">
-                Personality Themes & Sound Packs
+                Terminal Skins, Companion & Audio Settings
               </h1>
             </div>
             <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 max-w-2xl leading-relaxed">
-              Personalize your CE Licensure Exam preparation. Every theme combines a unique visual identity, calibrated typography, and an authentic client-side acoustic sound engine tailored to your motivation style.
+              Customize your Vault Companion or Dweller appearance, switch terminal visual skins, calibrate Web Audio feedback, and tune distraction-free study settings.
             </p>
           </div>
 
           {/* Quick Active Status Badge */}
-          <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 shrink-0 space-y-2">
+          <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 shrink-0 space-y-2.5 min-w-[260px]">
             <div className="flex items-center justify-between gap-4 text-xs">
-              <span className="text-stone-500 dark:text-stone-400 font-medium">Active Atmosphere:</span>
+              <span className="text-stone-500 dark:text-stone-400 font-medium">Active Skin:</span>
               <span className="font-bold text-orange-600 dark:text-orange-400 flex items-center space-x-1.5">
                 {getThemeIcon(currentThemeId)}
                 <span>{THEMES_DATA.find(t => t.id === currentThemeId)?.name}</span>
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4 text-xs">
+              <span className="text-stone-500 dark:text-stone-400 font-medium">Active Avatar:</span>
+              <span className="font-bold text-stone-800 dark:text-stone-200 font-mono">
+                {selectedCompanionMeta.name}
               </span>
             </div>
             <div className="flex items-center justify-between gap-4 text-xs">
@@ -206,11 +279,17 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
               </span>
             </div>
             <div className="flex items-center justify-between gap-4 text-xs">
+              <span className="text-stone-500 dark:text-stone-400 font-medium">Pip-Boy CRT:</span>
+              <span className="font-mono text-stone-700 dark:text-stone-300 capitalize">
+                {crtEnabled ? `${crtIntensity} Scanlines` : 'Disabled'}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4 text-xs">
               <span className="text-stone-500 dark:text-stone-400 font-medium">Lighting Mode:</span>
               <button
                 type="button"
                 onClick={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
-                className="px-2.5 py-1 rounded-lg font-bold text-xs bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 transition flex items-center space-x-1.5 cursor-pointer shadow-xs"
+                className="px-2.5 py-1.5 rounded-lg font-bold text-xs bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 transition flex items-center space-x-1.5 cursor-pointer shadow-xs"
               >
                 {themeMode === 'dark' ? (
                   <>
@@ -225,31 +304,396 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                 )}
               </button>
             </div>
-            <div className="flex items-center justify-between gap-4 text-xs">
-              <span className="text-stone-500 dark:text-stone-400 font-medium">Distraction-Free:</span>
-              <span className={`font-bold ${isDistractionFree ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-400'}`}>
-                {isDistractionFree ? 'Active' : 'Off'}
-              </span>
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================
+          VAULT COMPANION & DWELLER APPEARANCE STUDIO
+          ============================================================ */}
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-stone-200 dark:border-stone-800">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400">
+              <UserCheck className="w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-lg sm:text-xl font-extrabold text-stone-900 dark:text-stone-100">
+                Vault Companion & Dweller Customization
+              </h2>
+              <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                Pick a Fallout companion or customize your Vault Dweller's suit, hair, and gear. Drag your avatar to any side of the screen!
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                soundManager.playClick();
+                const next = !isAvatarMinimized;
+                setIsAvatarMinimized(next);
+                saveAvatarMinimized(next);
+              }}
+              className="px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-xs font-bold text-stone-700 dark:text-stone-200 transition flex items-center space-x-1.5 cursor-pointer min-h-[40px]"
+            >
+              {isAvatarMinimized ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+              <span>{isAvatarMinimized ? 'Show Avatar' : 'Hide Avatar'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleResetAvatarLocation}
+              className="px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-xs font-bold text-stone-700 dark:text-stone-200 transition flex items-center space-x-1.5 cursor-pointer min-h-[40px]"
+            >
+              <Move className="w-3.5 h-3.5" />
+              <span>{positionResetDone ? 'Position Reset' : 'Reset Position'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Studio Split: Live Preview Stage + Companion Picker */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Left: Live Interactive Companion Preview Stage */}
+          <div className="lg:col-span-4 rounded-2xl bg-stone-50 dark:bg-stone-800/70 border border-stone-200 dark:border-stone-700 p-5 flex flex-col items-center justify-between text-center space-y-4">
+            <div className="w-full flex items-center justify-between text-[11px] font-mono text-stone-500 dark:text-stone-400">
+              <span>LIVE PREVIEW</span>
+              <span>{selectedCompanionMeta.origin}</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                soundManager.playPetClick();
+                setPreviewWink(true);
+                setTimeout(() => setPreviewWink(false), 900);
+              }}
+              className="my-2 p-4 rounded-2xl bg-[#080E1E] border-2 border-amber-500/50 shadow-inner hover:border-amber-400 transition cursor-pointer group"
+              title="Click to test companion reaction"
+            >
+              <VaultAvatarSprite
+                config={avatarConfig}
+                isWinking={previewWink}
+                className="w-28 h-32 sm:w-32 sm:h-36 mx-auto group-hover:scale-105 transition-transform"
+              />
+            </button>
+
+            <div className="space-y-1 w-full">
+              <h3 className="text-base font-extrabold text-stone-900 dark:text-stone-100">
+                {selectedCompanionMeta.name}
+              </h3>
+              <p className="text-xs font-medium text-stone-600 dark:text-stone-400">
+                {selectedCompanionMeta.role} · {selectedCompanionMeta.perk}
+              </p>
+            </div>
+
+            <div className="w-full pt-3 border-t border-stone-200 dark:border-stone-700 flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => updateAvatar(prev => ({ ...prev, patrolEnabled: !prev.patrolEnabled }))}
+                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold border transition flex items-center justify-center space-x-1.5 cursor-pointer min-h-[40px] ${
+                  avatarConfig.patrolEnabled
+                    ? 'bg-emerald-600/15 border-emerald-500/50 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-stone-100 dark:bg-stone-800 border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>Roaming: {avatarConfig.patrolEnabled ? 'ON' : 'OFF'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  soundManager.playClick();
+                  setAvatarConfig(DEFAULT_AVATAR_CONFIG);
+                  saveAvatarConfig(DEFAULT_AVATAR_CONFIG);
+                }}
+                className="py-2 px-3 rounded-xl text-xs font-bold border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 transition cursor-pointer min-h-[40px]"
+                title="Reset avatar appearance to default Vault 101 Dweller"
+              >
+                Reset Look
+              </button>
+            </div>
+          </div>
+
+          {/* Right: Fallout Companion Cards Grid */}
+          <div className="lg:col-span-8 flex flex-col justify-between space-y-5">
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between text-xs font-bold text-stone-600 dark:text-stone-300 uppercase tracking-wider">
+                <span>Choose Companion or Dweller</span>
+                <span className="font-mono text-[11px] text-stone-500 dark:text-stone-400">
+                  6 Fallout Roster Options
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {COMPANION_OPTIONS.map(opt => {
+                  const isActive = avatarConfig.companion === opt.id;
+                  const previewCfg: VaultAvatarConfig = { ...avatarConfig, companion: opt.id };
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => handleSelectCompanion(opt.id)}
+                      className={`p-3 rounded-2xl border text-left transition flex flex-col justify-between cursor-pointer ${
+                        isActive
+                          ? 'border-2 border-orange-500 bg-orange-500/10 ring-2 ring-orange-500/20'
+                          : 'border-stone-200 dark:border-stone-700 bg-stone-50/80 dark:bg-stone-800/50 hover:border-stone-400 dark:hover:border-stone-500'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="w-12 h-14 rounded-xl bg-[#080E1E] border border-[#2B447A] flex items-center justify-center shrink-0 overflow-hidden">
+                          <VaultAvatarSprite config={previewCfg} className="w-10 h-12" />
+                        </div>
+                        {isActive && (
+                          <span className="px-2 py-0.5 rounded-md bg-orange-600 text-[10px] font-extrabold font-mono uppercase">
+                            Active
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-extrabold text-xs sm:text-sm text-stone-900 dark:text-stone-100 truncate">
+                          {opt.name}
+                        </div>
+                        <div className="text-[11px] text-stone-500 dark:text-stone-400 truncate mt-0.5">
+                          {opt.role}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Vault Dweller Appearance Controls */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-sm font-extrabold text-stone-900 dark:text-stone-100">
+                    Vault Dweller Appearance Wardrobe
+                  </h3>
+                  <p className="text-[11px] text-stone-500 dark:text-stone-400">
+                    Customize jumpsuit palette, vault number, hair, skin tone, and engineering gear
+                  </p>
+                </div>
+                {avatarConfig.companion !== 'vault-dweller' && (
+                  <button
+                    type="button"
+                    onClick={() => handleSelectCompanion('vault-dweller')}
+                    className="px-3 py-1.5 rounded-xl bg-orange-600 text-xs font-bold cursor-pointer transition"
+                  >
+                    Equip Dweller
+                  </button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Jumpsuit Color */}
+                <div className="space-y-1.5">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600 dark:text-stone-300">
+                    Vault Jumpsuit
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {(Object.keys(SUIT_COLOR_PRESETS) as SuitColorId[]).map(suitKey => {
+                      const preset = SUIT_COLOR_PRESETS[suitKey];
+                      const active = avatarConfig.dweller.suitColor === suitKey;
+                      return (
+                        <button
+                          key={suitKey}
+                          type="button"
+                          onClick={() =>
+                            updateAvatar(prev => ({
+                              ...prev,
+                              companion: 'vault-dweller',
+                              dweller: { ...prev.dweller, suitColor: suitKey }
+                            }))
+                          }
+                          title={preset.label}
+                          className={`px-2.5 py-1.5 rounded-xl border text-[11px] font-bold flex items-center space-x-1.5 cursor-pointer transition ${
+                            active
+                              ? 'border-orange-500 ring-2 ring-orange-500/25 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100'
+                              : 'border-stone-300 dark:border-stone-700 bg-white/60 dark:bg-stone-900/50 text-stone-700 dark:text-stone-300'
+                          }`}
+                        >
+                          <span
+                            data-keep-color="true"
+                            className="w-3.5 h-3.5 rounded-full border border-black/30 shrink-0 swatch-pill"
+                            style={{ backgroundColor: preset.main }}
+                          />
+                          <span>{preset.label.split(' ')[0]}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Vault Number */}
+                <div className="space-y-1.5">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600 dark:text-stone-300">
+                    Vault Number
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {VAULT_NUMBER_OPTIONS.map(num => {
+                      const active = avatarConfig.dweller.vaultNumber === num;
+                      return (
+                        <button
+                          key={num}
+                          type="button"
+                          onClick={() =>
+                            updateAvatar(prev => ({
+                              ...prev,
+                              companion: 'vault-dweller',
+                              dweller: { ...prev.dweller, vaultNumber: num }
+                            }))
+                          }
+                          className={`px-3 py-1.5 rounded-xl border font-mono text-xs font-extrabold cursor-pointer transition ${
+                            active
+                              ? 'bg-orange-600 border-orange-500'
+                              : 'border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 hover:border-stone-400'
+                          }`}
+                        >
+                          {num}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Hair Style & Color */}
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600 dark:text-stone-300 block">
+                    Hair Style & Color
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {HAIR_STYLE_OPTIONS.map(hs => {
+                      const active = avatarConfig.dweller.hairStyle === hs.id;
+                      return (
+                        <button
+                          key={hs.id}
+                          type="button"
+                          onClick={() =>
+                            updateAvatar(prev => ({
+                              ...prev,
+                              companion: 'vault-dweller',
+                              dweller: { ...prev.dweller, hairStyle: hs.id }
+                            }))
+                          }
+                          className={`px-2.5 py-1 rounded-lg border text-[11px] font-bold cursor-pointer transition ${
+                            active
+                              ? 'bg-orange-600 border-orange-500'
+                              : 'border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300'
+                          }`}
+                        >
+                          {hs.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="flex items-center space-x-2 pt-0.5">
+                    {(Object.keys(HAIR_COLOR_PRESETS) as HairColorId[]).map(hc => {
+                      const preset = HAIR_COLOR_PRESETS[hc];
+                      const active = avatarConfig.dweller.hairColor === hc;
+                      return (
+                        <button
+                          key={hc}
+                          type="button"
+                          title={preset.label}
+                          onClick={() =>
+                            updateAvatar(prev => ({
+                              ...prev,
+                              companion: 'vault-dweller',
+                              dweller: { ...prev.dweller, hairColor: hc }
+                            }))
+                          }
+                          data-keep-color="true"
+                          className={`w-7 h-7 rounded-full border-2 cursor-pointer transition swatch-pill ${
+                            active ? 'border-white scale-110 ring-2 ring-amber-400' : 'border-stone-700'
+                          }`}
+                          style={{ backgroundColor: preset.fill }}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Skin Tone & Gear Accessory */}
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600 dark:text-stone-300 block">
+                    Skin Tone & Headgear
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    {(Object.keys(SKIN_TONE_PRESETS) as SkinToneId[]).map(st => {
+                      const preset = SKIN_TONE_PRESETS[st];
+                      const active = avatarConfig.dweller.skinTone === st;
+                      return (
+                        <button
+                          key={st}
+                          type="button"
+                          title={preset.label}
+                          onClick={() =>
+                            updateAvatar(prev => ({
+                              ...prev,
+                              companion: 'vault-dweller',
+                              dweller: { ...prev.dweller, skinTone: st }
+                            }))
+                          }
+                          data-keep-color="true"
+                          className={`w-7 h-7 rounded-full border-2 cursor-pointer transition swatch-pill ${
+                            active ? 'border-white scale-110 ring-2 ring-amber-400' : 'border-stone-700'
+                          }`}
+                          style={{ backgroundColor: preset.fill }}
+                        />
+                      );
+                    })}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 pt-0.5">
+                    {ACCESSORY_OPTIONS.map(acc => {
+                      const active = avatarConfig.dweller.accessory === acc.id;
+                      return (
+                        <button
+                          key={acc.id}
+                          type="button"
+                          onClick={() =>
+                            updateAvatar(prev => ({
+                              ...prev,
+                              companion: 'vault-dweller',
+                              dweller: { ...prev.dweller, accessory: acc.id }
+                            }))
+                          }
+                          className={`px-2.5 py-1 rounded-lg border text-[11px] font-bold cursor-pointer transition ${
+                            active
+                              ? 'bg-orange-600 border-orange-500'
+                              : 'border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300'
+                          }`}
+                        >
+                          {acc.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Six Themes Gallery Grid */}
+      {/* Fallout Shelter Theme Packs Gallery Grid */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center space-x-2">
             <Sparkles className="w-5 h-5 text-orange-500" />
             <h2 className="text-lg font-bold text-stone-900 dark:text-stone-100">
-              Select Your Study Atmosphere
+              Fallout Shelter Theme Packs
             </h2>
           </div>
           <span className="text-xs font-mono text-stone-500 dark:text-stone-400">
-            6 Specialized Environments
+            {THEMES_DATA.length} Shelter Room Packs
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {THEMES_DATA.map(theme => {
             const isSelected = currentThemeId === theme.id;
             const isPreviewed = previewThemeId === theme.id;
@@ -271,11 +715,11 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                 <div className="p-5 sm:p-6 space-y-4">
                   
                   {/* Status Badges & Icon */}
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center space-x-3">
                       <div
                         data-keep-color="true"
-                        className="p-3 rounded-2xl flex items-center justify-center shadow-xs"
+                        className="p-3 rounded-2xl flex items-center justify-center shadow-xs shrink-0"
                         style={{
                           backgroundColor: cardPalette.cardSurface,
                           color: cardPalette.primary,
@@ -285,6 +729,9 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                         {getThemeIcon(theme.id)}
                       </div>
                       <div>
+                        <span className="block text-[10px] font-mono font-bold text-stone-500 dark:text-stone-400">
+                          {theme.sectorLabel}
+                        </span>
                         <h3 className="font-extrabold text-base sm:text-lg text-stone-900 dark:text-stone-100">
                           {theme.name}
                         </h3>
@@ -371,13 +818,13 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                             className="w-4 h-4 rounded flex items-center justify-center font-black text-[9px]"
                             style={{
                               backgroundColor: cardPalette.primary,
-                              color: '#FFFFFF'
+                              color: cardPalette.onPrimary
                             }}
                           >
-                            C
+                            V
                           </div>
                           <span data-keep-color="true" className="text-[11px] font-extrabold tracking-tight" style={{ color: cardPalette.textPrimary }}>
-                            CELEARN
+                            VAULT-TEC
                           </span>
                         </div>
                         <div
@@ -420,7 +867,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                             className="text-[9px] font-bold px-2 py-1 rounded-lg transition-transform"
                             style={{
                               backgroundColor: cardPalette.primary,
-                              color: '#FFFFFF'
+                              color: cardPalette.onPrimary
                             }}
                           >
                             {theme.previewCard.actionText}
@@ -607,6 +1054,73 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
             <p className="text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed">
               Hides ambient floating background shapes, confetti, and decorative indicators while preserving all crucial timer controls, flashcards, and board exam simulation features.
             </p>
+          </div>
+        </div>
+
+        {/* Pip-Boy CRT Scanline Overlay Console */}
+        <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start space-x-3">
+              <div
+                data-keep-color="true"
+                className="relative w-11 h-11 rounded-xl bg-[#071512] border border-emerald-500/45 flex items-center justify-center overflow-hidden shrink-0 shadow-inner"
+              >
+                <Monitor className="w-5 h-5 text-emerald-400 relative z-10" />
+                {crtEnabled && <div aria-hidden="true" className="absolute inset-0 vault-crt-overlay" />}
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="font-bold text-sm text-stone-800 dark:text-stone-200">
+                    Pip-Boy CRT Scanlines
+                  </span>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+                    {crtEnabled ? `${crtIntensity.toUpperCase()} ACTIVE` : 'BYPASSED'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5 leading-relaxed">
+                  Applies a non-blocking phosphor raster scanline &amp; edge vignette overlay across the entire application UI for authentic Pip-Boy terminal depth.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => onToggleCrt(!crtEnabled)}
+                className={`px-3.5 py-2 rounded-xl font-bold text-xs transition cursor-pointer min-h-[38px] ${
+                  crtEnabled
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-stone-200 text-stone-700 dark:bg-stone-700 dark:text-stone-300'
+                }`}
+              >
+                {crtEnabled ? 'CRT ON' : 'CRT OFF'}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-stone-200/80 dark:border-stone-700/80">
+            <span className="text-[11px] font-mono font-bold text-stone-600 dark:text-stone-300">
+              Scanline Density Preset
+            </span>
+            <div className="flex items-center p-1 rounded-xl bg-stone-200/80 dark:bg-stone-900 border border-stone-300/70 dark:border-stone-700 gap-1">
+              {(['subtle', 'classic', 'strong'] as CrtIntensity[]).map(level => {
+                const isLevelActive = crtEnabled && crtIntensity === level;
+                return (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => onChangeCrtIntensity(level)}
+                    className={`px-3 py-1 rounded-lg text-[11px] font-mono font-bold capitalize transition cursor-pointer ${
+                      isLevelActive
+                        ? 'bg-orange-600 shadow-xs'
+                        : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100'
+                    }`}
+                  >
+                    {level}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 

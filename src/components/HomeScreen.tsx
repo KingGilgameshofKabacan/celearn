@@ -46,6 +46,7 @@ import { DailyMotivationalQuoteCard } from './DailyMotivationalQuoteCard';
 import { BottleCapIcon } from './BottleCapIcon';
 import { PWAInstallButton } from './PWAInstallButton';
 import { FlipClockCountdown } from './FlipClockCountdown';
+import { StudyStreakCard } from './StudyStreakCard';
 
 interface HomeScreenProps {
   profile: UserProfile;
@@ -184,18 +185,28 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           
           {/* Left: User & Target Rank */}
           <div className="space-y-3">
-            <div className="flex items-center space-x-3">
-              <span className="px-3 py-1 bg-amber-500/15 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-extrabold text-xs rounded-full border border-amber-500/30 uppercase tracking-wider flex items-center space-x-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-                <span>Vault 101 Overseer Directive</span>
+            <div className="flex flex-wrap items-center gap-3 text-xs">
+              <span className="font-mono font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-300">
+                Vault 101 Overseer Directive
               </span>
+              <span className="text-stone-400 dark:text-stone-600" aria-hidden="true">·</span>
               <button
+                type="button"
                 onClick={() => setIsEditingProfile(true)}
-                className="text-xs text-stone-500 hover:text-amber-600 dark:text-sky-300 dark:hover:text-amber-400 flex items-center space-x-1 transition"
+                className="text-stone-600 hover:text-amber-600 dark:text-sky-300 dark:hover:text-amber-400 flex items-center space-x-1 transition font-semibold cursor-pointer"
                 title="Edit Dweller & Overseer credentials"
               >
                 <Edit3 className="w-3.5 h-3.5 text-amber-500" />
                 <span>Edit Dweller</span>
+              </button>
+              <span className="text-stone-400 dark:text-stone-600" aria-hidden="true">·</span>
+              <button
+                type="button"
+                onClick={() => onNavigateTab('themes')}
+                className="text-stone-600 hover:text-amber-600 dark:text-sky-300 dark:hover:text-amber-400 transition font-semibold cursor-pointer"
+                title="Customize your Fallout companion or Dweller appearance"
+              >
+                Customize Avatar
               </button>
             </div>
 
@@ -345,42 +356,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       {/* Daily Motivational Quote (Changes every day, styled according to the user's selected theme) */}
       <DailyMotivationalQuoteCard themeId={themeId} themeMode={themeMode} />
 
-      {/* Vault Daily Ration Dispenser (Claim Caps & Morale) */}
-      {!checkedInToday && (
-        <div className="bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-500/5 dark:from-[#162852] dark:via-[#101F42] dark:to-[#080E1E] border-2 border-amber-500/50 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 transition-all">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500 text-stone-950 flex items-center justify-center shrink-0 shadow-md">
-              <BottleCapIcon className="w-7 h-7 text-stone-950 animate-pulse" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-extrabold text-[10px] uppercase tracking-wider rounded-md border border-amber-500/30">
-                  Vault-Tec Ration Dispenser
-                </span>
-                <span className="text-xs text-stone-500 dark:text-sky-300 font-mono">
-                  +50 Caps Allowance
-                </span>
-              </div>
-              <h3 className="text-base sm:text-lg font-extrabold text-stone-900 dark:text-amber-300 mt-0.5 font-mono">
-                {streakData.currentStreak === 0
-                  ? 'Initiate Your Vault Survival Log!'
-                  : `Maintain Vault Morale: Day ${streakData.currentStreak} in the Wasteland`}
-              </h3>
-              <p className="text-xs text-stone-600 dark:text-stone-300">
-                Log your daily study presence to claim 50 Bottle Caps and sustain shelter morale. Resets automatically at 00:00 midnight.
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={handleStreakCheckIn}
-            className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 active:scale-95 text-stone-950 font-black text-sm rounded-2xl shadow-md flex items-center justify-center space-x-2 transition shrink-0 cursor-pointer font-mono"
-          >
-            <BottleCapIcon className="w-4 h-4 text-stone-950" />
-            <span>Dispense Ration (+50 Caps)</span>
-          </button>
-        </div>
-      )}
+      {/* Study Streak & Daily Goal Progress with Fallout Celebration Animation */}
+      <StudyStreakCard
+        onStreakExtended={(days) => {
+          setStreakCelebration({ streakDays: days });
+        }}
+      />
 
       {/* Overview Metric Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -430,24 +411,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           }`}
         >
           <div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-2">
               <span className="text-xs font-bold text-stone-500 dark:text-sky-300 uppercase font-mono tracking-wider">
                 Vault Morale
               </span>
               {!checkedInToday ? (
-                <span className="px-2 py-0.5 bg-amber-500 text-stone-950 text-[10px] font-black uppercase tracking-wider rounded-full animate-pulse font-mono">
+                <span className="text-[11px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-300 font-mono">
                   +50 Caps
                 </span>
               ) : (
-                <span className="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold rounded-full flex items-center space-x-0.5">
-                  <CheckCircle2 className="w-3 h-3" />
-                  <span>Ration Claimed</span>
+                <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center space-x-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Claimed</span>
                 </span>
               )}
             </div>
 
             <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono tabular-nums mt-1 flex items-center space-x-1.5">
-              <BottleCapIcon className="w-6 h-6 text-amber-500" />
+              <BottleCapIcon className="w-6 h-6 text-amber-500 shrink-0" />
               <span>{streakData.currentStreak} Days</span>
             </div>
           </div>
@@ -458,15 +439,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 e.stopPropagation();
                 handleStreakCheckIn();
               }}
-              className="mt-2.5 w-full py-1.5 px-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 active:scale-95 text-stone-950 font-black text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1.5 transition cursor-pointer font-mono"
+              className="mt-2.5 w-full py-2 px-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 active:scale-95 text-stone-950 font-black text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1.5 transition cursor-pointer font-mono"
             >
               <Sparkles className="w-3.5 h-3.5 text-stone-950" />
               <span>Claim +50 Caps</span>
             </button>
           ) : (
             <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-2 flex items-center space-x-1 font-mono">
-              <span>Next ration in:</span>
-              <span className="text-amber-500 font-bold">({timeToMidnight.formatted})</span>
+              <span>Next ration:</span>
+              <span className="text-amber-500 font-bold tabular-nums">{timeToMidnight.formatted}</span>
             </div>
           )}
         </div>
@@ -474,26 +455,26 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* Recently Added Terms Banner */}
       {recentlyAddedCount > 0 && onOpenRecentlyAdded && (
-        <div className="bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/5 dark:from-orange-950/40 dark:via-amber-950/30 dark:to-stone-900 border border-orange-500/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-stone-900 dark:text-stone-100 shadow-xs">
+        <div className="bg-amber-50/70 dark:bg-[#162852]/70 border border-amber-500/35 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-stone-900 dark:text-stone-100 shadow-xs">
           <div className="flex items-center space-x-3.5">
-            <div className="p-2.5 rounded-xl bg-orange-500 text-white shadow-xs shrink-0">
+            <div className="p-2.5 rounded-xl bg-amber-500 text-stone-950 shadow-xs shrink-0">
               <Clock className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
                 <h4 className="text-sm sm:text-base font-bold">Recently Added Terms</h4>
-                <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 border border-orange-300 dark:border-orange-800">
+                <span className="px-2 py-0.5 rounded-md text-xs font-mono font-bold bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30">
                   {recentlyAddedCount} {recentlyAddedCount === 1 ? 'term' : 'terms'}
                 </span>
               </div>
-              <p className="text-xs text-stone-600 dark:text-stone-400 mt-0.5">
+              <p className="text-xs text-stone-600 dark:text-stone-300 mt-0.5">
                 Review, select to delete, or delete all recently added terms (built-in data bank is preserved).
               </p>
             </div>
           </div>
           <button
             onClick={onOpenRecentlyAdded}
-            className="px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white transition flex items-center space-x-1.5 shadow-xs shrink-0 self-end sm:self-auto"
+            className="px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white transition flex items-center space-x-1.5 shadow-xs shrink-0 self-end sm:self-auto cursor-pointer"
           >
             <Clock className="w-3.5 h-3.5" />
             <span>Manage Terms</span>
@@ -518,7 +499,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <h2 className="text-lg sm:text-xl font-black text-stone-900 dark:text-amber-400 font-mono tracking-tight">
                   S.P.E.C.I.A.L. Engineering Matrix
                 </h2>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 uppercase">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 uppercase">
                   Pip-Boy Telemetry
                 </span>
               </div>
@@ -528,7 +509,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             </div>
           </div>
 
-          <div className="text-xs font-mono font-bold text-amber-500 dark:text-amber-300 self-start sm:self-auto bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/30">
+          <div className="text-xs font-mono font-bold text-amber-700 dark:text-amber-300 self-start sm:self-auto bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/30">
             Vault 101 Clearance: LEVEL 1
           </div>
         </div>
@@ -605,11 +586,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   <span className="w-6 h-6 rounded-lg bg-amber-500 text-stone-950 font-black text-xs flex items-center justify-center font-mono shadow-xs">
                     {attr.letter}
                   </span>
-                  <span className="text-xs font-mono font-extrabold text-emerald-400">
+                  <span className="text-xs font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
                     {attr.value}%
                   </span>
                 </div>
-                <div className="font-bold text-xs text-stone-900 dark:text-stone-100 group-hover:text-amber-400 transition truncate">
+                <div className="font-bold text-xs text-stone-900 dark:text-stone-100 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition truncate">
                   {attr.name}
                 </div>
                 <div className="text-[10px] text-stone-500 dark:text-sky-300/80 truncate font-mono">
@@ -643,11 +624,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <CheckSquare className="w-5 h-5 text-amber-500" />
             </div>
             <div>
-              <div className="flex items-center space-x-2.5">
+              <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-lg sm:text-xl font-bold text-stone-900 dark:text-amber-400 font-mono tracking-tight">
                   Vault Maintenance Quotas
                 </h2>
-                <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-stone-100 dark:bg-[#162852] text-stone-600 dark:text-sky-300 border border-stone-200 dark:border-[#2B447A]">
+                <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-stone-100 dark:bg-[#162852] text-stone-600 dark:text-sky-300 border border-stone-200 dark:border-[#2B447A]">
                   {todayFormatted}
                 </span>
               </div>
@@ -657,17 +638,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             </div>
           </div>
 
-          {/* Progress Pill */}
+          {/* Progress Counter */}
           <div className="flex items-center space-x-3 self-start sm:self-auto">
             <div className="text-right">
               <span className="text-xs font-bold text-stone-800 dark:text-stone-200 block">
                 {completedTasksCount} of 3 Completed
               </span>
-              <span className="text-[10px] text-stone-500 dark:text-stone-400">
-                {completedTasksCount === 3 ? '🎉 All tasks done!' : 'Daily Target'}
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-mono">
+                {completedTasksCount === 3 ? 'All directives clear' : 'Daily Quota'}
               </span>
             </div>
-            <div className="w-10 h-10 rounded-2xl bg-stone-100 dark:bg-stone-800 flex items-center justify-center font-mono font-extrabold text-sm border border-stone-200 dark:border-stone-700 text-stone-800 dark:text-stone-200">
+            <div className="w-11 h-10 rounded-xl bg-stone-100 dark:bg-[#162852] flex items-center justify-center font-mono font-extrabold text-sm border border-stone-200 dark:border-[#2B447A] text-stone-800 dark:text-amber-400">
               {Math.round((completedTasksCount / 3) * 100)}%
             </div>
           </div>
@@ -677,15 +658,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           
           {/* Task 1: Review Flashcards */}
-          <div
+          <button
+            type="button"
             onClick={() => {
               if (onStartDueFlashcards) onStartDueFlashcards();
               else onNavigateTab('flashcards');
             }}
-            className={`p-5 rounded-2xl border transition flex flex-col justify-between cursor-pointer group ${
+            className={`text-left p-5 rounded-2xl border transition flex flex-col justify-between cursor-pointer group ${
               dailyTasks.reviewedFlashcards
                 ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/60 shadow-xs'
-                : 'bg-stone-50/70 dark:bg-stone-800/50 border-stone-200 dark:border-stone-700/80 hover:border-orange-400 hover:shadow-md'
+                : 'bg-stone-50/70 dark:bg-[#162852]/65 border-stone-200 dark:border-[#2B447A] hover:border-amber-400 hover:shadow-md'
             }`}
           >
             <div>
@@ -693,47 +675,48 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <div className={`p-2 rounded-xl ${
                   dailyTasks.reviewedFlashcards
                     ? 'bg-emerald-500 text-white'
-                    : 'bg-orange-100 dark:bg-orange-950 text-orange-600 dark:text-orange-400'
+                    : 'bg-amber-500/15 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/25'
                 }`}>
                   <RotateCcw className="w-4 h-4" />
                 </div>
 
                 {dailyTasks.reviewedFlashcards ? (
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-1">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-1">
                     <CheckCircle2 className="w-3 h-3" />
                     <span>Done</span>
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold font-mono bg-orange-100 dark:bg-orange-950/70 text-orange-700 dark:text-orange-300 border border-orange-300 dark:border-orange-800">
+                  <span className="px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30">
                     {dueCardsCount > 0 ? `${dueCardsCount} Due` : '0 Due'}
                   </span>
                 )}
               </div>
 
-              <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition">
+              <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition font-mono">
                 Review Flashcards
               </h3>
-              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 leading-relaxed">
-                Bypasses setup flow and immediately starts a session using only cards scheduled for review today or earlier.
+              <p className="text-xs text-stone-500 dark:text-stone-300 mt-1 leading-relaxed">
+                Starts an immediate spaced-repetition session using cards scheduled for review today or earlier.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-stone-200/60 dark:border-stone-700/60 flex items-center justify-between text-xs font-bold text-orange-600 dark:text-orange-400">
+            <div className="mt-4 pt-3 border-t border-stone-200/70 dark:border-[#2B447A]/80 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">
               <span>{dailyTasks.reviewedFlashcards ? 'Review Again' : 'Start Due Review'}</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </button>
 
           {/* Task 2: Learn Something New */}
-          <div
+          <button
+            type="button"
             onClick={() => {
               if (onStartNewFlashcardsSetup) onStartNewFlashcardsSetup();
               else onNavigateTab('flashcards');
             }}
-            className={`p-5 rounded-2xl border transition flex flex-col justify-between cursor-pointer group ${
+            className={`text-left p-5 rounded-2xl border transition flex flex-col justify-between cursor-pointer group ${
               dailyTasks.learnedNew
                 ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/60 shadow-xs'
-                : 'bg-stone-50/70 dark:bg-stone-800/50 border-stone-200 dark:border-stone-700/80 hover:border-amber-400 hover:shadow-md'
+                : 'bg-stone-50/70 dark:bg-[#162852]/65 border-stone-200 dark:border-[#2B447A] hover:border-emerald-400 hover:shadow-md'
             }`}
           >
             <div>
@@ -741,44 +724,45 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <div className={`p-2 rounded-xl ${
                   dailyTasks.learnedNew
                     ? 'bg-emerald-500 text-white'
-                    : 'bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400'
+                    : 'bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25'
                 }`}>
                   <Sparkles className="w-4 h-4" />
                 </div>
 
                 {dailyTasks.learnedNew ? (
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-1">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-1">
                     <CheckCircle2 className="w-3 h-3" />
                     <span>Done</span>
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold font-mono bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                  <span className="px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
                     {newCardsCount} Unstudied
                   </span>
                 )}
               </div>
 
-              <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+              <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition font-mono">
                 Learn Something New
               </h3>
-              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 leading-relaxed">
-                Opens the setup flow to pick a board topic and pull only fresh terms with zero review history.
+              <p className="text-xs text-stone-500 dark:text-stone-300 mt-1 leading-relaxed">
+                Pick a civil engineering topic and pull fresh S.P.E.C.I.A.L. terms with zero prior review history.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-stone-200/60 dark:border-stone-700/60 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
+            <div className="mt-4 pt-3 border-t border-stone-200/70 dark:border-[#2B447A]/80 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono">
               <span>{dailyTasks.learnedNew ? 'Learn More' : 'Pick Topic & Start'}</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </button>
 
           {/* Task 3: Take Mock Exams */}
-          <div
+          <button
+            type="button"
             onClick={() => onNavigateTab('exam')}
-            className={`p-5 rounded-2xl border transition flex flex-col justify-between cursor-pointer group ${
+            className={`text-left p-5 rounded-2xl border transition flex flex-col justify-between cursor-pointer group ${
               dailyTasks.tookMockExam
                 ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/60 shadow-xs'
-                : 'bg-stone-50/70 dark:bg-stone-800/50 border-stone-200 dark:border-stone-700/80 hover:border-orange-400 hover:shadow-md'
+                : 'bg-stone-50/70 dark:bg-[#162852]/65 border-stone-200 dark:border-[#2B447A] hover:border-sky-400 hover:shadow-md'
             }`}
           >
             <div>
@@ -786,36 +770,36 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <div className={`p-2 rounded-xl ${
                   dailyTasks.tookMockExam
                     ? 'bg-emerald-500 text-white'
-                    : 'bg-orange-100 dark:bg-orange-950 text-orange-600 dark:text-orange-400'
+                    : 'bg-sky-500/15 dark:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-500/25'
                 }`}>
                   <Target className="w-4 h-4" />
                 </div>
 
                 {dailyTasks.tookMockExam ? (
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-1">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-1">
                     <CheckCircle2 className="w-3 h-3" />
                     <span>Done</span>
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold font-mono bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300">
+                  <span className="px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/30">
                     Timed TOS
                   </span>
                 )}
               </div>
 
-              <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition">
+              <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 group-hover:text-sky-600 dark:group-hover:text-sky-300 transition font-mono">
                 Take Mock Exams
               </h3>
-              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 leading-relaxed">
-                Complete a timed board assessment. Submitting and grading your exam logs your daily performance.
+              <p className="text-xs text-stone-500 dark:text-stone-300 mt-1 leading-relaxed">
+                Complete a timed G.O.A.T. board simulation. Submitting and grading logs your daily performance.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-stone-200/60 dark:border-stone-700/60 flex items-center justify-between text-xs font-bold text-orange-600 dark:text-orange-400">
+            <div className="mt-4 pt-3 border-t border-stone-200/70 dark:border-[#2B447A]/80 flex items-center justify-between text-xs font-bold text-sky-600 dark:text-sky-300 font-mono">
               <span>{dailyTasks.tookMockExam ? 'Take Another Exam' : 'Launch Simulator'}</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </button>
 
         </div>
 

@@ -47,19 +47,17 @@
           document.documentElement.setAttribute('data-personality-theme', savedPersonalityTheme);
 
           var palettes = {
-            'vault-tec': isDark ? { bg: '#080E1E', card: '#0E1B38', prim: '#FBC02D', bord: '#2B447A' } : { bg: '#F0F4FA', card: '#FFFFFF', prim: '#1E40AF', bord: '#BFDBFE' },
-            'midnight-strategist': isDark ? { bg: '#0A0F1D', card: '#0F172A', prim: '#38BDF8', bord: '#24344D' } : { bg: '#F0F4F8', card: '#FFFFFF', prim: '#0284C7', bord: '#CBD5E1' },
-            'zen-scholar': isDark ? { bg: '#111A14', card: '#18241D', prim: '#52B788', bord: '#2C4033' } : { bg: '#F5F7F2', card: '#FFFFFF', prim: '#2D5A43', bord: '#D5DFD1' },
-            'cyber-engineer': isDark ? { bg: '#050811', card: '#0B1120', prim: '#06B6D4', bord: '#1E293B' } : { bg: '#F0F9FF', card: '#FFFFFF', prim: '#0891B2', bord: '#BAE6FD' },
-            'academic-classic': isDark ? { bg: '#171312', card: '#211C1A', prim: '#D4A373', bord: '#423832' } : { bg: '#FAF7F2', card: '#FFFFFF', prim: '#6B1D28', bord: '#E2D5C3' },
-            'sunrise-momentum': isDark ? { bg: '#141210', card: '#1C1815', prim: '#F97316', bord: '#3D332B' } : { bg: '#FFFDF9', card: '#FFFFFF', prim: '#EA580C', bord: '#FED7AA' },
-            'deep-work': isDark ? { bg: '#101012', card: '#17171A', prim: '#A1A1AA', bord: '#32323A' } : { bg: '#F4F4F5', card: '#FFFFFF', prim: '#3F3F46', bord: '#D4D4D8' }
+            'vault-tec': isDark ? { bg: '#080E1E', card: '#0E1B38', prim: '#FBC02D', onPrim: '#080E1E', bord: '#2B447A' } : { bg: '#F0F4FA', card: '#FFFFFF', prim: '#1E40AF', onPrim: '#FFFFFF', bord: '#BFDBFE' },
+            'nuka-cola': isDark ? { bg: '#16090B', card: '#241014', prim: '#FB7185', onPrim: '#16090B', bord: '#5E2630' } : { bg: '#FFF8F6', card: '#FFFFFF', prim: '#DC2626', onPrim: '#FFFFFF', bord: '#F5C2BE' },
+            'power-armor': isDark ? { bg: '#0E1116', card: '#161B22', prim: '#FB923C', onPrim: '#110A04', bord: '#364150' } : { bg: '#F3F5F8', card: '#FFFFFF', prim: '#C2410C', onPrim: '#FFFFFF', bord: '#CBD5E1' },
+            'radaway-medbay': isDark ? { bg: '#071512', card: '#0D221D', prim: '#34D399', onPrim: '#052018', bord: '#234E43' } : { bg: '#F2FBF8', card: '#FFFFFF', prim: '#047857', onPrim: '#FFFFFF', bord: '#B8E3D4' }
           };
           var p = palettes[savedPersonalityTheme] || palettes['vault-tec'];
           document.documentElement.style.setProperty('--theme-canvas-bg', p.bg);
           document.documentElement.style.setProperty('--theme-card-bg', p.card);
           document.documentElement.style.setProperty('--theme-border', p.bord);
           document.documentElement.style.setProperty('--theme-primary', p.prim);
+          document.documentElement.style.setProperty('--theme-on-primary', p.onPrim);
 
           var savedDistraction = localStorage.getItem('cele_distraction_free_v1');
           if (savedDistraction === 'true') {

@@ -13,16 +13,10 @@ import {
   X,
   Volume2,
   VolumeX,
-  Flame,
   Clock,
   ChevronRight,
   Palette,
-  Mail,
-  Radio,
-  Play,
-  Pause,
-  Disc,
-  Music
+  Mail
 } from 'lucide-react';
 import { CeLearnLogo } from './CeLearnLogo';
 import { BottleCapIcon } from './BottleCapIcon';
@@ -190,39 +184,40 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
         
         {/* Brand: Vault-Tec // CELEARN Overseer Terminal */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center shrink-0">
           <button
             onClick={() => handleTabClick('home')}
-            className="flex items-center space-x-2.5 text-left focus:outline-none group interactive-btn"
+            className="flex items-center space-x-2.5 text-left focus:outline-none group interactive-btn whitespace-nowrap shrink-0 cursor-pointer"
           >
-            <CeLearnLogo size={36} className="group-hover:scale-105 transition-transform" />
+            <CeLearnLogo size={34} className="group-hover:scale-105 transition-transform shrink-0" />
             <div className="flex flex-col">
               <div className="flex items-center space-x-1.5">
-                <span className="font-black text-lg sm:text-xl tracking-tight text-stone-900 dark:text-amber-400 group-hover:text-amber-500 transition-colors">
+                <span className="font-black text-base sm:text-lg tracking-tight text-stone-900 dark:text-amber-400 group-hover:text-amber-500 transition-colors whitespace-nowrap">
                   VAULT-TEC
                 </span>
-                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-500 dark:text-amber-300 font-extrabold border border-amber-500/30">
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-300 font-extrabold border border-amber-500/30 whitespace-nowrap">
                   101
                 </span>
               </div>
-              <span className="text-[10px] font-mono tracking-wider uppercase text-blue-600 dark:text-sky-300 font-semibold -mt-1 hidden sm:block">
+              <span className="text-[10px] font-mono tracking-wider uppercase text-blue-600 dark:text-sky-300 font-semibold -mt-0.5 hidden xl:block whitespace-nowrap">
                 CELE Overseer Terminal
               </span>
             </div>
           </button>
         </div>
 
-        {/* Desktop Quick Nav */}
-        <nav className="hidden lg:flex items-center space-x-1">
+        {/* Desktop Quick Nav (Single-line clean layout without wrapping) */}
+        <nav className="hidden lg:flex items-center space-x-1 overflow-x-auto no-scrollbar">
           {navItems.map(item => {
             const isActive = activeTab === item.id;
+            const hideOnMediumLg = item.id === 'achievements' || item.id === 'themes';
             return (
               <button
                 key={item.id}
                 onClick={() => handleTabClick(item.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 flex items-center space-x-1.5 interactive-btn ${
+                className={`${hideOnMediumLg ? 'hidden xl:flex' : 'flex'} px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 items-center space-x-1.5 interactive-btn whitespace-nowrap shrink-0 cursor-pointer min-h-[38px] ${
                   isActive
-                    ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/40 shadow-xs'
+                    ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-xs'
                     : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-amber-300 hover:bg-stone-100 dark:hover:bg-[#162852]'
                 }`}
               >
@@ -231,54 +226,27 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             );
           })}
-          <a
-            href="mailto:franicholas119@gmail.com"
-            title="Contact Overseer Council"
-            className="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 flex items-center space-x-1.5 interactive-btn text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-[#162852]"
-          >
-            <Mail className="w-4 h-4 text-amber-500" />
-            <span>Contact</span>
-          </a>
         </nav>
 
         {/* Actions Zone: Bottle Caps, Daily Morale/Streak, Sound, Theme & Menu */}
-        <div className="flex items-center space-x-1.5 sm:space-x-2">
+        <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
           
           {/* Bottle Caps Currency Counter */}
           <button
             onClick={() => {
               soundManager.playCapsJingle();
             }}
-            title={`Vault Bottle Caps: ${caps.toLocaleString()} Caps earned from study quotas. Click to inspect.`}
-            className="flex items-center space-x-1.5 text-xs font-mono px-2.5 py-1.5 rounded-xl border bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/40 text-amber-600 dark:text-amber-300 transition interactive-btn cursor-pointer shadow-xs"
+            title={`Vault Bottle Caps: ${caps.toLocaleString()} Caps earned from study quotas.`}
+            className="flex items-center space-x-1.5 text-xs font-mono px-2.5 py-1.5 rounded-xl border bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/40 text-amber-600 dark:text-amber-300 transition interactive-btn cursor-pointer shadow-xs whitespace-nowrap min-h-[38px]"
             aria-label="Vault Bottle Caps"
           >
-            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" fill="none" />
-              <path d="M12 5v2M12 17v2M5 12h2M17 12h2M7 7l1.5 1.5M15.5 15.5l1.5 1.5M7 17l1.5-1.5M15.5 8.5l1.5-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="12" cy="12" r="4" fill="currentColor" fillOpacity="0.4" />
-            </svg>
-            <span className="font-extrabold tracking-tight">{caps.toLocaleString()}</span>
+            <BottleCapIcon className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+            <span className="font-extrabold tracking-tight tabular-nums">{caps.toLocaleString()}</span>
             <span className="text-[10px] uppercase font-bold text-amber-500/80 hidden sm:inline">Caps</span>
           </button>
 
           {/* PWA Install Button */}
           <PWAInstallButton variant="compact" />
-
-          {/* Recently Added Terms Button */}
-          {onOpenRecentlyAdded && (
-            <button
-              onClick={onOpenRecentlyAdded}
-              title="Vault Blueprint Archives"
-              className="hidden lg:flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl border bg-stone-100 hover:bg-stone-200 dark:bg-[#101F42] dark:hover:bg-[#182C5B] border-stone-200 dark:border-[#2A437E] text-stone-700 dark:text-stone-300 transition interactive-btn"
-            >
-              <Clock className="w-3.5 h-3.5 text-amber-500" />
-              <span className="hidden xl:inline">Blueprints</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 font-mono">
-                {recentlyAddedCount}
-              </span>
-            </button>
-          )}
 
           {/* Vault Morale / Daily Streak Indicator */}
           <button
@@ -288,18 +256,18 @@ export const Header: React.FC<HeaderProps> = ({
                 ? `Vault Morale: ${streak.currentStreak} Days Survived. Ration claimed today (Resets at 00:00).`
                 : 'Claim Daily Ration & Boost Vault Morale (+50 Caps)!'
             }
-            className={`flex items-center space-x-1.5 text-xs font-mono px-2.5 py-1.5 rounded-xl border transition interactive-btn ${
+            className={`flex items-center space-x-1.5 text-xs font-mono px-2.5 py-1.5 rounded-xl border transition interactive-btn whitespace-nowrap min-h-[38px] ${
               !checkedInToday
-                ? 'bg-amber-500/15 border-amber-500/50 text-amber-600 dark:text-amber-300 hover:bg-amber-500/25 shadow-xs animate-pulse cursor-pointer'
+                ? 'bg-amber-500/15 border-amber-500/50 text-amber-600 dark:text-amber-300 hover:bg-amber-500/25 shadow-xs cursor-pointer'
                 : 'bg-stone-100 dark:bg-[#101F42] border-stone-200 dark:border-[#2A437E] text-stone-600 dark:text-stone-300'
             }`}
             aria-label="Daily Vault Morale Status"
           >
-            <BottleCapIcon className="w-4 h-4 text-amber-500" />
-            <span className="font-bold">{streak.currentStreak}d</span>
+            <BottleCapIcon className="w-4 h-4 text-amber-500 shrink-0" />
+            <span className="font-bold tabular-nums">{streak.currentStreak}d</span>
             {!checkedInToday ? (
               <span className="hidden sm:inline text-[9px] bg-amber-500 text-stone-950 px-1.5 py-0.5 rounded-md font-sans uppercase font-black tracking-wider">
-                Claim +50c
+                +50c
               </span>
             ) : (
               <span className="text-emerald-500 text-[11px] font-bold" title="Ration claimed">✓</span>
@@ -310,11 +278,11 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
             title={`Switch to ${themeMode === 'dark' ? 'Day (Light)' : 'Night (Dark)'} mode`}
-            className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 transition interactive-btn flex items-center space-x-1.5 cursor-pointer"
+            className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 transition interactive-btn flex items-center justify-center cursor-pointer min-h-[38px] min-w-[38px]"
             aria-label="Toggle theme mode"
           >
             {themeMode === 'dark' ? (
-              <Sun className="w-4 h-4 text-orange-400" />
+              <Sun className="w-4 h-4 text-amber-400" />
             ) : (
               <Moon className="w-4 h-4 text-stone-700" />
             )}
@@ -323,9 +291,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Hamburger Icon Menu Button */}
           <button
             onClick={() => setIsMenuOpen(true)}
-            className="p-2 sm:p-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold transition interactive-btn flex items-center justify-center shadow-sm cursor-pointer"
-            aria-label="Menu"
-            title="Menu"
+            className="p-2 sm:p-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-95 font-bold transition interactive-btn flex items-center justify-center shadow-sm cursor-pointer min-h-[40px] min-w-[40px]"
+            aria-label="Open main menu and jukebox"
+            title="Main Menu & Jukebox"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -372,10 +340,19 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {/* Drawer Body: Fully scrollable catalog */}
-              <div className="p-4 sm:p-5 space-y-6 flex-1 overflow-y-auto">
+              <div className="p-4 sm:p-5 space-y-6 flex-1 overflow-y-auto overscroll-contain">
                 
+                {/* Section 0: Vault-Tec Jukebox Player (Cassette & Vinyl Deck) */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider px-1">
+                    <span>Vault Jukebox</span>
+                    <span className="text-[10px] text-amber-500 font-mono font-bold">Cassette & Vinyl</span>
+                  </div>
+                  <VaultJukeboxDrawerPlayer />
+                </div>
+
                 {/* Section 1: Main Menu */}
-                <div className="space-y-2.5">
+                <div className="space-y-2.5 pt-2 border-t border-stone-200 dark:border-stone-800">
                   <div className="flex items-center justify-between text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider px-1">
                     <span>Main Menu</span>
                   </div>
@@ -388,28 +365,28 @@ export const Header: React.FC<HeaderProps> = ({
                           key={item.id}
                           type="button"
                           onClick={() => handleTabClick(item.id)}
-                          className={`w-full p-3.5 rounded-2xl text-left transition flex items-center justify-between group interactive-btn cursor-pointer ${
+                          className={`w-full p-3 rounded-2xl text-left transition flex items-center justify-between group interactive-btn cursor-pointer ${
                             isActive
                               ? 'bg-orange-500/10 dark:bg-orange-950/60 border-2 border-orange-500 text-orange-900 dark:text-orange-200 shadow-sm'
                               : 'bg-stone-50 hover:bg-stone-100 dark:bg-stone-800/60 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700/80 hover:border-stone-300 dark:hover:border-stone-600'
                           }`}
                         >
-                          <div className="flex items-center space-x-3.5 min-w-0">
-                            <div className={`p-2.5 rounded-xl shrink-0 transition-colors ${
+                          <div className="flex items-center space-x-3 min-w-0">
+                            <div className={`p-2 rounded-xl shrink-0 transition-colors ${
                               isActive
-                                ? 'bg-orange-500 text-white shadow-xs'
-                                : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 group-hover:bg-orange-500 group-hover:text-white'
+                                ? 'bg-orange-500 shadow-xs'
+                                : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 group-hover:bg-orange-500'
                             }`}>
                               {item.icon}
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center space-x-2">
-                                <span className="font-bold text-sm text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+                                <span className="font-bold text-sm text-stone-900 dark:text-stone-100">
                                   {item.label}
                                 </span>
                                 {isActive && (
-                                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-orange-500 text-white uppercase tracking-wider">
-                                    Current
+                                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-500 uppercase tracking-wider">
+                                    Active
                                   </span>
                                 )}
                               </div>
@@ -420,7 +397,7 @@ export const Header: React.FC<HeaderProps> = ({
                           </div>
 
                           <ChevronRight className={`w-4 h-4 shrink-0 transition-transform ${
-                            isActive ? 'text-orange-600 dark:text-orange-400' : 'text-stone-400 group-hover:translate-x-1 group-hover:text-orange-500'
+                            isActive ? 'text-orange-600 dark:text-orange-400' : 'text-stone-400 group-hover:translate-x-1'
                           }`} />
                         </button>
                       );
@@ -430,20 +407,20 @@ export const Header: React.FC<HeaderProps> = ({
                     <a
                       href="mailto:franicholas119@gmail.com"
                       onClick={() => setIsMenuOpen(false)}
-                      className="w-full p-3.5 rounded-2xl text-left transition flex items-center justify-between group interactive-btn cursor-pointer bg-stone-50 hover:bg-stone-100 dark:bg-stone-800/60 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700/80 hover:border-orange-400 dark:hover:border-orange-500 shadow-xs"
+                      className="w-full p-3 rounded-2xl text-left transition flex items-center justify-between group interactive-btn cursor-pointer bg-stone-50 hover:bg-stone-100 dark:bg-stone-800/60 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700/80 hover:border-orange-400 shadow-xs"
                     >
-                      <div className="flex items-center space-x-3.5 min-w-0">
-                        <div className="p-2.5 rounded-xl shrink-0 transition-colors bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 group-hover:bg-orange-500 group-hover:text-white">
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="p-2 rounded-xl shrink-0 transition-colors bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200">
                           <Mail className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
-                          <span className="font-bold text-sm text-stone-900 dark:text-stone-100 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+                          <span className="font-bold text-sm text-stone-900 dark:text-stone-100">
                             Contact Us
                           </span>
                         </div>
                       </div>
 
-                      <ChevronRight className="w-4 h-4 shrink-0 transition-transform text-stone-400 group-hover:translate-x-1 group-hover:text-orange-500" />
+                      <ChevronRight className="w-4 h-4 shrink-0 transition-transform text-stone-400 group-hover:translate-x-1" />
                     </a>
                   </div>
                 </div>
@@ -455,7 +432,6 @@ export const Header: React.FC<HeaderProps> = ({
                     <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono font-bold">100% Offline Ready</span>
                   </div>
 
-                  {/* Offline App Install Banner in Menu */}
                   <div className="pt-0.5 pb-1">
                     <PWAInstallButton variant="banner" />
                   </div>
@@ -470,7 +446,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 hover:bg-stone-100 dark:hover:bg-stone-800 border border-stone-200 dark:border-stone-700 text-xs font-semibold text-stone-800 dark:text-stone-200 transition flex items-center justify-between cursor-pointer"
                     >
                       <div className="flex items-center space-x-2.5">
-                        <Clock className="w-4 h-4 text-orange-500" />
+                        <Clock className="w-4 h-4 text-amber-500" />
                         <span className="font-bold">Recently Added Terms</span>
                       </div>
                       <span className="px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 font-mono text-[10px] font-bold">
@@ -492,22 +468,13 @@ export const Header: React.FC<HeaderProps> = ({
                     }`}
                   >
                     <div className="flex items-center space-x-2.5">
-                      <Palette className="w-4 h-4 text-orange-500" />
-                      <span className="font-bold">Personality Themes & Sounds</span>
+                      <Palette className="w-4 h-4 text-amber-500" />
+                      <span className="font-bold">Skins, Companion & Audio</span>
                     </div>
                     <span className="px-2 py-0.5 rounded-md bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 font-mono text-[10px] font-bold">
-                      6 Packs
+                      4 Vault Packs
                     </span>
                   </button>
-
-                  {/* Vault-Tec 101 Jukebox Player (Fallout Shelter Broadcast Station) */}
-                  <div className="pt-1">
-                    <div className="flex items-center justify-between text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider px-1 mb-2">
-                      <span>Vault Jukebox</span>
-                      <span className="text-[10px] text-amber-500 font-mono font-bold">Fallout Shelter Radio</span>
-                    </div>
-                    <VaultJukeboxDrawerPlayer />
-                  </div>
 
                   <div className="flex items-center justify-between p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 text-xs">
                     <span className="text-stone-700 dark:text-stone-300 font-medium">Sound Effects</span>

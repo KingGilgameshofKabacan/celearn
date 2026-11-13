@@ -33,6 +33,10 @@ import {
   saveActiveThemeId,
   getDistractionFree,
   saveDistractionFree,
+  getCrtEnabled,
+  saveCrtEnabled,
+  getCrtIntensity,
+  saveCrtIntensity,
   resetThemeAndSoundSettings,
   getDueCards,
   getNewCards,
@@ -52,7 +56,7 @@ import { DictionaryView } from './components/DictionaryView';
 import { AnalyticsView } from './components/AnalyticsView';
 import { AchievementsView } from './components/AchievementsView';
 import { ThemesView } from './components/ThemesView';
-import { ThemeId, THEMES_DATA, DEFAULT_THEME_ID, getThemePalette } from './types/theme';
+import { ThemeId, CrtIntensity, THEMES_DATA, DEFAULT_THEME_ID, getThemePalette } from './types/theme';
 import { soundManager } from './utils/audio';
 import { WaterRippleEffect } from './components/WaterRippleEffect';
 import { LiveBackground } from './components/LiveBackground';
@@ -73,6 +77,8 @@ export default function App() {
   const [activeThemeId, setActiveThemeId] = useState<ThemeId>(getActiveThemeId);
   const [previewThemeId, setPreviewThemeId] = useState<ThemeId | null>(null);
   const [isDistractionFree, setIsDistractionFree] = useState<boolean>(getDistractionFree);
+  const [crtEnabled, setCrtEnabled] = useState<boolean>(getCrtEnabled);
+  const [crtIntensity, setCrtIntensity] = useState<CrtIntensity>(getCrtIntensity);
 
   // User Profile
   const [profile, setProfile] = useState<UserProfile>(getUserProfile);
@@ -186,6 +192,7 @@ export default function App() {
     rootStyle.setProperty('--theme-border', palette.border);
     rootStyle.setProperty('--theme-primary', palette.primary);
     rootStyle.setProperty('--theme-primary-hover', palette.primaryHover);
+    rootStyle.setProperty('--theme-on-primary', palette.onPrimary);
     rootStyle.setProperty('--theme-primary-soft', palette.accentSoft);
     rootStyle.setProperty('--theme-text-primary', palette.textPrimary);
     rootStyle.setProperty('--theme-text-muted', palette.textMuted);
@@ -223,11 +230,30 @@ export default function App() {
     showToast(enabled ? 'Distraction-free mode enabled' : 'Distraction-free mode disabled');
   };
 
+  const handleToggleCrt = (enabled: boolean) => {
+    saveCrtEnabled(enabled);
+    setCrtEnabled(enabled);
+    soundManager.playClick();
+    showToast(enabled ? 'Pip-Boy CRT scanlines enabled' : 'Pip-Boy CRT scanlines disabled');
+  };
+
+  const handleChangeCrtIntensity = (intensity: CrtIntensity) => {
+    saveCrtIntensity(intensity);
+    setCrtIntensity(intensity);
+    if (!crtEnabled) {
+      saveCrtEnabled(true);
+      setCrtEnabled(true);
+    }
+    soundManager.playClick();
+  };
+
   const handleResetThemeDefaults = () => {
     resetThemeAndSoundSettings();
     setActiveThemeId(DEFAULT_THEME_ID);
     setPreviewThemeId(null);
     setIsDistractionFree(false);
+    setCrtEnabled(true);
+    setCrtIntensity('subtle');
     soundManager.playCompleteTask(DEFAULT_THEME_ID);
     showToast('Theme and sound settings restored to defaults');
   };
@@ -558,7 +584,7 @@ export default function App() {
       }}
     >
       {/* Live Background with Moving Multi-Colored Shapes Hovering in Background */}
-      <LiveBackground distractionFree={isDistractionFree} />
+      <LiveBackground distractionFree={isDistractionFree} themeId={previewThemeId || activeThemeId} />
 
       {/* Water Ripple Waves Effect Triggered on Touching/Clicking Buttons, Pages, Cards */}
       <WaterRippleEffect />
@@ -693,6 +719,10 @@ export default function App() {
             onPreviewTheme={handlePreviewTheme}
             isDistractionFree={isDistractionFree}
             onToggleDistractionFree={handleToggleDistractionFree}
+            crtEnabled={crtEnabled}
+            onToggleCrt={handleToggleCrt}
+            crtIntensity={crtIntensity}
+            onChangeCrtIntensity={handleChangeCrtIntensity}
             onResetDefaults={handleResetThemeDefaults}
             themeMode={themeMode}
             setThemeMode={setThemeMode}
@@ -791,6 +821,14 @@ export default function App() {
       </footer>
       </div>
 
+      {/* Global Subtle Pip-Boy CRT Scanline Overlay */}
+      {crtEnabled && (
+        <div
+          aria-hidden="true"
+          className="pipboy-crt-overlay no-print"
+          data-crt-intensity={crtIntensity}
+        />
+      )}
     </div>
   );
 }

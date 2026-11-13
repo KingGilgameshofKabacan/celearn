@@ -1,13 +1,18 @@
 import { VAULT_JUKEBOX_TRACKS, JukeboxTrack } from '../data/jukeboxTracks';
 
+export type JukeboxPlayerMode = 'cassette' | 'vinyl';
+
 export interface JukeboxState {
   currentTrack: JukeboxTrack;
+  trackIndex: number;
+  totalTracks: number;
   isPlaying: boolean;
   currentTime: number;
   duration: number;
   volume: number;
   isMuted: boolean;
   loopMode: 'all' | 'one' | 'off';
+  playerMode: JukeboxPlayerMode;
 }
 
 class VaultJukeboxManager {
@@ -17,6 +22,7 @@ class VaultJukeboxManager {
   private volume: number = 0.65;
   private isMuted: boolean = false;
   private loopMode: 'all' | 'one' | 'off' = 'all';
+  private playerMode: JukeboxPlayerMode = 'cassette';
   private currentTime: number = 0;
   private duration: number = 0;
 
@@ -30,6 +36,10 @@ class VaultJukeboxManager {
         }
         const savedVol = localStorage.getItem('cele_jukebox_vol');
         if (savedVol) this.volume = parseFloat(savedVol);
+        const savedMode = localStorage.getItem('cele_jukebox_player_mode');
+        if (savedMode === 'cassette' || savedMode === 'vinyl') {
+          this.playerMode = savedMode;
+        }
       } catch {}
     }
   }
@@ -86,13 +96,24 @@ class VaultJukeboxManager {
     const currentTrack = VAULT_JUKEBOX_TRACKS[this.currentTrackIndex] || VAULT_JUKEBOX_TRACKS[0];
     return {
       currentTrack,
+      trackIndex: this.currentTrackIndex,
+      totalTracks: VAULT_JUKEBOX_TRACKS.length,
       isPlaying: this.isPlaying,
       currentTime: this.currentTime,
       duration: this.duration,
       volume: this.volume,
       isMuted: this.isMuted,
-      loopMode: this.loopMode
+      loopMode: this.loopMode,
+      playerMode: this.playerMode
     };
+  }
+
+  public setPlayerMode(mode: JukeboxPlayerMode): void {
+    this.playerMode = mode;
+    try {
+      localStorage.setItem('cele_jukebox_player_mode', mode);
+    } catch {}
+    this.notifyListeners();
   }
 
   public playTrack(trackId: string): void {

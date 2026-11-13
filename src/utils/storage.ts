@@ -6,14 +6,18 @@ import {
   CEQuestion,
   StreakData,
   ThemeId,
+  CrtIntensity,
   DEFAULT_THEME_ID,
   DailyTasksStatus,
   DailyActivityRecord,
   FlashcardItemProgress,
   FlashcardMasteryStatus,
   ActiveExamSession,
-  SRSRating
+  SRSRating,
+  VaultAvatarConfig,
+  AvatarScreenPosition
 } from '../types';
+import { DEFAULT_AVATAR_CONFIG } from '../types/avatar';
 import { INITIAL_ACHIEVEMENTS } from '../data/achievements';
 import { CE_QUESTIONS_MASTER } from '../data/questions';
 import confetti from 'canvas-confetti';
@@ -37,7 +41,14 @@ const STORAGE_KEYS = {
   DAILY_ACTIVITY: 'cele_daily_activity_v1',
   FORMULA_BOOKMARKS: 'cele_formula_bookmarks_v1',
   FORMULA_PROGRESS: 'cele_formula_progress_v1',
-  BOTTLE_CAPS: 'cele_bottle_caps_v1'
+  BOTTLE_CAPS: 'cele_bottle_caps_v1',
+  AVATAR_CONFIG: 'cele_avatar_config_v1',
+  AVATAR_POSITION: 'cele_avatar_position_v1',
+  AVATAR_MINIMIZED: 'cele_avatar_minimized_v1',
+  DAILY_STUDY_GOAL: 'cele_daily_study_goal_v1',
+  STREAK_GOAL_CELEBRATED_DATE: 'cele_streak_goal_celebrated_date_v1',
+  CRT_ENABLED: 'cele_crt_enabled_v1',
+  CRT_INTENSITY: 'cele_crt_intensity_v1'
 };
 
 export const DEFAULT_USER_PROFILE = {
@@ -475,12 +486,9 @@ export const getActiveThemeId = (): ThemeId => {
     const saved = localStorage.getItem(STORAGE_KEYS.ACTIVE_THEME);
     if (
       saved === 'vault-tec' ||
-      saved === 'midnight-strategist' ||
-      saved === 'zen-scholar' ||
-      saved === 'cyber-engineer' ||
-      saved === 'academic-classic' ||
-      saved === 'sunrise-momentum' ||
-      saved === 'deep-work'
+      saved === 'nuka-cola' ||
+      saved === 'power-armor' ||
+      saved === 'radaway-medbay'
     ) {
       return saved as ThemeId;
     }
@@ -556,12 +564,48 @@ export const saveDistractionFree = (df: boolean): void => {
   }
 };
 
+export const getCrtEnabled = (): boolean => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEYS.CRT_ENABLED);
+    if (saved !== null) return saved === 'true';
+  } catch {}
+  return true;
+};
+
+export const saveCrtEnabled = (enabled: boolean): void => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.CRT_ENABLED, String(enabled));
+  } catch (e) {
+    console.error('Failed to save CRT scanline state', e);
+  }
+};
+
+export const getCrtIntensity = (): CrtIntensity => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEYS.CRT_INTENSITY);
+    if (saved === 'subtle' || saved === 'classic' || saved === 'strong') {
+      return saved;
+    }
+  } catch {}
+  return 'subtle';
+};
+
+export const saveCrtIntensity = (intensity: CrtIntensity): void => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.CRT_INTENSITY, intensity);
+  } catch (e) {
+    console.error('Failed to save CRT scanline intensity', e);
+  }
+};
+
 export const resetThemeAndSoundSettings = (): void => {
   try {
     saveActiveThemeId(DEFAULT_THEME_ID);
     saveSoundVolume(0.8);
     saveSoundMuted(false);
     saveDistractionFree(false);
+    saveCrtEnabled(true);
+    saveCrtIntensity('subtle');
     soundManager.resetSettings();
   } catch (e) {
     console.error('Failed to reset theme and sound settings', e);
@@ -922,6 +966,42 @@ export const getDailyQuestionsAnswered = (dateStr: string = getTodayDateString()
   return allActivity[dateStr]?.questionsAnswered || 0;
 };
 
+export const getDailyStudyGoal = (): number => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.DAILY_STUDY_GOAL);
+    if (raw) {
+      const parsed = parseInt(raw, 10);
+      if (!isNaN(parsed) && parsed >= 5 && parsed <= 200) return parsed;
+    }
+  } catch {}
+  return 15;
+};
+
+export const saveDailyStudyGoal = (goal: number): number => {
+  const normalized = Math.max(5, Math.min(200, Math.round(goal)));
+  try {
+    localStorage.setItem(STORAGE_KEYS.DAILY_STUDY_GOAL, String(normalized));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_daily_goal_updated', { detail: normalized }));
+    }
+  } catch {}
+  return normalized;
+};
+
+export const hasCelebratedGoalToday = (): boolean => {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.STREAK_GOAL_CELEBRATED_DATE) === getLocalDateString();
+  } catch {
+    return false;
+  }
+};
+
+export const markGoalCelebratedToday = (): void => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.STREAK_GOAL_CELEBRATED_DATE, getLocalDateString());
+  } catch {}
+};
+
 export const getLast7DaysActivity = (): DailyActivityRecord[] => {
   const records: DailyActivityRecord[] = [];
   const allActivity = getAllDailyActivity();
@@ -1261,4 +1341,84 @@ export const requestPersistentStorage = async (): Promise<boolean> => {
     console.warn('Storage persist request caught error:', err);
     return false;
   }
+};
+
+// ==========================================
+// VAULT AVATAR & COMPANION CUSTOMIZATION
+// ==========================================
+
+export const getAvatarConfig = (): VaultAvatarConfig => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.AVATAR_CONFIG);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        ...DEFAULT_AVATAR_CONFIG,
+        ...parsed,
+        dweller: {
+          ...DEFAULT_AVATAR_CONFIG.dweller,
+          ...(parsed?.dweller || {})
+        }
+      };
+    }
+  } catch {}
+  return DEFAULT_AVATAR_CONFIG;
+};
+
+export const saveAvatarConfig = (config: VaultAvatarConfig): VaultAvatarConfig => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.AVATAR_CONFIG, JSON.stringify(config));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_avatar_updated', { detail: config }));
+    }
+  } catch (e) {
+    console.error('Failed to save avatar config', e);
+  }
+  return config;
+};
+
+export const getAvatarPosition = (): AvatarScreenPosition | null => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.AVATAR_POSITION);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (typeof parsed?.x === 'number' && typeof parsed?.y === 'number') {
+        return parsed;
+      }
+    }
+  } catch {}
+  return null;
+};
+
+export const saveAvatarPosition = (pos: AvatarScreenPosition): void => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.AVATAR_POSITION, JSON.stringify(pos));
+  } catch {}
+};
+
+export const resetAvatarPosition = (): void => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.AVATAR_POSITION);
+    localStorage.removeItem(STORAGE_KEYS.AVATAR_MINIMIZED);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_avatar_position_reset'));
+    }
+  } catch {}
+};
+
+export const getAvatarMinimized = (): boolean => {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.AVATAR_MINIMIZED) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+export const saveAvatarMinimized = (minimized: boolean): void => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.AVATAR_MINIMIZED, String(minimized));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_avatar_minimized_changed', { detail: minimized }));
+    }
+  } catch {}
 };

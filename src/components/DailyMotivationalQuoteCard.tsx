@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Quote, Sparkles, Copy, Check, RefreshCw } from 'lucide-react';
+import { Copy, Check, RefreshCw } from 'lucide-react';
 import { ThemeId } from '../types/theme';
 import {
   CELE_MOTIVATIONAL_QUOTES,
@@ -7,6 +7,7 @@ import {
   getDailyQuote
 } from '../data/motivationalQuotes';
 import { soundManager } from '../utils/audio';
+import { FalloutThemeIcon } from './FalloutThemeIcons';
 
 interface DailyMotivationalQuoteCardProps {
   themeId?: ThemeId;
@@ -15,8 +16,7 @@ interface DailyMotivationalQuoteCardProps {
 }
 
 export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProps> = ({
-  themeId = 'sunrise-momentum',
-  themeMode = 'dark',
+  themeId = 'vault-tec',
   className = ''
 }) => {
   const todayQuote = useMemo(() => getDailyQuote(), []);
@@ -48,70 +48,60 @@ export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProp
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Theme-tailored typography and visual accents
+  // Fallout Shelter room-tailored typography and visual accents
   const themeStyles = useMemo(() => {
     switch (themeId) {
-      case 'academic-classic':
+      case 'nuka-cola':
         return {
-          badge: 'CLASSICAL STUDY MAXIM',
-          quoteClass: 'font-serif italic font-normal text-lg sm:text-xl leading-relaxed text-stone-900 dark:text-stone-100',
-          authorClass: 'font-serif text-xs font-semibold tracking-wider uppercase text-amber-800 dark:text-amber-300',
-          containerBorder: 'border-l-4 border-l-[#C59B27] dark:border-l-[#C59B27]',
-          iconBg: 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400',
-          quoteMarkColor: 'text-[#C59B27]/25 dark:text-[#C59B27]/30'
+          badge: 'Nuka-Cola Bottling Dispatch',
+          quoteClass:
+            'font-sans text-base sm:text-lg font-bold tracking-tight text-stone-900 dark:text-rose-100 leading-relaxed',
+          authorClass:
+            'font-mono text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-cyan-300',
+          containerBorder: 'border-stone-200 dark:border-[#5E2630]',
+          iconBg: 'bg-rose-500/15 dark:bg-rose-500/20 text-rose-600 dark:text-rose-300',
+          quoteMarkColor: 'text-rose-500/20 dark:text-cyan-400/20'
         };
-      case 'zen-scholar':
+      case 'power-armor':
         return {
-          badge: 'DAILY CONTEMPLATION',
-          quoteClass: 'font-serif italic font-normal text-lg sm:text-xl leading-relaxed text-stone-800 dark:text-stone-200',
-          authorClass: 'font-sans text-xs font-medium tracking-wide text-emerald-800 dark:text-emerald-400',
-          containerBorder: 'border-l-4 border-l-emerald-600 dark:border-l-emerald-500',
-          iconBg: 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300',
-          quoteMarkColor: 'text-emerald-700/20 dark:text-emerald-400/25'
+          badge: 'Brotherhood T-60 Armory Codex',
+          quoteClass:
+            'font-mono text-base sm:text-lg font-semibold tracking-tight text-stone-900 dark:text-stone-100 leading-relaxed',
+          authorClass:
+            'font-mono text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-amber-400',
+          containerBorder: 'border-stone-200 dark:border-[#364150]',
+          iconBg: 'bg-orange-500/15 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+          quoteMarkColor: 'text-orange-500/20 dark:text-amber-400/20'
         };
-      case 'cyber-engineer':
+      case 'radaway-medbay':
         return {
-          badge: 'DAILY PROTOCOL // 0xCELE',
-          quoteClass: 'font-mono text-base sm:text-lg font-medium tracking-tight text-cyan-950 dark:text-cyan-100 leading-relaxed',
-          authorClass: 'font-mono text-xs font-semibold tracking-widest uppercase text-cyan-600 dark:text-cyan-400',
-          containerBorder: 'border-l-4 border-l-cyan-500 dark:border-l-cyan-400',
-          iconBg: 'bg-cyan-100 dark:bg-cyan-950/60 text-cyan-600 dark:text-cyan-400',
-          quoteMarkColor: 'text-cyan-500/25 dark:text-cyan-400/30'
+          badge: 'Vault Medbay Stimpak Log',
+          quoteClass:
+            'font-sans text-base sm:text-lg font-medium tracking-normal text-stone-900 dark:text-emerald-100 leading-relaxed',
+          authorClass:
+            'font-mono text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400',
+          containerBorder: 'border-stone-200 dark:border-[#234E43]',
+          iconBg: 'bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300',
+          quoteMarkColor: 'text-emerald-500/20 dark:text-emerald-400/20'
         };
-      case 'midnight-strategist':
-        return {
-          badge: 'COMMAND DIRECTIVE',
-          quoteClass: 'font-sans text-base sm:text-lg font-semibold tracking-tight text-stone-900 dark:text-stone-100 leading-snug',
-          authorClass: 'font-mono text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400',
-          containerBorder: 'border-l-4 border-l-sky-500 dark:border-l-sky-400',
-          iconBg: 'bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400',
-          quoteMarkColor: 'text-sky-500/25 dark:text-sky-400/30'
-        };
-      case 'deep-work':
-        return {
-          badge: 'FOCUS PRINCIPLE',
-          quoteClass: 'font-mono text-sm sm:text-base font-medium tracking-normal text-zinc-900 dark:text-zinc-100 leading-relaxed',
-          authorClass: 'font-mono text-xs uppercase tracking-widest text-zinc-600 dark:text-zinc-400 font-semibold',
-          containerBorder: 'border-l-4 border-l-zinc-500 dark:border-l-zinc-400',
-          iconBg: 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300',
-          quoteMarkColor: 'text-zinc-500/20 dark:text-zinc-400/20'
-        };
-      case 'sunrise-momentum':
+      case 'vault-tec':
       default:
         return {
-          badge: 'DAILY CELE MOTIVATION',
-          quoteClass: 'font-sans text-base sm:text-lg font-extrabold tracking-tight text-stone-900 dark:text-stone-100 leading-snug',
-          authorClass: 'font-sans text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400',
-          containerBorder: 'border-l-4 border-l-orange-500 dark:border-l-orange-400',
-          iconBg: 'bg-orange-100 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400',
-          quoteMarkColor: 'text-orange-500/25 dark:text-orange-400/30'
+          badge: 'Vault 101 Overseer Motivation',
+          quoteClass:
+            'font-mono text-base sm:text-lg font-bold tracking-tight text-stone-900 dark:text-amber-200 leading-relaxed',
+          authorClass:
+            'font-mono text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400',
+          containerBorder: 'border-stone-200 dark:border-[#2B447A]',
+          iconBg: 'bg-amber-500/15 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+          quoteMarkColor: 'text-amber-500/20 dark:text-amber-400/20'
         };
     }
   }, [themeId]);
 
   return (
     <div
-      className={`relative overflow-hidden rounded-3xl p-5 sm:p-6 shadow-xs border transition-all duration-200 bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 ${themeStyles.containerBorder} ${className}`}
+      className={`relative overflow-hidden rounded-3xl p-5 sm:p-6 shadow-xs border transition-all duration-200 bg-white dark:bg-[#0E1B38] ${themeStyles.containerBorder} ${className}`}
     >
       {/* Background Decorative Large Quotation Glyph */}
       <div
@@ -122,21 +112,23 @@ export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProp
       </div>
 
       <div className="relative z-10 flex flex-col justify-between gap-4">
-        
         {/* Top Header Row: Badge, Date & Action Controls */}
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center space-x-2.5">
             <div className={`p-1.5 sm:p-2 rounded-xl shrink-0 ${themeStyles.iconBg}`}>
-              <Sparkles className="w-4 h-4" />
+              <FalloutThemeIcon themeId={themeId} className="w-4 h-4" />
             </div>
-            <div className="flex items-center space-x-2 flex-wrap">
-              <span className="text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-stone-700 dark:text-stone-300">
+            <div className="flex items-center space-x-2 flex-wrap text-xs">
+              <span className="font-mono font-extrabold tracking-wider uppercase text-stone-700 dark:text-stone-200">
                 {themeStyles.badge}
               </span>
               {isTodayQuote && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 dark:bg-orange-950/70 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-900/50">
-                  Today's Pick
-                </span>
+                <>
+                  <span className="text-stone-400 dark:text-stone-600" aria-hidden="true">·</span>
+                  <span className="font-mono font-bold text-amber-600 dark:text-amber-400">
+                    Daily Pick
+                  </span>
+                </>
               )}
             </div>
           </div>
@@ -163,7 +155,9 @@ export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProp
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  <span className="hidden sm:inline text-emerald-600 dark:text-emerald-400 font-bold">Copied</span>
+                  <span className="hidden sm:inline text-emerald-600 dark:text-emerald-400 font-bold">
+                    Copied
+                  </span>
                 </>
               ) : (
                 <>
@@ -188,18 +182,13 @@ export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProp
         {/* Center: The Motivational Quote Text */}
         <div className="pl-1 sm:pl-2">
           <blockquote className="space-y-2">
-            <p className={themeStyles.quoteClass}>
-              “{activeQuote.quote}”
-            </p>
+            <p className={themeStyles.quoteClass}>“{activeQuote.quote}”</p>
             <footer className="flex items-center space-x-2 pt-1">
               <span className="text-stone-400 dark:text-stone-600 font-light">—</span>
-              <cite className={`${themeStyles.authorClass} not-italic`}>
-                {activeQuote.author}
-              </cite>
+              <cite className={`${themeStyles.authorClass} not-italic`}>{activeQuote.author}</cite>
             </footer>
           </blockquote>
         </div>
-
       </div>
     </div>
   );

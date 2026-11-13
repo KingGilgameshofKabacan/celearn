@@ -32,8 +32,13 @@ class SoundEffectManager {
         this.muted = storedMuted !== null ? storedMuted === 'true' : false;
 
         const storedTheme = localStorage.getItem(this.STORAGE_KEY_THEME);
-        if (storedTheme) {
-          this.activeThemeId = storedTheme as ThemeId;
+        if (
+          storedTheme === 'vault-tec' ||
+          storedTheme === 'nuka-cola' ||
+          storedTheme === 'power-armor' ||
+          storedTheme === 'radaway-medbay'
+        ) {
+          this.activeThemeId = storedTheme;
         }
       } catch {
         this.enabled = true;
@@ -155,7 +160,54 @@ class SoundEffectManager {
     const now = ctx.currentTime;
 
     switch (theme) {
-      case 'vault-tec': {
+      case 'nuka-cola': {
+        // Crisp soda bottle-cap pop
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(920, now);
+        osc.frequency.exponentialRampToValueAtTime(480, now + 0.05);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.06);
+        break;
+      }
+      case 'power-armor': {
+        // Heavy pneumatic armor plate clank
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.045);
+        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.055);
+        break;
+      }
+      case 'radaway-medbay': {
+        // Clean clinical bio-monitor dual blip
+        [580, 880].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(idx === 0 ? 0.14 : 0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.connect(gain);
+          gain.connect(this.masterGain!);
+          osc.start(now);
+          osc.stop(now + 0.045);
+        });
+        break;
+      }
+      case 'vault-tec':
+      default: {
         // Vault-Tec heavy relay click / Pip-Boy CRT phosphor toggle
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -175,101 +227,6 @@ class SoundEffectManager {
         osc.stop(now + 0.045);
         break;
       }
-      case 'midnight-strategist': {
-        // Precise digital sine click, 980Hz fast decay
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(980, now);
-        osc.frequency.exponentialRampToValueAtTime(450, now + 0.035);
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start(now);
-        osc.stop(now + 0.04);
-        break;
-      }
-      case 'zen-scholar': {
-        // Dual harmonic wooden tap (marimba/rosewood block)
-        [440, 880].forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now);
-          gain.gain.setValueAtTime(idx === 0 ? 0.16 : 0.06, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
-          osc.connect(gain);
-          gain.connect(this.masterGain!);
-          osc.start(now);
-          osc.stop(now + 0.05);
-        });
-        break;
-      }
-      case 'cyber-engineer': {
-        // Futuristic cyber blip (1600Hz downward sweep)
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sawtooth';
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2400, now);
-        osc.frequency.setValueAtTime(1400, now);
-        osc.frequency.exponentialRampToValueAtTime(600, now + 0.03);
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start(now);
-        osc.stop(now + 0.035);
-        break;
-      }
-      case 'academic-classic': {
-        // Tactile typewriter mechanical pop
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(320, now);
-        osc.frequency.exponentialRampToValueAtTime(120, now + 0.03);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start(now);
-        osc.stop(now + 0.035);
-        break;
-      }
-      case 'sunrise-momentum': {
-        // Bright energetic water droplet pop
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(820, now);
-        osc.frequency.exponentialRampToValueAtTime(440, now + 0.06);
-        gain.gain.setValueAtTime(0.14, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start(now);
-        osc.stop(now + 0.065);
-        break;
-      }
-      case 'deep-work':
-      default: {
-        // Whisper-soft felt click, zero ring
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1100, now);
-        gain.gain.setValueAtTime(0.04, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start(now);
-        osc.stop(now + 0.02);
-        break;
-      }
     }
   }
 
@@ -281,36 +238,19 @@ class SoundEffectManager {
     const theme = themeOverride || this.activeThemeId;
     const now = ctx.currentTime;
 
-    if (theme === 'deep-work') {
-      // Single quiet focus tone
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(320, now);
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-      osc.connect(gain);
-      gain.connect(this.masterGain);
-      osc.start(now);
-      osc.stop(now + 0.22);
-      return;
-    }
-
     const notes =
-      theme === 'vault-tec'
-        ? [440, 554.37, 659.25, 880] // Vault-Tec Pip-Boy terminal boot arpeggio
-        : theme === 'zen-scholar'
-        ? [330, 440]
-        : theme === 'cyber-engineer'
-        ? [440, 880, 1320]
-        : theme === 'academic-classic'
-        ? [261.63, 392.0]
-        : [523.25, 659.25]; // Sunrise / Midnight
+      theme === 'nuka-cola'
+        ? [523.25, 659.25, 783.99]
+        : theme === 'power-armor'
+        ? [220, 293.66, 440]
+        : theme === 'radaway-medbay'
+        ? [440, 554.37, 659.25]
+        : [440, 554.37, 659.25, 880]; // Vault-Tec Pip-Boy boot arpeggio
 
     notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = theme === 'vault-tec' || theme === 'cyber-engineer' ? 'sawtooth' : 'sine';
+      osc.type = theme === 'vault-tec' ? 'sawtooth' : theme === 'power-armor' ? 'triangle' : 'sine';
       osc.frequency.setValueAtTime(freq, now + idx * 0.08);
       gain.gain.setValueAtTime(0, now + idx * 0.08);
       gain.gain.linearRampToValueAtTime(0.14, now + idx * 0.08 + 0.02);
@@ -378,7 +318,58 @@ class SoundEffectManager {
     const now = ctx.currentTime;
 
     switch (theme) {
-      case 'vault-tec': {
+      case 'nuka-cola': {
+        // Cheerful Nuka-Fizz ascending bottle chimes
+        [659.25, 880.0, 1108.73].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.065);
+          gain.gain.setValueAtTime(0, now + idx * 0.065);
+          gain.gain.linearRampToValueAtTime(0.16, now + idx * 0.065 + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.065 + 0.26);
+          osc.connect(gain);
+          gain.connect(this.masterGain!);
+          osc.start(now + idx * 0.065);
+          osc.stop(now + idx * 0.065 + 0.28);
+        });
+        break;
+      }
+      case 'power-armor': {
+        // Twin Brotherhood Fusion Core confirmation lock
+        [392.0, 659.25].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0, now + idx * 0.08);
+          gain.gain.linearRampToValueAtTime(0.17, now + idx * 0.08 + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.32);
+          osc.connect(gain);
+          gain.connect(this.masterGain!);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.34);
+        });
+        break;
+      }
+      case 'radaway-medbay': {
+        // Serene Stimpak Medbay monitor harmonic chord C5 -> G5
+        [523.25, 783.99].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.085);
+          gain.gain.setValueAtTime(0.16, now + idx * 0.085);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.085 + 0.32);
+          osc.connect(gain);
+          gain.connect(this.masterGain!);
+          osc.start(now + idx * 0.085);
+          osc.stop(now + idx * 0.085 + 0.34);
+        });
+        break;
+      }
+      case 'vault-tec':
+      default: {
         // Pip-Boy Quest Notification / Positive Terminal Fanfare [587.33 (D5), 880.0 (A5), 1174.66 (D6)]
         [587.33, 880.0, 1174.66].forEach((freq, idx) => {
           const osc = ctx.createOscillator();
@@ -398,119 +389,6 @@ class SoundEffectManager {
           osc.start(now + idx * 0.06);
           osc.stop(now + idx * 0.06 + 0.28);
         });
-        break;
-      }
-      case 'midnight-strategist': {
-        // Dual cool electronic pulse E5 -> B5
-        [659.25, 987.77].forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-          gain.gain.setValueAtTime(0, now + idx * 0.08);
-          gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.08 + 0.015);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.28);
-          osc.connect(gain);
-          gain.connect(this.masterGain!);
-          osc.start(now + idx * 0.08);
-          osc.stop(now + idx * 0.08 + 0.3);
-        });
-        break;
-      }
-      case 'zen-scholar': {
-        // Resonant warm marimba chord C5 -> G5
-        [523.25, 783.99].forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.09);
-          gain.gain.setValueAtTime(0.17, now + idx * 0.09);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.32);
-          osc.connect(gain);
-          gain.connect(this.masterGain!);
-          osc.start(now + idx * 0.09);
-          osc.stop(now + idx * 0.09 + 0.35);
-        });
-        break;
-      }
-      case 'cyber-engineer': {
-        // FM modulated cyber confirmation chirp
-        const carrier = ctx.createOscillator();
-        const modulator = ctx.createOscillator();
-        const modGain = ctx.createGain();
-        const mainGain = ctx.createGain();
-
-        carrier.type = 'sine';
-        carrier.frequency.setValueAtTime(740, now);
-        carrier.frequency.exponentialRampToValueAtTime(1108, now + 0.12);
-
-        modulator.type = 'sawtooth';
-        modulator.frequency.setValueAtTime(1480, now);
-
-        modGain.gain.setValueAtTime(300, now);
-        modGain.gain.exponentialRampToValueAtTime(10, now + 0.12);
-
-        mainGain.gain.setValueAtTime(0.15, now);
-        mainGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
-
-        modulator.connect(modGain);
-        modGain.connect(carrier.frequency);
-        carrier.connect(mainGain);
-        mainGain.connect(this.masterGain);
-
-        modulator.start(now);
-        carrier.start(now);
-        modulator.stop(now + 0.23);
-        carrier.stop(now + 0.23);
-        break;
-      }
-      case 'academic-classic': {
-        // Elegant academic two-tone bell (G4 -> E5)
-        [392.0, 659.25].forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.1);
-          gain.gain.setValueAtTime(0, now + idx * 0.1);
-          gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.1 + 0.02);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.4);
-          osc.connect(gain);
-          gain.connect(this.masterGain!);
-          osc.start(now + idx * 0.1);
-          osc.stop(now + idx * 0.1 + 0.42);
-        });
-        break;
-      }
-      case 'sunrise-momentum': {
-        // Cheerful ascending major notes (E5 -> A5 -> C#6)
-        [659.25, 880.0, 1108.73].forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
-          gain.gain.setValueAtTime(0, now + idx * 0.07);
-          gain.gain.linearRampToValueAtTime(0.16, now + idx * 0.07 + 0.015);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.28);
-          osc.connect(gain);
-          gain.connect(this.masterGain!);
-          osc.start(now + idx * 0.07);
-          osc.stop(now + idx * 0.07 + 0.3);
-        });
-        break;
-      }
-      case 'deep-work':
-      default: {
-        // Minimalist quiet confirmation tap
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(640, now);
-        gain.gain.setValueAtTime(0.06, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
-        osc.connect(gain);
-        gain.connect(this.masterGain);
-        osc.start(now);
-        osc.stop(now + 0.1);
         break;
       }
     }
@@ -534,101 +412,80 @@ class SoundEffectManager {
     const theme = themeOverride || this.activeThemeId;
     const now = ctx.currentTime;
 
-    if (theme === 'vault-tec') {
-      // Vault-Tec Approved Triumphant Brass Fanfare (Pip-Boy Level Up)
-      const notes = [523.25, 659.25, 783.99, 1046.5];
-      notes.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sawtooth';
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2400, now + idx * 0.09);
-        osc.frequency.setValueAtTime(freq, now + idx * 0.09);
-        gain.gain.setValueAtTime(0, now + idx * 0.09);
-        gain.gain.linearRampToValueAtTime(0.15, now + idx * 0.09 + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.4);
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.masterGain!);
-        osc.start(now + idx * 0.09);
-        osc.stop(now + idx * 0.09 + 0.42);
-      });
-      return;
-    }
-
-    if (theme === 'deep-work') {
-      // Quiet, dignified completion tone
-      [440, 554.37, 659.25].forEach((freq, idx) => {
+    if (theme === 'radaway-medbay') {
+      // Calming bio-synthesis bell chord with gentle tail
+      const fundamental = 440;
+      [fundamental, fundamental * 1.5, fundamental * 2].forEach((freq, idx) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-        gain.gain.setValueAtTime(0.07, now + idx * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
-        osc.connect(gain);
-        gain.connect(this.masterGain!);
-        osc.start(now + idx * 0.08);
-        osc.stop(now + idx * 0.08 + 0.35);
-      });
-      return;
-    }
-
-    if (theme === 'zen-scholar') {
-      // Calming temple bowl chime with deep acoustic tail
-      const fundamental = 432;
-      [fundamental, fundamental * 2, fundamental * 3].forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now);
-        gain.gain.setValueAtTime(idx === 0 ? 0.22 : 0.07, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-        osc.connect(gain);
-        gain.connect(this.masterGain!);
-        osc.start(now);
-        osc.stop(now + 1.25);
-      });
-      return;
-    }
-
-    if (theme === 'cyber-engineer') {
-      // Futuristic arpeggio D5 -> F#5 -> A5 -> D6 with resonant filter
-      const notes = [587.33, 739.99, 880.0, 1174.66];
-      notes.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const filter = ctx.createBiquadFilter();
-        osc.type = 'sawtooth';
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(1800, now);
         osc.frequency.setValueAtTime(freq, now + idx * 0.07);
-        gain.gain.setValueAtTime(0, now + idx * 0.07);
-        gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.07 + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 0.6);
-        osc.connect(filter);
-        filter.connect(gain);
+        gain.gain.setValueAtTime(idx === 0 ? 0.2 : 0.1, now + idx * 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+        osc.connect(gain);
         gain.connect(this.masterGain!);
         osc.start(now + idx * 0.07);
-        osc.stop(now + idx * 0.07 + 0.65);
+        osc.stop(now + 0.95);
       });
       return;
     }
 
-    // Default Sunrise / Midnight / Academic celebratory cascade
-    const chord = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
-    chord.forEach((freq, idx) => {
+    if (theme === 'nuka-cola') {
+      // Bubbly Nuka-World celebratory cascade
+      const chord = [523.25, 659.25, 783.99, 1046.5];
+      chord.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+        gain.gain.setValueAtTime(0, now + idx * 0.07);
+        gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.07 + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 0.55);
+        osc.connect(gain);
+        gain.connect(this.masterGain!);
+        osc.start(now + idx * 0.07);
+        osc.stop(now + idx * 0.07 + 0.6);
+      });
+      return;
+    }
+
+    if (theme === 'power-armor') {
+      // Deep fusion core startup fanfare
+      const notes = [293.66, 440.0, 587.33, 880.0];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+        gain.gain.setValueAtTime(0, now + idx * 0.09);
+        gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.09 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.09 + 0.5);
+        osc.connect(gain);
+        gain.connect(this.masterGain!);
+        osc.start(now + idx * 0.09);
+        osc.stop(now + idx * 0.09 + 0.55);
+      });
+      return;
+    }
+
+    // Vault-Tec Approved Triumphant Brass Fanfare (Pip-Boy Level Up)
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = theme === 'academic-classic' ? 'triangle' : 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-      gain.gain.setValueAtTime(0, now + idx * 0.08);
-      gain.gain.linearRampToValueAtTime(0.2, now + idx * 0.08 + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.7);
-      osc.connect(gain);
+      osc.type = 'sawtooth';
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(2400, now + idx * 0.09);
+      osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+      gain.gain.setValueAtTime(0, now + idx * 0.09);
+      gain.gain.linearRampToValueAtTime(0.15, now + idx * 0.09 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.4);
+      osc.connect(filter);
+      filter.connect(gain);
       gain.connect(this.masterGain!);
-      osc.start(now + idx * 0.08);
-      osc.stop(now + idx * 0.08 + 0.75);
+      osc.start(now + idx * 0.09);
+      osc.stop(now + idx * 0.09 + 0.42);
     });
   }
 
@@ -646,10 +503,10 @@ class SoundEffectManager {
     notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = theme === 'academic-classic' ? 'triangle' : 'sine';
+      osc.type = theme === 'power-armor' ? 'triangle' : 'sine';
       osc.frequency.setValueAtTime(freq, now + idx * 0.06);
       gain.gain.setValueAtTime(0, now + idx * 0.06);
-      gain.gain.linearRampToValueAtTime(theme === 'deep-work' ? 0.08 : 0.18, now + idx * 0.06 + 0.02);
+      gain.gain.linearRampToValueAtTime(0.17, now + idx * 0.06 + 0.02);
       gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.32);
       osc.connect(gain);
       gain.connect(this.masterGain!);
@@ -768,12 +625,12 @@ class SoundEffectManager {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const filter = ctx.createBiquadFilter();
-      osc.type = theme === 'cyber-engineer' ? 'sawtooth' : 'triangle';
+      osc.type = theme === 'power-armor' ? 'sawtooth' : 'triangle';
       osc.frequency.setValueAtTime(freq, now + idx * 0.1);
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(400, now);
       gain.gain.setValueAtTime(0, now + idx * 0.1);
-      gain.gain.linearRampToValueAtTime(theme === 'deep-work' ? 0.05 : 0.14, now + idx * 0.1 + 0.02);
+      gain.gain.linearRampToValueAtTime(0.14, now + idx * 0.1 + 0.02);
       gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.2);
       osc.connect(filter);
       filter.connect(gain);

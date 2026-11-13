@@ -273,13 +273,14 @@ html.dark[data-personality-theme] .dark\:border-stone-700:not([data-keep-color])
 [data-personality-theme] .bg-orange-500:not([data-keep-color]):not(.swatch-pill):not(.status-dot),
 [data-personality-theme] .bg-gradient-to-r.from-orange-500.to-amber-500 {
   background: var(--theme-primary) !important;
-  color: #ffffff !important;
+  color: var(--theme-on-primary, #ffffff) !important;
 }
 
 [data-personality-theme] .hover\:bg-orange-500:hover:not([data-keep-color]),
 [data-personality-theme] .hover\:bg-orange-600:hover:not([data-keep-color]),
 [data-personality-theme] .hover\:from-orange-600:hover {
   background: var(--theme-primary-hover) !important;
+  color: var(--theme-on-primary, #ffffff) !important;
 }
 
 /* Accent Badges, Pills, and Banner Backgrounds */
@@ -451,19 +452,23 @@ body {
 }
 
 /* Custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(251, 192, 45, 0.35) transparent;
+}
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(234, 88, 12, 0.25);
-  border-radius: 4px;
+  background: rgba(251, 192, 45, 0.35);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(234, 88, 12, 0.5);
+  background: rgba(251, 192, 45, 0.65);
 }
 
 /* Print Rules */
@@ -737,5 +742,324 @@ body.dark .water-wave-core {
   background-size: 100% 3px, 4px 100%;
   pointer-events: none;
 }
+
+/* Global Pip-Boy CRT Scanline Overlay across entire application UI */
+@keyframes crtRefreshRoll {
+  0% {
+    transform: translate3d(0, -18vh, 0);
+  }
+  100% {
+    transform: translate3d(0, 118vh, 0);
+  }
+}
+
+.pipboy-crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  opacity: 0.34;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 2px,
+      rgba(0, 0, 0, 0.24) 2px,
+      rgba(0, 0, 0, 0.24) 3px
+    ),
+    repeating-linear-gradient(
+      to right,
+      rgba(255, 0, 0, 0.025) 0px,
+      rgba(0, 255, 0, 0.018) 1px,
+      rgba(0, 140, 255, 0.025) 2px,
+      transparent 3px
+    );
+  box-shadow: inset 0 0 85px rgba(0, 0, 0, 0.24);
+  transition: opacity 0.25s ease;
+}
+
+.pipboy-crt-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 14vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(34, 197, 94, 0) 0%,
+    rgba(34, 197, 94, 0.04) 50%,
+    rgba(251, 192, 45, 0.025) 75%,
+    rgba(34, 197, 94, 0) 100%
+  );
+  animation: crtRefreshRoll 9s linear infinite;
+  will-change: transform;
+}
+
+/* Light (Day) Mode calibration for clean daytime readability */
+html:not(.dark) .pipboy-crt-overlay {
+  opacity: 0.18;
+  box-shadow: inset 0 0 65px rgba(15, 23, 42, 0.08);
+}
+
+html:not(.dark) .pipboy-crt-overlay::after {
+  opacity: 0.45;
+}
+
+/* CRT Intensity Presets */
+.pipboy-crt-overlay[data-crt-intensity="subtle"] {
+  opacity: 0.3;
+}
+html:not(.dark) .pipboy-crt-overlay[data-crt-intensity="subtle"] {
+  opacity: 0.15;
+}
+
+.pipboy-crt-overlay[data-crt-intensity="classic"] {
+  opacity: 0.54;
+}
+html:not(.dark) .pipboy-crt-overlay[data-crt-intensity="classic"] {
+  opacity: 0.28;
+}
+
+.pipboy-crt-overlay[data-crt-intensity="strong"] {
+  opacity: 0.82;
+}
+html:not(.dark) .pipboy-crt-overlay[data-crt-intensity="strong"] {
+  opacity: 0.42;
+}
+
+/* =========================================================================
+   Vault Jukebox Vinyl Platter & Cassette Reel Spin Animations
+   ========================================================================= */
+
+@keyframes jukeboxSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.jukebox-vinyl-spin {
+  animation: jukeboxSpin 3.2s linear infinite;
+}
+
+.jukebox-reel-spin {
+  animation: jukeboxSpin 2.4s linear infinite;
+}
+
+/* =========================================================================
+   Fallout Study Streak Goal-Met Celebration Animations
+   ========================================================================= */
+
+@keyframes streakSealPop {
+  0% {
+    transform: scale(0.65) rotate(-12deg);
+    opacity: 0.4;
+  }
+  55% {
+    transform: scale(1.12) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes streakCapFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(12deg);
+  }
+}
+
+@keyframes streakScanSweep {
+  0% {
+    background: linear-gradient(110deg, transparent 20%, rgba(251, 192, 45, 0.14) 50%, transparent 80%);
+    transform: translateX(-60%);
+  }
+  100% {
+    background: linear-gradient(110deg, transparent 20%, rgba(34, 197, 94, 0.12) 50%, transparent 80%);
+    transform: translateX(60%);
+  }
+}
+
+.streak-gear-spin {
+  animation: jukeboxSpin 6s linear infinite;
+}
+
+.streak-seal-pop {
+  animation: streakSealPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.streak-cap-float {
+  animation: streakCapFloat 2.2s ease-in-out infinite;
+}
+
+.streak-scan-sweep {
+  animation: streakScanSweep 1.6s ease-out 2;
+}
+
+/* =========================================================================
+   VaultDwellerPet Stationary Idle Animations (Shift Weight, Look Around)
+   ========================================================================= */
+
+@keyframes petWeightShift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1, 1);
+  }
+  22% {
+    transform: translate3d(-1.5px, -0.8px, 0) rotate(-1.5deg) scale(1.008, 0.992);
+  }
+  48% {
+    transform: translate3d(0, -2.5px, 0) rotate(0.2deg) scale(0.994, 1.012);
+  }
+  74% {
+    transform: translate3d(1.8px, -0.6px, 0) rotate(1.6deg) scale(1.008, 0.992);
+  }
+  90% {
+    transform: translate3d(0.4px, -1.6px, 0) rotate(0.4deg) scale(0.997, 1.006);
+  }
+}
+
+@keyframes petHoverIdle {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-1.2deg);
+  }
+  35% {
+    transform: translate3d(1.5px, -5px, 0) rotate(1.6deg);
+  }
+  70% {
+    transform: translate3d(-1.5px, -2.5px, 0) rotate(-1.6deg);
+  }
+}
+
+@keyframes petHeadLook {
+  0%, 16%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  24%, 36% {
+    transform: translate3d(-1.2px, 0.2px, 0) rotate(-3.2deg);
+  }
+  46%, 58% {
+    transform: translate3d(0, -0.5px, 0) rotate(0deg);
+  }
+  68%, 80% {
+    transform: translate3d(1.2px, 0.2px, 0) rotate(3.4deg);
+  }
+  90% {
+    transform: translate3d(0, 0, 0) rotate(-0.6deg);
+  }
+}
+
+@keyframes petEyeBlink {
+  0%, 43%, 47%, 91%, 95%, 100% {
+    transform: scaleY(1);
+  }
+  45%, 93% {
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes petArmGesture {
+  0%, 100% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(-4deg) translate3d(0, -1px, 0);
+  }
+}
+
+@keyframes petTailWag {
+  0%, 100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes petShadowPulse {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleX(0.9);
+    opacity: 0.32;
+  }
+}
+
+.vault-pet-idle-stance {
+  animation: petWeightShift 4.8s ease-in-out infinite;
+  transform-origin: 50% 92%;
+  will-change: transform;
+}
+
+.vault-pet-idle-hover {
+  animation: petHoverIdle 3.4s ease-in-out infinite;
+  transform-origin: 50% 55%;
+  will-change: transform;
+}
+
+.vault-pet-idle .pet-head-group {
+  animation: petHeadLook 7.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+}
+
+.vault-pet-idle .pet-eyes-group {
+  animation: petEyeBlink 5.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.vault-pet-idle .pet-arm-gesture {
+  animation: petArmGesture 2.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 80% 70%;
+}
+
+.vault-pet-idle .pet-tail {
+  animation: petTailWag 0.95s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 15% 85%;
+}
+
+.vault-pet-idle .pet-shadow {
+  animation: petShadowPulse 3.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jukebox-vinyl-spin,
+  .jukebox-reel-spin,
+  .streak-gear-spin,
+  .streak-seal-pop,
+  .streak-cap-float,
+  .streak-scan-sweep,
+  .live-hover-shape,
+  .pipboy-crt-overlay::after,
+  .vault-pet-idle-stance,
+  .vault-pet-idle-hover,
+  .vault-pet-idle .pet-head-group,
+  .vault-pet-idle .pet-eyes-group,
+  .vault-pet-idle .pet-arm-gesture,
+  .vault-pet-idle .pet-tail,
+  .vault-pet-idle .pet-shadow {
+    animation: none !important;
+  }
+  .pipboy-crt-overlay::after {
+    display: none !important;
+  }
+}
+
 
 

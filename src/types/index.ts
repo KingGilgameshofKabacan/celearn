@@ -133,3 +133,4 @@ export interface UserStats {
 }
 
 export * from './theme';
+export * from './avatar';
