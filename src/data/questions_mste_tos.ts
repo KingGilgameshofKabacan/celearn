@@ -14,7 +14,7 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
       "dy/dx = e^u · (du/dx)",
       "dy/dx = 1 / (u · ln 10)"
     ],
-    "explanation": "Fundamental calculus formula in board exams: d/dx[ln u] = u' / u."
+    "explanation": "Fundamental logarithmic differentiation rule: d/dx[ln u] = u' / u."
   },
   {
     "id": 902,
@@ -112,14 +112,14 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
     "question": "The length of curve L for a simple circular curve with radius R and central deflection angle I in radians is:",
-    "answer": "L = R · I (OR L = 20 · I / D FOR 20-m DEFINITION)",
+    "answer": "L = R · I (for radian angle I)",
     "choices": [
       "L = 2R · sin(I / 2)",
-      "L = R · I (OR L = 20 · I / D FOR 20-m DEFINITION)",
+      "L = R · I (for radian angle I)",
       "L = R · tan(I / 2)",
       "L = π · R · I / 360"
     ],
-    "explanation": "Subtended circular arc length L = R · I (where I is in radians), or 20 · (I / D) in standard metric stationing."
+    "explanation": "Subtended circular arc length L = R · I (where I is in radians), or 20 · (I / D) in standard metric stationing. Or L = 20 · I / D for the 20-m definition."
   },
   {
     "id": 909,
@@ -187,14 +187,14 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE Department Order 13, crane operators on construction sites in the Philippines must be certified by:",
-    "answer": "Tesda (technical Education and Skills Development Authority)",
+    "answer": "TESDA",
     "choices": [
       "DPWH",
-      "Tesda (technical Education and Skills Development Authority)",
+      "TESDA",
       "PRC",
       "LTO"
     ],
-    "explanation": "Heavy equipment operators must hold a valid National Certificate (NC II) issued by TESDA."
+    "explanation": "Heavy equipment operators must hold a valid National Certificate (NC II) issued by TESDA. Technical Education and Skills Development Authority (TESDA) issues national trade certifications."
   },
   {
     "id": 914,
@@ -217,11 +217,11 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under Philippine RA 11058, the maximum daily administrative penalty imposed on employers for refusing or failing to correct an imminent danger violation is:",
-    "answer": "Php 100,000 Per Day of Continued Violation",
+    "answer": "Php 100,000 Per Day",
     "choices": [
       "Php 10,000 Per Day",
       "Php 50,000 Per Day",
-      "Php 100,000 Per Day of Continued Violation",
+      "Php 100,000 Per Day",
       "Php 500,000 Per Day"
     ],
     "explanation": "Section 29 of RA 11058 establishes non-compliance fines up to ₱100,000 per calendar day until the hazard is fully corrected."
@@ -262,12 +262,12 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Hard",
     "question": "Simpson’s One-Third Rule for computing the area of an irregular boundary requires that the total number of strips must be:",
-    "answer": "Even Number of Strips (odd Number of Ordinates)",
+    "answer": "Even Number of Strips (Odd Number of Ordinates)",
     "choices": [
-      "Odd Number of Strips (even Number of Ordinates)",
-      "Even Number of Strips (odd Number of Ordinates)",
-      "Any Number of Strips",
-      "Exactly Three Strips"
+      "Odd Number of Strips (Even Number of Ordinates)",
+      "Even Number of Strips (Odd Number of Ordinates)",
+      "Any Number of Strips (Even or Odd Ordinates)",
+      "Multiple of Three Strips (Divisible by Three)"
     ],
     "explanation": "Simpson’s rule fits parabolas across pairs of strips; hence the number of strips must be even (number of offsets n is odd)."
   },
@@ -279,10 +279,10 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "question": "In differential equations, an equation of the form dy/dx + P(x)·y = Q(x) is classified as a:",
     "answer": "First-order Linear Differential Equation",
     "choices": [
-      "Homogeneous Equation",
+      "Homogeneous Second-Order Differential Equation",
       "First-order Linear Differential Equation",
-      "Bernoulli Equation",
-      "Exact Equation"
+      "Nonlinear Bernoulli Differential Equation",
+      "Exact Partial Differential Equation"
     ],
     "explanation": "Solved using integrating factor IF = e^(∫ P(x) dx)."
   },
@@ -339,10 +339,10 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "question": "In highway vertical curves, the rate of vertical curvature K is defined as the length of curve L per percent change in grade A (K = L / A). On crest curves governed by stopping sight distance S < L:",
     "answer": "L = A · S² / [ 100 · (√(2·h1) + √(2·h2))² ]",
     "choices": [
-      "L = A · S / 100",
       "L = A · S² / [ 100 · (√(2·h1) + √(2·h2))² ]",
-      "L = 2S - 200 / A",
-      "L = A · S² / 800"
+      "L = A · S² / [ 200 · (√(h1) + √(h2))² ]",
+      "L = 2S - [ 200 · (√(h1) + √(h2))² / A ]",
+      "L = A · S² / [ 800 · (h1 + h2) ]"
     ],
     "explanation": "AASHTO standard with eye height h1 = 1.08 m and object height h2 = 0.60 m, yielding L = A·S² / 658."
   },
@@ -352,14 +352,14 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
     "question": "On sag vertical highway curves, nighttime design sight distance is governed by headlight beam spreading distance with headlight height of:",
-    "answer": "0.60 Meters (2.0 Feet) and 1-degree Upward Divergence Angle",
+    "answer": "0.60 m Height and 1° Upward Divergence",
     "choices": [
-      "1.08 meters",
-      "0.60 Meters (2.0 Feet) and 1-degree Upward Divergence Angle",
-      "0.30 meters and 2-degree angle",
-      "0.80 meters with zero divergence"
+      "1.08 m Height and 0° Divergence",
+      "0.60 m Height and 1° Upward Divergence",
+      "0.30 m Height and 2° Upward Divergence",
+      "0.80 m Height and 1° Downward Divergence"
     ],
-    "explanation": "Headlight beam trajectory illuminates roadway ahead, establishing standard sag K-values."
+    "explanation": "Headlight beam trajectory illuminates roadway ahead, establishing standard sag K-values. 0.60 meters corresponds to 2.0 feet."
   },
   {
     "id": 925,
@@ -384,10 +384,10 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "question": "The present sum P equivalent to a uniform gradient series G increasing by G each year starting at end of year 2 is:",
     "answer": "P = (G / i) · [ ((1 + i)^n - 1) / (i · (1 + i)^n) - n / (1 + i)^n ]",
     "choices": [
-      "P = G · n / i",
       "P = (G / i) · [ ((1 + i)^n - 1) / (i · (1 + i)^n) - n / (1 + i)^n ]",
-      "P = G / (1 + i)^n",
-      "P = G · (P/A, i, n)"
+      "P = (G / i) · [ ((1 + i)^n + 1) / (i · (1 + i)^n) + n / (1 + i)^n ]",
+      "P = (G / i²) · [ 1 - (1 + i)^(-n) ] + n · G / (1 + i)^n",
+      "P = G · [ ((1 + i)^n - 1) / (i · (1 + i)^n) ] - n · G"
     ],
     "explanation": "The Uniform Gradient Present Worth factor (P/G, i, n) models linearly escalating annual maintenance expenses."
   },
@@ -412,12 +412,12 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE Department Order 13, all heavy equipment mobilized to a construction site must undergo testing and inspection by a:",
-    "answer": "Dole-accredited Third-party Testing Organization",
+    "answer": "DOLE-Accredited Third-Party Testing Organization",
     "choices": [
-      "Local Municipal Engineer",
-      "Dole-accredited Third-party Testing Organization",
-      "Site Resident Architect",
-      "Equipment Dealer Mechanic"
+      "Local Municipal Building Engineer",
+      "DOLE-Accredited Third-Party Testing Organization",
+      "Site Resident Supervising Architect",
+      "Heavy Equipment Dealer Mechanic"
     ],
     "explanation": "Ensures structural integrity, hydraulic stability, and load limit safety before equipment operation."
   },
@@ -442,12 +442,12 @@ export const MSTE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Easy",
     "question": "A rectangular road sign with green background and white lettering universally designates an:",
-    "answer": "Informative Guide / Destination Sign",
+    "answer": "Informative Guide Sign",
     "choices": [
-      "Regulatory Sign",
-      "Warning Sign",
-      "Informative Guide / Destination Sign",
-      "Temporary Hazard"
+      "Regulatory Control Sign",
+      "Hazard Warning Sign",
+      "Informative Guide Sign",
+      "Temporary Work Sign"
     ],
     "explanation": "Green guide signs communicate highway route numbers, destination cities, exits, and mileposts."
   }

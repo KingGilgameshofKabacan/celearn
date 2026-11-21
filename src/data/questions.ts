@@ -14,6 +14,10 @@ import { SCANNED_PDF_QUESTIONS } from './questions_scanned_pdf';
 import { HIGHWAY_PORTS_QUESTIONS } from './questions_highway_ports';
 import { QUESTIONS_BOARD_SERIES } from './questions_board_series';
 import { QUESTIONS_REFRESHER_SERIES } from './questions_refresher_series';
+import { GEOTECH_360_QUESTIONS } from './questions_geotech_360';
+import { HPGE_FORMULA_QUESTIONS } from './questions_hpge_formulas';
+import { PSAD_FORMULA_QUESTIONS } from './questions_psad_formulas';
+import { MSTE_FORMULA_QUESTIONS } from './questions_mste_formulas';
 
 // Pool of authentic Table of Specifications (TOS) board exam questions
 export const ALL_SOURCE_QUESTIONS: CEQuestion[] = [
@@ -23,6 +27,10 @@ export const ALL_SOURCE_QUESTIONS: CEQuestion[] = [
   ...PDF_TOS_QUESTIONS,
   ...QUESTIONS_BOARD_SERIES,
   ...QUESTIONS_REFRESHER_SERIES,
+  ...GEOTECH_360_QUESTIONS,
+  ...HPGE_FORMULA_QUESTIONS,
+  ...PSAD_FORMULA_QUESTIONS,
+  ...MSTE_FORMULA_QUESTIONS,
   ...SCANNED_PDF_QUESTIONS,
   ...HIGHWAY_PORTS_QUESTIONS,
   ...PSAD_QUESTIONS,
@@ -97,6 +105,7 @@ export const SUBTOPICS_BY_AREA: Record<CEArea, string[]> = {
     'Highway Geometric Design & Sight Distances',
     'Traffic Engineering, Markings & Signs',
     'Pavement Distress, Asphalt & Concrete Paving',
+    'Ports, Harbors, Waves & Coastal Engineering',
     'Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)',
     'Project Management, CPM/PERT & Equipment Economics'
   ]

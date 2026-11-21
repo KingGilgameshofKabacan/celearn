@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { CEQuestion, CEArea } from '../types';
 import {
   Clock,
@@ -11,9 +11,7 @@ import {
   FileText,
   Copy,
   Check,
-  Tag,
-  ShieldCheck,
-  Sparkles
+  ShieldCheck
 } from 'lucide-react';
 import { soundManager } from '../utils/audio';
 
@@ -42,6 +40,28 @@ export const RecentlyAddedModal: React.FC<RecentlyAddedModalProps> = ({
   const [confirmDeleteAll, setConfirmDeleteAll] = useState<boolean>(false);
   const [confirmDeleteSelected, setConfirmDeleteSelected] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const copiedTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimerRef.current !== null) {
+        window.clearTimeout(copiedTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (confirmDeleteSelected) setConfirmDeleteSelected(false);
+        else if (confirmDeleteAll) setConfirmDeleteAll(false);
+        else onClose();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, confirmDeleteSelected, confirmDeleteAll, onClose]);
 
   // Filter recently added questions by search term and area
   const filteredQuestions = useMemo(() => {
@@ -123,19 +143,37 @@ export const RecentlyAddedModal: React.FC<RecentlyAddedModalProps> = ({
   };
 
   // Copy term & definition
-  const handleCopy = (q: CEQuestion, e: React.MouseEvent) => {
+  const handleCopy = async (q: CEQuestion, e: React.MouseEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(`Term: ${q.answer}\nDefinition: ${q.question}`);
+    const text = `Term: ${q.answer}\nDefinition: ${q.question}`;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
     setCopiedId(q.id);
-    setTimeout(() => setCopiedId(null), 2000);
+    if (copiedTimerRef.current !== null) {
+      window.clearTimeout(copiedTimerRef.current);
+    }
+    copiedTimerRef.current = window.setTimeout(() => {
+      setCopiedId(null);
+      copiedTimerRef.current = null;
+    }, 2000);
   };
 
   const isAllSelected = filteredQuestions.length > 0 && selectedIds.size === filteredQuestions.length;
   const isPartiallySelected = selectedIds.size > 0 && selectedIds.size < filteredQuestions.length;
 
   return (
-    <div className="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-4xl w-full p-5 sm:p-7 shadow-2xl text-stone-900 dark:text-stone-100 my-4 flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-5 pl-safe pr-safe overflow-y-auto">
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-4xl w-full p-5 sm:p-7 shadow-2xl text-stone-900 dark:text-stone-100 my-auto flex flex-col max-h-[calc(100dvh-2rem)]">
         
         {/* Modal Header */}
         <div className="flex items-start justify-between pb-4 border-b border-stone-200 dark:border-stone-800 gap-3 shrink-0">

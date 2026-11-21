@@ -13,9 +13,13 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: [
           'favicon.ico',
-          'icons/apple-touch-icon.png',
-          'icons/icon-192.png',
-          'icons/icon-512.png',
+          'manifest.json',
+          'icons/celearn-apple-touch-icon-v2.png',
+          'icons/celearn-icon-192-v2.png',
+          'icons/celearn-icon-192-maskable-v2.png',
+          'icons/celearn-icon-512-v2.png',
+          'icons/celearn-icon-512-maskable-v2.png',
+          'assets/aistudio/1794750470931_ee9565f2.jpg',
           'assets/aistudio/120_CELE_Motivational_Quotes_8ac569fa.txt'
         ],
         manifest: {
@@ -26,30 +30,30 @@ export default defineConfig(() => {
           start_url: '/',
           scope: '/',
           display: 'standalone',
-          orientation: 'portrait-primary',
-          theme_color: '#EA580C',
-          background_color: '#141210',
+          orientation: 'any',
+          theme_color: '#080E1E',
+          background_color: '#121F39',
           icons: [
             {
-              src: '/icons/icon-192.png',
+              src: '/icons/celearn-icon-192-v2.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any'
             },
             {
-              src: '/icons/icon-192-maskable.png',
+              src: '/icons/celearn-icon-192-maskable-v2.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'maskable'
             },
             {
-              src: '/icons/icon-512.png',
+              src: '/icons/celearn-icon-512-v2.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any'
             },
             {
-              src: '/icons/icon-512-maskable.png',
+              src: '/icons/celearn-icon-512-maskable-v2.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable'
@@ -57,7 +61,8 @@ export default defineConfig(() => {
           ]
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,txt,woff,woff2}'],
+          cleanupOutdatedCaches: true,
+          globPatterns: ['**/*.{js,css,html,ico,png,webp,jpg,svg,txt,woff,woff2,mjs}'],
           maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, // 6MB to cache bundled libraries & questions
           runtimeCaching: [
             {
@@ -105,7 +110,7 @@ export default defineConfig(() => {
           ]
         },
         devOptions: {
-          enabled: true,
+          enabled: false,
           type: 'module'
         }
       })

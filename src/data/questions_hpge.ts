@@ -157,12 +157,12 @@ export const HPGE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Medium",
     "question": "What occurs to the ultimate bearing capacity of a shallow foundation if the ground water table rises to ground level?",
-    "answer": "BEARING CAPACITY DECREASES BY APPROXIMATELY 50%",
+    "answer": "Bearing Capacity Decreases by Approximately 50%",
     "choices": [
       "Bearing Capacity Remains Unchanged",
       "Bearing Capacity Increases Slightly",
-      "BEARING CAPACITY DECREASES BY APPROXIMATELY 50%",
-      "Bearing Capacity Drops to Zero"
+      "Bearing Capacity Decreases by Approximately 50%",
+      "Bearing Capacity Drops Completely to Zero"
     ],
     "explanation": "Submerged unit weight (γ_sub ≈ γ_sat - γ_w) is roughly half of moist unit weight, halving soil resistance terms."
   },
@@ -172,12 +172,12 @@ export const HPGE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Medium",
     "question": "In Terzaghi’s bearing capacity formula (q_ult = c·Nc + q·Nq + 0.5·γ·B·Nγ), the factors Nc, Nq, and Nγ depend exclusively on:",
-    "answer": "SOIL ANGLE OF INTERNAL FRICTION (φ)",
+    "answer": "Soil Angle of Internal Friction (φ)",
     "choices": [
-      "SOIL COHESION (c)",
-      "SOIL UNIT WEIGHT (γ)",
-      "SOIL ANGLE OF INTERNAL FRICTION (φ)",
-      "FOUNDATION DEPTH (Df)"
+      "Soil Cohesion (c)",
+      "Soil Unit Weight (γ)",
+      "Soil Angle of Internal Friction (φ)",
+      "Foundation Depth (Df)"
     ],
     "explanation": "Bearing capacity factors are dimensionless mathematical functions strictly of the friction angle φ."
   },
@@ -292,12 +292,12 @@ export const HPGE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "According to NSCP 2015 Section 302.2.2, the steepness of permanent cut slopes shall not exceed:",
-    "answer": "1 VERTICAL TO 2 HORIZONTAL (1:2)",
+    "answer": "1:2 (Vertical to Horizontal)",
     "choices": [
-      "1:1",
-      "1:1.5",
-      "1 VERTICAL TO 2 HORIZONTAL (1:2)",
-      "1:3"
+      "1:1 (Vertical to Horizontal)",
+      "1:1.5 (Vertical to Horizontal)",
+      "1:2 (Vertical to Horizontal)",
+      "1:3 (Vertical to Horizontal)"
     ],
     "explanation": "NSCP provisions state that permanent cut slopes shall not exceed 1:2 (50% slope) unless geotechnical report justifies steeper."
   },
@@ -307,14 +307,14 @@ export const HPGE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Fluid Statics & Buoyancy",
     "difficulty": "Easy",
     "question": "The weight per unit volume of a fluid at standard temperature and pressure.",
-    "answer": "Specific Weight (unit Weight)",
+    "answer": "Specific Weight",
     "choices": [
       "Mass Density",
       "Specific Gravity",
-      "Specific Weight (unit Weight)",
+      "Specific Weight",
       "Dynamic Viscosity"
     ],
-    "explanation": "Specific weight (γ) is the product of mass density and gravitational acceleration: γ = ρ · g (9.81 kN/m³ for water)."
+    "explanation": "Specific weight (γ) is the product of mass density and gravitational acceleration: γ = ρ · g (9.81 kN/m³ for water). Specific weight is also termed unit weight (γ)."
   },
   {
     "id": 122,
@@ -322,11 +322,11 @@ export const HPGE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Fluid Statics & Buoyancy",
     "difficulty": "Easy",
     "question": "A standard physical quantity that remains constant regardless of the planet or gravitational field it is situated in.",
-    "answer": "Mass",
+    "answer": "Fluid Mass",
     "choices": [
       "Specific Weight",
       "Hydrostatic Force",
-      "Mass",
+      "Fluid Mass",
       "Buoyant Force"
     ],
     "explanation": "Mass is an invariant intrinsic measure of the quantity of matter, unlike weight which depends on local g."
@@ -642,7 +642,7 @@ export const HPGE_QUESTIONS: CEQuestion[] = [
       "90%",
       "95%",
       "98%",
-      "99.5%"
+      "99%"
     ],
     "explanation": "International navigation waterway standards specify 98% tidal availability as design guarantee for vessel draft."
   }

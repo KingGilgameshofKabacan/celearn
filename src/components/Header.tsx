@@ -16,7 +16,14 @@ import {
   Clock,
   ChevronRight,
   Palette,
-  Mail
+  Mail,
+  Sigma,
+  ShieldCheck,
+  LogIn,
+  Cloud,
+  RefreshCw,
+  LogOut,
+  Trophy
 } from 'lucide-react';
 import { CeLearnLogo } from './CeLearnLogo';
 import { BottleCapIcon } from './BottleCapIcon';
@@ -32,8 +39,10 @@ import {
 import confetti from 'canvas-confetti';
 import { StreakData } from '../types';
 import { PWAInstallButton } from './PWAInstallButton';
+import { JsonBackupTile } from './JsonBackupTile';
+import { useFirebaseAuth } from '../contexts/FirebaseAuthContext';
 
-export type AppTab = 'home' | 'exam' | 'flashcards' | 'dictionary' | 'analytics' | 'achievements' | 'themes';
+export type AppTab = 'home' | 'exam' | 'flashcards' | 'formulas' | 'dictionary' | 'rankings' | 'analytics' | 'achievements' | 'themes';
 
 interface HeaderProps {
   activeTab: AppTab;
@@ -64,6 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [checkedInToday, setCheckedInToday] = useState<boolean>(hasCheckedInToday);
   const [caps, setCaps] = useState<number>(getBottleCaps);
   const [jukeboxState, setJukeboxState] = useState<JukeboxState>(() => vaultJukebox.getState());
+  const { user, syncStatus, openLoginModal, signInWithGoogle, signOutDweller, syncNow } = useFirebaseAuth();
 
   useEffect(() => {
     const handleJukebox = (e: Event) => {
@@ -80,16 +90,22 @@ export const Header: React.FC<HeaderProps> = ({
       setStreak(getStreakData());
       setCheckedInToday(hasCheckedInToday());
       setCaps(getBottleCaps());
+      setSoundEnabled(soundManager.isEnabled());
+      setJukeboxState(vaultJukebox.getState());
     };
     update();
     const interval = setInterval(update, 10000);
     const handleEvent = () => update();
     window.addEventListener('cele_streak_updated', handleEvent);
     window.addEventListener('cele_caps_updated', handleEvent);
+    window.addEventListener('cele_sound_updated', handleEvent);
+    window.addEventListener('cele_backup_restored', handleEvent);
     return () => {
       clearInterval(interval);
       window.removeEventListener('cele_streak_updated', handleEvent);
       window.removeEventListener('cele_caps_updated', handleEvent);
+      window.removeEventListener('cele_sound_updated', handleEvent);
+      window.removeEventListener('cele_backup_restored', handleEvent);
     };
   }, []);
 
@@ -149,10 +165,22 @@ export const Header: React.FC<HeaderProps> = ({
       icon: <Sparkles className="w-4 h-4" />
     },
     {
+      id: 'formulas',
+      label: 'Formulas',
+      desc: 'HPGE, PSAD & MSTE equations, cropped figures & Fallout flashcards',
+      icon: <Sigma className="w-4 h-4" />
+    },
+    {
       id: 'dictionary',
       label: 'Vault Glossary',
       desc: 'TOS board review syllabus & technical records',
       icon: <Search className="w-4 h-4" />
+    },
+    {
+      id: 'rankings',
+      label: 'Rankings',
+      desc: 'Dweller dashboard, Top 5 trophies & daily/weekly/monthly standings',
+      icon: <Trophy className="w-4 h-4" />
     },
     {
       id: 'analytics',
@@ -180,8 +208,8 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b transition-colors bg-white/95 dark:bg-[#0A1128]/95 backdrop-blur-md border-stone-200 dark:border-[#2A437E] text-stone-800 dark:text-stone-100 no-print pt-safe">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 border-b transition-colors bg-white/95 dark:bg-[#0A1128]/95 backdrop-blur-md border-stone-200 dark:border-[#2A437E] text-stone-800 dark:text-stone-100 no-print pt-safe pl-safe pr-safe">
+      <div data-header-inner className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-3">
         
         {/* Brand: Vault-Tec // CELEARN Overseer Terminal */}
         <div className="flex items-center shrink-0">
@@ -206,11 +234,12 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
 
-        {/* Desktop Quick Nav (Single-line clean layout without wrapping) */}
-        <nav className="hidden lg:flex items-center space-x-1 overflow-x-auto no-scrollbar">
+        {/* Desktop & Tablet Landscape Quick Nav (Single-line clean layout without pushing actions offscreen) */}
+        <nav className="hidden lg:flex items-center space-x-1 overflow-x-auto no-scrollbar min-w-0">
           {navItems.map(item => {
             const isActive = activeTab === item.id;
-            const hideOnMediumLg = item.id === 'achievements' || item.id === 'themes';
+            const hideOnMediumLg =
+              item.id === 'analytics' || item.id === 'achievements' || item.id === 'themes';
             return (
               <button
                 key={item.id}
@@ -288,10 +317,43 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
+          {/* Vault Cloud Dweller Login / Account Trigger */}
+          <button
+            type="button"
+            onClick={openLoginModal}
+            title={
+              user
+                ? `Vault Cloud Account: ${user.displayName || user.email}`
+                : 'Sign in with Google for Vault Cloud Sync'
+            }
+            className={`flex items-center space-x-1.5 text-xs font-mono px-2.5 py-1.5 rounded-xl border transition interactive-btn cursor-pointer whitespace-nowrap min-h-[38px] ${
+              user
+                ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/25'
+                : 'bg-amber-500/15 border-amber-500/40 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25'
+            }`}
+            aria-label={user ? 'Vault Cloud Account' : 'Vault Login'}
+          >
+            {user?.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt={user.displayName || 'Dweller'}
+                referrerPolicy="no-referrer"
+                className="w-5 h-5 rounded-full object-cover border border-emerald-400 shrink-0"
+              />
+            ) : user ? (
+              <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+            ) : (
+              <LogIn className="w-4 h-4 text-amber-500 shrink-0" />
+            )}
+            <span className="hidden sm:inline font-bold max-w-[90px] truncate">
+              {user ? (user.displayName?.split(' ')[0] || 'Dweller') : 'Vault Login'}
+            </span>
+          </button>
+
           {/* Hamburger Icon Menu Button */}
           <button
             onClick={() => setIsMenuOpen(true)}
-            className="p-2 sm:p-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-95 font-bold transition interactive-btn flex items-center justify-center shadow-sm cursor-pointer min-h-[40px] min-w-[40px]"
+            className="p-2 sm:p-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white active:scale-95 font-bold transition interactive-btn flex items-center justify-center shadow-sm cursor-pointer min-h-[40px] min-w-[40px]"
             aria-label="Open main menu and jukebox"
             title="Main Menu & Jukebox"
           >
@@ -313,7 +375,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Slide-out drawer panel */}
           <div className="fixed inset-y-0 right-0 max-w-full flex pl-4 sm:pl-10">
-            <div className="w-screen max-w-sm sm:max-w-md bg-white dark:bg-stone-900 border-l border-stone-200 dark:border-stone-800 shadow-2xl flex flex-col h-full z-10 overflow-hidden pt-safe pb-safe">
+            <div className="w-screen max-w-sm sm:max-w-md bg-white dark:bg-stone-900 border-l border-stone-200 dark:border-stone-800 shadow-2xl flex flex-col h-full max-h-dvh z-10 overflow-hidden pt-safe pb-safe pr-safe">
               
               {/* Drawer Header */}
               <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between shrink-0 bg-stone-50/90 dark:bg-stone-900/90">
@@ -341,6 +403,97 @@ export const Header: React.FC<HeaderProps> = ({
 
               {/* Drawer Body: Fully scrollable catalog */}
               <div className="p-4 sm:p-5 space-y-6 flex-1 overflow-y-auto overscroll-contain">
+
+                {/* Section -1: Vault-Tec Cloud Account & Security Clearance */}
+                <div className="rounded-2xl border border-amber-500/40 bg-stone-50 dark:bg-[#080E1E] overflow-hidden shadow-xs">
+                  <div className="h-1.5 w-full vault-tec-hazard-stripe-sm" />
+                  <div className="p-3.5 space-y-2.5">
+                    {user ? (
+                      <>
+                        <div className="flex items-center justify-between gap-2.5">
+                          <div className="flex items-center space-x-2.5 min-w-0">
+                            {user.photoURL ? (
+                              <img
+                                src={user.photoURL}
+                                alt={user.displayName || 'Vault Dweller'}
+                                referrerPolicy="no-referrer"
+                                className="w-9 h-9 rounded-xl object-cover border border-emerald-400 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-500 shrink-0">
+                                <ShieldCheck className="w-5 h-5" />
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <p className="text-xs font-extrabold text-stone-900 dark:text-white truncate">
+                                {user.displayName || 'Verified Dweller'}
+                              </p>
+                              <p className="text-[10px] font-mono text-stone-500 dark:text-sky-300 truncate">
+                                {user.email}
+                              </p>
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsMenuOpen(false);
+                              openLoginModal();
+                            }}
+                            className="px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-[10px] font-mono font-bold border border-emerald-500/30 cursor-pointer shrink-0"
+                          >
+                            {syncStatus === 'syncing' ? 'Syncing' : 'Dossier'}
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-0.5">
+                          <button
+                            type="button"
+                            onClick={syncNow}
+                            disabled={syncStatus === 'syncing'}
+                            className="flex-1 py-1.5 px-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-60 text-[#080E1E] text-[11px] font-black flex items-center justify-center space-x-1.5 transition cursor-pointer"
+                          >
+                            <RefreshCw className={`w-3.5 h-3.5 ${syncStatus === 'syncing' ? 'animate-spin' : ''}`} />
+                            <span>{syncStatus === 'syncing' ? 'Syncing...' : 'Sync Now'}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={signOutDweller}
+                            className="py-1.5 px-3 rounded-xl bg-white dark:bg-[#162852] border border-stone-200 dark:border-[#2B447A] text-stone-700 dark:text-stone-200 text-[11px] font-bold flex items-center space-x-1 transition cursor-pointer"
+                          >
+                            <LogOut className="w-3.5 h-3.5" />
+                            <span>Sign Out</span>
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="flex items-center space-x-1.5 text-amber-600 dark:text-amber-400">
+                            <Cloud className="w-3.5 h-3.5 shrink-0" />
+                            <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider">
+                              Vault Cloud Uplink
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-0.5 leading-snug">
+                            Sync Bottle Caps, exams &amp; flashcards with Google.
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            void signInWithGoogle();
+                          }}
+                          className="px-3 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#080E1E] text-xs font-black flex items-center space-x-1.5 transition shadow-xs cursor-pointer shrink-0"
+                        >
+                          <LogIn className="w-3.5 h-3.5" />
+                          <span>Sign In</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
                 
                 {/* Section 0: Vault-Tec Jukebox Player (Cassette & Vinyl Deck) */}
                 <div className="space-y-2">
@@ -374,8 +527,8 @@ export const Header: React.FC<HeaderProps> = ({
                           <div className="flex items-center space-x-3 min-w-0">
                             <div className={`p-2 rounded-xl shrink-0 transition-colors ${
                               isActive
-                                ? 'bg-orange-500 shadow-xs'
-                                : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 group-hover:bg-orange-500'
+                                ? 'bg-orange-500 text-white shadow-xs'
+                                : 'bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 group-hover:bg-orange-500 group-hover:text-white'
                             }`}>
                               {item.icon}
                             </div>
@@ -385,7 +538,7 @@ export const Header: React.FC<HeaderProps> = ({
                                   {item.label}
                                 </span>
                                 {isActive && (
-                                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-500 uppercase tracking-wider">
+                                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-500 text-white uppercase tracking-wider">
                                     Active
                                   </span>
                                 )}
@@ -517,6 +670,9 @@ export const Header: React.FC<HeaderProps> = ({
                       )}
                     </button>
                   </div>
+
+                  {/* Small JSON Backup Export / Import below Theme */}
+                  <JsonBackupTile variant="compact" />
                 </div>
 
               </div>

@@ -12,6 +12,9 @@ export const WaterRippleEffect: React.FC = () => {
 
   // Listen to 'click' instead of 'pointerdown' so scrolling/swiping gestures do not trigger ripple re-renders
   const handleClick = useCallback((e: MouseEvent) => {
+    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     // Only spawn wave for valid client coordinates
     if (e.clientX === undefined || e.clientY === undefined) return;
 
@@ -32,17 +35,21 @@ export const WaterRippleEffect: React.FC = () => {
     };
   }, [handleClick]);
 
-  // Clean up completed waves after 950ms
+  // Clean up completed waves periodically while any wave is active
+  const hasWaves = waves.length > 0;
   useEffect(() => {
-    if (waves.length === 0) return;
+    if (!hasWaves) return;
 
-    const timer = setTimeout(() => {
+    const interval = setInterval(() => {
       const now = performance.now();
-      setWaves(prev => prev.filter(w => now - w.createdAt < 950));
-    }, 950);
+      setWaves(prev => {
+        const next = prev.filter(w => now - w.createdAt < 950);
+        return next.length === prev.length ? prev : next;
+      });
+    }, 150);
 
-    return () => clearTimeout(timer);
-  }, [waves]);
+    return () => clearInterval(interval);
+  }, [hasWaves]);
 
   if (waves.length === 0) return null;
 

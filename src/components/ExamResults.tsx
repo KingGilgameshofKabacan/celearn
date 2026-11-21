@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   CEQuestion,
   ExamSessionResult
@@ -6,12 +6,10 @@ import {
 import {
   RotateCcw,
   Printer,
-  ArrowRight,
-  Award,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
 import { soundManager } from '../utils/audio';
-import { addBottleCaps } from '../utils/storage';
+import { KatexEquation } from './KatexEquation';
 
 interface ExamResultsProps {
   result: ExamSessionResult;
@@ -20,6 +18,8 @@ interface ExamResultsProps {
   onRetakeMissed: () => void;
   onNewExam: () => void;
 }
+
+const rewardedExamResultIds = new Set<string>();
 
 export const ExamResults: React.FC<ExamResultsProps> = ({
   result,
@@ -30,8 +30,11 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
 }) => {
   const [reviewFilter, setReviewFilter] = useState<'ALL' | 'INCORRECT' | 'FLAGGED'>('ALL');
 
-  const questionMap = new Map<number, CEQuestion>();
-  questions.forEach(q => questionMap.set(q.id, q));
+  const questionMap = useMemo(() => {
+    const map = new Map<number, CEQuestion>();
+    questions.forEach(q => map.set(q.id, q));
+    return map;
+  }, [questions]);
 
   const total = result.totalQuestions;
   const correct = result.correctAnswers;
@@ -41,28 +44,53 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
   const capsEarned = isPassed ? 100 : 25;
 
   useEffect(() => {
-    addBottleCaps(capsEarned);
+    if (rewardedExamResultIds.has(result.id)) return;
+    rewardedExamResultIds.add(result.id);
+
+    let jingleTimer: number | undefined;
     if (isPassed) {
       soundManager.playPassed();
-      setTimeout(() => soundManager.playCapsJingle(), 400);
+      jingleTimer = window.setTimeout(() => soundManager.playCapsJingle(), 400);
     } else {
       soundManager.playFailed();
     }
-  }, [isPassed, capsEarned]);
+    return () => {
+      if (jingleTimer !== undefined) window.clearTimeout(jingleTimer);
+    };
+  }, [result.id, isPassed]);
 
-  const areaBreakdown: Record<string, { total: number; correct: number }> = {};
-  result.questionIds.forEach(qid => {
-    const q = questionMap.get(qid);
-    if (!q) return;
+  const areaBreakdown = useMemo(() => {
+    const breakdown: Record<string, { total: number; correct: number }> = {};
+    result.questionIds.forEach(qid => {
+      const q = questionMap.get(qid);
+      if (!q) return;
 
-    if (!areaBreakdown[q.area]) {
-      areaBreakdown[q.area] = { total: 0, correct: 0 };
-    }
-    areaBreakdown[q.area].total++;
-    if (result.userAnswers[qid] === q.answer) {
-      areaBreakdown[q.area].correct++;
-    }
-  });
+      if (!breakdown[q.area]) {
+        breakdown[q.area] = { total: 0, correct: 0 };
+      }
+      breakdown[q.area].total++;
+      if (result.userAnswers[qid] === q.answer) {
+        breakdown[q.area].correct++;
+      }
+    });
+    return breakdown;
+  }, [result, questionMap]);
+
+  const flaggedSet = useMemo(() => new Set(result.flaggedIds), [result.flaggedIds]);
+
+  const filteredQuestionIds = useMemo(() => {
+    return result.questionIds.filter(qid => {
+      const userAns = result.userAnswers[qid];
+      const q = questionMap.get(qid);
+      if (!q) return false;
+      const isCorrect = userAns === q.answer;
+      const isFlagged = flaggedSet.has(qid);
+
+      if (reviewFilter === 'INCORRECT' && isCorrect) return false;
+      if (reviewFilter === 'FLAGGED' && !isFlagged) return false;
+      return true;
+    });
+  }, [result, questionMap, flaggedSet, reviewFilter]);
 
   const formatDuration = (totalSeconds: number) => {
     const mins = Math.floor(totalSeconds / 60);
@@ -157,7 +185,7 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
         </h3>
         <div className="space-y-3">
           {Object.entries(areaBreakdown).map(([areaKey, stat]) => {
-            const areaPct = Math.round((stat.correct / stat.total) * 100);
+            const areaPct = stat.total > 0 ? Math.round((stat.correct / stat.total) * 100) : 0;
             return (
               <div key={areaKey} className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
@@ -221,19 +249,7 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
         </div>
 
         <div className="space-y-4">
-          {result.questionIds
-            .filter(qid => {
-              const userAns = result.userAnswers[qid];
-              const q = questionMap.get(qid);
-              if (!q) return false;
-              const isCorrect = userAns === q.answer;
-              const isFlagged = result.flaggedIds.includes(qid);
-
-              if (reviewFilter === 'INCORRECT' && isCorrect) return false;
-              if (reviewFilter === 'FLAGGED' && !isFlagged) return false;
-              return true;
-            })
-            .map((qid, idx) => {
+          {filteredQuestionIds.map((qid, idx) => {
               const q = questionMap.get(qid)!;
               const userAns = result.userAnswers[qid];
               const isCorrect = userAns === q.answer;
@@ -267,6 +283,27 @@ export const ExamResults: React.FC<ExamResultsProps> = ({
                   <p className="font-bold text-sm sm:text-base leading-snug">
                     {q.question}
                   </p>
+
+                  {q.latex && (
+                    <div className="p-2.5 rounded-xl bg-white/80 dark:bg-stone-900/70 border border-stone-200 dark:border-stone-700 overflow-x-auto">
+                      <KatexEquation latex={q.latex} />
+                    </div>
+                  )}
+
+                  {q.diagramSrc && (
+                    <div
+                      data-keep-color
+                      className="bg-white border border-stone-200 dark:border-stone-700 rounded-xl p-2.5 flex items-center justify-center"
+                    >
+                      <img
+                        src={q.diagramSrc}
+                        alt={q.diagramAlt || q.subtopic}
+                        loading="lazy"
+                        decoding="async"
+                        className="max-h-48 w-auto max-w-full object-contain"
+                      />
+                    </div>
+                  )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs">
                     <div

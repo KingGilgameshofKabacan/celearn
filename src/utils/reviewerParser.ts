@@ -150,70 +150,111 @@ export const detectAreaAndSubtopic = (
   return { area, subtopic };
 };
 
+const PRESERVED_ACRONYMS = new Set([
+  'NSCP', 'ASTM', 'DPWH', 'DOLE', 'OSHS', 'AASHTO', 'ACI', 'AISC', 'LRFD', 'ASD',
+  'SPT', 'CPT', 'OCR', 'CBR', 'USCS', 'EGL', 'HGL', 'CPM', 'PERT', 'AADT', 'PHF',
+  'SSD', 'PSD', 'LOS', 'PPE', 'MMDA', 'TESDA', 'PRC', 'LTO', 'DENR', 'PPA', 'UPV',
+  'RCC', 'VE', 'BEP', 'FOS', 'MRFS', 'ASR', 'MLLW', 'MHHW', 'MSL', 'MHW', 'HAT',
+  'LAT', 'BM', 'TP', 'PC', 'PT', 'PI', 'LL', 'PL', 'SL', 'LI', 'CI', 'CSHP', 'IRR',
+  'MP', 'FY', 'KL', 'DB'
+]);
+
+const MINOR_TITLE_WORDS = new Set(['of', 'the', 'and', 'in', 'to', 'for', 'on', 'by', 'with', 'or', 'at', 'from', 'as', 'per']);
+
+export const formatReviewerTermCase = (term: string): string => {
+  const words = term.trim().split(/\s+/);
+  return words
+    .map((word, idx) => {
+      const bare = word.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      if (PRESERVED_ACRONYMS.has(bare)) {
+        return word.toUpperCase();
+      }
+      // Keep mixed math/symbol notation intact (e.g. f'c, N60, e = Vv/Vs)
+      if (/[0-9'=<>\/·²³]/.test(word) && /[a-zA-Z]/.test(word)) {
+        return word;
+      }
+      const lower = word.toLowerCase();
+      if (idx > 0 && idx < words.length - 1 && MINOR_TITLE_WORDS.has(lower)) {
+        return lower;
+      }
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join(' ');
+};
+
+const shuffleFisherYates = <T,>(items: T[]): T[] => {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 /**
  * Intelligent Distractor Generator for multiple-choice testing
  */
 export const generateDistractors = (term: string, area: CEArea): string[] => {
   const pools: Record<CEArea, string[]> = {
     PSAD: [
-      'POISSON RATIO',
-      'SHEAR MODULUS',
-      'PLASTIC HINGE',
-      'DEVELOPMENT LENGTH',
-      'BASE ISOLATION',
-      'MODULUS OF RUPTURE',
-      'WHITNEY STRESS BLOCK',
-      'PUNCHING SHEAR',
-      'LATERAL-TORSIONAL BUCKLING',
-      'SHEAR LAG FACTOR',
-      'BLOCK SHEAR RUPTURE',
-      'RADIUS OF GYRATION',
-      'FIBER SATURATION POINT',
-      'SLUMP TEST',
-      'HOOP STRESS',
-      'FLEXURAL RIGIDITY'
+      'Poisson Ratio',
+      'Shear Modulus',
+      'Plastic Hinge',
+      'Development Length',
+      'Base Isolation',
+      'Modulus of Rupture',
+      'Whitney Stress Block',
+      'Punching Shear',
+      'Lateral-Torsional Buckling',
+      'Shear Lag Factor',
+      'Block Shear Rupture',
+      'Radius of Gyration',
+      'Fiber Saturation Point',
+      'Slump Test',
+      'Hoop Stress',
+      'Flexural Rigidity'
     ],
     HPGE: [
-      'HYDRAULIC JUMP',
-      'CRITICAL DEPTH',
-      'FLOW NET',
-      'CAVITATION',
-      'PLASTICITY INDEX',
-      'PRECONSOLIDATION PRESSURE',
-      'CENTER OF PRESSURE',
-      'METACENTRIC HEIGHT',
-      'ENERGY GRADE LINE',
-      'WATER HAMMER',
-      'SURGE TANK',
-      'RATIONAL METHOD',
-      'VOID RATIO',
-      'QUICK CONDITION',
-      'EFFECTIVE STRESS PRINCIPLE',
-      'DARCY LAW'
+      'Hydraulic Jump',
+      'Critical Depth',
+      'Flow Net',
+      'Cavitation',
+      'Plasticity Index',
+      'Preconsolidation Pressure',
+      'Center of Pressure',
+      'Metacentric Height',
+      'Energy Grade Line',
+      'Water Hammer',
+      'Surge Tank',
+      'Rational Method',
+      'Void Ratio',
+      'Quick Condition',
+      'Effective Stress Principle',
+      "Darcy's Law"
     ],
     MSTE: [
-      'CAPITALIZED COST',
-      'SINKING FUND',
-      'SUPERELEVATION',
-      'COMPASS RULE',
-      'PEAK HOUR FACTOR',
-      'TOTAL FLOAT',
-      'FREE FLOAT',
-      'STOPPING SIGHT DISTANCE',
-      'GREENSHIELDS MODEL',
-      'ECONOMIC LIMIT OF HAUL',
-      'STRUCTURAL NUMBER',
-      'ALLIGATOR CRACKING',
-      'DOWEL BARS',
-      'ANNUAL AVERAGE DAILY TRAFFIC',
-      'CRASH COST SLOPE',
-      'SCHEDULE PERFORMANCE INDEX'
+      'Capitalized Cost',
+      'Sinking Fund',
+      'Superelevation',
+      'Compass Rule',
+      'Peak Hour Factor',
+      'Total Float',
+      'Free Float',
+      'Stopping Sight Distance',
+      'Greenshields Model',
+      'Economic Limit of Haul',
+      'Structural Number',
+      'Alligator Cracking',
+      'Dowel Bars',
+      'Annual Average Daily Traffic',
+      'Crash Cost Slope',
+      'Schedule Performance Index'
     ]
   };
 
   const pool = pools[area] || pools.PSAD;
   const filtered = pool.filter(p => p.toLowerCase() !== term.toLowerCase());
-  return filtered.slice(0, 3);
+  return shuffleFisherYates(filtered).slice(0, 3);
 };
 
 /**
@@ -227,12 +268,12 @@ export const createReviewerQuestion = (
   area: CEArea,
   subtopic: string
 ): CEQuestion => {
-  // Extract strictly the term value
-  const cleanedTerm = rawTerm
+  // Extract strictly the term value with clean acronym-preserving casing
+  const rawCleaned = rawTerm
     .replace(/^[-*•–—▪▫►▸✓\d\.\)\s]+/, '')
     .replace(/[:–—\-]+$/, '')
-    .trim()
-    .toUpperCase();
+    .trim();
+  const cleanedTerm = formatReviewerTermCase(rawCleaned);
 
   // Clean definition and bullet values
   let defText = rawDefinition
@@ -258,7 +299,7 @@ export const createReviewerQuestion = (
   }
 
   const distractors = generateDistractors(cleanedTerm, area);
-  const choices = [cleanedTerm, ...distractors].sort(() => Math.random() - 0.5);
+  const choices = shuffleFisherYates([cleanedTerm, ...distractors]);
 
   let explanation = `${cleanedTerm}: ${defText}`;
   if (cleanBullets.length > 0) {
@@ -273,8 +314,7 @@ export const createReviewerQuestion = (
     question: defText,
     answer: cleanedTerm,
     choices,
-    explanation,
-    reference: 'Reviewer Bank'
+    explanation
   };
 };
 
@@ -446,7 +486,7 @@ export const parseReviewerText = (
         !isBadTerm &&
         candidateTerm.length >= 2 &&
         candidateTerm.split(/\s+/).length <= 5 &&
-        !candidateTerm.includes('.') &&
+        !candidateTerm.endsWith('.') &&
         candidateDef.length >= 10
       ) {
         finalizeOpenTerm();

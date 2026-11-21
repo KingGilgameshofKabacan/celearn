@@ -11,11 +11,7 @@ import {
   Moon,
   Award,
   Zap,
-  Flame,
-  Crown,
-  Lock,
-  CheckCircle2,
-  Volume2
+  Crown
 } from 'lucide-react';
 import { BottleCapIcon } from './BottleCapIcon';
 import { soundManager } from '../utils/audio';
@@ -90,6 +86,12 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({ achievements
             <div
               key={badge.id}
               onClick={handleBadgeClick}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleBadgeClick();
+                }
+              }}
               role="button"
               tabIndex={0}
               title={isUnlocked ? `${badge.title} (Unlocked!) Click to play chime` : `${badge.title} (In Progress)`}

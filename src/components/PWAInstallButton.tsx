@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Download, CheckCircle2, Share, PlusSquare, HelpCircle, X } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
@@ -14,6 +15,15 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
   const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
   const [showIOSGuide, setShowIOSGuide] = useState<boolean>(false);
   const [installSuccess, setInstallSuccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!showIOSGuide) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowIOSGuide(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [showIOSGuide]);
 
   // If already installed and running in standalone window, don't clutter the UI
   if (isInstalled && !installSuccess) {
@@ -96,9 +106,17 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
         </div>
 
         {/* Modal / Guide */}
-        {showIOSGuide && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/70 backdrop-blur-xs p-4">
-            <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-900 dark:text-stone-100 space-y-4">
+        {showIOSGuide && typeof document !== 'undefined' && createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center bg-stone-950/70 backdrop-blur-xs p-4 pl-safe pr-safe overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setShowIOSGuide(false)}
+          >
+            <div
+              className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-900 dark:text-stone-100 space-y-4 my-auto"
+              onClick={e => e.stopPropagation()}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
                   <div className="p-2 rounded-xl bg-orange-500/15 text-orange-600 dark:text-orange-400">
@@ -109,7 +127,8 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowIOSGuide(false)}
-                  className="p-1 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+                  className="p-1 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 cursor-pointer"
+                  aria-label="Close install guide"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -142,12 +161,13 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
               <button
                 type="button"
                 onClick={() => setShowIOSGuide(false)}
-                className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition"
+                className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition cursor-pointer"
               >
                 Got It
               </button>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </div>
     );
@@ -181,9 +201,17 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
           <span className="hidden sm:inline">Install PWA</span>
         </button>
 
-        {showIOSGuide && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/70 backdrop-blur-xs p-4">
-            <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-900 dark:text-stone-100 space-y-4">
+        {showIOSGuide && typeof document !== 'undefined' && createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center bg-stone-950/70 backdrop-blur-xs p-4 pl-safe pr-safe overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setShowIOSGuide(false)}
+          >
+            <div
+              className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-900 dark:text-stone-100 space-y-4 my-auto"
+              onClick={e => e.stopPropagation()}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
                   <div className="p-2 rounded-xl bg-orange-500/15 text-orange-600 dark:text-orange-400">
@@ -194,7 +222,8 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowIOSGuide(false)}
-                  className="p-1 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+                  className="p-1 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 cursor-pointer"
+                  aria-label="Close install guide"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -221,12 +250,13 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
               <button
                 type="button"
                 onClick={() => setShowIOSGuide(false)}
-                className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition"
+                className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition cursor-pointer"
               >
                 Done
               </button>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </>
     );

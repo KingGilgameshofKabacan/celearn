@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { WifiOff, Zap, CheckCircle2, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
+import { WifiOff, Zap, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
 
 export const OfflineIndicator: React.FC = () => {
@@ -47,7 +47,7 @@ export const OfflineIndicator: React.FC = () => {
                 </span>
               </div>
               <p className="text-[11px] text-stone-300 truncate">
-                All 600+ questions, flashcards & timers are operating 100% locally.
+                All 1,700+ questions, formulas, flashcards & timers are operating 100% locally.
               </p>
             </div>
           </div>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   CEQuestion,
   FeedbackMode,
@@ -16,11 +17,13 @@ import {
   AlertTriangle,
   CheckCircle2,
   XCircle,
-  Flame,
   Minimize2,
-  Maximize2
+  Maximize2,
+  ZoomIn,
+  X
 } from 'lucide-react';
 import { BottleCapIcon } from './BottleCapIcon';
+import { KatexEquation } from './KatexEquation';
 import { soundManager } from '../utils/audio';
 import {
   incrementDailyQuestionsAnswered,
@@ -76,10 +79,20 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
   const [isTimerMinimized, setIsTimerMinimized] = useState<boolean>(false);
+  const [zoomedDiagram, setZoomedDiagram] = useState<{ src: string; alt: string } | null>(null);
 
-  // Auto-persist active exam state to localStorage so examinees can resume if interrupted
-  useEffect(() => {
-    if (!questions || questions.length === 0) return;
+  const secondsRemainingRef = useRef<number>(secondsRemaining);
+  secondsRemainingRef.current = secondsRemaining;
+  const secondsElapsedRef = useRef<number>(secondsElapsed);
+  secondsElapsedRef.current = secondsElapsed;
+
+  const hasFinishedRef = useRef<boolean>(false);
+  const countedQuestionIdsRef = useRef<Set<number>>(
+    new Set(Object.keys(userAnswers).map(Number).filter(n => !isNaN(n)))
+  );
+
+  const persistSessionSnapshot = () => {
+    if (hasFinishedRef.current || !questions || questions.length === 0) return;
     saveActiveExamSession({
       id: 'active_exam_session',
       timestamp: Date.now(),
@@ -95,41 +108,75 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
       currentIndex,
       userAnswers,
       flaggedIds,
-      secondsRemaining,
-      secondsElapsed
+      secondsRemaining: secondsRemainingRef.current,
+      secondsElapsed: secondsElapsedRef.current
     });
-  }, [
-    config,
-    questions,
-    currentIndex,
-    userAnswers,
-    flaggedIds,
-    secondsRemaining,
-    secondsElapsed,
-    timeLimitMinutes,
-    feedbackMode
-  ]);
+  };
 
-  // Timer effect
+  const persistSessionRef = useRef(persistSessionSnapshot);
+  persistSessionRef.current = persistSessionSnapshot;
+
+  // Auto-persist active exam state on structural changes (not every 1s timer tick)
   useEffect(() => {
+    persistSessionSnapshot();
+  }, [config, questions, currentIndex, userAnswers, flaggedIds, timeLimitMinutes, feedbackMode]);
+
+  // Periodic 10s timer snapshot + pagehide/unmount flush so resume preserves time without 1Hz JSON.stringify
+  useEffect(() => {
+    const heartbeat = window.setInterval(() => {
+      persistSessionRef.current();
+    }, 10000);
+    const handlePageHide = () => {
+      persistSessionRef.current();
+    };
+    window.addEventListener('pagehide', handlePageHide);
+    return () => {
+      window.clearInterval(heartbeat);
+      window.removeEventListener('pagehide', handlePageHide);
+      persistSessionRef.current();
+    };
+  }, []);
+
+  const onFinishExamRef = useRef(onFinishExam);
+  onFinishExamRef.current = onFinishExam;
+  const hasExpiredRef = useRef<boolean>(false);
+
+  // Timer effect (cleanly separated from parent finish callback)
+  useEffect(() => {
+    hasExpiredRef.current = false;
     const timer = setInterval(() => {
       setSecondsElapsed(prev => prev + 1);
       if (timeLimitMinutes > 0) {
-        setSecondsRemaining(prev => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            soundManager.playWrong();
-            clearActiveExamSession();
-            onFinishExam(timeLimitMinutes * 60);
-            return 0;
-          }
-          return prev - 1;
-        });
+        setSecondsRemaining(prev => (prev <= 1 ? 0 : prev - 1));
       }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLimitMinutes, onFinishExam]);
+  }, [timeLimitMinutes]);
+
+  // Trigger exam submission cleanly when countdown reaches 0
+  useEffect(() => {
+    if (timeLimitMinutes > 0 && secondsRemaining === 0 && !hasExpiredRef.current) {
+      hasExpiredRef.current = true;
+      hasFinishedRef.current = true;
+      soundManager.playWrong();
+      clearActiveExamSession();
+      onFinishExamRef.current(timeLimitMinutes * 60);
+    }
+  }, [timeLimitMinutes, secondsRemaining]);
+
+  // Cancel any active TTS utterance when changing question or leaving exam
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [currentIndex]);
 
   // Comprehensive Global Keyboard shortcuts in ExamActive
   useEffect(() => {
@@ -145,12 +192,22 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
         return;
       }
 
+      if (zoomedDiagram) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          setZoomedDiagram(null);
+        }
+        return;
+      }
+
       // If submit confirmation modal is active, Enter submits and Escape cancels
       if (showSubmitModal) {
         if (e.key === 'Enter') {
           e.preventDefault();
+          hasFinishedRef.current = true;
+          clearActiveExamSession();
           setShowSubmitModal(false);
-          onFinishExam(secondsElapsed);
+          onFinishExamRef.current(secondsElapsedRef.current);
         } else if (e.key === 'Escape') {
           e.preventDefault();
           setShowSubmitModal(false);
@@ -190,7 +247,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
 
         if (optionIndex !== null && currentQ.choices[optionIndex] !== undefined) {
           e.preventDefault();
-          handleSelectOption(currentQ.choices[optionIndex]);
+          handleSelectOptionRef.current(currentQ.choices[optionIndex]);
           return;
         }
       }
@@ -229,14 +286,14 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
       // Key 'f' or 'F': Toggle Flag
       if ((e.key === 'f' || e.key === 'F') && currentQ) {
         e.preventDefault();
-        toggleFlag();
+        toggleFlagRef.current();
         return;
       }
 
       // Key 'c' or 'C': Clear answer
       if ((e.key === 'c' || e.key === 'C') && currentQ) {
         e.preventDefault();
-        clearCurrentAnswer();
+        clearCurrentAnswerRef.current();
         return;
       }
     };
@@ -245,18 +302,16 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [
     currentIndex,
-    questions,
+    questions.length,
     showSubmitModal,
+    zoomedDiagram,
     currentQ,
-    feedbackMode,
-    userAnswers,
-    currentStreak,
-    secondsElapsed
+    setCurrentIndex
   ]);
 
   // Web Speech API
   const handleSpeak = () => {
-    if (!('speechSynthesis' in window)) return;
+    if (!currentQ || !('speechSynthesis' in window)) return;
     if (isSpeaking) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
@@ -273,18 +328,20 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
   };
 
   const handleSelectOption = (choice: string) => {
+    if (!currentQ) return;
     if (feedbackMode === 'immediate' && userAnswers[currentQ.id] !== undefined) {
       return;
     }
-    const isFirstTime = userAnswers[currentQ.id] === undefined;
+    const isFirstTime = !countedQuestionIdsRef.current.has(currentQ.id);
+    if (isFirstTime) {
+      countedQuestionIdsRef.current.add(currentQ.id);
+      incrementDailyQuestionsAnswered(1);
+    }
+
     setUserAnswers(prev => ({
       ...prev,
       [currentQ.id]: choice
     }));
-
-    if (isFirstTime) {
-      incrementDailyQuestionsAnswered(1);
-    }
 
     if (feedbackMode === 'immediate') {
       const isCorrect = choice === currentQ.answer;
@@ -307,7 +364,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
   };
 
   const clearCurrentAnswer = () => {
-    if (feedbackMode === 'immediate') return;
+    if (!currentQ || feedbackMode === 'immediate') return;
     setUserAnswers(prev => {
       const copy = { ...prev };
       delete copy[currentQ.id];
@@ -316,10 +373,18 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
   };
 
   const toggleFlag = () => {
+    if (!currentQ) return;
     setFlaggedIds(prev =>
       prev.includes(currentQ.id) ? prev.filter(id => id !== currentQ.id) : [...prev, currentQ.id]
     );
   };
+
+  const handleSelectOptionRef = useRef(handleSelectOption);
+  handleSelectOptionRef.current = handleSelectOption;
+  const clearCurrentAnswerRef = useRef(clearCurrentAnswer);
+  clearCurrentAnswerRef.current = clearCurrentAnswer;
+  const toggleFlagRef = useRef(toggleFlag);
+  toggleFlagRef.current = toggleFlag;
 
   const formatTime = (totalSeconds: number) => {
     const hrs = Math.floor(totalSeconds / 3600);
@@ -330,6 +395,27 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
     }
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
+  if (!currentQ) {
+    return (
+      <div className="max-w-xl mx-auto my-12 p-6 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-center space-y-4">
+        <p className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+          No assessment items loaded for this session.
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            hasFinishedRef.current = true;
+            clearActiveExamSession();
+            onFinishExam(secondsElapsedRef.current);
+          }}
+          className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold cursor-pointer"
+        >
+          Finish Session
+        </button>
+      </div>
+    );
+  }
 
   const answeredCount = Object.keys(userAnswers).length;
   const unansweredCount = questions.length - answeredCount;
@@ -342,6 +428,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
       
       {/* Thin Animated Horizontal Progress Bar (Pinned at top of ExamActive session) */}
       <div
+        data-sticky-subbar="true"
         className="sticky top-16 -mt-6 -mx-4 sm:-mx-6 lg:-mx-8 z-30 bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border-b border-stone-200/60 dark:border-stone-800/60 transition-colors shadow-xs"
         role="progressbar"
         aria-valuenow={answeredCount}
@@ -436,10 +523,10 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
       </div>
 
       {/* Dual Pane Assessment Stage */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-start">
         
         {/* Left Pane: Question */}
-        <div className="lg:col-span-6 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[420px] shadow-xs text-stone-900 dark:text-stone-100 transition-colors">
+        <div className="md:col-span-6 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-5 sm:p-7 flex flex-col justify-between min-h-[200px] md:min-h-[340px] shadow-xs text-stone-900 dark:text-stone-100 transition-colors">
           <div>
             <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-stone-200 dark:border-stone-800 text-xs">
               <div className="flex items-center space-x-2">
@@ -481,9 +568,47 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
               </div>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-bold leading-relaxed mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold leading-relaxed mb-4">
               {currentQ.question}
             </h3>
+
+            {currentQ.latex && (
+              <div className="mb-4 p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/70 border border-stone-200 dark:border-stone-700 overflow-x-auto">
+                <KatexEquation latex={currentQ.latex} />
+              </div>
+            )}
+
+            {currentQ.diagramSrc && (
+              <div className="mb-4">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setZoomedDiagram({
+                      src: currentQ.diagramSrc!,
+                      alt: currentQ.diagramAlt || currentQ.subtopic
+                    })
+                  }
+                  data-keep-color
+                  className="group relative w-full bg-white border border-stone-200 dark:border-stone-700 rounded-2xl p-3 flex items-center justify-center overflow-hidden hover:border-amber-500 transition cursor-zoom-in"
+                  title="Tap to enlarge diagram"
+                >
+                  <img
+                    src={currentQ.diagramSrc}
+                    alt={currentQ.diagramAlt || currentQ.subtopic}
+                    loading="lazy"
+                    decoding="async"
+                    className="max-h-56 sm:max-h-64 w-auto max-w-full object-contain"
+                  />
+                  <span
+                    data-keep-color
+                    className="absolute bottom-2 right-2 px-2 py-1 rounded-lg bg-stone-900/80 text-white text-[10px] font-mono font-bold flex items-center space-x-1 opacity-85 group-hover:opacity-100 transition"
+                  >
+                    <ZoomIn className="w-3 h-3" />
+                    <span>Inspect</span>
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Immediate Feedback Box */}
@@ -521,7 +646,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
         </div>
 
         {/* Right Pane: Options */}
-        <div className="lg:col-span-6 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[420px] shadow-xs text-stone-900 dark:text-stone-100 transition-colors">
+        <div className="md:col-span-6 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-5 sm:p-7 flex flex-col justify-between min-h-[200px] md:min-h-[340px] shadow-xs text-stone-900 dark:text-stone-100 transition-colors">
           <div>
             <div className="text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-4">
               Select Answer
@@ -700,7 +825,7 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
       {/* Persistent Non-Intrusive Floating Countdown Timer HUD (Appears only during active exams) */}
       <aside
         aria-label="Active Exam Persistent Countdown Timer"
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 no-print select-none"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 no-print select-none pr-safe"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
         {isTimerMinimized ? (
@@ -799,8 +924,8 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
 
       {/* Submit Confirmation Modal */}
       {showSubmitModal && (
-        <div className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-md w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100">
+        <div className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs z-50 flex items-start sm:items-center justify-center p-4 pl-safe pr-safe overflow-y-auto">
+          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-md w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100 my-auto">
             <div className="text-center">
               <div className="w-12 h-12 bg-orange-100 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl">
                 <AlertTriangle className="w-6 h-6" />
@@ -828,9 +953,10 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
               <button
                 type="button"
                 onClick={() => {
+                  hasFinishedRef.current = true;
                   setShowSubmitModal(false);
                   clearActiveExamSession();
-                  onFinishExam(secondsElapsed);
+                  onFinishExam(secondsElapsedRef.current);
                 }}
                 className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white font-bold text-sm rounded-xl transition shadow-xs"
               >
@@ -839,6 +965,42 @@ export const ExamActive: React.FC<ExamActiveProps> = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Diagram Zoom Lightbox */}
+      {zoomedDiagram && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] bg-stone-950/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+          onClick={() => setZoomedDiagram(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            data-keep-color
+            className="relative max-w-3xl w-full bg-white rounded-3xl p-4 sm:p-6 shadow-2xl border-2 border-amber-500/60 my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setZoomedDiagram(null)}
+              data-keep-color
+              className="absolute top-3 right-3 p-2 rounded-xl bg-stone-900 text-white hover:bg-stone-800 transition cursor-pointer"
+              aria-label="Close diagram preview"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <img
+              src={zoomedDiagram.src}
+              alt={zoomedDiagram.alt}
+              decoding="async"
+              className="w-full max-h-[75dvh] object-contain mx-auto"
+            />
+            <p data-keep-color className="mt-3 text-center text-xs font-mono text-stone-600">
+              {zoomedDiagram.alt}
+            </p>
+          </div>
+        </div>,
+        document.body
       )}
 
     </div>

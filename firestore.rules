@@ -1,0 +1,444 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default-Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // =========================================================================
+    // Global Hardened Primitives
+    // =========================================================================
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isParentDweller(userId) {
+      return exists(/databases/$(database)/documents/users/$(userId)) &&
+             get(/databases/$(database)/documents/users/$(userId)).data.ownerId == request.auth.uid;
+    }
+
+    // =========================================================================
+    // Entity Validation Blueprints
+    // =========================================================================
+    function isValidDwellerProfile(data, userId) {
+      return data.keys().hasAll([
+        'ownerId', 'email', 'displayName', 'photoURL', 'dwellerName',
+        'targetRank', 'targetExamDate', 'bottleCaps', 'dailyStudyGoal',
+        'themeMode', 'activeThemeId', 'crtEnabled', 'crtIntensity',
+        'isDistractionFree', 'soundMuted', 'soundVolume',
+        'streakCurrent', 'streakBest', 'streakLastCheckInDate', 'streakHistory',
+        'avatarCompanion', 'avatarSuitColor', 'avatarVaultNumber',
+        'avatarHairStyle', 'avatarHairColor', 'avatarSkinTone', 'avatarAccessory',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'ownerId', 'email', 'displayName', 'photoURL', 'dwellerName',
+        'targetRank', 'targetExamDate', 'bottleCaps', 'dailyStudyGoal',
+        'themeMode', 'activeThemeId', 'crtEnabled', 'crtIntensity',
+        'isDistractionFree', 'soundMuted', 'soundVolume',
+        'streakCurrent', 'streakBest', 'streakLastCheckInDate', 'streakHistory',
+        'avatarCompanion', 'avatarSuitColor', 'avatarVaultNumber',
+        'avatarHairStyle', 'avatarHairColor', 'avatarSkinTone', 'avatarAccessory',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.ownerId is string && data.ownerId == request.auth.uid && data.ownerId == userId &&
+      data.email is string && data.email.size() >= 3 && data.email.size() <= 254 &&
+      data.displayName is string && data.displayName.size() <= 120 &&
+      data.photoURL is string && data.photoURL.size() <= 500 &&
+      data.dwellerName is string && data.dwellerName.size() >= 1 && data.dwellerName.size() <= 80 &&
+      data.targetRank is string && data.targetRank.size() >= 1 && data.targetRank.size() <= 120 &&
+      data.targetExamDate is string && data.targetExamDate.size() >= 4 && data.targetExamDate.size() <= 20 && data.targetExamDate.matches('^\\d{4}-\\d{2}-\\d{2}$') &&
+      data.bottleCaps is int && data.bottleCaps >= 0 && data.bottleCaps <= 10000000 &&
+      data.dailyStudyGoal is int && data.dailyStudyGoal >= 5 && data.dailyStudyGoal <= 200 &&
+      data.themeMode is string && data.themeMode in ['dark', 'light'] &&
+      data.activeThemeId is string && data.activeThemeId in ['vault-tec', 'nuka-cola', 'power-armor', 'radaway-medbay'] &&
+      data.crtEnabled is bool &&
+      data.crtIntensity is string && data.crtIntensity in ['subtle', 'classic', 'strong'] &&
+      data.isDistractionFree is bool &&
+      data.soundMuted is bool &&
+      data.soundVolume is number && data.soundVolume >= 0 && data.soundVolume <= 1 &&
+      data.streakCurrent is int && data.streakCurrent >= 0 && data.streakCurrent <= 10000 &&
+      data.streakBest is int && data.streakBest >= 0 && data.streakBest <= 10000 &&
+      data.streakLastCheckInDate is string && data.streakLastCheckInDate.size() <= 20 &&
+      data.streakHistory is list && data.streakHistory.size() <= 2000 && (data.streakHistory.size() == 0 || data.streakHistory[0] is string) &&
+      data.avatarCompanion is string && data.avatarCompanion.size() >= 1 && data.avatarCompanion.size() <= 40 &&
+      data.avatarSuitColor is string && data.avatarSuitColor.size() >= 1 && data.avatarSuitColor.size() <= 40 &&
+      data.avatarVaultNumber is string && data.avatarVaultNumber.size() >= 1 && data.avatarVaultNumber.size() <= 16 &&
+      data.avatarHairStyle is string && data.avatarHairStyle.size() >= 1 && data.avatarHairStyle.size() <= 40 &&
+      data.avatarHairColor is string && data.avatarHairColor.size() >= 1 && data.avatarHairColor.size() <= 40 &&
+      data.avatarSkinTone is string && data.avatarSkinTone.size() >= 1 && data.avatarSkinTone.size() <= 40 &&
+      data.avatarAccessory is string && data.avatarAccessory.size() >= 1 && data.avatarAccessory.size() <= 40 &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidStudyProgress(data, userId) {
+      return data.keys().hasAll([
+        'ownerId', 'bookmarks', 'formulaBookmarks',
+        'flashcardProgress', 'formulaProgress', 'dailyActivity',
+        'achievements', 'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'ownerId', 'bookmarks', 'formulaBookmarks',
+        'flashcardProgress', 'formulaProgress', 'dailyActivity',
+        'achievements', 'createdAt', 'updatedAt'
+      ]) &&
+      data.ownerId is string && data.ownerId == request.auth.uid && data.ownerId == userId &&
+      data.bookmarks is list && data.bookmarks.size() <= 5000 && (data.bookmarks.size() == 0 || data.bookmarks[0] is int) &&
+      data.formulaBookmarks is list && data.formulaBookmarks.size() <= 1000 && (data.formulaBookmarks.size() == 0 || data.formulaBookmarks[0] is string) &&
+      data.flashcardProgress is map && data.flashcardProgress.keys().size() <= 5000 &&
+      data.formulaProgress is map && data.formulaProgress.keys().size() <= 1000 &&
+      data.dailyActivity is map && data.dailyActivity.keys().size() <= 1500 &&
+      data.achievements is list && data.achievements.size() <= 100 && (data.achievements.size() == 0 || data.achievements[0] is map) &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidExamSessionRecord(data, userId, sessionDocId) {
+      return data.keys().hasAll([
+        'ownerId', 'sessionId', 'timestamp', 'area', 'subtopic', 'difficulty',
+        'totalQuestions', 'correctAnswers', 'percentage', 'timeSpentSeconds',
+        'timeLimitMinutes', 'userAnswers', 'flaggedIds', 'questionIds', 'passed',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'ownerId', 'sessionId', 'timestamp', 'area', 'subtopic', 'difficulty',
+        'totalQuestions', 'correctAnswers', 'percentage', 'timeSpentSeconds',
+        'timeLimitMinutes', 'userAnswers', 'flaggedIds', 'questionIds', 'passed',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.ownerId is string && data.ownerId == request.auth.uid && data.ownerId == userId &&
+      data.sessionId is string && isValidId(data.sessionId) && data.sessionId == sessionDocId &&
+      data.timestamp is int && data.timestamp >= 0 &&
+      data.area is string && data.area in ['ALL', 'PSAD', 'HPGE', 'MSTE'] &&
+      data.subtopic is string && data.subtopic.size() >= 1 && data.subtopic.size() <= 160 &&
+      data.difficulty is string && data.difficulty in ['ALL', 'Easy', 'Medium', 'Hard'] &&
+      data.totalQuestions is int && data.totalQuestions >= 0 && data.totalQuestions <= 500 &&
+      data.correctAnswers is int && data.correctAnswers >= 0 && data.correctAnswers <= 500 &&
+      data.percentage is number && data.percentage >= 0 && data.percentage <= 100 &&
+      data.timeSpentSeconds is int && data.timeSpentSeconds >= 0 && data.timeSpentSeconds <= 86400 &&
+      data.timeLimitMinutes is int && data.timeLimitMinutes >= 0 && data.timeLimitMinutes <= 1440 &&
+      data.userAnswers is map && data.userAnswers.keys().size() <= 500 &&
+      data.flaggedIds is list && data.flaggedIds.size() <= 500 && (data.flaggedIds.size() == 0 || data.flaggedIds[0] is int) &&
+      data.questionIds is list && data.questionIds.size() <= 500 && (data.questionIds.size() == 0 || data.questionIds[0] is int) &&
+      data.passed is bool &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidCustomQuestionRecord(data, userId) {
+      return data.keys().hasAll([
+        'ownerId', 'questionId', 'area', 'subtopic', 'difficulty',
+        'question', 'answer', 'choices', 'explanation', 'reference',
+        'addedAt', 'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'ownerId', 'questionId', 'area', 'subtopic', 'difficulty',
+        'question', 'answer', 'choices', 'explanation', 'reference',
+        'addedAt', 'createdAt', 'updatedAt'
+      ]) &&
+      data.ownerId is string && data.ownerId == request.auth.uid && data.ownerId == userId &&
+      data.questionId is int && data.questionId >= 1 &&
+      data.area is string && data.area in ['PSAD', 'HPGE', 'MSTE'] &&
+      data.subtopic is string && data.subtopic.size() >= 1 && data.subtopic.size() <= 160 &&
+      data.difficulty is string && data.difficulty in ['Easy', 'Medium', 'Hard'] &&
+      data.question is string && data.question.size() >= 1 && data.question.size() <= 2000 &&
+      data.answer is string && data.answer.size() >= 1 && data.answer.size() <= 1000 &&
+      data.choices is list && data.choices.size() >= 1 && data.choices.size() <= 10 && data.choices[0] is string &&
+      data.explanation is string && data.explanation.size() <= 3000 &&
+      data.reference is string && data.reference.size() <= 300 &&
+      data.addedAt is int && data.addedAt >= 0 &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidLeaderboardEntry(data, userId) {
+      return data.keys().hasAll([
+        'ownerId', 'isPublic', 'nickname', 'photoURL',
+        'avatarCompanion', 'avatarSuitColor', 'avatarVaultNumber', 'targetRank',
+        'streakCurrent', 'streakBest', 'bottleCaps',
+        'tasksCompletedTotal', 'questionsAnsweredTotal', 'masteredCards',
+        'examsCompleted', 'accuracyPercent', 'compositeScore',
+        'dailyKey', 'dailyQuestions', 'dailyTasks', 'dailyScore',
+        'weeklyKey', 'weeklyQuestions', 'weeklyTasks', 'weeklyScore',
+        'monthlyKey', 'monthlyQuestions', 'monthlyTasks', 'monthlyScore',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'ownerId', 'isPublic', 'nickname', 'photoURL',
+        'avatarCompanion', 'avatarSuitColor', 'avatarVaultNumber', 'targetRank',
+        'streakCurrent', 'streakBest', 'bottleCaps',
+        'tasksCompletedTotal', 'questionsAnsweredTotal', 'masteredCards',
+        'examsCompleted', 'accuracyPercent', 'compositeScore',
+        'dailyKey', 'dailyQuestions', 'dailyTasks', 'dailyScore',
+        'weeklyKey', 'weeklyQuestions', 'weeklyTasks', 'weeklyScore',
+        'monthlyKey', 'monthlyQuestions', 'monthlyTasks', 'monthlyScore',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.ownerId is string && data.ownerId == request.auth.uid && data.ownerId == userId &&
+      data.isPublic is bool &&
+      data.nickname is string && data.nickname.size() >= 1 && data.nickname.size() <= 40 &&
+      data.photoURL is string && data.photoURL.size() <= 500 &&
+      data.avatarCompanion is string && data.avatarCompanion.size() >= 1 && data.avatarCompanion.size() <= 40 &&
+      data.avatarSuitColor is string && data.avatarSuitColor.size() >= 1 && data.avatarSuitColor.size() <= 40 &&
+      data.avatarVaultNumber is string && data.avatarVaultNumber.size() >= 1 && data.avatarVaultNumber.size() <= 16 &&
+      data.targetRank is string && data.targetRank.size() >= 1 && data.targetRank.size() <= 120 &&
+      data.streakCurrent is int && data.streakCurrent >= 0 && data.streakCurrent <= 10000 &&
+      data.streakBest is int && data.streakBest >= 0 && data.streakBest <= 10000 &&
+      data.bottleCaps is int && data.bottleCaps >= 0 && data.bottleCaps <= 10000000 &&
+      data.tasksCompletedTotal is int && data.tasksCompletedTotal >= 0 && data.tasksCompletedTotal <= 100000 &&
+      data.questionsAnsweredTotal is int && data.questionsAnsweredTotal >= 0 && data.questionsAnsweredTotal <= 500000 &&
+      data.masteredCards is int && data.masteredCards >= 0 && data.masteredCards <= 20000 &&
+      data.examsCompleted is int && data.examsCompleted >= 0 && data.examsCompleted <= 10000 &&
+      data.accuracyPercent is number && data.accuracyPercent >= 0 && data.accuracyPercent <= 100 &&
+      data.compositeScore is int && data.compositeScore >= 0 && data.compositeScore <= 200000000 &&
+      data.dailyKey is string && data.dailyKey.size() >= 4 && data.dailyKey.size() <= 20 && data.dailyKey.matches('^\\d{4}-\\d{2}-\\d{2}$') &&
+      data.dailyQuestions is int && data.dailyQuestions >= 0 && data.dailyQuestions <= 10000 &&
+      data.dailyTasks is int && data.dailyTasks >= 0 && data.dailyTasks <= 10 &&
+      data.dailyScore is int && data.dailyScore >= 0 && data.dailyScore <= 1000000 &&
+      data.weeklyKey is string && data.weeklyKey.size() >= 4 && data.weeklyKey.size() <= 20 && data.weeklyKey.matches('^\\d{4}-W\\d{2}$') &&
+      data.weeklyQuestions is int && data.weeklyQuestions >= 0 && data.weeklyQuestions <= 100000 &&
+      data.weeklyTasks is int && data.weeklyTasks >= 0 && data.weeklyTasks <= 100 &&
+      data.weeklyScore is int && data.weeklyScore >= 0 && data.weeklyScore <= 10000000 &&
+      data.monthlyKey is string && data.monthlyKey.size() >= 4 && data.monthlyKey.size() <= 20 && data.monthlyKey.matches('^\\d{4}-\\d{2}$') &&
+      data.monthlyQuestions is int && data.monthlyQuestions >= 0 && data.monthlyQuestions <= 500000 &&
+      data.monthlyTasks is int && data.monthlyTasks >= 0 && data.monthlyTasks <= 500 &&
+      data.monthlyScore is int && data.monthlyScore >= 0 && data.monthlyScore <= 50000000 &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    // =========================================================================
+    // Collection Rules
+    // =========================================================================
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false;
+
+      allow create: if isEmailVerified() &&
+        isValidId(userId) &&
+        isOwner(userId) &&
+        isValidDwellerProfile(incoming(), userId) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isEmailVerified() &&
+        isValidId(userId) &&
+        isOwner(userId) &&
+        isValidDwellerProfile(incoming(), userId) && (
+          // Action: SyncProfileAndVaultSettings
+          (
+            incoming().ownerId == existing().ownerId &&
+            incoming().createdAt == existing().createdAt &&
+            incoming().updatedAt == request.time &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'email', 'displayName', 'photoURL', 'dwellerName',
+              'targetRank', 'targetExamDate', 'bottleCaps', 'dailyStudyGoal',
+              'themeMode', 'activeThemeId', 'crtEnabled', 'crtIntensity',
+              'isDistractionFree', 'soundMuted', 'soundVolume',
+              'streakCurrent', 'streakBest', 'streakLastCheckInDate', 'streakHistory',
+              'avatarCompanion', 'avatarSuitColor', 'avatarVaultNumber',
+              'avatarHairStyle', 'avatarHairColor', 'avatarSkinTone', 'avatarAccessory',
+              'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isEmailVerified() &&
+        isValidId(userId) &&
+        isOwner(userId) &&
+        existing().ownerId == request.auth.uid;
+
+      // Subcollection: /users/{userId}/studyProgress/{progressId}
+      match /studyProgress/{progressId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(progressId) && isParentDweller(userId);
+        allow list: if isOwner(userId) && existing().ownerId == request.auth.uid;
+
+        allow create: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(progressId) &&
+          isOwner(userId) &&
+          isValidStudyProgress(incoming(), userId) &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          isParentDweller(userId);
+
+        allow update: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(progressId) &&
+          isOwner(userId) &&
+          isValidStudyProgress(incoming(), userId) && (
+            // Action: SyncStudyProgress
+            (
+              incoming().ownerId == existing().ownerId &&
+              incoming().createdAt == existing().createdAt &&
+              incoming().updatedAt == request.time &&
+              incoming().diff(existing()).affectedKeys().hasOnly([
+                'bookmarks', 'formulaBookmarks', 'flashcardProgress',
+                'formulaProgress', 'dailyActivity', 'achievements', 'updatedAt'
+              ]) &&
+              isParentDweller(userId)
+            )
+          );
+
+        allow delete: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(progressId) &&
+          isOwner(userId) &&
+          existing().ownerId == request.auth.uid &&
+          isParentDweller(userId);
+      }
+
+      // Subcollection: /users/{userId}/examSessions/{sessionId}
+      match /examSessions/{sessionId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(sessionId) && isParentDweller(userId);
+        allow list: if isOwner(userId) && existing().ownerId == request.auth.uid;
+
+        allow create: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(sessionId) &&
+          isOwner(userId) &&
+          isValidExamSessionRecord(incoming(), userId, sessionId) &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          isParentDweller(userId);
+
+        allow update: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(sessionId) &&
+          isOwner(userId) &&
+          isValidExamSessionRecord(incoming(), userId, sessionId) && (
+            // Action: SyncExamRecord
+            (
+              incoming().ownerId == existing().ownerId &&
+              incoming().sessionId == existing().sessionId &&
+              incoming().createdAt == existing().createdAt &&
+              incoming().updatedAt == request.time &&
+              incoming().diff(existing()).affectedKeys().hasOnly([
+                'timestamp', 'area', 'subtopic', 'difficulty',
+                'totalQuestions', 'correctAnswers', 'percentage',
+                'timeSpentSeconds', 'timeLimitMinutes',
+                'userAnswers', 'flaggedIds', 'questionIds', 'passed', 'updatedAt'
+              ]) &&
+              isParentDweller(userId)
+            )
+          );
+
+        allow delete: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(sessionId) &&
+          isOwner(userId) &&
+          existing().ownerId == request.auth.uid &&
+          isParentDweller(userId);
+      }
+
+      // Subcollection: /users/{userId}/customQuestions/{questionDocId}
+      match /customQuestions/{questionDocId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(questionDocId) && isParentDweller(userId);
+        allow list: if isOwner(userId) && existing().ownerId == request.auth.uid;
+
+        allow create: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(questionDocId) &&
+          isOwner(userId) &&
+          isValidCustomQuestionRecord(incoming(), userId) &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          isParentDweller(userId);
+
+        allow update: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(questionDocId) &&
+          isOwner(userId) &&
+          isValidCustomQuestionRecord(incoming(), userId) && (
+            // Action: SyncCustomQuestion
+            (
+              incoming().ownerId == existing().ownerId &&
+              incoming().questionId == existing().questionId &&
+              incoming().createdAt == existing().createdAt &&
+              incoming().updatedAt == request.time &&
+              incoming().diff(existing()).affectedKeys().hasOnly([
+                'area', 'subtopic', 'difficulty', 'question', 'answer',
+                'choices', 'explanation', 'reference', 'addedAt', 'updatedAt'
+              ]) &&
+              isParentDweller(userId)
+            )
+          );
+
+        allow delete: if isEmailVerified() &&
+          isValidId(userId) &&
+          isValidId(questionDocId) &&
+          isOwner(userId) &&
+          existing().ownerId == request.auth.uid &&
+          isParentDweller(userId);
+      }
+    }
+
+    // Non-PII Leaderboard Standings Collection
+    match /leaderboard/{userId} {
+      allow get: if isSignedIn() && isValidId(userId) && (
+        isOwner(userId) ||
+        (resource != null && existing().isPublic == true)
+      );
+      allow list: if isSignedIn() && existing().isPublic == true;
+
+      allow create: if isEmailVerified() &&
+        isValidId(userId) &&
+        isOwner(userId) &&
+        isValidLeaderboardEntry(incoming(), userId) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isEmailVerified() &&
+        isValidId(userId) &&
+        isOwner(userId) &&
+        isValidLeaderboardEntry(incoming(), userId) && (
+          // Action: SyncLeaderboardStanding
+          (
+            incoming().ownerId == existing().ownerId &&
+            incoming().createdAt == existing().createdAt &&
+            incoming().updatedAt == request.time &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'isPublic', 'nickname', 'photoURL',
+              'avatarCompanion', 'avatarSuitColor', 'avatarVaultNumber', 'targetRank',
+              'streakCurrent', 'streakBest', 'bottleCaps',
+              'tasksCompletedTotal', 'questionsAnsweredTotal', 'masteredCards',
+              'examsCompleted', 'accuracyPercent', 'compositeScore',
+              'dailyKey', 'dailyQuestions', 'dailyTasks', 'dailyScore',
+              'weeklyKey', 'weeklyQuestions', 'weeklyTasks', 'weeklyScore',
+              'monthlyKey', 'monthlyQuestions', 'monthlyTasks', 'monthlyScore',
+              'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isEmailVerified() &&
+        isValidId(userId) &&
+        isOwner(userId) &&
+        existing().ownerId == request.auth.uid;
+    }
+  }
+}

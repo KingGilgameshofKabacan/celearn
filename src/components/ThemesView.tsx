@@ -49,6 +49,7 @@ import {
 } from '../utils/storage';
 import { VaultAvatarSprite } from './VaultAvatarSprite';
 import { soundManager } from '../utils/audio';
+import { JsonBackupTile } from './JsonBackupTile';
 
 interface ThemesViewProps {
   currentThemeId: ThemeId;
@@ -64,6 +65,7 @@ interface ThemesViewProps {
   onResetDefaults: () => void;
   themeMode: 'dark' | 'light';
   setThemeMode: (mode: 'dark' | 'light') => void;
+  onNotify?: (msg: string) => void;
 }
 
 export const ThemesView: React.FC<ThemesViewProps> = ({
@@ -79,7 +81,8 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
   onChangeCrtIntensity,
   onResetDefaults,
   themeMode,
-  setThemeMode
+  setThemeMode,
+  onNotify
 }) => {
   // Sound controls local state synced with soundManager
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => soundManager.isEnabled());
@@ -105,11 +108,25 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
       if (typeof custom.detail === 'boolean') setIsAvatarMinimized(custom.detail);
       else setIsAvatarMinimized(getAvatarMinimized());
     };
+    const handleSoundSync = () => {
+      setSoundEnabled(soundManager.isEnabled());
+      setSoundMuted(soundManager.isMuted());
+      setVolume(soundManager.getVolume());
+    };
+    const handleBackupSync = () => {
+      setAvatarConfig(getAvatarConfig());
+      setIsAvatarMinimized(getAvatarMinimized());
+      handleSoundSync();
+    };
     window.addEventListener('cele_avatar_updated', handleAvatarSync);
     window.addEventListener('cele_avatar_minimized_changed', handleMinSync);
+    window.addEventListener('cele_sound_updated', handleSoundSync);
+    window.addEventListener('cele_backup_restored', handleBackupSync);
     return () => {
       window.removeEventListener('cele_avatar_updated', handleAvatarSync);
       window.removeEventListener('cele_avatar_minimized_changed', handleMinSync);
+      window.removeEventListener('cele_sound_updated', handleSoundSync);
+      window.removeEventListener('cele_backup_restored', handleBackupSync);
     };
   }, []);
 
@@ -447,7 +464,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                           <VaultAvatarSprite config={previewCfg} className="w-10 h-12" />
                         </div>
                         {isActive && (
-                          <span className="px-2 py-0.5 rounded-md bg-orange-600 text-[10px] font-extrabold font-mono uppercase">
+                          <span className="px-2 py-0.5 rounded-md bg-orange-600 text-white text-[10px] font-extrabold font-mono uppercase">
                             Active
                           </span>
                         )}
@@ -481,7 +498,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSelectCompanion('vault-dweller')}
-                    className="px-3 py-1.5 rounded-xl bg-orange-600 text-xs font-bold cursor-pointer transition"
+                    className="px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold cursor-pointer transition"
                   >
                     Equip Dweller
                   </button>
@@ -549,7 +566,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                           }
                           className={`px-3 py-1.5 rounded-xl border font-mono text-xs font-extrabold cursor-pointer transition ${
                             active
-                              ? 'bg-orange-600 border-orange-500'
+                              ? 'bg-orange-600 text-white border-orange-500'
                               : 'border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 hover:border-stone-400'
                           }`}
                         >
@@ -581,7 +598,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                           }
                           className={`px-2.5 py-1 rounded-lg border text-[11px] font-bold cursor-pointer transition ${
                             active
-                              ? 'bg-orange-600 border-orange-500'
+                              ? 'bg-orange-600 text-white border-orange-500'
                               : 'border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300'
                           }`}
                         >
@@ -663,7 +680,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                           }
                           className={`px-2.5 py-1 rounded-lg border text-[11px] font-bold cursor-pointer transition ${
                             active
-                              ? 'bg-orange-600 border-orange-500'
+                              ? 'bg-orange-600 text-white border-orange-500'
                               : 'border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300'
                           }`}
                         >
@@ -946,6 +963,11 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
             );
           })}
         </div>
+
+        {/* Small JSON Backup Tile directly below Theme Packs */}
+        <div className="pt-1 flex justify-start">
+          <JsonBackupTile variant="small" onNotify={onNotify} />
+        </div>
       </div>
 
       {/* Interactive Sound Lab & Audio Controls Console */}
@@ -1112,7 +1134,7 @@ export const ThemesView: React.FC<ThemesViewProps> = ({
                     onClick={() => onChangeCrtIntensity(level)}
                     className={`px-3 py-1 rounded-lg text-[11px] font-mono font-bold capitalize transition cursor-pointer ${
                       isLevelActive
-                        ? 'bg-orange-600 shadow-xs'
+                        ? 'bg-orange-600 text-white shadow-xs'
                         : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100'
                     }`}
                   >

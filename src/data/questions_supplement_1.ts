@@ -37,14 +37,14 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Medium",
     "question": "The point along a bent beam where the internal bending moment changes algebraic sign (+ to -) is the:",
-    "answer": "Point of Inflection (contraflexure)",
+    "answer": "Point of Inflection",
     "choices": [
       "Neutral Axis",
-      "Point of Inflection (contraflexure)",
+      "Point of Inflection",
       "Maximum Deflection Point",
       "Shear Pinch"
     ],
-    "explanation": "At the point of contraflexure, bending moment M = 0 and beam curvature changes from concave upward to downward."
+    "explanation": "At the point of contraflexure, bending moment M = 0 and beam curvature changes from concave upward to downward. Also known as the point of contraflexure."
   },
   {
     "id": 304,
@@ -52,14 +52,14 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Hard",
     "question": "In structural steel plate girders with thin webs stiffened by transverse stiffeners, the extra post-buckling shear strength developed through diagonal tensile web stresses is known as:",
-    "answer": "Tension Field Action (pratt Truss Analogy)",
+    "answer": "Tension Field Action",
     "choices": [
-      "Lateral-torsional Yielding",
-      "Tension Field Action (pratt Truss Analogy)",
+      "Lateral-Torsional Yielding",
+      "Tension Field Action",
       "Compact Flange Resistance",
       "Coupled Shear Deformation"
     ],
-    "explanation": "After thin web panels buckle elastically in shear, diagonal tension stresses form across panels anchored by transverse stiffeners and flanges."
+    "explanation": "After thin web panels buckle elastically in shear, diagonal tension stresses form across panels anchored by transverse stiffeners and flanges. Analyzed using the Pratt truss analogy."
   },
   {
     "id": 305,
@@ -67,12 +67,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Medium",
     "question": "In lightweight roof truss structural framing, sag rods are installed at midspan or third points of cold-formed purlins primarily to:",
-    "answer": "Prevent Excessive Sag and Lateral Bending About the Purlin Weak Axis (z-axis)",
+    "answer": "Prevent excessive sag and lateral bending about the purlin weak axis",
     "choices": [
-      "Carry Main Gravity Dead Load of Roof Truss",
-      "Prevent Excessive Sag and Lateral Bending About the Purlin Weak Axis (z-axis)",
-      "Act As Primary Uplift Anchors for Sheeting",
-      "Replace Transverse Diaphragm Bracing"
+      "Carry the primary gravity dead load of the roof truss",
+      "Prevent excessive sag and lateral bending about the purlin weak axis",
+      "Act as primary wind uplift anchors for roof sheeting",
+      "Replace the transverse diaphragm bracing system"
     ],
     "explanation": "Purlins on sloping roofs carry loads inclined to their strong axes; sag rods support purlins against weak-axis bending down the slope."
   },
@@ -82,12 +82,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Medium",
     "question": "The ratio of ultimate tensile strength to allowable working stress used in structural design is the:",
-    "answer": "Factor of Safety (fos)",
+    "answer": "Factor of Safety (FOS)",
     "choices": [
-      "Load Factor",
-      "Factor of Safety (fos)",
-      "Stress Concentration Factor",
-      "Serviceability Index"
+      "Load Factor (LF)",
+      "Factor of Safety (FOS)",
+      "Stress Concentration Factor (SCF)",
+      "Serviceability Index (SI)"
     ],
     "explanation": "Factor of Safety accounts for uncertainties in loading, material imperfections, and analysis simplifications."
   },
@@ -127,11 +127,11 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Hard",
     "question": "The maximum longitudinal steel reinforcement ratio ρ_max permitted in columns by NSCP to prevent congestion is:",
-    "answer": "0.08 (8%) OF GROSS AREA",
+    "answer": "0.08 (8%)",
     "choices": [
       "0.04 (4%)",
       "0.06 (6%)",
-      "0.08 (8%) OF GROSS AREA",
+      "0.08 (8%)",
       "0.10 (10%)"
     ],
     "explanation": "The code limits column reinforcement between 1% (ρ_min = 0.01) and 8% (ρ_max = 0.08) of Ag."
@@ -172,12 +172,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Medium",
     "question": "A welded or bolted steel connection designed to transfer shear force only without transferring bending moment is a:",
-    "answer": "Shear (simple) Connection",
+    "answer": "Shear Connection",
     "choices": [
       "Moment Connection",
-      "Shear (simple) Connection",
+      "Shear Connection",
       "Rigid Splice",
-      "Semi-rigid Joint"
+      "Semi-Rigid Joint"
     ],
     "explanation": "Shear connections (e.g. web clip angles) allow minor beam end rotation without transferring moment."
   },
@@ -187,14 +187,14 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Medium",
     "question": "A connection between steel beam and column capable of transferring both shear and full flexural bending moments is a:",
-    "answer": "Moment Connection (rigid Connection)",
+    "answer": "Moment Connection",
     "choices": [
       "Shear Tab",
-      "Moment Connection (rigid Connection)",
+      "Moment Connection",
       "Pinned Cleat",
       "Slotted Bearing"
     ],
-    "explanation": "Moment connections require top and bottom flange plates or full penetration welds to column flanges."
+    "explanation": "Moment connections require top and bottom flange plates or full penetration welds to column flanges. Also termed a rigid connection."
   },
   {
     "id": 314,
@@ -232,12 +232,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Easy",
     "question": "Standard size of concrete test cylinders used for compressive strength testing according to ASTM C31 and C39 is:",
-    "answer": "150 mm DIAMETER BY 300 mm HEIGHT (6\" × 12\")",
+    "answer": "150 mm × 300 mm Cylinder",
     "choices": [
-      "100 mm × 100 mm CUBE",
-      "150 mm DIAMETER BY 300 mm HEIGHT (6\" × 12\")",
-      "200 mm × 200 mm CYLINDER",
-      "150 mm × 150 mm × 150 mm CUBE"
+      "100 mm × 100 mm Cube",
+      "150 mm × 300 mm Cylinder",
+      "200 mm × 200 mm Cylinder",
+      "150 mm × 150 mm Cube"
     ],
     "explanation": "Standard ASTM cylinders have 2:1 height-to-diameter ratio (150 mm × 300 mm, or modern 100 mm × 200 mm)."
   },
@@ -292,11 +292,11 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Hard",
     "question": "The non-destructive test method that measures the velocity of acoustic sound waves through hardened concrete to assess uniformity, voids, and crack depth is the:",
-    "answer": "Ultrasonic Pulse Velocity (upv) Test (ASTM C597)",
+    "answer": "Ultrasonic Pulse Velocity Test (ASTM C597)",
     "choices": [
       "Schmidt Rebound Hammer Test (ASTM C805)",
-      "Ultrasonic Pulse Velocity (upv) Test (ASTM C597)",
-      "Windsor Probe Test (ASTM C803)",
+      "Ultrasonic Pulse Velocity Test (ASTM C597)",
+      "Windsor Probe Penetration Test (ASTM C803)",
       "Split Tensile Cylinder Test (ASTM C496)"
     ],
     "explanation": "Higher wave speeds (>4000 m/s) indicate dense, sound concrete; lower velocities indicate internal honeycomb voids, microcracking, or low density."
@@ -487,14 +487,14 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "Standard dynamic laboratory compaction test utilizing a 2.5 kg (5.5 lb) hammer dropped from 305 mm (12 in) is the:",
-    "answer": "Standard Proctor Test (ASTM D698)",
+    "answer": "Standard Proctor Test",
     "choices": [
       "Modified Proctor Test",
-      "Standard Proctor Test (ASTM D698)",
-      "CBR Test",
+      "Standard Proctor Test",
+      "California Bearing Ratio Test",
       "Vibro Compaction Test"
     ],
-    "explanation": "The Standard Proctor test applies 600 kN-m/m³ of compactive energy to determine Maximum Dry Density (MDD) and Optimum Moisture Content (OMC)."
+    "explanation": "The Standard Proctor test applies 600 kN-m/m³ of compactive energy to determine Maximum Dry Density (MDD) and Optimum Moisture Content (OMC). Standardized under ASTM D698."
   },
   {
     "id": 334,
@@ -502,14 +502,14 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "Heavier laboratory compaction test utilizing a 4.54 kg (10 lb) hammer dropped from 457 mm (18 in) for airfield subbases is the:",
-    "answer": "Modified Proctor Test (ASTM D1557)",
+    "answer": "Modified Proctor Test",
     "choices": [
       "Standard Proctor Test",
-      "Modified Proctor Test (ASTM D1557)",
-      "Dynamic Probe Test",
-      "Direct Cone Test"
+      "Modified Proctor Test",
+      "Dynamic Cone Test",
+      "Direct Shear Test"
     ],
-    "explanation": "The Modified Proctor test imparts approximately 4.5 times more energy (2700 kN-m/m³) than the standard test."
+    "explanation": "The Modified Proctor test imparts approximately 4.5 times more energy (2700 kN-m/m³) than the standard test. Standardized under ASTM D1557."
   },
   {
     "id": 335,
@@ -532,12 +532,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Easy",
     "question": "A permanent or semi-permanent survey mark of established known elevation above a reference vertical datum is a:",
-    "answer": "Benchmark (bm)",
+    "answer": "Benchmark (BM)",
     "choices": [
-      "Turning Point",
-      "Benchmark (bm)",
-      "Monument Pin",
-      "Witness Corner"
+      "Turning Point (TP)",
+      "Benchmark (BM)",
+      "Monument Pin (MP)",
+      "Witness Corner (WC)"
     ],
     "explanation": "Benchmarks provide reliable elevation control for engineering leveling surveys."
   },
@@ -547,12 +547,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Medium",
     "question": "A temporary stable physical point used in leveling to transfer instrument lines of sight between setups is a:",
-    "answer": "Turning Point (tp)",
+    "answer": "Turning Point (TP)",
     "choices": [
-      "Benchmark",
-      "Turning Point (tp)",
-      "Datum Peg",
-      "Azimuth Hub"
+      "Benchmark (BM)",
+      "Turning Point (TP)",
+      "Datum Peg (DP)",
+      "Azimuth Hub (AH)"
     ],
     "explanation": "A turning point receives a foresight (FS) from the rear setup and a backsight (BS) from the forward setup."
   },
@@ -622,14 +622,14 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
     "question": "A horizontal transition curve with continuously varying curvature used to connect a tangent to a circular highway curve is a:",
-    "answer": "Spiral Transition Curve (clothoid)",
+    "answer": "Spiral Transition Curve",
     "choices": [
-      "Parabolic Curve",
-      "Spiral Transition Curve (clothoid)",
-      "Reverse Curve",
-      "Compound Curve"
+      "Parabolic Vertical Curve",
+      "Spiral Transition Curve",
+      "Reverse Circular Curve",
+      "Compound Circular Curve"
     ],
-    "explanation": "Clothoid spirals introduce centrifugal force gradually and provide runoff length for superelevation."
+    "explanation": "Clothoid spirals introduce centrifugal force gradually and provide runoff length for superelevation. Follows a clothoid geometry."
   },
   {
     "id": 343,
@@ -652,12 +652,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Easy",
     "question": "The fundamental principle of hierarchy of controls ranks workplace risk elimination methods in which descending order?",
-    "answer": "ELIMINATION > SUBSTITUTION > ENGINEERING > ADMINISTRATIVE > PPE",
+    "answer": "Elimination > Substitution > Engineering > Administrative > PPE",
     "choices": [
-      "PPE > ADMINISTRATIVE > ENGINEERING > ELIMINATION",
-      "ELIMINATION > SUBSTITUTION > ENGINEERING > ADMINISTRATIVE > PPE",
-      "ENGINEERING > ELIMINATION > PPE > SUBSTITUTION",
-      "ADMINISTRATIVE > PPE > ENGINEERING > ELIMINATION"
+      "PPE > Administrative > Engineering > Elimination",
+      "Elimination > Substitution > Engineering > Administrative > PPE",
+      "Engineering > Elimination > PPE > Substitution",
+      "Administrative > PPE > Engineering > Elimination"
     ],
     "explanation": "Eliminating the hazard entirely is most effective; PPE is the last line of defense."
   },
@@ -667,12 +667,12 @@ export const SUPPLEMENT_QUESTIONS_1: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE standards, a safety officer responsible for overseeing health programs on construction sites is classified based on training as:",
-    "answer": "Safety Officer (so1, So2, So3, or So4)",
+    "answer": "Safety Officer (SO1–SO4)",
     "choices": [
-      "Safety Enforcer",
-      "Safety Officer (so1, So2, So3, or So4)",
-      "First Aid Chief",
-      "Site Inspector"
+      "Safety Enforcer (SE)",
+      "Safety Officer (SO1–SO4)",
+      "First Aid Chief (FAC)",
+      "Site Inspector (SI)"
     ],
     "explanation": "RA 11058 classifies safety officers from SO1 (basic orientation) up to SO4 (highly advanced certified practitioner)."
   },

@@ -82,14 +82,14 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Medium",
     "question": "Under Philippine road standards, pavement markings on national roads may only be officially applied or removed by:",
-    "answer": "DPWH (department of Public Works and Highways)",
+    "answer": "DPWH",
     "choices": [
-      "Mmda",
-      "DPWH (department of Public Works and Highways)",
+      "MMDA",
+      "DPWH",
       "LTO",
-      "Local Barangay Council"
+      "DILG"
     ],
-    "explanation": "The Department of Public Works and Highways holds statutory jurisdiction over national road infrastructure markings."
+    "explanation": "The Department of Public Works and Highways holds statutory jurisdiction over national road infrastructure markings. Department of Public Works and Highways (DPWH) maintains the National Highway Traffic Control Manual."
   },
   {
     "id": 207,
@@ -157,10 +157,10 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Medium",
     "question": "The time difference between the start and end of a continuous through green band in a coordinated signal time-space diagram.",
-    "answer": "Bandwidth (band)",
+    "answer": "Bandwidth",
     "choices": [
       "Cycle Offset",
-      "Bandwidth (band)",
+      "Bandwidth",
       "Clearance Time",
       "Lost Time"
     ],
@@ -202,14 +202,14 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Hard",
     "question": "The theoretical ideal basic capacity of a multi-lane highway under standard uninterrupted conditions is typically taken as:",
-    "answer": "2000 PASSENGER CARS PER HOUR PER LANE (pcphpl)",
+    "answer": "2000 pcphpl",
     "choices": [
       "1200 pcphpl",
       "1500 pcphpl",
-      "2000 PASSENGER CARS PER HOUR PER LANE (pcphpl)",
+      "2000 pcphpl",
       "2800 pcphpl"
     ],
-    "explanation": "Under Highway Capacity Manual (HCM) conditions, ideal basic freeway capacity is 2000-2400 pcphpl."
+    "explanation": "Under Highway Capacity Manual (HCM) conditions, ideal basic freeway capacity is 2000-2400 pcphpl. Measured in passenger cars per hour per lane (pcphpl)."
   },
   {
     "id": 215,
@@ -262,12 +262,12 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Easy",
     "question": "Transverse banking of the outer edge of a curved roadway above the inner edge to counteract outward centrifugal force.",
-    "answer": "SUPERELEVATION (e)",
+    "answer": "Superelevation (e)",
     "choices": [
-      "Camber",
-      "Crown Slope",
-      "SUPERELEVATION (e)",
-      "Gradient"
+      "Camber (c)",
+      "Crown Slope (s)",
+      "Superelevation (e)",
+      "Longitudinal Grade (g)"
     ],
     "explanation": "Superelevation satisfies the dynamic equilibrium equation: e + f = V² / (127·R)."
   },
@@ -322,14 +322,14 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "Series of interconnecting polygon cracks resembling chicken wire caused by fatigue failure of asphalt pavement under heavy loads.",
-    "answer": "Alligator Cracking (fatigue Cracking)",
+    "answer": "Alligator Cracking",
     "choices": [
       "Block Cracking",
-      "Alligator Cracking (fatigue Cracking)",
+      "Alligator Cracking",
       "Transverse Cracking",
       "Longitudinal Cracking"
     ],
-    "explanation": "Alligator cracking originates at the bottom of the asphalt layer where tensile flexural strains are highest."
+    "explanation": "Alligator cracking originates at the bottom of the asphalt layer where tensile flexural strains are highest. Also referred to as fatigue cracking."
   },
   {
     "id": 223,
@@ -352,14 +352,14 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "Migration of excess asphalt binder upward creating a shiny glass-like black film that severely reduces skid resistance.",
-    "answer": "Bleeding (flushing)",
+    "answer": "Bleeding",
     "choices": [
       "Stripping",
-      "Bleeding (flushing)",
+      "Bleeding",
       "Delamination",
       "Polishing"
     ],
-    "explanation": "Bleeding happens in hot weather when air voids in mix are too low (< 3%), forcing liquid asphalt to surface."
+    "explanation": "Bleeding happens in hot weather when air voids in mix are too low (< 3%), forcing liquid asphalt to surface. Also known as flushing of excess asphalt binder."
   },
   {
     "id": 225,
@@ -427,14 +427,14 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Medium",
     "question": "Surveying method involving measuring an angle twice with the telescope in direct and reversed positions to eliminate instrumental errors.",
-    "answer": "Double Centering (double Sighting)",
+    "answer": "Double Centering",
     "choices": [
       "Repetition Method",
-      "Double Centering (double Sighting)",
+      "Double Centering",
       "Trigonometric Leveling",
       "Stadia Traverse"
     ],
-    "explanation": "Double centering cancels out horizontal and vertical collimation errors, index errors, and trunnion axis tilt."
+    "explanation": "Double centering cancels out horizontal and vertical collimation errors, index errors, and trunnion axis tilt. Also known as double sighting."
   },
   {
     "id": 230,
@@ -472,12 +472,12 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE Department Order No. 13, every construction site must implement a project-specific program known as:",
-    "answer": "Construction Safety and Health Program (cshp)",
+    "answer": "Construction Safety and Health Program (CSHP)",
     "choices": [
-      "Site Hazard Register",
-      "Construction Safety and Health Program (cshp)",
-      "Emergency Action Protocol",
-      "Safety Quality Plan"
+      "Site Hazard Register (SHR)",
+      "Construction Safety and Health Program (CSHP)",
+      "Emergency Action Protocol (EAP)",
+      "Safety Quality Assurance Plan (SQAP)"
     ],
     "explanation": "A DOLE-approved CSHP is mandatory before any construction mobilization or building permit issuance."
   },
@@ -487,14 +487,14 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE OSH regulations, full-body safety harnesses with lifelines must be worn by workers exposed to fall hazards starting at what height?",
-    "answer": "6 Meters (or 2 Meters Unguarded Edge)",
+    "answer": "6 Meters",
     "choices": [
       "1 Meter",
       "3 Meters",
-      "6 Meters (or 2 Meters Unguarded Edge)",
+      "6 Meters",
       "10 Meters"
     ],
-    "explanation": "DOLE Rule 1080 requires fall arrest harnesses at 6 meters, while standard scaffolding mandates edge protection at 2m."
+    "explanation": "DOLE Rule 1080 requires fall arrest harnesses at 6 meters, while standard scaffolding mandates edge protection at 2m. Under DOLE DO 13, fall protection is required at 6 meters (or 2 meters near unguarded edges)."
   },
   {
     "id": 234,
@@ -504,10 +504,10 @@ export const MSTE_QUESTIONS: CEQuestion[] = [
     "question": "What is the required structural load safety factor for all construction scaffolding platforms and supports?",
     "answer": "At Least 4 Times Maximum Intended Load",
     "choices": [
-      "At Least 2 Times",
-      "At Least 3 Times",
+      "At Least 2 Times Maximum Intended Load",
+      "At Least 3 Times Maximum Intended Load",
       "At Least 4 Times Maximum Intended Load",
-      "At Least 5 Times"
+      "At Least 5 Times Maximum Intended Load"
     ],
     "explanation": "Scaffold structural frames must support without failure at least 4 times the maximum rated design live load."
   },

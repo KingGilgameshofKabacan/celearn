@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   CEQuestion,
   CEArea,
   FlashcardProgress,
-  FlashcardMasteryStatus,
   StudyMode,
   SRSRating
 } from '../types';
@@ -12,16 +11,12 @@ import {
   SUBTOPICS_BY_AREA
 } from '../data/questions';
 import {
-  ChevronLeft,
-  ChevronRight,
-  Shuffle,
   Volume2,
   VolumeX,
   Bookmark,
   Check,
   RotateCw,
   RotateCcw,
-  Eye,
   CheckCircle2,
   Sparkles,
   Layers,
@@ -29,17 +24,13 @@ import {
   Clock,
   Award,
   AlertCircle,
-  HelpCircle,
   BookOpen,
-  Filter,
-  CheckSquare,
   LogOut,
   X,
   Home
 } from 'lucide-react';
 import { soundManager } from '../utils/audio';
 import {
-  scheduleGraduatedFlashcard,
   scheduleSRSFlashcard,
   calculateSRSIntervals,
   incrementDailyQuestionsAnswered,
@@ -51,14 +42,25 @@ import {
   addBottleCaps
 } from '../utils/storage';
 import confetti from 'canvas-confetti';
+import { KatexEquation } from './KatexEquation';
+
+const shuffleArray = <T,>(items: T[]): T[] => {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 interface FlashcardsViewProps {
   questions: CEQuestion[];
   flashcardProgress: FlashcardProgress;
-  onUpdateStatus: (qid: number, status: FlashcardMasteryStatus) => void;
+  onSyncProgress: () => void;
   bookmarks: number[];
   onToggleBookmark: (qid: number) => void;
   initialMode?: 'setup' | 'due' | 'new';
+  launchNonce?: number;
   onNavigateHome?: () => void;
 }
 
@@ -74,10 +76,11 @@ interface SessionQueueItem {
 export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
   questions,
   flashcardProgress,
-  onUpdateStatus,
+  onSyncProgress,
   bookmarks,
   onToggleBookmark,
   initialMode = 'setup',
+  launchNonce = 0,
   onNavigateHome
 }) => {
   // Mode state: 'setup' | 'session' | 'completed'
@@ -120,15 +123,28 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     }
   }, [selectedArea, selectedSubtopic]);
 
-  // Handle external launch mode triggers
+  const stopSpeech = () => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  // Handle external launch mode triggers (re-fires reliably via launchNonce)
   useEffect(() => {
     if (initialMode === 'due') {
-      // Immediately start session with Due cards
       const due = getDueCards(questions, flashcardProgress);
       if (due.length > 0) {
-        startSessionWithCards(due.slice(0, 30), 'due');
+        startSessionWithCards(shuffleArray(due).slice(0, 30), 'due');
       } else {
-        // If none due, prompt in setup mode with due filter
         setCardFilterType('due');
         setViewState('setup');
       }
@@ -136,7 +152,8 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       setCardFilterType('new');
       setViewState('setup');
     }
-  }, [initialMode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialMode, launchNonce]);
 
   // Matching questions for current setup selection
   const matchingQuestions = useMemo(() => {
@@ -160,7 +177,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     if (cards.length === 0) return;
 
     // Shuffle cards uniformly for natural flow
-    const shuffled = [...cards].sort(() => Math.random() - 0.5);
+    const shuffled = shuffleArray(cards);
 
     const queueItems: SessionQueueItem[] = shuffled.map(q => ({
       question: q,
@@ -181,18 +198,36 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
   };
 
   const handleStartSession = () => {
-    let pool = matchingQuestions;
+    const pool = matchingQuestions;
     if (pool.length === 0) return;
 
     const count = selectedCount === 'ALL' ? pool.length : Math.min(selectedCount, pool.length);
-    const selected = pool.slice(0, count);
+    const selected = shuffleArray(pool).slice(0, count);
     startSessionWithCards(selected, cardFilterType === 'due' ? 'due' : cardFilterType === 'new' ? 'new' : 'custom');
   };
+
+  const dueCount = useMemo(
+    () => getDueCards(questions, flashcardProgress).length,
+    [questions, flashcardProgress]
+  );
+  const newCount = useMemo(
+    () => getNewCards(questions, flashcardProgress).length,
+    [questions, flashcardProgress]
+  );
+  const bookmarkSet = useMemo(() => new Set(bookmarks), [bookmarks]);
 
   // Current active card in the sessionQueue is always at index 0
   const currentItem = sessionQueue[0] || null;
   const currentCard = currentItem?.question || null;
-  const isBookmarked = currentCard ? bookmarks.includes(currentCard.id) : false;
+  const displayCardReference = useMemo(() => {
+    const ref = currentCard?.reference?.trim();
+    if (!ref) return null;
+    if (/\.pdf|\bpdf\b|refresher|compilation|board reviewer|reviewer bank/i.test(ref)) {
+      return null;
+    }
+    return ref;
+  }, [currentCard]);
+  const isBookmarked = currentCard ? bookmarkSet.has(currentCard.id) : false;
 
   const currentCardProgress = currentCard ? flashcardProgress[currentCard.id] : undefined;
   const currentCardIntervals = useMemo(() => {
@@ -261,13 +296,13 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     const newQueue = [...sessionQueue];
     newQueue.shift();
 
-    let wasGraduated = false;
+    stopSpeech();
 
     switch (rating) {
       case 'bad': {
         // Bad (Again): The user forgot it entirely.
-        const updated = scheduleSRSFlashcard(qid, 'again');
-        onUpdateStatus(qid, updated.status);
+        scheduleSRSFlashcard(qid, 'again');
+        onSyncProgress();
         card.selectedAnswer = null;
         card.isAnswered = false;
         card.isCorrect = false;
@@ -280,8 +315,8 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
 
       case 'ok': {
         // Ok (Hard): The user struggled.
-        const updated = scheduleSRSFlashcard(qid, 'hard');
-        onUpdateStatus(qid, updated.status);
+        scheduleSRSFlashcard(qid, 'hard');
+        onSyncProgress();
         card.timesOk += 1;
         card.selectedAnswer = null;
         card.isAnswered = false;
@@ -304,9 +339,8 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           soundManager.playClick();
         } else {
           // 2nd Good: Graduated!
-          const updated = scheduleSRSFlashcard(qid, 'good');
-          onUpdateStatus(qid, updated.status);
-          wasGraduated = true;
+          scheduleSRSFlashcard(qid, 'good');
+          onSyncProgress();
           setGraduatedCount(prev => prev + 1);
           soundManager.playCompleteTask();
         }
@@ -315,9 +349,8 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
 
       case 'perfect': {
         // Perfect (Easy): Too easy. Immediately graduate with high interval.
-        const updated = scheduleSRSFlashcard(qid, 'easy');
-        onUpdateStatus(qid, updated.status);
-        wasGraduated = true;
+        scheduleSRSFlashcard(qid, 'easy');
+        onSyncProgress();
         setGraduatedCount(prev => prev + 1);
         soundManager.playCompleteTopic();
         break;
@@ -344,10 +377,11 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     e?.stopPropagation();
     if (!currentItem || !currentCard) return;
 
+    stopSpeech();
     incrementDailyQuestionsAnswered(1);
     const qid = currentCard.id;
     const updated = scheduleSRSFlashcard(qid, rating);
-    onUpdateStatus(qid, updated.status);
+    onSyncProgress();
 
     const newQueue = [...sessionQueue];
     const current = newQueue.shift()!;
@@ -393,6 +427,20 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       setDailyTaskCompleted('learnedNew', true);
     }
 
+    onSyncProgress();
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('cele_flashcard_drill_completed', {
+          detail: {
+            mode: studyMode,
+            sessionType,
+            graduatedCount
+          }
+        })
+      );
+    }
+
     confetti({
       particleCount: 100,
       spread: 70,
@@ -406,6 +454,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
   };
 
   const handleConfirmExitToSetup = () => {
+    stopSpeech();
     soundManager.playClick();
     setShowExitConfirm(false);
     setViewState('setup');
@@ -414,6 +463,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
   };
 
   const handleConfirmExitToHome = () => {
+    stopSpeech();
     soundManager.playClick();
     setShowExitConfirm(false);
     setSessionQueue([]);
@@ -429,11 +479,37 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     setShowExitConfirm(false);
   };
 
+  const shortcutHandlersRef = useRef({
+    handleConfirmExitToSetup,
+    handleFlipCard,
+    handleRateSRS,
+    handleSelectOption,
+    handleRate
+  });
+  shortcutHandlersRef.current = {
+    handleConfirmExitToSetup,
+    handleFlipCard,
+    handleRateSRS,
+    handleSelectOption,
+    handleRate
+  };
+
   // Keyboard shortcut listener for options (A, B, C, D) / Flip (Space/F), ratings (1, 2, 3, 4 / R, M), and Escape for Exit
   useEffect(() => {
     if (viewState !== 'session') return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
       // Escape toggles exit confirmation
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -444,7 +520,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       // If confirm modal is active, Enter confirms exit to setup
       if (showExitConfirm) {
         if (e.key === 'Enter') {
-          handleConfirmExitToSetup();
+          shortcutHandlersRef.current.handleConfirmExitToSetup();
         }
         return;
       }
@@ -456,24 +532,24 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
       if (studyMode === 'flashcard') {
         if (e.key === ' ' || key === 'F') {
           e.preventDefault();
-          handleFlipCard();
+          shortcutHandlersRef.current.handleFlipCard();
         } else if (isFlipped) {
-          if (e.key === '1' || key === 'R' || e.key === 'ArrowLeft') handleRateSRS('again');
-          if (e.key === '2' || key === 'H' || e.key === 'ArrowDown') handleRateSRS('hard');
-          if (e.key === '3' || key === 'G' || e.key === 'ArrowUp') handleRateSRS('good');
-          if (e.key === '4' || key === 'E' || e.key === 'ArrowRight') handleRateSRS('easy');
+          if (e.key === '1' || key === 'R' || e.key === 'ArrowLeft') shortcutHandlersRef.current.handleRateSRS('again');
+          if (e.key === '2' || key === 'H' || e.key === 'ArrowDown') shortcutHandlersRef.current.handleRateSRS('hard');
+          if (e.key === '3' || key === 'G' || e.key === 'ArrowUp') shortcutHandlersRef.current.handleRateSRS('good');
+          if (e.key === '4' || key === 'E' || e.key === 'ArrowRight') shortcutHandlersRef.current.handleRateSRS('easy');
         }
       } else {
         if (!currentItem.isAnswered) {
-          if (key === 'A' && currentCard?.choices[0]) handleSelectOption(currentCard.choices[0]);
-          if (key === 'B' && currentCard?.choices[1]) handleSelectOption(currentCard.choices[1]);
-          if (key === 'C' && currentCard?.choices[2]) handleSelectOption(currentCard.choices[2]);
-          if (key === 'D' && currentCard?.choices[3]) handleSelectOption(currentCard.choices[3]);
+          if (key === 'A' && currentCard?.choices[0]) shortcutHandlersRef.current.handleSelectOption(currentCard.choices[0]);
+          if (key === 'B' && currentCard?.choices[1]) shortcutHandlersRef.current.handleSelectOption(currentCard.choices[1]);
+          if (key === 'C' && currentCard?.choices[2]) shortcutHandlersRef.current.handleSelectOption(currentCard.choices[2]);
+          if (key === 'D' && currentCard?.choices[3]) shortcutHandlersRef.current.handleSelectOption(currentCard.choices[3]);
         } else {
-          if (e.key === '1' || key === 'B') handleRate('bad');
-          if (e.key === '2' || key === 'O') handleRate('ok');
-          if (e.key === '3' || key === 'G') handleRate('good');
-          if (e.key === '4' || key === 'P') handleRate('perfect');
+          if (e.key === '1' || key === 'B') shortcutHandlersRef.current.handleRate('bad');
+          if (e.key === '2' || key === 'O') shortcutHandlersRef.current.handleRate('ok');
+          if (e.key === '3' || key === 'G') shortcutHandlersRef.current.handleRate('good');
+          if (e.key === '4' || key === 'P') shortcutHandlersRef.current.handleRate('perfect');
         }
       }
     };
@@ -489,9 +565,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
     return (
       <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
         {/* Header Banner (Vault-Tec S.P.E.C.I.A.L. Training Console) */}
-        <div className="bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm relative overflow-hidden">
+        <div className="bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] rounded-3xl pt-8 px-6 pb-6 sm:pt-9 sm:px-8 sm:pb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm relative overflow-hidden">
           {/* Top Hazard Chevrons */}
-          <div className="h-2 w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] vault-tec-hazard-stripe -mt-6 -mx-6 sm:-mt-8 sm:-mx-8 mb-6" />
+          <div className="absolute top-0 left-0 right-0 h-2 vault-tec-hazard-stripe" />
 
           <div className="flex items-start space-x-4">
             <div className="p-3 rounded-2xl bg-amber-500 text-stone-950 shadow-md">
@@ -510,7 +586,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                 S.P.E.C.I.A.L. Terminology Deck
               </h1>
               <p className="text-sm text-stone-600 dark:text-stone-300 mt-1 max-w-xl">
-                Condition your civil engineering recall through Vault-Tec's 4-stage spaced repetition memory reactor across all 1,296 board terms.
+                Condition your civil engineering recall through Vault-Tec's 4-stage spaced repetition memory reactor across all {questions.length.toLocaleString()} board terms.
               </p>
             </div>
           </div>
@@ -518,7 +594,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           {onNavigateHome && (
             <button
               onClick={onNavigateHome}
-              className="px-4 py-2 text-xs font-mono font-bold rounded-xl border border-stone-300 dark:border-[#2B447A] hover:bg-stone-100 dark:hover:bg-[#162852] text-stone-700 dark:text-sky-300 transition cursor-pointer"
+              className="px-4 py-2 text-xs font-mono font-bold rounded-xl border border-stone-300 dark:border-[#2B447A] hover:bg-stone-100 dark:hover:bg-[#162852] text-stone-700 dark:text-sky-300 transition cursor-pointer shrink-0"
             >
               Overseer Deck
             </button>
@@ -531,7 +607,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
             onClick={() => {
               const due = getDueCards(questions, flashcardProgress);
               if (due.length > 0) {
-                startSessionWithCards(due.slice(0, 30), 'due');
+                startSessionWithCards(shuffleArray(due).slice(0, 30), 'due');
               } else {
                 setCardFilterType('due');
               }
@@ -549,7 +625,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
               <div>
                 <h4 className="text-sm font-bold text-stone-900 dark:text-stone-100">Review Due Cards</h4>
                 <p className="text-xs text-stone-500 dark:text-stone-400">
-                  {getDueCards(questions, flashcardProgress).length} cards scheduled for today
+                  {dueCount} cards scheduled for today
                 </p>
               </div>
             </div>
@@ -571,7 +647,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
               <div>
                 <h4 className="text-sm font-bold text-stone-900 dark:text-stone-100">Learn Something New</h4>
                 <p className="text-xs text-stone-500 dark:text-stone-400">
-                  {getNewCards(questions, flashcardProgress).length} unstudied cards available
+                  {newCount} unstudied cards available
                 </p>
               </div>
             </div>
@@ -612,7 +688,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                   </span>
                 </div>
                 <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-                  Flip card to reveal the term and TOS definition behind. Rate as "Mastered" or "Needs Review".
+                  Flip card to reveal the term and TOS definition behind. Rate recall with Again, Hard, Good, or Easy (Vaia SRS).
                 </p>
               </div>
             </button>
@@ -644,7 +720,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                   </span>
                 </div>
                 <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-                  Multiple-choice options with Bad, Ok, Good, Perfect ratings. Cards get repeated until graduated.
+                  Multiple-choice options with Again, Hard, Good, and Easy ratings. Cards get repeated until graduated.
                 </p>
               </div>
             </button>
@@ -656,7 +732,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-800 pb-4">
             <div>
               <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100">Custom Study Configuration</h3>
-              <p className="text-xs text-stone-500 dark:text-stone-400">Select area, subtopic, and session volume to build your sessionQueue</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Select area, subtopic, and session volume to build your study queue</p>
             </div>
             <span className="px-3 py-1 bg-stone-100 dark:bg-stone-800 rounded-full text-xs font-mono font-bold text-stone-600 dark:text-stone-300">
               {matchingQuestions.length} Matches
@@ -762,7 +838,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           <div className="pt-4 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between">
             <div className="text-xs text-stone-500 dark:text-stone-400">
               Queue will load <strong className="text-stone-900 dark:text-stone-100 font-bold">
-                {selectedCount === 'ALL' ? matchingQuestions.length : Math.min(Number(selectedCount), matchingQuestions.length)}
+                {selectedCount === 'ALL' ? matchingQuestions.length : Math.min(selectedCount, matchingQuestions.length)}
               </strong> items for spaced repetition
             </div>
             <button
@@ -883,11 +959,32 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     <h2 className="text-xl sm:text-2xl font-extrabold text-stone-900 dark:text-stone-100 leading-relaxed">
                       {currentCard.question}
                     </h2>
+
+                    {currentCard.latex && (
+                      <div className="p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/70 border border-stone-200 dark:border-stone-700 overflow-x-auto">
+                        <KatexEquation latex={currentCard.latex} />
+                      </div>
+                    )}
+
+                    {currentCard.diagramSrc && (
+                      <div
+                        data-keep-color
+                        className="bg-white border border-stone-200 dark:border-stone-700 rounded-2xl p-2.5 flex items-center justify-center"
+                      >
+                        <img
+                          src={currentCard.diagramSrc}
+                          alt={currentCard.diagramAlt || currentCard.subtopic}
+                          loading="lazy"
+                          decoding="async"
+                          className="max-h-48 w-auto max-w-full object-contain"
+                        />
+                      </div>
+                    )}
                   </div>
 
-                  {currentCard.reference && (
+                  {displayCardReference && (
                     <div className="text-xs text-stone-500 dark:text-stone-400 italic">
-                      TOS Reference: {currentCard.reference}
+                      TOS Reference: {displayCardReference}
                     </div>
                   )}
                 </div>
@@ -981,9 +1078,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed">
                       {currentCard.explanation}
                     </p>
-                    {currentCard.reference && (
+                    {displayCardReference && (
                       <div className="text-[11px] text-stone-400 dark:text-stone-500 italic pt-1 border-t border-stone-200/50 dark:border-stone-700/50">
-                        Ref: {currentCard.reference}
+                        Ref: {displayCardReference}
                       </div>
                     )}
                   </div>
@@ -1013,7 +1110,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                       </div>
                       <div className="font-extrabold text-xs sm:text-sm">Again</div>
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200/80 dark:bg-rose-900/80 text-rose-900 dark:text-rose-200">
-                        {currentCardIntervals?.again.label || '<10m'}
+                        {currentCardIntervals?.again.label || '1d'}
                       </span>
                       <div className="text-[9px] text-rose-600 dark:text-rose-400 leading-tight">
                         Re-queue in session
@@ -1135,6 +1232,27 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                 <h2 className="text-lg sm:text-xl font-bold leading-relaxed text-stone-900 dark:text-stone-100">
                   {currentCard.question}
                 </h2>
+
+                {currentCard.latex && (
+                  <div className="p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/70 border border-stone-200 dark:border-stone-700 overflow-x-auto">
+                    <KatexEquation latex={currentCard.latex} />
+                  </div>
+                )}
+
+                {currentCard.diagramSrc && (
+                  <div
+                    data-keep-color
+                    className="bg-white border border-stone-200 dark:border-stone-700 rounded-2xl p-2.5 flex items-center justify-center"
+                  >
+                    <img
+                      src={currentCard.diagramSrc}
+                      alt={currentCard.diagramAlt || currentCard.subtopic}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-48 w-auto max-w-full object-contain"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Multiple-Choice Options */}
@@ -1202,9 +1320,9 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                   <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
                     {currentCard.explanation}
                   </p>
-                  {currentCard.reference && (
+                  {displayCardReference && (
                     <div className="text-[11px] text-stone-400 dark:text-stone-500 italic pt-1 border-t border-stone-200/50 dark:border-stone-700/50">
-                      Ref: {currentCard.reference}
+                      Ref: {displayCardReference}
                     </div>
                   )}
                 </div>
@@ -1227,7 +1345,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
                     >
                       <div className="font-extrabold text-sm sm:text-base">Again</div>
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200/80 dark:bg-rose-900/80 text-rose-900 dark:text-rose-200">
-                        {currentCardIntervals?.again.label || '<10m'}
+                        {currentCardIntervals?.again.label || '1d'}
                       </span>
                       <div className="text-[10px] text-rose-600 dark:text-rose-400 leading-tight">
                         Forgot (repeats in queue)
@@ -1292,11 +1410,11 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
             role="dialog"
             aria-modal="true"
             aria-labelledby="exit-modal-title"
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-start sm:items-center justify-center p-4 pl-safe pr-safe overflow-y-auto animate-in fade-in duration-150"
             onClick={handleCancelExit}
           >
             <div
-              className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-5 text-stone-900 dark:text-stone-100 relative"
+              className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-5 text-stone-900 dark:text-stone-100 relative my-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -1404,7 +1522,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
             Outstanding Review Session!
           </h2>
           <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-sm mx-auto">
-            You successfully cleared your flashcard queue. Graduated cards have been scheduled with continuous stacked intervals in localStorage.
+            You successfully cleared your flashcard queue. Graduated cards and study progress have been saved and submitted for cloud sync.
           </p>
         </div>
 
@@ -1417,7 +1535,7 @@ export const FlashcardsView: React.FC<FlashcardsViewProps> = ({
           </div>
           <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60">
             <span className="text-xs font-bold text-stone-500 dark:text-stone-400 uppercase">Task Status</span>
-            <div className="text-sm font-bold text-stone-900 dark:text-stone-100 mt-2 flex items-center justify-center space-x-1 text-emerald-600 dark:text-emerald-400">
+            <div className="text-sm font-bold mt-2 flex items-center justify-center space-x-1 text-emerald-600 dark:text-emerald-400">
               <CheckCircle2 className="w-4 h-4" />
               <span>Marked Done</span>
             </div>

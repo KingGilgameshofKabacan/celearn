@@ -4,39 +4,37 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
   {
     "id": 5001,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Harbors can be broadly classified into which categories?",
-    "answer": "Natural harbors, Semi-natural harbors, and Artificial harbors",
+    "answer": "Natural, Semi-natural, and Artificial Harbors",
     "choices": [
-      "Natural harbors, Semi-natural harbors, and Artificial harbors",
-      "Commercial harbors only",
-      "Inland and oceanic ports only",
-      "Deep water ports only"
+      "Natural, Semi-natural, and Artificial Harbors",
+      "Commercial, Fishery, and Naval Harbors",
+      "Inland, Estuarine, and Oceanic Harbors",
+      "Deep-water, Tidal, and Basin Harbors"
     ],
-    "explanation": "Harbors are classified based on natural shelter into natural harbors (protected by natural land configuration), semi-natural harbors (natural shelter improved by breakwaters), and artificial harbors (wholly protected by breakwaters).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Harbors are classified based on natural shelter into natural harbors (protected by natural land configuration), semi-natural harbors (natural shelter improved by breakwaters), and artificial harbors (wholly protected by breakwaters)."
   },
   {
     "id": 5002,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A port is a harbor in which terminal facilities are provided. What are the recognized classifications of ports based on location and trade?",
-    "answer": "All of the above (Ocean port, Inland port, Entry port, Free port)",
+    "answer": "Ocean, inland, entry, and free ports",
     "choices": [
-      "All of the above (Ocean port, Inland port, Entry port, Free port)",
-      "Ocean port and Inland port only",
-      "Commercial and military ports only",
-      "Domestic container ports only"
+      "Ocean, inland, entry, and free ports",
+      "Natural, semi-natural, and artificial harbors",
+      "Deep-water, tidal, and breakwater basins",
+      "Commercial, naval, and dry-dock slipways"
     ],
-    "explanation": "Ports are categorized by functional role into ocean ports, inland ports on rivers/canals, ports of entry (customs clearance), and free ports (duty-free trade zones).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Ports are categorized by functional role into ocean ports, inland ports on rivers/canals, ports of entry (customs clearance), and free ports (duty-free trade zones). Includes ocean ports, inland ports, entry ports, and free ports."
   },
   {
     "id": 5003,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Where should the entrance of a harbor ideally be located to ensure vessel maneuvering safety during heavy seas?",
     "answer": "Lee side",
@@ -46,29 +44,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Outer end",
       "Inner end"
     ],
-    "explanation": "Harbor entrances should ideally be oriented on the lee side (sheltered side away from prevailing winds and storm wave approach) to prevent heavy waves from rolling through the entrance navigation channel.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Harbor entrances should ideally be oriented on the lee side (sheltered side away from prevailing winds and storm wave approach) to prevent heavy waves from rolling through the entrance navigation channel."
   },
   {
     "id": 5004,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What is the recommended design width for a harbor entrance navigation channel?",
     "answer": "Between 0.7 to 1.0 times the length of the design ship",
     "choices": [
       "Between 0.7 to 1.0 times the length of the design ship",
-      "30 m",
-      "Between 2 to 6 times the beam of the design ship",
-      "50 m"
+      "Between 0.3 to 0.5 times the length of the design ship",
+      "Between 2.0 to 6.0 times the beam of the design ship",
+      "Between 1.5 to 2.0 times the length of the design ship"
     ],
-    "explanation": "Standard maritime navigation criteria specify that harbor entrance channel widths should be between 0.7 and 1.0 times the overall length of the design vessel (LOA).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Standard maritime navigation criteria specify that harbor entrance channel widths should be between 0.7 and 1.0 times the overall length of the design vessel (LOA)."
   },
   {
     "id": 5005,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What is the maximum allowable tidal and current velocity through a harbor entrance channel for safe vessel navigation?",
     "answer": "1.5 m/s or 3 knots",
@@ -78,61 +74,57 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "3 m/s or 5 knots",
       "1 m/s or 1.5 knots"
     ],
-    "explanation": "Cross and longitudinal currents at harbor entrances should not exceed 1.5 m/s (approx. 3 knots) to allow vessels to maintain rudder steerage without risk of yawing into breakwaters.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Cross and longitudinal currents at harbor entrances should not exceed 1.5 m/s (approx. 3 knots) to allow vessels to maintain rudder steerage without risk of yawing into breakwaters."
   },
   {
     "id": 5006,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What is the typical stopping distance required for a fully loaded cargo vessel depending on ship speed, displacement, and engine horsepower?",
     "answer": "7 to 8 times the ship's length",
     "choices": [
+      "3 to 4 times the ship's length",
+      "5 to 6 times the ship's length",
       "7 to 8 times the ship's length",
-      "100 m",
-      "150 m",
       "10 to 12 times the ship's length"
     ],
-    "explanation": "A loaded vessel coasting or using reverse propeller thrust typically requires a stopping distance of 7 to 8 times its overall length in open harbor approaches.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A loaded vessel coasting or using reverse propeller thrust typically requires a stopping distance of 7 to 8 times its overall length in open harbor approaches."
   },
   {
     "id": 5007,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "When more than one ship must be accommodated along a continuous berthing face, what clearance length should be provided between adjacent moored vessels?",
     "answer": "0.1 times the length of the largest ship",
     "choices": [
       "0.1 times the length of the largest ship",
-      "20 m",
-      "40 m",
-      "60 m"
+      "0.25 times the length of the largest ship",
+      "0.5 times the length of the largest ship",
+      "1.0 times the length of the largest ship"
     ],
-    "explanation": "The safety clearance between adjacent moored ships along a continuous quay or wharf is generally specified as 10% (0.1) of the length of the larger vessel (typically 15 to 25 meters).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The safety clearance between adjacent moored ships along a continuous quay or wharf is generally specified as 10% (0.1) of the length of the larger vessel (typically 15 to 25 meters)."
   },
   {
     "id": 5008,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "For a single-berth finger pier, what is the clear water area width required between two adjacent piers to permit tugboat maneuvering and assistance?",
     "answer": "2 times the beam of the largest ship plus 30 m",
     "choices": [
       "2 times the beam of the largest ship plus 30 m",
       "2 times the beam of the largest ship plus 50 m",
-      "200 m",
+      "1 times the beam of the largest ship plus 30 m",
       "2 times the length of the ship plus 30 m"
     ],
-    "explanation": "For single-berth piers with tug assistance, the minimum slip clearance width between adjacent pier structures is twice the beam of the design ship plus 30 meters.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "For single-berth piers with tug assistance, the minimum slip clearance width between adjacent pier structures is twice the beam of the design ship plus 30 meters."
   },
   {
     "id": 5009,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "For harbor turning basins, what is the minimum diameter/width required to permit a ship to swing freely into a berth with tug assistance at a 45-degree berthing angle?",
     "answer": "1.5 times the length of the ship",
@@ -142,13 +134,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "8 times the beam of the ship plus 30 m",
       "6 times the beam of the ship plus 180 m"
     ],
-    "explanation": "A harbor turning basin accommodating 45-degree approaches with tug assistance requires a clear diameter of at least 1.5 times the ship's length (LOA).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A harbor turning basin accommodating 45-degree approaches with tug assistance requires a clear diameter of at least 1.5 times the ship's length (LOA)."
   },
   {
     "id": 5010,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "For harbor basins where vessels must swing freely into a berth at a 90-degree angle (perpendicular berthing), what basin width is required?",
     "answer": "2 times the length of the ship",
@@ -158,13 +149,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "8 times the beam of the ship plus 30 m",
       "6 times the beam of the ship plus 180 m"
     ],
-    "explanation": "When berthing at right angles (90 degrees), the turning basin diameter must provide at least 2.0 times the ship's length to allow safe swinging without tug fouling.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "When berthing at right angles (90 degrees), the turning basin diameter must provide at least 2.0 times the ship's length to allow safe swinging without tug fouling."
   },
   {
     "id": 5011,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What is the recommended safety clearance distance between a moored oil tanker and a passing vessel in a harbor fairway?",
     "answer": "From 50 - 150 m",
@@ -174,13 +164,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "From 150 - 200 m",
       "From 50 - 100 m"
     ],
-    "explanation": "Due to hydrodynamic suction interaction and volatile hazardous cargo, safe fairway clearance between a moored tanker and passing traffic is maintained between 50 m and 150 m.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Due to hydrodynamic suction interaction and volatile hazardous cargo, safe fairway clearance between a moored tanker and passing traffic is maintained between 50 m and 150 m."
   },
   {
     "id": 5012,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "In commercial harbor anchorages, the water depth should preferably not exceed what range due to the practical length and handling of standard anchor chains?",
     "answer": "50 - 60 m",
@@ -190,29 +179,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "25 - 50 m",
       "60 - 80 m"
     ],
-    "explanation": "Anchorages deeper than 50 to 60 meters require excessively long chain scopes (typically 5 to 7 times depth) that exceed standard windlass capacity and weight ratings.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Anchorages deeper than 50 to 60 meters require excessively long chain scopes (typically 5 to 7 times depth) that exceed standard windlass capacity and weight ratings."
   },
   {
     "id": 5013,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What wind speed threshold in km/h corresponds to a wind speed where waves continue to grow at a decreasing rate after reaching a velocity equal to 1/3 of the wind speed (wave speed 48.67 km/h)?",
     "answer": "146 kph",
     "choices": [
       "146 kph",
-      "36.5 kph",
-      "48.67 kph",
-      "32.6 kph"
+      "98 kph",
+      "124 kph",
+      "172 kph"
     ],
-    "explanation": "At a wind velocity of 146 kph, the wave phase speed reaches 1/3 of wind speed (48.67 kph), beyond which whitecapping and friction attenuate additional growth.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "At a wind velocity of 146 kph, the wave phase speed reaches 1/3 of wind speed (48.67 kph), beyond which whitecapping and friction attenuate additional growth."
   },
   {
     "id": 5014,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "For ocean waves generated in deep water, the ratio of wave length to wave height (L/H) typically ranges between:",
     "answer": "17 and 33",
@@ -222,13 +209,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "12 and 18",
       "20 and 34"
     ],
-    "explanation": "In deep-water oceanic storm swells, the ratio of wave length to wave height (steepness reciprocal L/H) is commonly observed between 17 and 33.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "In deep-water oceanic storm swells, the ratio of wave length to wave height (steepness reciprocal L/H) is commonly observed between 17 and 33."
   },
   {
     "id": 5015,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A very long standing wave on a large but limited body of water (such as a bay, harbor, or lake) occurring when a storm subsides after producing wind tilt is called a:",
     "answer": "Seiche",
@@ -236,15 +222,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Seiche",
       "Shoal",
       "Ebb",
-      "Skewd"
+      "Estuary"
     ],
-    "explanation": "A seiche is a resonant standing wave oscillation in an enclosed or semi-enclosed basin triggered by wind stresses, pressure gradients, or seismic disturbances.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A seiche is a resonant standing wave oscillation in an enclosed or semi-enclosed basin triggered by wind stresses, pressure gradients, or seismic disturbances."
   },
   {
     "id": 5016,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Ocean waves generated by storms that have traveled out of their generating area and propagated outside the field of observation are called:",
     "answer": "Swells",
@@ -254,13 +239,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wakes",
       "Ebbs"
     ],
-    "explanation": "Swells are mature, long-period, regular gravity waves that propagate beyond the fetch and stormy weather systems that created them.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Swells are mature, long-period, regular gravity waves that propagate beyond the fetch and stormy weather systems that created them."
   },
   {
     "id": 5017,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What standardized meteorological scale is used to measure and classify the intensity and force of wind based on sea and terrestrial observations?",
     "answer": "Beaufort scale",
@@ -270,13 +254,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Fibonacci scale",
       "Antwerp scale"
     ],
-    "explanation": "The Beaufort Wind Force Scale (devised by Sir Francis Beaufort) classifies wind speeds from Force 0 (calm) to Force 12 (hurricane) based on observed physical sea effects.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The Beaufort Wind Force Scale (devised by Sir Francis Beaufort) classifies wind speeds from Force 0 (calm) to Force 12 (hurricane) based on observed physical sea effects."
   },
   {
     "id": 5018,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "When an ocean wave propagates from deep water into shoaling water, what happens to its wave period?",
     "answer": "Remains constant",
@@ -286,29 +269,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Decreases",
       "Fluctuates erratically"
     ],
-    "explanation": "As waves enter shoaling shallow water, their wave length decreases and height increases due to seabed friction, but the wave period (T) remains strictly constant.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "As waves enter shoaling shallow water, their wave length decreases and height increases due to seabed friction, but the wave period (T) remains strictly constant."
   },
   {
     "id": 5019,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "An open body of navigable water through which ships travel safely along an established channel route is called a:",
     "answer": "Fairway",
     "choices": [
       "Fairway",
       "Shoal",
-      "Skewd",
+      "Lagoon",
       "Significant depth"
     ],
-    "explanation": "A fairway is the main navigable deep-water channel through a harbor, bay, or river designated for safe vessel transit.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A fairway is the main navigable deep-water channel through a harbor, bay, or river designated for safe vessel transit."
   },
   {
     "id": 5020,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves formed by the frictional drag of wind over the water surface, where water particles are displaced and gravity acts as the restoring force, are classified as:",
     "answer": "Gravity waves",
@@ -318,13 +299,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Significant waves",
       "Equivalent depth water waves"
     ],
-    "explanation": "Surface gravity waves are waves generated by wind whose dominant restoring force returning the water surface to equilibrium is gravity (as opposed to capillary waves governed by surface tension).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Surface gravity waves are waves generated by wind whose dominant restoring force returning the water surface to equilibrium is gravity (as opposed to capillary waves governed by surface tension)."
   },
   {
     "id": 5021,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The standing wave phenomenon characterized by non-breaking wave reflection producing pure vertical oscillation and hydrodynamic pressure against a vertical sea wall is known as:",
     "answer": "Clapotis",
@@ -334,13 +314,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Dynamic pressure",
       "Rankine's active pressure"
     ],
-    "explanation": "Clapotis (French for 'lapping') is a non-breaking standing wave pattern formed by the complete reflection of traveling ocean waves against a vertical boundary like a seawall or breakwater.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Clapotis (French for 'lapping') is a non-breaking standing wave pattern formed by the complete reflection of traveling ocean waves against a vertical boundary like a seawall or breakwater."
   },
   {
     "id": 5022,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The change in the direction of wave travel as waves enter shallow water, causing wave crests to align parallel to seabed depth contours and distributing wave energy unevenly, is called:",
     "answer": "Wave refraction",
@@ -350,13 +329,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave reflection",
       "Wave frequency"
     ],
-    "explanation": "Wave refraction occurs when different segments of a wave crest travel over different depths; the section in shallower water slows down first, bending the wave crest toward bathymetric contours.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave refraction occurs when different segments of a wave crest travel over different depths; the section in shallower water slows down first, bending the wave crest toward bathymetric contours."
   },
   {
     "id": 5023,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves generated by local wind blowing directly over the sea surface bordering or adjacent to a port site are called:",
     "answer": "Wind waves",
@@ -366,13 +344,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breaking waves",
       "Depth water wave"
     ],
-    "explanation": "Wind waves (or 'sea') are irregular, short-crested waves actively growing under the local action of wind in the immediate observation vicinity.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wind waves (or 'sea') are irregular, short-crested waves actively growing under the local action of wind in the immediate observation vicinity."
   },
   {
     "id": 5024,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Wind-generated waves formed in the deep ocean at a distance from a port site that have traveled past the wind field that generated them are termed:",
     "answer": "Swell waves",
@@ -382,13 +359,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breaking waves",
       "Wakes"
     ],
-    "explanation": "Swell waves are smooth, long-crested waves characterized by uniform periods that have traveled hundreds or thousands of kilometers away from their generating storm centers.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Swell waves are smooth, long-crested waves characterized by uniform periods that have traveled hundreds or thousands of kilometers away from their generating storm centers."
   },
   {
     "id": 5025,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Long-period waves having natural periods ranging from 30 seconds up to 12 hours and 25 minutes occurring in enclosed or semi-enclosed harbor basins are termed:",
     "answer": "Seiching waves",
@@ -398,13 +374,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breaking waves",
       "Wakes"
     ],
-    "explanation": "Seiching waves (basin resonance) exhibit periods from half a minute up to tidal periods, causing dangerous surging motions in moored vessels.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Seiching waves (basin resonance) exhibit periods from half a minute up to tidal periods, causing dangerous surging motions in moored vessels."
   },
   {
     "id": 5026,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Massive water waves created by sudden, violent seabed vertical displacements such as submarine earthquakes, volcanic caldera collapses, or underwater landslides are called:",
     "answer": "Tsunamis",
@@ -414,13 +389,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Swell waves",
       "Clapotis"
     ],
-    "explanation": "Tsunamis are catastrophic long-wavelength water waves initiated by impulsive geological disturbances of the sea floor.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Tsunamis are catastrophic long-wavelength water waves initiated by impulsive geological disturbances of the sea floor."
   },
   {
     "id": 5027,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "In coastal engineering, water waves are classified as 'Deep Water Waves' when the ratio of water depth (d) to wave length (L) is:",
     "answer": "Greater than 0.50 (d/L > 0.50)",
@@ -430,29 +404,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Between 0.04 and 0.50",
       "Equal to 1.0"
     ],
-    "explanation": "When d/L > 0.50, seabed bathymetry exerts virtually no influence on the surface wave kinematics, defining deep water (short wave) regime.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "When d/L > 0.50, seabed bathymetry exerts virtually no influence on the surface wave kinematics, defining deep water (short wave) regime."
   },
   {
     "id": 5028,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves in which the ratio of water depth to wave length (d/L) is less than 0.50 but greater than 0.04 (or 1/25) are classified as:",
-    "answer": "Transitional or intermediate water waves",
+    "answer": "Transitional Water Waves",
     "choices": [
-      "Transitional or intermediate water waves",
-      "Breaking waves",
-      "Shallow-water waves",
-      "Deep water waves"
+      "Transitional Water Waves",
+      "Breaking Water Waves",
+      "Shallow Water Waves",
+      "Deep Water Waves"
     ],
-    "explanation": "Transitional (intermediate depth) waves have 0.04 <= d/L <= 0.50, where orbital water particle trajectories flatten into ellipses under seafloor influence.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Transitional (intermediate depth) waves have 0.04 <= d/L <= 0.50, where orbital water particle trajectories flatten into ellipses under seafloor influence."
   },
   {
     "id": 5029,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves in which the ratio of water depth to wave length (d/L) is equal to or less than 0.04 (or 1/25) are classified as:",
     "answer": "Shallow-water waves",
@@ -462,13 +434,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breaking waves",
       "Deep water waves"
     ],
-    "explanation": "Shallow-water (long) waves satisfy d/L <= 0.04; their phase propagation velocity depends strictly on water depth: c = sqrt(g*d).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Shallow-water (long) waves satisfy d/L <= 0.04; their phase propagation velocity depends strictly on water depth: c = sqrt(g*d)."
   },
   {
     "id": 5030,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What type of wave occurs when the forward orbital velocity of crest water particles exceeds the wave phase speed (usually when wave length L < 7H in deep water or depth d ~ 1.25H in shallow water)?",
     "answer": "Breaking waves",
@@ -478,13 +449,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shallow-water waves",
       "Deep water waves"
     ],
-    "explanation": "Breaking waves occur when wave steepness limits (H/L > 1/7) or depth limits (H/d ~ 0.78) are exceeded, causing the crest to curl, plunge, or spill forward.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Breaking waves occur when wave steepness limits (H/L > 1/7) or depth limits (H/d ~ 0.78) are exceeded, causing the crest to curl, plunge, or spill forward."
   },
   {
     "id": 5031,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The continuous horizontal distance over open water over which wind blows in a constant direction to generate waves is known as the:",
     "answer": "Fetch",
@@ -494,13 +464,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wakes",
       "Seiche"
     ],
-    "explanation": "Fetch (or fetch length) is the unobstructed open water distance over which a steady wind transfers energy to form wave trains.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Fetch (or fetch length) is the unobstructed open water distance over which a steady wind transfers energy to form wave trains."
   },
   {
     "id": 5032,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The dimensionless ratio of wave height to wave length (H/L) is called:",
     "answer": "Wave steepness",
@@ -510,13 +479,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave propagation",
       "Slope"
     ],
-    "explanation": "Wave steepness is the ratio H/L; theoretical maximum steepness before breaking in deep water is 1/7 (~0.142).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave steepness is the ratio H/L; theoretical maximum steepness before breaking in deep water is 1/7 (~0.142)."
   },
   {
     "id": 5033,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average height of the highest one-third (33.3%) of all waves in a wave record over a stated observation interval is defined as:",
     "answer": "Significant wave height",
@@ -526,13 +494,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Critical wave height",
       "Intermediate wave height"
     ],
-    "explanation": "Significant wave height (Hs or H1/3) closely matches the visual wave height estimate reported by experienced mariners.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Significant wave height (Hs or H1/3) closely matches the visual wave height estimate reported by experienced mariners."
   },
   {
     "id": 5034,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "An abnormal rise in sea level above the astronomical tide generated by intense tropical cyclones or typhoons due to atmospheric pressure drop and wind shear is called a:",
     "answer": "Storm surge",
@@ -542,13 +509,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Tsunami",
       "Tornado"
     ],
-    "explanation": "Storm surge is the elevated mound of ocean water pushed ashore by hurricane/typhoon low barometric pressure and sustained onshore hurricane winds.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Storm surge is the elevated mound of ocean water pushed ashore by hurricane/typhoon low barometric pressure and sustained onshore hurricane winds."
   },
   {
     "id": 5035,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves with extremely long periods that propagate across oceans following sudden seabed fault rupture during shallow-focus earthquakes are:",
     "answer": "Tsunamis",
@@ -558,13 +524,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Storm surge",
       "Deep water waves"
     ],
-    "explanation": "Tsunamis are seismic sea waves exhibiting wavelengths of hundreds of kilometers and speeds exceeding 700 to 800 km/h in deep water.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Tsunamis are seismic sea waves exhibiting wavelengths of hundreds of kilometers and speeds exceeding 700 to 800 km/h in deep water."
   },
   {
     "id": 5036,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The period in the astronomical tidal cycle during which the sea level is descending or receding is called the:",
     "answer": "Ebb tide",
@@ -574,13 +539,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Neap tide",
       "Diurnal tide"
     ],
-    "explanation": "Ebb tide refers to the receding seaward flow from high water toward low water.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Ebb tide refers to the receding seaward flow from high water toward low water."
   },
   {
     "id": 5037,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The horizontal extension of the open water generating area in the direction of wind blow is the:",
     "answer": "Fetch",
@@ -590,13 +554,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shoal",
       "Seiche"
     ],
-    "explanation": "Fetch is the unbroken geographical extent of the wave generation zone aligned with wind vector.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Fetch is the unbroken geographical extent of the wave generation zone aligned with wind vector."
   },
   {
     "id": 5038,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical difference in height between the Mean Higher High Water (MHHW) and the Mean Lower Low Water (MLLW) is termed:",
     "answer": "Diurnal range",
@@ -606,13 +569,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean range",
       "Residual water level"
     ],
-    "explanation": "The diurnal range of tide is the difference in elevation between the higher high water and lower low water occurring in a tidal day.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The diurnal range of tide is the difference in elevation between the higher high water and lower low water occurring in a tidal day."
   },
   {
     "id": 5039,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The exceptionally high tides that occur twice each lunar month when the moon, earth, and sun align at new and full moon (syzygy) are:",
     "answer": "Spring tides",
@@ -622,13 +584,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Semi-diurnal tides",
       "Ebb tides"
     ],
-    "explanation": "Spring tides (from German 'springen', to rise) occur at syzygy when gravitational pulls of the sun and moon reinforce each other.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Spring tides (from German 'springen', to rise) occur at syzygy when gravitational pulls of the sun and moon reinforce each other."
   },
   {
     "id": 5040,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What tidal datum is standardly adopted as the chart datum for the design of port and navigation facilities by the Philippine Ports Authority (PPA)?",
     "answer": "Mean Lower Low Water (MLLW)",
@@ -638,13 +599,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Residual Water Level (RWL)",
       "High Water Level (HWL)"
     ],
-    "explanation": "The Philippine Ports Authority (PPA) standardly adopts Mean Lower Low Water (MLLW) as the zero vertical datum for bathymetric navigation charts and harbor bed dredging.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The Philippine Ports Authority (PPA) standardly adopts Mean Lower Low Water (MLLW) as the zero vertical datum for bathymetric navigation charts and harbor bed dredging."
   },
   {
     "id": 5041,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Tides occurring near the times of new and full moon where the lunar and solar tide-generating gravitational forces reinforce additively are called:",
     "answer": "Spring tides",
@@ -654,13 +614,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Diurnal tides",
       "Ebb tides"
     ],
-    "explanation": "Spring tides produce the maximum tidal range with the highest high waters and lowest low waters.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Spring tides produce the maximum tidal range with the highest high waters and lowest low waters."
   },
   {
     "id": 5042,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The Philippine Ports Authority (PPA) requires what safety underkeel clearance allowance for ship berthing below the Mean Lower Low Water (MLLW)?",
     "answer": "0.15 m to 0.40 m",
@@ -670,13 +629,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "0.12 m to 0.40 m",
       "0.12 m to 0.50 m"
     ],
-    "explanation": "PPA design manuals prescribe an additional safety depth allowance of 0.15 m to 0.40 m below MLLW to account for vessel squat, roll, and sediment siltation.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "PPA design manuals prescribe an additional safety depth allowance of 0.15 m to 0.40 m below MLLW to account for vessel squat, roll, and sediment siltation."
   },
   {
     "id": 5043,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "When the moon is in its first or third quarter (quadrature) and lines from earth to sun and moon form a right angle, what tides of minimum range occur?",
     "answer": "Neap tides",
@@ -686,13 +644,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Diurnal tides",
       "Ebb tides"
     ],
-    "explanation": "Neap tides occur at quadrature when solar and lunar tides oppose each other, producing minimum tidal ranges.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Neap tides occur at quadrature when solar and lunar tides oppose each other, producing minimum tidal ranges."
   },
   {
     "id": 5044,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The time interval (which may amount to up to two and a half days) between the syzygy alignment of the sun and moon and the arrival of highest spring tides due to oceanic inertia is called the:",
     "answer": "Age of the tide",
@@ -702,13 +659,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Lunar tide",
       "Semi-diurnal tide"
     ],
-    "explanation": "The age of the tide represents the phase lag between astronomical peak gravitational alignment and oceanic physical response.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The age of the tide represents the phase lag between astronomical peak gravitational alignment and oceanic physical response."
   },
   {
     "id": 5045,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What is the average time interval between successive passages of the moon across a meridian (successive high tides in a semidiurnal regime)?",
     "answer": "12 hrs. and 25 min.",
@@ -718,13 +674,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "11 hrs. and 45 min.",
       "12 hrs"
     ],
-    "explanation": "Because the moon advances in orbit, a lunar day lasts 24 hours and 50 minutes, yielding semidiurnal high tide intervals of approximately 12 hours and 25 minutes.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Because the moon advances in orbit, a lunar day lasts 24 hours and 50 minutes, yielding semidiurnal high tide intervals of approximately 12 hours and 25 minutes."
   },
   {
     "id": 5046,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "In many parts of the world, high waters reach their greatest heights soon after the time of full and new moon. These tides are:",
     "answer": "Spring tides",
@@ -734,13 +689,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Neap tides",
       "Ebb tides"
     ],
-    "explanation": "Syzygy tides with amplified amplitudes are termed spring tides.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Syzygy tides with amplified amplitudes are termed spring tides."
   },
   {
     "id": 5047,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The difference in height between high water and low water at a tidal observation station is termed:",
     "answer": "Tidal range",
@@ -750,13 +704,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean range",
       "Extreme range"
     ],
-    "explanation": "Tidal range is the vertical difference in water elevation between consecutive high and low waters.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Tidal range is the vertical difference in water elevation between consecutive high and low waters."
   },
   {
     "id": 5048,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "When daily high waters are at their lowest height and daily low waters are at their highest height soon after quadrature, these tides are called:",
     "answer": "Neap tides",
@@ -766,13 +719,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Flood tides",
       "Ebb tides"
     ],
-    "explanation": "Neap tides exhibit the smallest amplitude and minimum tidal exchange of the lunar month.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Neap tides exhibit the smallest amplitude and minimum tidal exchange of the lunar month."
   },
   {
     "id": 5049,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Disturbances and diverging waves formed in water by moving vessels or boats are known as:",
     "answer": "Wakes",
@@ -782,13 +734,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breaking waves",
       "Seiching"
     ],
-    "explanation": "Vessel wakes consist of divergent and transverse wave patterns generated by ship hulls moving through water.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Vessel wakes consist of divergent and transverse wave patterns generated by ship hulls moving through water."
   },
   {
     "id": 5050,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Catastrophic oceanic water waves generated by tectonic earthquake disturbances on the seabed are called:",
     "answer": "Tsunamis",
@@ -798,29 +749,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breaking waves",
       "Wakes"
     ],
-    "explanation": "Seismic sea waves caused by tectonic seafloor displacement are tsunamis.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Seismic sea waves caused by tectonic seafloor displacement are tsunamis."
   },
   {
     "id": 5051,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Tides formed by the gravitational attraction of the moon and sun acting upon the earth's oceans are called:",
-    "answer": "Tides (Astronomical tides)",
+    "answer": "Astronomical Tides",
     "choices": [
-      "Tides (Astronomical tides)",
-      "Seiching",
-      "Swell",
-      "Wakes"
+      "Astronomical Tides",
+      "Basin Seiches",
+      "Ocean Swells",
+      "Vessel Wakes"
     ],
-    "explanation": "Astronomical tides are periodic sea level oscillations produced by the differential gravitational pulls of the celestial bodies.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Astronomical tides are periodic sea level oscillations produced by the differential gravitational pulls of the celestial bodies."
   },
   {
     "id": 5052,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The lateral transfer and dispersion of wave energy along a wave crest past an obstruction or breakwater barrier is called:",
     "answer": "Wave diffraction",
@@ -830,13 +779,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave reflection",
       "Wave shoaling"
     ],
-    "explanation": "Wave diffraction is the phenomenon whereby wave energy spreads laterally into sheltered water behind an obstacle such as a breakwater head.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave diffraction is the phenomenon whereby wave energy spreads laterally into sheltered water behind an obstacle such as a breakwater head."
   },
   {
     "id": 5053,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The bending of waves as they slow down upon entering progressively shallower water is called:",
     "answer": "Wave refraction",
@@ -846,13 +794,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shoaling",
       "Diffraction"
     ],
-    "explanation": "Refraction is the angular bending of wave fronts due to differential phase speeds across variable water depths.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Refraction is the angular bending of wave fronts due to differential phase speeds across variable water depths."
   },
   {
     "id": 5054,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves actively under the direct generating influence of the winds that created them are called:",
     "answer": "Sea",
@@ -862,13 +809,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Swell",
       "Seiching"
     ],
-    "explanation": "A 'sea' refers to choppy, chaotic wind waves currently growing under the direct action of local winds.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A 'sea' refers to choppy, chaotic wind waves currently growing under the direct action of local winds."
   },
   {
     "id": 5055,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves that have propagated beyond their initial wind-generating area are called:",
     "answer": "Swell",
@@ -878,13 +824,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shoal",
       "Seiche"
     ],
-    "explanation": "Swells are regular waves that travel far away from the storm winds that birthed them.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Swells are regular waves that travel far away from the storm winds that birthed them."
   },
   {
     "id": 5056,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The distance that wind blows across open water to generate waves is called the:",
     "answer": "Fetch",
@@ -894,13 +839,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shoal",
       "On-shore"
     ],
-    "explanation": "Fetch is the unimpeded distance over water across which wind acts.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Fetch is the unimpeded distance over water across which wind acts."
   },
   {
     "id": 5057,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The continuous time duration that a wind blows across the water surface during wave generation is called the:",
     "answer": "Duration",
@@ -910,13 +854,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Refraction",
       "Period"
     ],
-    "explanation": "Duration is the continuous time during which wind blows at a given speed and direction over the fetch.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Duration is the continuous time during which wind blows at a given speed and direction over the fetch."
   },
   {
     "id": 5058,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average height of the highest one-third of the waves in a given wave spectrum is called:",
     "answer": "Significant wave height",
@@ -926,13 +869,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Critical wave height",
       "Intermediate wave height"
     ],
-    "explanation": "Significant wave height (H1/3) represents the top 33.3% wave height average.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Significant wave height (H1/3) represents the top 33.3% wave height average."
   },
   {
     "id": 5059,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The highest tides occurring at intervals of half a lunar month when the sun, moon, and earth fall into line are:",
     "answer": "Spring tides",
@@ -942,13 +884,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Flood tides",
       "Ebb tides"
     ],
-    "explanation": "Spring tides occur semi-monthly during full and new moons.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Spring tides occur semi-monthly during full and new moons."
   },
   {
     "id": 5060,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The lowest tides of the month occurring when lines connecting the earth with the sun and moon form a right angle (quadrature) are:",
     "answer": "Neap tides",
@@ -958,13 +899,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Diurnal tides",
       "Semi-diurnal tides"
     ],
-    "explanation": "Neap tides represent the monthly minimum tidal ranges.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Neap tides represent the monthly minimum tidal ranges."
   },
   {
     "id": 5061,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Tides that occur twice every lunar day, having two approximately equal high waters and two low waters daily, are called:",
     "answer": "Semi-diurnal tides",
@@ -974,13 +914,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Ebb tides",
       "Diurnal tides"
     ],
-    "explanation": "Semi-diurnal tides produce two high tides and two low tides each lunar day of 24h 50m.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Semi-diurnal tides produce two high tides and two low tides each lunar day of 24h 50m."
   },
   {
     "id": 5062,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "High created waves caused by the rush of flood tide surging up a narrowing river estuary or meeting river currents are called:",
     "answer": "Tidal bores",
@@ -990,13 +929,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Swells",
       "Shoals"
     ],
-    "explanation": "A tidal bore is a steep hydraulic jump or wave that travels up an estuary against the natural direction of river flow.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A tidal bore is a steep hydraulic jump or wave that travels up an estuary against the natural direction of river flow."
   },
   {
     "id": 5063,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The circulation of masses of air more or less parallel to the earth's surface is termed:",
     "answer": "Wind",
@@ -1006,13 +944,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wind pressure",
       "Breeze"
     ],
-    "explanation": "Wind is the horizontal movement of air across the earth's surface driven by pressure differentials.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wind is the horizontal movement of air across the earth's surface driven by pressure differentials."
   },
   {
     "id": 5064,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Prevailing winds that blow seasonally in one direction over part of the year and in the opposite direction during the remainder are called:",
     "answer": "Monsoon",
@@ -1022,13 +959,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Windward side",
       "Leeward side"
     ],
-    "explanation": "Monsoons are large-scale seasonal wind reversals (e.g., Habagat and Amihan in the Philippines).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Monsoons are large-scale seasonal wind reversals (e.g., Habagat and Amihan in the Philippines)."
   },
   {
     "id": 5065,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The side of a marine or port structure facing the direction from which the wind comes is the:",
     "answer": "Windward side",
@@ -1038,13 +974,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Backward side",
       "Leeward side"
     ],
-    "explanation": "Windward is the side exposed directly to oncoming wind.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Windward is the side exposed directly to oncoming wind."
   },
   {
     "id": 5066,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The sheltered side of a structure facing away from the direction from which the wind comes is the:",
     "answer": "Leeward side",
@@ -1054,13 +989,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Backward side",
       "Windward side"
     ],
-    "explanation": "Leeward is the side sheltered from wind and waves.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Leeward is the side sheltered from wind and waves."
   },
   {
     "id": 5067,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A graphical circular diagram representing the distribution of wind directions, velocities, and frequencies at a particular location over a period of time is known as a:",
     "answer": "Wind rose",
@@ -1070,13 +1004,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wind intensity gauge",
       "Wind index"
     ],
-    "explanation": "A wind rose diagram plots the percentage frequency and velocity of winds blowing from each compass quadrant.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A wind rose diagram plots the percentage frequency and velocity of winds blowing from each compass quadrant."
   },
   {
     "id": 5068,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A standardized empirical scale used by mariners and engineers to measure the intensity and force of wind is the:",
     "answer": "Beaufort's Scale",
@@ -1086,13 +1019,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Richter Scale",
       "Buchanan's Scale"
     ],
-    "explanation": "Beaufort's Scale quantifies wind forces from 0 to 12 based on observable sea state.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Beaufort's Scale quantifies wind forces from 0 to 12 based on observable sea state."
   },
   {
     "id": 5069,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The periodic vertical rise and fall of oceanic waters produced by the gravitational attraction of the moon and sun is called:",
     "answer": "Tides",
@@ -1102,13 +1034,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave",
       "Wake"
     ],
-    "explanation": "Tides are the rhythmic planetary rises and falls of the sea.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Tides are the rhythmic planetary rises and falls of the sea."
   },
   {
     "id": 5070,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Tides which exhibit only one high water and one low water per lunar day are classified as:",
     "answer": "Diurnal tides",
@@ -1118,13 +1049,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Spring tides",
       "Semi-diurnal tides"
     ],
-    "explanation": "Diurnal tides feature a single high tide and single low tide each tidal day.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Diurnal tides feature a single high tide and single low tide each tidal day."
   },
   {
     "id": 5071,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "If one of the two daily tides in a tidal cycle is incomplete and does not reach the height of the previous tide, the tides are classified as:",
     "answer": "Mixed diurnal tides",
@@ -1134,13 +1064,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Diurnal tides",
       "Semi-diurnal tides"
     ],
-    "explanation": "Mixed tides feature substantial inequalities in tidal heights and durations between morning and afternoon cycles.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mixed tides feature substantial inequalities in tidal heights and durations between morning and afternoon cycles."
   },
   {
     "id": 5072,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Where in the world are the highest tides recorded, where tidal rises exceeding 100 ft (up to 16 to 21 meters) have been measured?",
     "answer": "Bay of Fundy",
@@ -1150,13 +1079,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "San Francisco Bay",
       "Venice, Italy"
     ],
-    "explanation": "The Bay of Fundy (Canada) features extreme natural resonance with the semi-diurnal oceanic tidal wave, creating world-record tidal ranges.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The Bay of Fundy (Canada) features extreme natural resonance with the semi-diurnal oceanic tidal wave, creating world-record tidal ranges."
   },
   {
     "id": 5073,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average of the high water levels observed over a standard 19-year National Tidal Datum Epoch is known as:",
     "answer": "Mean high water",
@@ -1166,13 +1094,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Higher high water",
       "Highest high water"
     ],
-    "explanation": "Mean High Water (MHW) is the arithmetic average of all high water levels observed over a complete 19-year Metonic cycle.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean High Water (MHW) is the arithmetic average of all high water levels observed over a complete 19-year Metonic cycle."
   },
   {
     "id": 5074,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average of only the higher high waters of each tidal day observed over a 19-year period is known as:",
     "answer": "Mean higher high water",
@@ -1182,13 +1109,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Highest high water",
       "Mean high water"
     ],
-    "explanation": "Mean Higher High Water (MHHW) averages only the higher of the two daily high waters in mixed or semidiurnal regimes.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean Higher High Water (MHHW) averages only the higher of the two daily high waters in mixed or semidiurnal regimes."
   },
   {
     "id": 5075,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average of all the low water levels observed over a standard 19-year period is called:",
     "answer": "Mean low water",
@@ -1198,13 +1124,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Lower low water",
       "Mean lower low water"
     ],
-    "explanation": "Mean Low Water (MLW) is the 19-year average of all observed low water stages.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean Low Water (MLW) is the 19-year average of all observed low water stages."
   },
   {
     "id": 5076,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The higher of the two daily high water elevations occurring in any mixed tidal day is the:",
     "answer": "Higher high water",
@@ -1214,13 +1139,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Highest high water",
       "Mean high water"
     ],
-    "explanation": "Higher High Water (HHW) is the higher of the two daily peaks.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Higher High Water (HHW) is the higher of the two daily peaks."
   },
   {
     "id": 5077,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The lower of the two daily low water elevations occurring in any mixed tidal day is the:",
     "answer": "Lower low water",
@@ -1230,13 +1154,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean low water",
       "Mean lower low water"
     ],
-    "explanation": "Lower Low Water (LLW) is the lower of the two daily troughs.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Lower Low Water (LLW) is the lower of the two daily troughs."
   },
   {
     "id": 5078,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average height of only the lower low waters observed each day over a 19-year tidal epoch is:",
     "answer": "Mean lower low water",
@@ -1246,13 +1169,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Lower low water",
       "Mean low water"
     ],
-    "explanation": "Mean Lower Low Water (MLLW) is the official chart datum used in the Philippines and USA for maritime navigation.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean Lower Low Water (MLLW) is the official chart datum used in the Philippines and USA for maritime navigation."
   },
   {
     "id": 5079,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The highest elevation reached by water during spring tides is termed:",
     "answer": "Highest high water",
@@ -1262,13 +1184,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Higher high water",
       "Mean high water"
     ],
-    "explanation": "Highest High Water denotes the maximum spring tidal crest recorded in a station's epoch.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Highest High Water denotes the maximum spring tidal crest recorded in a station's epoch."
   },
   {
     "id": 5080,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The lowest elevation reached by water during spring tides is termed:",
     "answer": "Lowest low water",
@@ -1278,13 +1199,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean low water",
       "Mean lower low water"
     ],
-    "explanation": "Lowest Low Water represents the lowest astronomical spring tide trough.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Lowest Low Water represents the lowest astronomical spring tide trough."
   },
   {
     "id": 5081,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical height of the mean high water level above the mean low water level is called the:",
     "answer": "Mean range",
@@ -1294,13 +1214,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Higher high water",
       "Mean high water"
     ],
-    "explanation": "Mean range of tide is the difference in elevation between Mean High Water and Mean Low Water.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean range of tide is the difference in elevation between Mean High Water and Mean Low Water."
   },
   {
     "id": 5082,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The mean of the height of mean high water above mean low water is referred to as:",
     "answer": "Mean sea level",
@@ -1310,13 +1229,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean range",
       "Mean high water"
     ],
-    "explanation": "Mean Sea Level (MSL) represents the average sea surface height halfway between mean high water and mean low water over an epoch.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean Sea Level (MSL) represents the average sea surface height halfway between mean high water and mean low water over an epoch."
   },
   {
     "id": 5083,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical difference in height between the mean higher high water and the mean lower low water is the:",
     "answer": "Diurnal range",
@@ -1326,13 +1244,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean lower low water",
       "Mean range"
     ],
-    "explanation": "Diurnal range is MHHW minus MLLW, representing the full daily envelope of mixed tides.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Diurnal range is MHHW minus MLLW, representing the full daily envelope of mixed tides."
   },
   {
     "id": 5084,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A regular occurrence at certain river estuaries where a solitary steep wave is caused by the rush of flood tide surging up a narrowing river channel is a:",
     "answer": "Tidal bore",
@@ -1342,15 +1259,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Deep water wave",
       "Solitary wave"
     ],
-    "explanation": "A tidal bore is a steep tidal wave surging upstream into a river mouth.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A tidal bore is a steep tidal wave surging upstream into a river mouth."
   },
   {
     "id": 5085,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
-    "question": "A wave at a point where the water depth (d) is equal to 1/2 of the wavelength (d = L/2) or greater is classified as a (CE Board May 2016):",
+    "question": "A wave at a point where the water depth (d) is equal to 1/2 of the wavelength (d = L/2) or greater is classified as:",
     "answer": "Deep water wave",
     "choices": [
       "Deep water wave",
@@ -1358,13 +1274,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Highest wave",
       "Significant wave"
     ],
-    "explanation": "When d >= L/2, water depth is sufficient that seabed friction has negligible effect on wave mechanics.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "When d >= L/2, water depth is sufficient that seabed friction has negligible effect on wave mechanics."
   },
   {
     "id": 5086,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A hypothetical design wave having a wave height and period equal respectively to the average values of the height and period of the largest 1/3 of all waves in a train is the:",
     "answer": "Significant wave",
@@ -1374,13 +1289,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Equivalent depth water wave height",
       "Highest wave"
     ],
-    "explanation": "The significant wave (H1/3, Ts) characterizes the statistical upper third of irregular wave records.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The significant wave (H1/3, Ts) characterizes the statistical upper third of irregular wave records."
   },
   {
     "id": 5087,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The single highest wave height and its associated period in a measured wave train is the:",
     "answer": "Highest wave",
@@ -1390,45 +1304,42 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Equivalent depth water wave height",
       "Significant wave"
     ],
-    "explanation": "The highest wave (Hmax) is the maximum individual wave peak-to-trough height recorded in a sea spectrum.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The highest wave (Hmax) is the maximum individual wave peak-to-trough height recorded in a sea spectrum."
   },
   {
     "id": 5088,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Waves occurring in water having a depth less than one half of the wave length (d < L/2) where bottom influence flattens orbital water particle motion from circular to elliptical are:",
-    "answer": "Shallow water wave (Transitional to shallow)",
+    "answer": "Shallow Water Wave",
     "choices": [
-      "Shallow water wave (Transitional to shallow)",
-      "Deep water wave",
-      "Significant wave",
-      "Highest wave"
+      "Shallow Water Wave",
+      "Deep Water Wave",
+      "Significant Wave",
+      "Breaking Wave"
     ],
-    "explanation": "When d < L/2, bottom boundary shear deforms circular particle orbits into flattened ellipses.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "When d < L/2, bottom boundary shear deforms circular particle orbits into flattened ellipses."
   },
   {
     "id": 5089,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Ocean waves break under which of the following physical conditions?",
-    "answer": "All of the above (Crest particle velocity exceeds wave speed; wave height exceeds 1/7 of length in deep water; depth is ~1.25 of wave height)",
+    "answer": "u > c, H/L > 1/7 in deep water, or d ≈ 1.25 H",
     "choices": [
-      "All of the above (Crest particle velocity exceeds wave speed; wave height exceeds 1/7 of length in deep water; depth is ~1.25 of wave height)",
-      "Only when depth equals wave height",
-      "Only in deep water",
-      "Only during ebb tides"
+      "u > c, H/L > 1/7 in deep water, or d ≈ 1.25 H",
+      "Only when water depth equals wave height",
+      "Only in deep water conditions regardless of slope",
+      "Only during receding spring neap ebb tides"
     ],
-    "explanation": "Wave breaking occurs by kinematic instability (u > c), deep-water geometric steepness limit (H/L > 1/7), or shallow water limiting depth (d ~ 1.25H).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave breaking occurs by kinematic instability (u > c), deep-water geometric steepness limit (H/L > 1/7), or shallow water limiting depth (d ~ 1.25H). Breaking occurs when crest particle velocity exceeds wave celerity, H/L exceeds 1/7 in deep water, or depth is roughly 1.25 times wave height."
   },
   {
     "id": 5090,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The horizontal distance between two consecutive wave crests (or two consecutive troughs) is called the:",
     "answer": "Wave length",
@@ -1438,13 +1349,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave amplitude",
       "Frequency"
     ],
-    "explanation": "Wave length (L) is the spatial distance between successive crests.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave length (L) is the spatial distance between successive crests."
   },
   {
     "id": 5091,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical distance from the still water level to the crest of a wave (or half the total wave height) is the:",
     "answer": "Wave amplitude",
@@ -1454,13 +1364,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Oscillation",
       "Frequency"
     ],
-    "explanation": "Wave amplitude (a) is the displacement of the crest above still water level (a = H/2).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave amplitude (a) is the displacement of the crest above still water level (a = H/2)."
   },
   {
     "id": 5092,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The elapsed time required for two consecutive wave crests to pass a fixed stationary observation point is called the:",
     "answer": "Wave period",
@@ -1470,29 +1379,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Amplitude",
       "Frequency"
     ],
-    "explanation": "Wave period (T) is the temporal duration of one complete wave cycle.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave period (T) is the temporal duration of one complete wave cycle."
   },
   {
     "id": 5093,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The speed at which an individual wave form travels through the water is the:",
-    "answer": "Velocity of wave propagation (Celerity)",
+    "answer": "Wave Celerity",
     "choices": [
-      "Velocity of wave propagation (Celerity)",
-      "Steepness of wave",
-      "Instantaneous velocity",
-      "Average velocity of wave"
+      "Wave Celerity",
+      "Wave Steepness",
+      "Instantaneous Velocity",
+      "Orbital Velocity"
     ],
-    "explanation": "Wave celerity (c = L/T) is the phase velocity of the wave profile.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave celerity (c = L/T) is the phase velocity of the wave profile. Wave celerity is the velocity of wave propagation."
   },
   {
     "id": 5094,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The water level that guarantees about 98% of tides are safe for vessel navigation according to the International Water Wave Congress (0.15 m - 0.40 m below MLLW) is:",
     "answer": "Design Low Tide (DLT)",
@@ -1502,13 +1409,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Residual Water Level (RWL)",
       "High Water Level (HWL)"
     ],
-    "explanation": "Design Low Tide (DLT) provides a 98% probability of adequate water depth for deep-draft harbor berthing.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Design Low Tide (DLT) provides a 98% probability of adequate water depth for deep-draft harbor berthing."
   },
   {
     "id": 5095,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "In harbor design, Residual Water Level (RWL) for gravity quay walls is expressed as:",
     "answer": "1/3(hwl - Lwl) + Lwl",
@@ -1518,13 +1424,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "1/3(hwl - Lwl)",
       "2/3(hwl - Lwl)"
     ],
-    "explanation": "Residual Water Level (RWL) for massive gravity quay walls accounts for delayed groundwater drawdown behind the wall, taken at 1/3 the tidal range above LWL.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Residual Water Level (RWL) for massive gravity quay walls accounts for delayed groundwater drawdown behind the wall, taken at 1/3 the tidal range above LWL."
   },
   {
     "id": 5096,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Residual Water Level (RWL) for flexible sheet pile wharf walls is standardly expressed as:",
     "answer": "2/3(hwl - Lwl) + Lwl",
@@ -1534,13 +1439,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "1/3(hwl - Lwl)",
       "2/3(hwl - Lwl)"
     ],
-    "explanation": "Because sheet piles drain more slowly, RWL is positioned higher at 2/3 of the tidal range above LWL.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Because sheet piles drain more slowly, RWL is positioned higher at 2/3 of the tidal range above LWL."
   },
   {
     "id": 5097,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The shape and propagation speed of ocean waves are primarily governed by the displacement of water particles and which two key variables?",
     "answer": "Wave length and Water depth",
@@ -1550,13 +1454,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Water temperature and salinity",
       "Wind gust and air density"
     ],
-    "explanation": "Classical wave mechanics demonstrates that wave form and phase speed c = sqrt((g*L/2*pi)*tanh(2*pi*d/L)) depend on wave length L and water depth d.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Classical wave mechanics demonstrates that wave form and phase speed c = sqrt((g*L/2*pi)*tanh(2*pi*d/L)) depend on wave length L and water depth d."
   },
   {
     "id": 5098,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical distance between the highest point (crest) and lowest point (trough) of a wave is the:",
     "answer": "Wave height",
@@ -1566,13 +1469,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave shoals",
       "Wave period"
     ],
-    "explanation": "Wave height (H) is the total vertical crest-to-trough distance.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave height (H) is the total vertical crest-to-trough distance."
   },
   {
     "id": 5099,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The reciprocal of wave period, representing the number of wave crests passing a fixed point per unit of time, is:",
     "answer": "Wave frequency",
@@ -1582,13 +1484,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "3 seconds",
       "Wave period"
     ],
-    "explanation": "Wave frequency (f = 1/T) is the number of cycles per second (Hz).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave frequency (f = 1/T) is the number of cycles per second (Hz)."
   },
   {
     "id": 5100,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Large waves with long periods can be generated only when wind blows over an extensive fetch. Wave growth begins to decelerate when wave speed reaches what fraction of wind speed?",
     "answer": "1/3 of wind speed",
@@ -1598,13 +1499,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "1/2 of wind speed",
       "3/4 of wind speed"
     ],
-    "explanation": "Wave growth rate decreases significantly once wave phase speed exceeds approximately 1/3 of wind velocity.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave growth rate decreases significantly once wave phase speed exceeds approximately 1/3 of wind velocity."
   },
   {
     "id": 5101,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The process whereby wave energy spreads laterally along a wave crest into the geometric shadow zone behind a breakwater is called:",
     "answer": "Wave diffraction",
@@ -1614,29 +1514,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Deflection",
       "Refraction"
     ],
-    "explanation": "Diffraction transmits wave energy around the ends of breakwaters into protected harbors.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Diffraction transmits wave energy around the ends of breakwaters into protected harbors."
   },
   {
     "id": 5102,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A water wave in a depth where 1/25 < d/L < 1/2 is classified as a:",
-    "answer": "Transitional or intermediate water wave",
+    "answer": "Transitional Water Wave",
     "choices": [
-      "Transitional or intermediate water wave",
-      "Shallow water wave",
-      "High water wave",
-      "Deep water wave"
+      "Transitional Water Wave",
+      "Shallow Water Wave",
+      "Breaking Water Wave",
+      "Deep Water Wave"
     ],
-    "explanation": "Intermediate (transitional) water waves exist where 0.04 < d/L < 0.50.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Intermediate (transitional) water waves exist where 0.04 < d/L < 0.50."
   },
   {
     "id": 5103,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A water wave in a depth where d/L <= 1/25 (0.04) is classified as a:",
     "answer": "Shallow water wave",
@@ -1646,13 +1544,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "High water wave",
       "Deep water wave"
     ],
-    "explanation": "Long or shallow water waves operate where depth is less than 1/25 of wave length.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Long or shallow water waves operate where depth is less than 1/25 of wave length."
   },
   {
     "id": 5104,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The highest elevation point along an individual wave profile is called the:",
     "answer": "Wave crest",
@@ -1662,13 +1559,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave height",
       "Wave length"
     ],
-    "explanation": "The crest is the peak of the wave.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The crest is the peak of the wave."
   },
   {
     "id": 5105,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The lowest depression point along an individual wave profile is called the:",
     "answer": "Wave trough",
@@ -1678,13 +1574,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave height",
       "Wave length"
     ],
-    "explanation": "The trough is the lowest point between successive crests.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The trough is the lowest point between successive crests."
   },
   {
     "id": 5106,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical distance from the lowest point of a wave (trough) to the highest point (crest) is:",
     "answer": "Wave height",
@@ -1694,13 +1589,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave trough",
       "Wave length"
     ],
-    "explanation": "Wave height is the vertical distance between trough and crest.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave height is the vertical distance between trough and crest."
   },
   {
     "id": 5107,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The vertical distance of the wave crest above the wave trough is called:",
     "answer": "Wave height",
@@ -1710,13 +1604,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wave trough",
       "Wave length"
     ],
-    "explanation": "Wave height measures total crest-to-trough amplitude.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave height measures total crest-to-trough amplitude."
   },
   {
     "id": 5108,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average height of the sea surface for all stages of tide over a complete 19-year tidal epoch is:",
     "answer": "Mean sea level",
@@ -1726,13 +1619,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mean lower low water",
       "Mean ocean level"
     ],
-    "explanation": "Mean Sea Level (MSL) serves as the primary vertical control datum for national topographic surveys.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean Sea Level (MSL) serves as the primary vertical control datum for national topographic surveys."
   },
   {
     "id": 5109,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The process of widening, enlarging, cleaning, or deepening navigation channels, harbors, and rivers to maintain safe depth against siltation is known as:",
     "answer": "Dredging",
@@ -1742,13 +1634,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Meandering",
       "Excavation"
     ],
-    "explanation": "Dredging removes bottom sediments to maintain authorized navigation drafts.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Dredging removes bottom sediments to maintain authorized navigation drafts."
   },
   {
     "id": 5110,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The periodic rise and fall of sea level produced by the gravitational attraction of celestial bodies modified by earth rotation is:",
     "answer": "Astronomical tide",
@@ -1758,13 +1649,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Storm surge",
       "Gravitational tide"
     ],
-    "explanation": "Astronomical tides are predictable gravitational sea oscillations.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Astronomical tides are predictable gravitational sea oscillations."
   },
   {
     "id": 5111,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A localized harbor phenomenon involving abnormal oscillations of water level with periods from a few minutes to tens of minutes triggered by barometric fronts and resonant harbor amplification is a:",
     "answer": "Seiche",
@@ -1774,13 +1664,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Tsunami",
       "Astronomical tide"
     ],
-    "explanation": "Harbor seiching creates standing oscillations when meteorological wave frequencies match harbor basin resonance.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Harbor seiching creates standing oscillations when meteorological wave frequencies match harbor basin resonance."
   },
   {
     "id": 5112,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The horizontal flow of seawater in and out of coastal bays and estuaries that accompanies the vertical rise and fall of the tide is the:",
     "answer": "Tidal current",
@@ -1790,13 +1679,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Storm surge",
       "Tsunami"
     ],
-    "explanation": "Tidal currents are horizontal water movements driven by tidal gradients.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Tidal currents are horizontal water movements driven by tidal gradients."
   },
   {
     "id": 5113,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The rotational period of the earth with respect to the moon (lunar day) is approximately:",
     "answer": "24 hours and 50 minutes",
@@ -1806,29 +1694,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Lowest astronomical tide",
       "Ebb tidal day"
     ],
-    "explanation": "A tidal day (lunar day) is 24 hours, 50 minutes, and 28 seconds.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A tidal day (lunar day) is 24 hours, 50 minutes, and 28 seconds."
   },
   {
     "id": 5114,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The standard bathymetric chart datum used internationally for harbor engineering works is generally referenced to the:",
-    "answer": "Lowest astronomical tide (or MLLW)",
+    "answer": "Lowest Astronomical Tide",
     "choices": [
-      "Lowest astronomical tide (or MLLW)",
-      "Lowest observed water level",
-      "Mean tidal-high water level",
-      "Mean tidal-low water level"
+      "Lowest Astronomical Tide",
+      "Lowest Observed Water Level",
+      "Mean Higher High Water",
+      "Mean Lower Low Water"
     ],
-    "explanation": "Lowest Astronomical Tide (LAT) or MLLW ensures charted soundings represent the absolute minimum depth mariners will encounter.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Lowest Astronomical Tide (LAT) or MLLW ensures charted soundings represent the absolute minimum depth mariners will encounter."
   },
   {
     "id": 5115,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The projected rise of global sea level due to climate change between years 2000 and 2050 is assumed in coastal design criteria to be approximately:",
     "answer": "0.25 m to 0.30 m",
@@ -1838,13 +1724,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "0.06 m to 0.2 m",
       "0.16 m to 0.25 m"
     ],
-    "explanation": "Standard port engineering risk guidelines adopt a mid-century sea level rise allowance of 0.25 to 0.30 meters.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Standard port engineering risk guidelines adopt a mid-century sea level rise allowance of 0.25 to 0.30 meters."
   },
   {
     "id": 5116,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The inverted barometer effect states that for every 1 millibar (hPa) fall or rise in atmospheric barometric pressure, sea level will rise or fall by approximately:",
     "answer": "0.9 cm rise or fall",
@@ -1854,13 +1739,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "0.25 cm rise or fall",
       "0.6 cm rise or fall"
     ],
-    "explanation": "Hydrostatic pressure equilibrium causes the ocean surface to rise by approximately 0.9 cm to 1.0 cm for each 1 mb drop in atmospheric pressure.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Hydrostatic pressure equilibrium causes the ocean surface to rise by approximately 0.9 cm to 1.0 cm for each 1 mb drop in atmospheric pressure."
   },
   {
     "id": 5117,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Wind-generated waves formed in the deep ocean that propagate far away from the storm area that created them are called:",
     "answer": "Swell",
@@ -1870,13 +1754,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wind waves",
       "Sieching"
     ],
-    "explanation": "Swells are mature wave trains propagating outside the storm fetch.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Swells are mature wave trains propagating outside the storm fetch."
   },
   {
     "id": 5118,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Ocean waves having very long periods (from 30 seconds up to 12 hr 24 min) found in enclosed or semi-enclosed harbor basins are termed:",
     "answer": "Seiching waves",
@@ -1886,13 +1769,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Swell waves",
       "Wind waves"
     ],
-    "explanation": "Seiching waves cause dangerous surge and sway motions in moored vessels.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Seiching waves cause dangerous surge and sway motions in moored vessels."
   },
   {
     "id": 5119,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The regular periodic rise and fall of the surface of the seas observable along ocean shorelines is called the:",
     "answer": "Tide",
@@ -1902,13 +1784,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Period of wave",
       "Current"
     ],
-    "explanation": "Tides are the regular gravitational sea oscillations.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Tides are the regular gravitational sea oscillations."
   },
   {
     "id": 5120,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average height of all low waters observed at any coastal station over an extended 19-year period is the:",
     "answer": "Mean low water",
@@ -1918,13 +1799,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Diurnal range",
       "Extreme range"
     ],
-    "explanation": "Mean Low Water (MLW) averages all daily low water soundings over 19 years.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Mean Low Water (MLW) averages all daily low water soundings over 19 years."
   },
   {
     "id": 5121,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The tidal current setting and flowing into bays, harbors, and estuaries along the coast during a rising tide is the:",
     "answer": "Flood current",
@@ -1934,13 +1814,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Lunitidal current",
       "Slack water current"
     ],
-    "explanation": "Flood current flows landward/inshore as water level rises.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Flood current flows landward/inshore as water level rises."
   },
   {
     "id": 5122,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The return tidal current flowing seaward toward the open sea during a falling tide is the:",
     "answer": "Ebb current",
@@ -1950,13 +1829,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Flood current",
       "Slack water current"
     ],
-    "explanation": "Ebb current flows seaward as water level recedes toward low water.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Ebb current flows seaward as water level recedes toward low water."
   },
   {
     "id": 5123,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The period of momentary transition between flood and ebb tidal currents during which velocity is negligible (less than 0.1 knot or 0.169 fps) is called:",
     "answer": "Slack water",
@@ -1966,13 +1844,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Spring water",
       "Diurnal time"
     ],
-    "explanation": "Slack water is the interval of zero or near-zero current velocity when the tidal flow reverses direction.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Slack water is the interval of zero or near-zero current velocity when the tidal flow reverses direction."
   },
   {
     "id": 5124,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The average time interval in solar hours between the transit of the moon across a meridian and the next succeeding high water is the:",
     "answer": "High water lunitidal interval",
@@ -1982,13 +1859,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Higher high water interval",
       "Higher water slack"
     ],
-    "explanation": "High water lunitidal interval measures the characteristic time lag of high water following lunar transit.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "High water lunitidal interval measures the characteristic time lag of high water following lunar transit."
   },
   {
     "id": 5125,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The maximum water elevation reached by each rising tide cycle is called:",
     "answer": "High water",
@@ -1998,13 +1874,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Ebb",
       "Crest"
     ],
-    "explanation": "High water (HW) is the peak level of a tidal cycle.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "High water (HW) is the peak level of a tidal cycle."
   },
   {
     "id": 5126,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The maximum water depression reached by each falling tide cycle is called:",
     "answer": "Low water",
@@ -2014,13 +1889,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Neap",
       "Ebb"
     ],
-    "explanation": "Low water (LW) is the lowest stage reached by a falling tide.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Low water (LW) is the lowest stage reached by a falling tide."
   },
   {
     "id": 5127,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The straight-line stretch of open water available for wave growth without the interruption of land barriers is the:",
     "answer": "Fetch",
@@ -2030,13 +1904,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Neap",
       "Ebb"
     ],
-    "explanation": "Fetch is the unbroken over-water distance over which wind generates waves.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Fetch is the unbroken over-water distance over which wind generates waves."
   },
   {
     "id": 5128,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The interval of time between the passage of two successive wave crests past a stationary reference point is the:",
     "answer": "Wave period",
@@ -2046,13 +1919,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "High-water lunitidal interval",
       "Lunitidal period"
     ],
-    "explanation": "Wave period is the temporal period between successive wave crests.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave period is the temporal period between successive wave crests."
   },
   {
     "id": 5129,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A hypothetical deep-water wave height corrected for seabed bathymetric changes (refraction and shoaling) but excluding local breaking is the:",
     "answer": "Equivalent deep-water wave",
@@ -2062,29 +1934,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Highest wave",
       "Significant wave"
     ],
-    "explanation": "The equivalent deep-water wave height (H0') represents the unrefracted offshore equivalent used in coastal transformation calculations.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "The equivalent deep-water wave height (H0') represents the unrefracted offshore equivalent used in coastal transformation calculations."
   },
   {
     "id": 5130,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The statistically determined maximum wave height expected in a wave train during a certain observation period is designated:",
-    "answer": "Max. wave height (Hmax)",
+    "answer": "Maximum Wave Height (Hmax)",
     "choices": [
-      "Max. wave height (Hmax)",
-      "Highest wave height",
-      "H1/10 significant wave height",
-      "H1/3"
+      "Maximum Wave Height (Hmax)",
+      "Mean Wave Height (Hmean)",
+      "Significant Wave Height (Hs)",
+      "Highest Tenth Wave (H1/10)"
     ],
-    "explanation": "Hmax is the maximum expected individual wave height in an ocean storm record (typically 1.6 to 1.8 times Hs).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Hmax is the maximum expected individual wave height in an ocean storm record (typically 1.6 to 1.8 times Hs)."
   },
   {
     "id": 5131,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "The height and period of ocean waves resulting from wind energy transfer are governed by which three fundamental factors?",
     "answer": "Wind velocity, Fetch distance, and Wind duration",
@@ -2094,45 +1964,42 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Depth, Temperature, and Salinity",
       "Tidal current, Coriolis effect, and Pressure"
     ],
-    "explanation": "Wave dimensions are governed by wind speed (U), uninterrupted fetch length (F), and wind duration (t).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave dimensions are governed by wind speed (U), uninterrupted fetch length (F), and wind duration (t)."
   },
   {
     "id": 5132,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Ocean waves continue to grow after reaching a phase velocity equal to 1/3 of wind speed, but at a decreasing rate. What is this threshold fraction?",
     "answer": "1/3 of wind speed",
     "choices": [
       "1/3 of wind speed",
-      "2/3",
-      "1/2",
-      "3/4"
+      "2/3 of wind speed",
+      "1/2 of wind speed",
+      "3/4 of wind speed"
     ],
-    "explanation": "Wave growth rate slows markedly once wave velocity reaches one-third of the generating wind speed.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wave growth rate slows markedly once wave velocity reaches one-third of the generating wind speed."
   },
   {
     "id": 5133,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "When ocean waves propagate into progressively shallower water, which wave characteristics change?",
-    "answer": "Wave speed decreases, wave length decreases, and wave height increases (Wave period stays constant)",
+    "answer": "Wave speed and length decrease while height increases",
     "choices": [
-      "Wave speed decreases, wave length decreases, and wave height increases (Wave period stays constant)",
-      "All parameters increase",
-      "Wave speed increases while height drops",
-      "Period decreases and wavelength increases"
+      "Wave speed and length decrease while height increases",
+      "Wave speed, length, and height all increase together",
+      "Wave speed increases while height and period drop",
+      "Wave period decreases while length and speed increase"
     ],
-    "explanation": "As waves enter shallow water, bottom friction decreases celerity and wavelength, forcing wave energy to compress vertically (increasing wave height until breaking), while period T remains strictly invariant.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "As waves enter shallow water, bottom friction decreases celerity and wavelength, forcing wave energy to compress vertically (increasing wave height until breaking), while period T remains strictly invariant. Wave period stays constant during shoaling."
   },
   {
     "id": 5134,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "What are the primary recognized physical types of breaking waves classified in coastal engineering?",
     "answer": "Spilling, Plunging, Collapsing, and Surging breakers",
@@ -2142,13 +2009,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Deep and shallow breakers only",
       "Refracted and reflected breakers only"
     ],
-    "explanation": "Galvin's breaker classification identifies spilling (flat beaches), plunging (steep crest curl), collapsing (face collapses), and surging (steep beaches, no free-fall).",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Galvin's breaker classification identifies spilling (flat beaches), plunging (steep crest curl), collapsing (face collapses), and surging (steep beaches, no free-fall)."
   },
   {
     "id": 5135,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "In seismic design of port facilities using the seismic coefficient method, if A is dead weight, B is surcharge, and C is seismic coefficient, the lateral seismic force is computed as:",
     "answer": "(a + B/2) * C",
@@ -2158,61 +2024,57 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "(a/2 + B) * C",
       "(a + 2b) * C"
     ],
-    "explanation": "Under standard port engineering design codes (e.g. OCDI), lateral seismic inertia is evaluated using the dead weight plus 50% of the live surcharge: F = (A + B/2)*C.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Under standard port engineering design codes (e.g. OCDI), lateral seismic inertia is evaluated using the dead weight plus 50% of the live surcharge: F = (A + B/2)*C."
   },
   {
     "id": 5136,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "In port design during earthquake conditions, what proportion of the design surcharge load is considered to act concurrently with seismic inertia?",
-    "answer": "1/2 of the surcharge (50%)",
+    "answer": "50% of the surcharge",
     "choices": [
-      "1/2 of the surcharge (50%)",
-      "Double the surcharge",
-      "3 times the surcharge",
-      "1/3 of the surcharge"
+      "50% of the surcharge",
+      "200% of the surcharge",
+      "300% of the surcharge",
+      "33% of the surcharge"
     ],
-    "explanation": "Because live surcharges (containers, cargo) do not move completely in phase with ground acceleration, 50% (1/2) is standardly considered.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Because live surcharges (containers, cargo) do not move completely in phase with ground acceleration, 50% (1/2) is standardly considered."
   },
   {
     "id": 5137,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A general term used to describe a marine berthing structure for mooring vessels to load and unload cargo or embark passengers is:",
-    "answer": "All of the above (Dock, Pier, Wharf)",
+    "answer": "Marine Terminal (Dock, Pier, or Wharf)",
     "choices": [
-      "All of the above (Dock, Pier, Wharf)",
-      "Dock only",
-      "Pier only",
-      "Wharf only"
+      "Marine Terminal (Dock, Pier, or Wharf)",
+      "Breakwater Groin",
+      "Fairway Navigation Buoy",
+      "Harbor Turning Basin"
     ],
-    "explanation": "Maritime berthing infrastructure encompasses docks (enclosed water basins or quays), finger piers, and marginal wharves.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Maritime berthing infrastructure encompasses docks (enclosed water basins or quays), finger piers, and marginal wharves. Includes docks, piers, and wharves."
   },
   {
     "id": 5138,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A berthing structure built parallel to the shore or bank, where vessels can dock on one side only and the rear is retained or backed by land, is called a:",
-    "answer": "Wharf (or Quay)",
+    "answer": "Wharf or Quay",
     "choices": [
-      "Wharf (or Quay)",
-      "Bulkhead",
-      "Pier",
-      "Jetty"
+      "Wharf or Quay",
+      "Anchored Bulkhead",
+      "Finger Pier",
+      "Harbor Jetty"
     ],
-    "explanation": "A wharf or quay runs parallel to the shoreline and features berthing facilities on the seaward face only.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A wharf or quay runs parallel to the shoreline and features berthing facilities on the seaward face only."
   },
   {
     "id": 5139,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A berthing structure that projects out into the water perpendicular or oblique to the shoreline, enabling vessels to dock on both sides, is called a:",
     "answer": "Pier",
@@ -2222,29 +2084,27 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wharf",
       "Breakwater"
     ],
-    "explanation": "A pier (or finger pier) projects into navigable water allowing two-sided vessel docking.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A pier (or finger pier) projects into navigable water allowing two-sided vessel docking."
   },
   {
     "id": 5140,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "An artificial marine basin provided with gates that can be pumped dry to allow construction, painting, and repair of ship hulls is a:",
-    "answer": "Dry dock (Graving dock)",
+    "answer": "Dry Dock",
     "choices": [
-      "Dry dock (Graving dock)",
-      "Wet dock",
-      "Quay",
-      "Jetty"
+      "Dry Dock",
+      "Wet Dock",
+      "Marginal Quay",
+      "Timber Jetty"
     ],
-    "explanation": "A dry dock is an enclosed basin fitted with a caisson gate that is dewatered to expose ship hulls.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A dry dock is an enclosed basin fitted with a caisson gate that is dewatered to expose ship hulls. Also referred to as a graving dock."
   },
   {
     "id": 5141,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A marine wall structure similar to a wharf whose primary structural function is to retain earth fill behind it while preventing soil slumping into the waterway is a:",
     "answer": "Bulkhead",
@@ -2254,13 +2114,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Jetty",
       "Breakwater"
     ],
-    "explanation": "A bulkhead is primarily an earth-retaining structure along a waterfront, though it may occasionally berth shallow-draft vessels.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A bulkhead is primarily an earth-retaining structure along a waterfront, though it may occasionally berth shallow-draft vessels."
   },
   {
     "id": 5142,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Isolated marine structures or clusters of piles built in harbors to moor vessels, assist in berthing alignment, or secure breasting lines are called:",
     "answer": "Dolphins",
@@ -2270,13 +2129,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Jetties",
       "Breakwaters"
     ],
-    "explanation": "Dolphins are independent offshore marine structures used for vessel berthing, breasting, and mooring.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Dolphins are independent offshore marine structures used for vessel berthing, breasting, and mooring."
   },
   {
     "id": 5143,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "Dolphins designed with heavy elastomeric fenders to absorb the impact energy of a vessel during berthing and hold the ship against broadside winds are called:",
     "answer": "Breasting dolphins",
@@ -2286,13 +2144,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Fixed mooring berth",
       "Bollards"
     ],
-    "explanation": "Breasting dolphins take direct vessel berthing impacts and prevent ships from striking piers; mooring dolphins only handle mooring lines.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Breasting dolphins take direct vessel berthing impacts and prevent ships from striking piers; mooring dolphins only handle mooring lines."
   },
   {
     "id": 5144,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A massive marine barrier structure built to protect a harbor basin from ocean waves and create tranquil waters for shipping operations is a:",
     "answer": "Breakwater",
@@ -2302,13 +2159,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wharf",
       "Jetty"
     ],
-    "explanation": "Breakwaters dissipate wave energy through reflection and wave breaking to shelter harbor basins.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Breakwaters dissipate wave energy through reflection and wave breaking to shelter harbor basins."
   },
   {
     "id": 5145,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A coastal engineering structure built perpendicular to the shore into the sea to prevent sediment littoral drift from shoaling harbor entrance channels is a:",
     "answer": "Jetty",
@@ -2318,13 +2174,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wharf",
       "Breakwater"
     ],
-    "explanation": "Jetties are built at harbor entrances and river mouths to maintain navigation depth and prevent sand shoaling.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Jetties are built at harbor entrances and river mouths to maintain navigation depth and prevent sand shoaling."
   },
   {
     "id": 5146,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A paved platform structure built in a harbor parallel to the shore and backed directly by ground or reclaimed earth fill is called a:",
     "answer": "Quay",
@@ -2334,13 +2189,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wharf",
       "Jetty"
     ],
-    "explanation": "A quay is a solid stone, concrete, or sheet pile berthing platform backed by solid ground.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "A quay is a solid stone, concrete, or sheet pile berthing platform backed by solid ground."
   },
   {
     "id": 5147,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A marine platform built parallel to the shore or to a breakwater within a harbor basin to berth vessels is called a:",
     "answer": "Wharf",
@@ -2350,13 +2204,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Quay",
       "Jetty"
     ],
-    "explanation": "Wharves are marginal structures built parallel to shorelines or inner breakwaters for vessel berthing.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Wharves are marginal structures built parallel to shorelines or inner breakwaters for vessel berthing."
   },
   {
     "id": 5148,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A rubble-mound or concrete barrier structure that protects a harbor basin from oceanic wave attack is a:",
     "answer": "Breakwater",
@@ -2366,13 +2219,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Bulkhead",
       "Jetty"
     ],
-    "explanation": "Rubble-mound breakwaters use heavy quarrystone armor or concrete tetrapods to absorb storm wave forces.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Rubble-mound breakwaters use heavy quarrystone armor or concrete tetrapods to absorb storm wave forces."
   },
   {
     "id": 5149,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A marine retaining structure built primarily to retain earth fill and prevent soil from sliding into navigable water is a:",
     "answer": "Bulkhead",
@@ -2382,13 +2234,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Breakwater",
       "Berth structure"
     ],
-    "explanation": "Bulkheads are vertical earth retaining waterfront walls.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Bulkheads are vertical earth retaining waterfront walls."
   },
   {
     "id": 5150,
     "area": "MSTE",
-    "subtopic": "Hydrology, Coastal & Harbor Engineering",
+    "subtopic": "Ports, Harbors, Waves & Coastal Engineering",
     "difficulty": "Medium",
     "question": "A strong cast iron or steel post securely anchored to a wharf, pier, or quay to which a ship's mooring eye lines are fastened is a:",
     "answer": "Bollard",
@@ -2398,8 +2249,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Gravity wall",
       "Tetrapod"
     ],
-    "explanation": "Bollards are heavy steel/iron posts anchored to berth decks for securing ship mooring hawsers.",
-    "reference": "GERTC Refresher — Ports & Harbors Review Compilation"
+    "explanation": "Bollards are heavy steel/iron posts anchored to berth decks for securing ship mooring hawsers."
   },
   {
     "id": 5151,
@@ -2414,8 +2264,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Potential Energy",
       "Thermal Energy"
     ],
-    "explanation": "Strain energy equals the internal work done by stresses acting through strains during load application.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Strain energy equals the internal work done by stresses acting through strains during load application."
   },
   {
     "id": 5152,
@@ -2423,15 +2272,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Medium",
     "question": "The ratio of shear stress to shear strain within the linear elastic proportional limit of a material.",
-    "answer": "Modulus of Rigidity (Shear Modulus)",
+    "answer": "Modulus of Rigidity",
     "choices": [
-      "Modulus of Rigidity (Shear Modulus)",
+      "Modulus of Rigidity",
       "Modulus of Elasticity",
       "Poisson's Ratio",
       "Bulk Modulus"
     ],
-    "explanation": "Modulus of rigidity (G) quantifies a material's elastic resistance to shearing deformation and torsional twist.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Modulus of rigidity (G) quantifies a material's elastic resistance to shearing deformation and torsional twist. Also known as the shear modulus (G)."
   },
   {
     "id": 5153,
@@ -2446,8 +2294,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Modulus of Elasticity",
       "Bulk Ratio"
     ],
-    "explanation": "Poisson's ratio (nu) for civil engineering steel is approx. 0.30 and for concrete ranges from 0.15 to 0.20.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Poisson's ratio (nu) for civil engineering steel is approx. 0.30 and for concrete ranges from 0.15 to 0.20."
   },
   {
     "id": 5154,
@@ -2462,8 +2309,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Yield Strength",
       "Ultimate Tensile Strength"
     ],
-    "explanation": "Modulus of toughness measures total energy absorption capacity through both elastic and large plastic deformations.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Modulus of toughness measures total energy absorption capacity through both elastic and large plastic deformations."
   },
   {
     "id": 5155,
@@ -2478,8 +2324,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Proportional Limit",
       "Rupture Modulus"
     ],
-    "explanation": "Modulus of resilience (ur = sigma_y^2 / 2E) measures the capacity of a material to withstand shock and impact within its elastic range.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Modulus of resilience (ur = sigma_y^2 / 2E) measures the capacity of a material to withstand shock and impact within its elastic range."
   },
   {
     "id": 5156,
@@ -2494,8 +2339,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Toughness",
       "Hardness"
     ],
-    "explanation": "Stiffness depends on elastic modulus E and member cross-sectional geometric properties (moment of inertia I, area A).",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Stiffness depends on elastic modulus E and member cross-sectional geometric properties (moment of inertia I, area A)."
   },
   {
     "id": 5157,
@@ -2510,8 +2354,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Orthotropic Material",
       "Anisotropic Material"
     ],
-    "explanation": "Homogeneity refers to point-to-point uniformity in composition regardless of direction.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Homogeneity refers to point-to-point uniformity in composition regardless of direction."
   },
   {
     "id": 5158,
@@ -2526,8 +2369,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Orthotropic Material",
       "Heterogeneous Material"
     ],
-    "explanation": "Structural steel is isotropic; structural wood is anisotropic/orthotropic.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Structural steel is isotropic; structural wood is anisotropic/orthotropic."
   },
   {
     "id": 5159,
@@ -2542,8 +2384,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Homogeneous Material",
       "Prismatic Material"
     ],
-    "explanation": "Wood and fiber-reinforced composites exhibit different stiffnesses along longitudinal, radial, and tangential axes.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Wood and fiber-reinforced composites exhibit different stiffnesses along longitudinal, radial, and tangential axes."
   },
   {
     "id": 5160,
@@ -2558,8 +2399,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Haunched Member",
       "Stepped Member"
     ],
-    "explanation": "Standard rolled W-beams and uniform reinforced concrete columns are prismatic members.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Standard rolled W-beams and uniform reinforced concrete columns are prismatic members."
   },
   {
     "id": 5161,
@@ -2574,8 +2414,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Relaxation",
       "Necking"
     ],
-    "explanation": "Fatigue failure begins with microscopic stress concentrations in bridge girders, crane runways, and offshore towers.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Fatigue failure begins with microscopic stress concentrations in bridge girders, crane runways, and offshore towers."
   },
   {
     "id": 5162,
@@ -2590,8 +2429,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Necking",
       "Rupture"
     ],
-    "explanation": "Euler's critical buckling formula Pcr = pi^2*E*I / (K*L)^2 governs slender compression members.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Euler's critical buckling formula Pcr = pi^2*E*I / (K*L)^2 governs slender compression members."
   },
   {
     "id": 5163,
@@ -2606,8 +2444,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Bernoulli's Principle",
       "Pascal's Law"
     ],
-    "explanation": "Hooke's law defines linear elasticity and constant modulus of elasticity E.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Hooke's law defines linear elasticity and constant modulus of elasticity E."
   },
   {
     "id": 5164,
@@ -2622,8 +2459,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Yield Plateau",
       "Necking Stage"
     ],
-    "explanation": "Dislocation entanglement in crystal lattices strengthens the metal during strain hardening.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Dislocation entanglement in crystal lattices strengthens the metal during strain hardening."
   },
   {
     "id": 5165,
@@ -2638,8 +2474,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Strain Hardening",
       "Buckling"
     ],
-    "explanation": "Necking marks the onset of ductile tensile instability in steel rebar tests.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Necking marks the onset of ductile tensile instability in steel rebar tests."
   },
   {
     "id": 5166,
@@ -2654,8 +2489,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Truss",
       "Spandrel Beam"
     ],
-    "explanation": "Rigid concrete slabs act as horizontal diaphragms distributing lateral base shear based on vertical element relative stiffness.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Rigid concrete slabs act as horizontal diaphragms distributing lateral base shear based on vertical element relative stiffness."
   },
   {
     "id": 5167,
@@ -2670,8 +2504,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Curtain Wall",
       "Retaining Wall"
     ],
-    "explanation": "Shear walls provide immense lateral stiffness to high-rise building structures.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Shear walls provide immense lateral stiffness to high-rise building structures."
   },
   {
     "id": 5168,
@@ -2686,8 +2519,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shear Center",
       "Center of Buoyancy"
     ],
-    "explanation": "Center of mass is computed as the weighted centroid of all floor dead loads and permanent equipment.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Center of mass is computed as the weighted centroid of all floor dead loads and permanent equipment."
   },
   {
     "id": 5169,
@@ -2702,8 +2534,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Story Shear",
       "Story Drift"
     ],
-    "explanation": "Base shear V is distributed vertically across all story levels in equivalent lateral force procedures.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Base shear V is distributed vertically across all story levels in equivalent lateral force procedures."
   },
   {
     "id": 5170,
@@ -2718,8 +2549,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Torsional Drift",
       "Chord Rotation"
     ],
-    "explanation": "NSCP 2015 limits maximum inelastic design story drift (Delta_M) to prevent structural and partition collapse.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "NSCP 2015 limits maximum inelastic design story drift (Delta_M) to prevent structural and partition collapse."
   },
   {
     "id": 5171,
@@ -2734,8 +2564,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Weak Story",
       "Torsional Irregularity"
     ],
-    "explanation": "Out-of-plane vertical framing offsets constitute a severe plan structural irregularity penalized in seismic codes.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Out-of-plane vertical framing offsets constitute a severe plan structural irregularity penalized in seismic codes."
   },
   {
     "id": 5172,
@@ -2750,8 +2579,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Punching Shear Stress",
       "Direct Shear Stress"
     ],
-    "explanation": "Eccentricity creates an inherent twisting moment M_t = V * e in the floor diaphragm.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Eccentricity creates an inherent twisting moment M_t = V * e in the floor diaphragm."
   },
   {
     "id": 5173,
@@ -2766,8 +2594,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Attenuation",
       "Decoupling"
     ],
-    "explanation": "Resonance triggers drastic amplification of lateral building displacement and interstory drift.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Resonance triggers drastic amplification of lateral building displacement and interstory drift."
   },
   {
     "id": 5174,
@@ -2782,8 +2609,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Frequency",
       "Peak Acceleration"
     ],
-    "explanation": "Approximate fundamental building period T can be estimated in NSCP using Ct * (hn)^3/4.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Approximate fundamental building period T can be estimated in NSCP using Ct * (hn)^3/4."
   },
   {
     "id": 5175,
@@ -2798,8 +2624,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Stiffness",
       "Inertia"
     ],
-    "explanation": "Civil structures typically exhibit 2% to 5% of critical viscous damping during seismic events.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Civil structures typically exhibit 2% to 5% of critical viscous damping during seismic events."
   },
   {
     "id": 5176,
@@ -2814,8 +2639,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Fault Scarp",
       "Seismic Zone"
     ],
-    "explanation": "Epicentral distance is the surface distance from a seismic monitoring station to the epicenter.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Epicentral distance is the surface distance from a seismic monitoring station to the epicenter."
   },
   {
     "id": 5177,
@@ -2823,15 +2647,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Medium",
     "question": "The exact subsurface geological point of origin along a tectonic fault rupture from which seismic energy and elastic waves are released.",
-    "answer": "Earthquake Focus (Hypocenter)",
+    "answer": "Earthquake Focus",
     "choices": [
-      "Earthquake Focus (Hypocenter)",
-      "Epicenter",
-      "Fault Trace",
+      "Earthquake Focus",
+      "Surface Epicenter",
+      "Active Fault Trace",
       "Subduction Axis"
     ],
-    "explanation": "Hypocenter depth classifies earthquakes into shallow (<70 km), intermediate, or deep.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Hypocenter depth classifies earthquakes into shallow (<70 km), intermediate, or deep. Also known as the hypocenter."
   },
   {
     "id": 5178,
@@ -2846,8 +2669,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Base Shear",
       "Peak Spectral Displacement"
     ],
-    "explanation": "Intensity varies with distance from epicenter and local soil conditions; magnitude is a single global energy value.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Intensity varies with distance from epicenter and local soil conditions; magnitude is a single global energy value."
   },
   {
     "id": 5179,
@@ -2862,8 +2684,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Ground Acceleration",
       "Spectral Velocity"
     ],
-    "explanation": "Each whole number increase in moment magnitude corresponds to an approximate 32-fold increase in radiated seismic energy.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Each whole number increase in moment magnitude corresponds to an approximate 32-fold increase in radiated seismic energy."
   },
   {
     "id": 5180,
@@ -2878,8 +2699,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Weight Irregularity",
       "Geometric Irregularity"
     ],
-    "explanation": "Soft stories (often created by tall ground-floor parking or lobby columns without walls) concentrate severe drift demands.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Soft stories (often created by tall ground-floor parking or lobby columns without walls) concentrate severe drift demands."
   },
   {
     "id": 5181,
@@ -2894,8 +2714,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mass Irregularity",
       "Diaphragm Discontinuity"
     ],
-    "explanation": "Weak stories produce plastic collapse mechanisms under extreme lateral seismic shear.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Weak stories produce plastic collapse mechanisms under extreme lateral seismic shear."
   },
   {
     "id": 5182,
@@ -2910,8 +2729,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Factor of Safety",
       "Resistance Factor"
     ],
-    "explanation": "NSCP 2015 specifies load factors such as 1.2D + 1.6L in Ultimate Strength Design.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "NSCP 2015 specifies load factors such as 1.2D + 1.6L in Ultimate Strength Design."
   },
   {
     "id": 5183,
@@ -2919,15 +2737,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
     "question": "A capacity reduction factor (phi <= 1.0) that accounts for statistical variations in material strengths, dimensional tolerances, and the consequence and ductility of failure modes.",
-    "answer": "Strength Reduction Factor (Phi)",
+    "answer": "Strength Reduction Factor",
     "choices": [
-      "Strength Reduction Factor (Phi)",
-      "Load Factor",
+      "Strength Reduction Factor",
+      "Dead Load Factor",
       "Overstrength Factor",
-      "Impact Factor"
+      "Dynamic Impact Factor"
     ],
-    "explanation": "In NSCP 2015, phi = 0.90 for tension-controlled flexure, 0.75 for shear, and 0.65 for tied compression members.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "In NSCP 2015, phi = 0.90 for tension-controlled flexure, 0.75 for shear, and 0.65 for tied compression members. Denoted by the Greek letter Phi (φ)."
   },
   {
     "id": 5184,
@@ -2942,8 +2759,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Splitting Tensile Strength",
       "Compressive Strength"
     ],
-    "explanation": "Modulus of rupture defines cracking moment Mcr in concrete slab and beam serviceability analysis.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Modulus of rupture defines cracking moment Mcr in concrete slab and beam serviceability analysis."
   },
   {
     "id": 5185,
@@ -2958,8 +2774,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "External Post-Tensioning",
       "Chemical Prestressing"
     ],
-    "explanation": "Pre-tensioning is standard in precast casting beds for double-tees, hollow-core slabs, and bridge girders.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Pre-tensioning is standard in precast casting beds for double-tees, hollow-core slabs, and bridge girders."
   },
   {
     "id": 5186,
@@ -2974,8 +2789,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Steam Curing",
       "Shotcreting"
     ],
-    "explanation": "Post-tensioning enables long-span cast-in-place floor slabs, transfer plates, and segmental box girder bridges.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Post-tensioning enables long-span cast-in-place floor slabs, transfer plates, and segmental box girder bridges."
   },
   {
     "id": 5187,
@@ -2990,8 +2804,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Elastic Shortening Force",
       "Anchor Seating Force"
     ],
-    "explanation": "Jacking force is carefully monitored alongside tendon elongation measurements during stressing.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Jacking force is carefully monitored alongside tendon elongation measurements during stressing."
   },
   {
     "id": 5188,
@@ -3006,8 +2819,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Initial Prestress",
       "Yield Prestress"
     ],
-    "explanation": "Effective prestress accounts for losses from elastic shortening, anchor slip, creep, shrinkage, and tendon relaxation.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Effective prestress accounts for losses from elastic shortening, anchor slip, creep, shrinkage, and tendon relaxation."
   },
   {
     "id": 5189,
@@ -3022,8 +2834,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Concrete Shrinkage",
       "Elastic Shortening"
     ],
-    "explanation": "Low-relaxation strands (ASTM A416) are standardly specified to minimize relaxation prestress losses.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Low-relaxation strands (ASTM A416) are standardly specified to minimize relaxation prestress losses."
   },
   {
     "id": 5190,
@@ -3038,8 +2849,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Tendon Relaxation",
       "Elastic Deflection"
     ],
-    "explanation": "Creep in prestressed concrete leads to progressive camber changes and prestress loss.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Creep in prestressed concrete leads to progressive camber changes and prestress loss."
   },
   {
     "id": 5191,
@@ -3054,8 +2864,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Clear Cover",
       "Shear Span"
     ],
-    "explanation": "Effective depth d governs internal resisting moment arm (d - a/2) in beam flexure.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Effective depth d governs internal resisting moment arm (d - a/2) in beam flexure."
   },
   {
     "id": 5192,
@@ -3070,8 +2879,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "180-degree Bend",
       "J-Hook"
     ],
-    "explanation": "Seismic 135-degree hooks prevent ties from popping open when outer cover concrete spalls during severe earthquake cyclic loading.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Seismic 135-degree hooks prevent ties from popping open when outer cover concrete spalls during severe earthquake cyclic loading."
   },
   {
     "id": 5193,
@@ -3079,15 +2887,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
     "question": "A closed or continuously wound tie made up of one or several rebar elements, each having standard seismic hooks at both ends, providing confinement to core concrete in seismic ductile members.",
-    "answer": "Hoop",
+    "answer": "Seismic Hoop",
     "choices": [
-      "Hoop",
+      "Seismic Hoop",
       "Longitudinal Bar",
       "Spacer Tie",
       "Dowelled Splice"
     ],
-    "explanation": "Seismic hoops prevent longitudinal bar buckling and preserve compressive strain capacity in plastic hinge zones.",
-    "reference": "Review Innovations — Structural Engineering Terms & Principles"
+    "explanation": "Seismic hoops prevent longitudinal bar buckling and preserve compressive strain capacity in plastic hinge zones."
   },
   {
     "id": 5194,
@@ -3102,8 +2909,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Design-Build Contracting",
       "Procurement Management"
     ],
-    "explanation": "Construction management involves professional coordination of schedule, cost, quality, and safety on behalf of the project owner.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Construction management involves professional coordination of schedule, cost, quality, and safety on behalf of the project owner."
   },
   {
     "id": 5195,
@@ -3118,8 +2924,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Field Surveying",
       "Procurement Logistics"
     ],
-    "explanation": "Quality management encompasses the overarching policies, testing standards, and certifications ensuring built work meets contract specifications.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Quality management encompasses the overarching policies, testing standards, and certifications ensuring built work meets contract specifications."
   },
   {
     "id": 5196,
@@ -3134,8 +2939,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Value Engineering",
       "Risk Management"
     ],
-    "explanation": "Quality control (QC) is the contractor's internal operational process control ensuring materials and workmanship conform to standards.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Quality control (QC) is the contractor's internal operational process control ensuring materials and workmanship conform to standards."
   },
   {
     "id": 5197,
@@ -3150,8 +2954,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Subgrade Infiltration",
       "Quarry Blasting"
     ],
-    "explanation": "Earthmoving includes excavation, hauling, dumping, spreading, grading, and compaction of earth or rock materials.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Earthmoving includes excavation, hauling, dumping, spreading, grading, and compaction of earth or rock materials."
   },
   {
     "id": 5198,
@@ -3166,8 +2969,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Plasticity Index",
       "Moisture Ratio"
     ],
-    "explanation": "Trafficability determines whether heavy haulers, scrapers, and trucks can traverse site terrain repeatedly.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Trafficability determines whether heavy haulers, scrapers, and trucks can traverse site terrain repeatedly."
   },
   {
     "id": 5199,
@@ -3182,8 +2984,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Compressibility",
       "Optimum Moisture"
     ],
-    "explanation": "Loadability reflects soil stiffness, boulder content, and cohesion that influence excavator cycle times.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Loadability reflects soil stiffness, boulder content, and cohesion that influence excavator cycle times."
   },
   {
     "id": 5200,
@@ -3198,8 +2999,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Heaped Volume",
       "Water Line Capacity"
     ],
-    "explanation": "Plate line capacity is the geometric volume bounded by bucket plates and side cutters.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Plate line capacity is the geometric volume bounded by bucket plates and side cutters."
   },
   {
     "id": 5201,
@@ -3214,8 +3014,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Heaped Volume",
       "Water Line Capacity"
     ],
-    "explanation": "Struck capacity represents the flat, level volume with no surcharge above bucket edges.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Struck capacity represents the flat, level volume with no surcharge above bucket edges."
   },
   {
     "id": 5202,
@@ -3230,8 +3029,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Plate Line Capacity",
       "Heaped Volume"
     ],
-    "explanation": "Water line capacity is used for watery slurry, wet muck, and dredging buckets.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Water line capacity is used for watery slurry, wet muck, and dredging buckets."
   },
   {
     "id": 5203,
@@ -3246,8 +3044,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Plate Line Capacity",
       "Water Line Capacity"
     ],
-    "explanation": "Heaped volume includes the heaped surcharge resting on top of the bucket at the material's natural angle of repose.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Heaped volume includes the heaped surcharge resting on top of the bucket at the material's natural angle of repose."
   },
   {
     "id": 5204,
@@ -3262,8 +3059,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Hydraulic Backhoe",
       "Skid-steer Loader"
     ],
-    "explanation": "Draglines excavate below ground level at long distances from the machine, commonly used in canals and deep quarries.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Draglines excavate below ground level at long distances from the machine, commonly used in canals and deep quarries."
   },
   {
     "id": 5205,
@@ -3278,8 +3074,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Motor Graders",
       "Scrapers"
     ],
-    "explanation": "Cranes utilize wire rope hoist lines, sheaves, and lattice/telescoping booms to position heavy loads.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Cranes utilize wire rope hoist lines, sheaves, and lattice/telescoping booms to position heavy loads."
   },
   {
     "id": 5206,
@@ -3294,8 +3089,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Drawbar Pull",
       "Rimpull"
     ],
-    "explanation": "Grade resistance is approx. 20 lb per ton of gross vehicle weight for each 1% of adverse incline (grade).",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Grade resistance is approx. 20 lb per ton of gross vehicle weight for each 1% of adverse incline (grade)."
   },
   {
     "id": 5207,
@@ -3310,8 +3104,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Inertial Resistance",
       "Wind Resistance"
     ],
-    "explanation": "Rolling resistance depends on tire diameter, pressure, tread pattern, and subgrade firmness.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Rolling resistance depends on tire diameter, pressure, tread pattern, and subgrade firmness."
   },
   {
     "id": 5208,
@@ -3326,8 +3119,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Travel Time",
       "Idling Time"
     ],
-    "explanation": "Fixed time includes spotting at the excavator, loading time, turning at the dump, and dumping time.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Fixed time includes spotting at the excavator, loading time, turning at the dump, and dumping time."
   },
   {
     "id": 5209,
@@ -3342,12 +3134,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Spotting Time",
       "Delay Time"
     ],
-    "explanation": "Variable time fluctuates directly with haul distance, haul road grade, and truck speed.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Variable time fluctuates directly with haul distance, haul road grade, and truck speed."
   },
   {
     "id": 5210,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "A deep soil densification technique that involves repeatedly dropping a heavy steel or concrete tamper weight (10 to 40 tons) from a crane from heights of 10 to 30 meters onto the ground surface.",
@@ -3358,28 +3149,26 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Surcharging",
       "Pneumatic Rolling"
     ],
-    "explanation": "Dynamic compaction (deep compaction) imparts high-energy shock waves that densify loose granular soils and fills at depths up to 10 meters.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Dynamic compaction (deep compaction) imparts high-energy shock waves that densify loose granular soils and fills at depths up to 10 meters."
   },
   {
     "id": 5211,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "The process of densifying cohesionless, granular soils by inserting a heavy vibrating probe (vibroflot) into the ground accompanied by water jetting and backfill.",
-    "answer": "Vibratory Compaction (Vibroflotation)",
+    "answer": "Vibroflotation",
     "choices": [
-      "Vibratory Compaction (Vibroflotation)",
+      "Vibroflotation",
       "Dynamic Compaction",
-      "Surcharging",
+      "Soil Surcharging",
       "Vacuum Dewatering"
     ],
-    "explanation": "Vibroflotation liquefies loose sand surrounding the probe, allowing sand grains to rearrange into a dense state.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Vibroflotation liquefies loose sand surrounding the probe, allowing sand grains to rearrange into a dense state."
   },
   {
     "id": 5212,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Medium",
     "question": "The process of placing temporary additional weight (such as a large soil embankment surcharge) on the ground surface to accelerate the consolidation of cohesive clay soils.",
@@ -3390,12 +3179,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Electroosmosis",
       "Vibrocompaction"
     ],
-    "explanation": "Surcharging pre-compresses soft clay deposits before building construction, eliminating post-construction settlement.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Surcharging pre-compresses soft clay deposits before building construction, eliminating post-construction settlement."
   },
   {
     "id": 5213,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "The improvement of the engineering properties of a soil (bearing strength, shear resistance, and compressibility) by the use of physical compaction, blending, or chemical admixtures (cement, lime, fly ash).",
@@ -3406,8 +3194,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Soil Liquefaction",
       "Soil Leaching"
     ],
-    "explanation": "Soil stabilization improves subgrade load-bearing capacity and reduces moisture-induced swelling.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Soil stabilization improves subgrade load-bearing capacity and reduces moisture-induced swelling."
   },
   {
     "id": 5214,
@@ -3422,8 +3209,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Balancing",
       "Scarifying"
     ],
-    "explanation": "Finish grading is executed using precision motor graders to establish final subgrade tolerance prior to paving.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Finish grading is executed using precision motor graders to establish final subgrade tolerance prior to paving."
   },
   {
     "id": 5215,
@@ -3438,8 +3224,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Borrowing",
       "Wasting"
     ],
-    "explanation": "Balancing equates cut and fill volumes within economic haul limits along roadway profiles.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Balancing equates cut and fill volumes within economic haul limits along roadway profiles."
   },
   {
     "id": 5216,
@@ -3454,8 +3239,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Rough Grading",
       "Screeding"
     ],
-    "explanation": "Trimming prepares the final stable surface upon which asphalt or concrete pavement is placed.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Trimming prepares the final stable surface upon which asphalt or concrete pavement is placed."
   },
   {
     "id": 5217,
@@ -3470,8 +3254,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Self-Consolidating Concrete",
       "Flowing Concrete"
     ],
-    "explanation": "No-slump concrete has extremely stiff consistency requiring intense mechanical vibration to consolidate.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "No-slump concrete has extremely stiff consistency requiring intense mechanical vibration to consolidate."
   },
   {
     "id": 5218,
@@ -3479,15 +3262,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "A standard test procedure for measuring concrete consistency and workability by determining the decrease in height of a compacted concrete cone after the mold is lifted.",
-    "answer": "Slump Test (ASTM C143)",
+    "answer": "Slump Test",
     "choices": [
-      "Slump Test (ASTM C143)",
+      "Slump Test",
       "Kelly Ball Test",
       "Vee-Bee Consistometer",
       "Air Content Test"
     ],
-    "explanation": "ASTM C143 standardizes the slump test measuring consistency in millimeters or inches.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "ASTM C143 standardizes the slump test measuring consistency in millimeters or inches. Standardized under ASTM C143."
   },
   {
     "id": 5219,
@@ -3502,8 +3284,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Architectural Concrete",
       "Heavyweight Concrete"
     ],
-    "explanation": "Refractory concrete withstands service temperatures exceeding 1000°C without loss of integrity.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Refractory concrete withstands service temperatures exceeding 1000°C without loss of integrity."
   },
   {
     "id": 5220,
@@ -3518,8 +3299,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shotcrete",
       "Roller Compacted Concrete"
     ],
-    "explanation": "Precast concrete offers superior quality control and accelerated on-site construction schedules.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Precast concrete offers superior quality control and accelerated on-site construction schedules."
   },
   {
     "id": 5221,
@@ -3534,8 +3314,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Mass Concrete",
       "Refractory Concrete"
     ],
-    "explanation": "Architectural concrete fulfills both structural load-bearing and aesthetic exterior facade functions.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Architectural concrete fulfills both structural load-bearing and aesthetic exterior facade functions."
   },
   {
     "id": 5222,
@@ -3550,8 +3329,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Type III Portland Cement",
       "Type IV Portland Cement"
     ],
-    "explanation": "ASTM C150 Type I is standard cement used in buildings, pavements, and general structures.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "ASTM C150 Type I is standard cement used in buildings, pavements, and general structures."
   },
   {
     "id": 5223,
@@ -3566,8 +3344,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Type III Portland Cement",
       "Type V Portland Cement"
     ],
-    "explanation": "Type II cement is ideal for moderate mass concrete structures, piers, and retaining walls.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Type II cement is ideal for moderate mass concrete structures, piers, and retaining walls."
   },
   {
     "id": 5224,
@@ -3582,8 +3359,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Type IV Portland Cement",
       "Type V Portland Cement"
     ],
-    "explanation": "Type III cement accelerates formwork stripping in precast plants and cold-weather construction.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Type III cement accelerates formwork stripping in precast plants and cold-weather construction."
   },
   {
     "id": 5225,
@@ -3598,8 +3374,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Type III Portland Cement",
       "Type V Portland Cement"
     ],
-    "explanation": "Type IV cement prevents thermal cracking in massive gravity concrete dams.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Type IV cement prevents thermal cracking in massive gravity concrete dams."
   },
   {
     "id": 5226,
@@ -3614,8 +3389,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Type II Portland Cement",
       "Type III Portland Cement"
     ],
-    "explanation": "Type V cement has low tricalcium aluminate (C3A <= 5%) to prevent ettringite expansion in sulfate soils.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Type V cement has low tricalcium aluminate (C3A <= 5%) to prevent ettringite expansion in sulfate soils."
   },
   {
     "id": 5227,
@@ -3630,8 +3404,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Carbonation",
       "Oxidation"
     ],
-    "explanation": "Hydration transforms liquid water and cement grains into calcium silicate hydrate (C-S-H) gel.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Hydration transforms liquid water and cement grains into calcium silicate hydrate (C-S-H) gel."
   },
   {
     "id": 5228,
@@ -3646,8 +3419,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Heavyweight Concrete",
       "Refractory Concrete"
     ],
-    "explanation": "Air entrainment (typically 4% to 7% air content) prevents frost spalling and scaling in cold climates.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Air entrainment (typically 4% to 7% air content) prevents frost spalling and scaling in cold climates."
   },
   {
     "id": 5229,
@@ -3655,15 +3427,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "Admixtures that increase the slump or workability of concrete at a constant water content, or allow water reduction of 5% to 12% without loss of slump.",
-    "answer": "Water-Reducing Admixtures (Plasticizers)",
+    "answer": "Water-Reducing Admixtures",
     "choices": [
-      "Water-Reducing Admixtures (Plasticizers)",
-      "Accelerators",
-      "Retarders",
+      "Water-Reducing Admixtures",
+      "Set Accelerators",
+      "Set Retarders",
       "Expansive Agents"
     ],
-    "explanation": "Water reducers lower the water-cement ratio, significantly increasing compressive strength and durability.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Water reducers lower the water-cement ratio, significantly increasing compressive strength and durability. Commonly known as plasticizers."
   },
   {
     "id": 5230,
@@ -3678,8 +3449,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Superplasticizers",
       "Air Entrainers"
     ],
-    "explanation": "Retarders prevent cold joints during hot-weather trucking and prolonged placing times.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Retarders prevent cold joints during hot-weather trucking and prolonged placing times."
   },
   {
     "id": 5231,
@@ -3694,8 +3464,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Pozzolans",
       "Plasticizers"
     ],
-    "explanation": "Accelerators permit earlier formwork removal and prevent freezing in cold-weather concrete work.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Accelerators permit earlier formwork removal and prevent freezing in cold-weather concrete work."
   },
   {
     "id": 5232,
@@ -3710,8 +3479,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Retarders",
       "Accelerators"
     ],
-    "explanation": "Pozzolanic reaction consumes free lime, creating additional durable C-S-H binder.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Pozzolanic reaction consumes free lime, creating additional durable C-S-H binder."
   },
   {
     "id": 5233,
@@ -3726,8 +3494,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Climbing Forms",
       "Tunnel Forms"
     ],
-    "explanation": "Slipform construction operates non-stop 24 hours a day until the vertical structure reaches final elevation.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Slipform construction operates non-stop 24 hours a day until the vertical structure reaches final elevation."
   },
   {
     "id": 5234,
@@ -3742,8 +3509,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Ganged Forms",
       "Coffered Forms"
     ],
-    "explanation": "Flying form tables drastically reduce cycle times in multi-story reinforced concrete building construction.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Flying form tables drastically reduce cycle times in multi-story reinforced concrete building construction."
   },
   {
     "id": 5235,
@@ -3758,8 +3524,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Flashings",
       "Tie Rods"
     ],
-    "explanation": "Waterstops create a tortuous waterproof path across construction joints in basements, pools, and tunnels.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Waterstops create a tortuous waterproof path across construction joints in basements, pools, and tunnels."
   },
   {
     "id": 5236,
@@ -3774,8 +3539,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Segregation",
       "Honeycombing"
     ],
-    "explanation": "Excessive bleeding weakens the top concrete surface and creates porous laitance layers.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Excessive bleeding weakens the top concrete surface and creates porous laitance layers."
   },
   {
     "id": 5237,
@@ -3783,15 +3547,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "The initial finishing step where freshly placed concrete is struck off level with formwork tops using a straightedge moved in a sawlike motion.",
-    "answer": "Screeding (Strike-off)",
+    "answer": "Screeding",
     "choices": [
-      "Screeding (Strike-off)",
+      "Screeding",
       "Floating",
       "Troweling",
       "Brooming"
     ],
-    "explanation": "Screeding establishes the primary grade and planar surface of fresh concrete slabs.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Screeding establishes the primary grade and planar surface of fresh concrete slabs. Also called strike-off."
   },
   {
     "id": 5238,
@@ -3806,8 +3569,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Troweling",
       "Edging"
     ],
-    "explanation": "Floating brings up sufficient mortar paste and closes surface voids without over-compacting.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Floating brings up sufficient mortar paste and closes surface voids without over-compacting."
   },
   {
     "id": 5239,
@@ -3822,13 +3584,12 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Screeding",
       "Brooming"
     ],
-    "explanation": "Steel troweling produces a dense, glossy, wear-resistant concrete floor surface.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Steel troweling produces a dense, glossy, wear-resistant concrete floor surface."
   },
   {
     "id": 5240,
     "area": "PSAD",
-    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "Texturing steel-troweled concrete surfaces by drawing a specialized stiff-bristle broom across the wet slab to produce a non-skid, slip-resistant surface.",
     "answer": "Broom Finishing",
@@ -3838,8 +3599,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Power Troweling",
       "Screeding"
     ],
-    "explanation": "Broom texturing is standard for exterior sidewalks, ramps, bridge decks, and driveways.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Broom texturing is standard for exterior sidewalks, ramps, bridge decks, and driveways."
   },
   {
     "id": 5241,
@@ -3854,8 +3614,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Dusting",
       "Honeycombing"
     ],
-    "explanation": "Scaling occurs when excessive bleed water is worked into the surface during premature finishing.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Scaling occurs when excessive bleed water is worked into the surface during premature finishing."
   },
   {
     "id": 5242,
@@ -3870,8 +3629,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Dusting",
       "Spalling"
     ],
-    "explanation": "Crazing cracks are shallow and do not impair structural load-bearing capacity.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Crazing cracks are shallow and do not impair structural load-bearing capacity."
   },
   {
     "id": 5243,
@@ -3886,12 +3644,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Crazing",
       "Efflorescence"
     ],
-    "explanation": "Dusting indicates a weak, unhydrated surface matrix subject to continuous abrasion.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Dusting indicates a weak, unhydrated surface matrix subject to continuous abrasion."
   },
   {
     "id": 5244,
-    "area": "PSAD",
+    "area": "MSTE",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "Liquid asphalt produced by blending asphalt cement with volatile petroleum distillates (such as gasoline, kerosene, or diesel fuel) to make it fluid at room temperature.",
@@ -3902,12 +3659,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Polymer Asphalt",
       "Bitumen Mastic"
     ],
-    "explanation": "Cutback asphalt cures as the volatile petroleum solvent evaporates into the atmosphere.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Cutback asphalt cures as the volatile petroleum solvent evaporates into the atmosphere."
   },
   {
     "id": 5245,
-    "area": "PSAD",
+    "area": "MSTE",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "A dispersion of minute microscopic droplets of asphalt cement in water held in suspension by an emulsifying chemical surfactant.",
@@ -3918,8 +3674,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Fluxed Asphalt",
       "Tar Primer"
     ],
-    "explanation": "Asphalt emulsions eliminate volatile organic hydrocarbon emissions associated with petroleum cutbacks.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Asphalt emulsions eliminate volatile organic hydrocarbon emissions associated with petroleum cutbacks."
   },
   {
     "id": 5246,
@@ -3934,12 +3689,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Boiling Point",
       "Softening Point"
     ],
-    "explanation": "The Cleveland Open Cup flash point test determines critical handling safety temperatures for hot liquid asphalts.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "The Cleveland Open Cup flash point test determines critical handling safety temperatures for hot liquid asphalts."
   },
   {
     "id": 5247,
-    "area": "PSAD",
+    "area": "MSTE",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "A very thin, uniform application of light bituminous material (diluted asphalt emulsion) applied to an existing paved surface to ensure a strong adhesive bond with a new overlay layer.",
@@ -3950,12 +3704,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Fog Seal",
       "Seal Coat"
     ],
-    "explanation": "Tack coats prevent slippage failure between new asphalt overlays and old pavement surfaces.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Tack coats prevent slippage failure between new asphalt overlays and old pavement surfaces."
   },
   {
     "id": 5248,
-    "area": "PSAD",
+    "area": "MSTE",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "An application of low-viscosity liquid asphalt applied to an untreated absorbent gravel or crushed stone base course to penetrate and bond the loose surface particles.",
@@ -3966,8 +3719,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Slurry Seal",
       "Chip Seal"
     ],
-    "explanation": "Prime coats waterproof absorbent sub-base aggregates and provide traction for paving equipment.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Prime coats waterproof absorbent sub-base aggregates and provide traction for paving equipment."
   },
   {
     "id": 5249,
@@ -3982,12 +3734,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Slurry Seal",
       "Tack Coat"
     ],
-    "explanation": "Dust palliatives (calcium chloride, lignin, asphalt emulsions) stabilize unpaved haul roads.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Dust palliatives (calcium chloride, lignin, asphalt emulsions) stabilize unpaved haul roads."
   },
   {
     "id": 5250,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "The simplest and most common type of shallow foundation that spreads concentrated building column loads over an adequate area of underlying soil.",
@@ -3998,28 +3749,26 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Caisson",
       "Rock Anchor"
     ],
-    "explanation": "Spread footings include isolated column pads, wall strip footings, and combined footings.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Spread footings include isolated column pads, wall strip footings, and combined footings."
   },
   {
     "id": 5251,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "A continuous, heavily reinforced concrete slab extending under an entire building structure designed to distribute high total building loads over a large soil footprint.",
-    "answer": "Mat (Raft) Foundation",
+    "answer": "Mat Foundation",
     "choices": [
-      "Mat (Raft) Foundation",
+      "Mat Foundation",
       "Isolated Footing",
       "Strap Footing",
       "Grade Beam"
     ],
-    "explanation": "Mat foundations are used when column footings would cover more than 50% of the building footprint or in low-bearing soils.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Mat foundations are used when column footings would cover more than 50% of the building footprint or in low-bearing soils. Also called a raft foundation."
   },
   {
     "id": 5252,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "A specialized deep mat or compensated basement foundation where the weight of soil excavated for the sub-basement approximately equals the total weight of the structure erected.",
@@ -4030,12 +3779,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "End-bearing Pier",
       "Caisson Foundation"
     ],
-    "explanation": "Floating foundations result in zero net increase in effective stress on deep underlying compressible clay layers.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Floating foundations result in zero net increase in effective stress on deep underlying compressible clay layers."
   },
   {
     "id": 5253,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "A massive watertight retaining box or cylindrical hollow shaft sunk deep into the ground or ocean floor through water and unstable soils to construct deep bridge and dam foundations.",
@@ -4046,12 +3794,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Trench Shield",
       "Sheet Pile"
     ],
-    "explanation": "Caissons can be open dredged or pressurized pneumatic shafts sunk to sound bedrock.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Caissons can be open dredged or pressurized pneumatic shafts sunk to sound bedrock."
   },
   {
     "id": 5254,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "The dangerous phenomenon in saturated cohesionless sand or silt deposits where earthquake shaking causes pore water pressure to equal overburden pressure, reducing effective shear strength to zero so the soil acts like a viscous liquid.",
@@ -4062,24 +3809,22 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Subsidence",
       "Quick Clay"
     ],
-    "explanation": "Liquefaction leads to severe bearing capacity failure, ground spreading, and floatation of buried pipes.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Liquefaction leads to severe bearing capacity failure, ground spreading, and floatation of buried pipes."
   },
   {
     "id": 5255,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "The unstable hydraulic condition occurring at the base of an open excavation where upward seepage water pressure overcomes the submerged weight of the soil, causing sand grains to boil upward.",
-    "answer": "Boiling (Piping)",
+    "answer": "Boiling",
     "choices": [
-      "Boiling (Piping)",
+      "Boiling",
       "Liquefaction",
       "Slumping",
-      "Erosion"
+      "Scouring"
     ],
-    "explanation": "Piping undermines sheet pile cutoffs and excavation trenches unless dewatering wells lower the hydraulic gradient.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Piping undermines sheet pile cutoffs and excavation trenches unless dewatering wells lower the hydraulic gradient. Often referred to as piping or quicksand condition."
   },
   {
     "id": 5256,
@@ -4094,12 +3839,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Underpinning",
       "Grouting"
     ],
-    "explanation": "Shoring prevents cave-ins and protects adjacent buildings during deep trenching operations.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Shoring prevents cave-ins and protects adjacent buildings during deep trenching operations."
   },
   {
     "id": 5257,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "Horizontal heavy timber planks or precast concrete slabs placed between vertical steel soldier piles (H-piles) to retain soil in deep excavation shoring systems.",
@@ -4110,12 +3854,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wales",
       "Struts"
     ],
-    "explanation": "Soldier pile and lagging systems provide rapid, cost-effective excavation support above the water table.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Soldier pile and lagging systems provide rapid, cost-effective excavation support above the water table."
   },
   {
     "id": 5258,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "Interlocking rolled steel, vinyl, or concrete sheet sections driven continuously into the ground to form an impermeable retaining wall against earth and water pressure.",
@@ -4126,12 +3869,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Trench Shield",
       "Soldier Pile"
     ],
-    "explanation": "Interlocking sheet piles create cofferdams and marine bulkheads with high watertightness.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Interlocking sheet piles create cofferdams and marine bulkheads with high watertightness."
   },
   {
     "id": 5259,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "A dewatering system consisting of a series of small-diameter perforated well screen points driven into water-bearing soil connected to a common header pipe evacuated by a vacuum pump.",
@@ -4142,12 +3884,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Deep Well Sump",
       "French Drain"
     ],
-    "explanation": "Wellpoint systems lower groundwater tables up to 5 to 6 meters per stage in sandy subsoils.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Wellpoint systems lower groundwater tables up to 5 to 6 meters per stage in sandy subsoils."
   },
   {
     "id": 5260,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "A specialized dewatering process of accelerating the flow and drainage of water through tight, low-permeability clay soils by applying a direct electrical current (DC) between anodes and cathodes.",
@@ -4158,12 +3899,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Wellpoints",
       "Pressure Grouting"
     ],
-    "explanation": "Water ions migrate from positive anodes to negative cathode wellpoints where water is pumped out.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Water ions migrate from positive anodes to negative cathode wellpoints where water is pumped out."
   },
   {
     "id": 5261,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "The process of injecting a fluid chemical or cement slurry under pressure into soil or fractured rock to increase shear strength, reduce permeability, or seal foundation leaks.",
@@ -4174,8 +3914,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Slurry Trenching",
       "Hydro-demolition"
     ],
-    "explanation": "Pressure grouting seals porous foundation rock beneath concrete dams and stabilizes sinkholes.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Pressure grouting seals porous foundation rock beneath concrete dams and stabilizes sinkholes."
   },
   {
     "id": 5262,
@@ -4190,8 +3929,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Pilaster",
       "Parapet"
     ],
-    "explanation": "Bond beams tie masonry walls together horizontally at floor and roof diaphragm levels.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Bond beams tie masonry walls together horizontally at floor and roof diaphragm levels."
   },
   {
     "id": 5263,
@@ -4206,8 +3944,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Weep Hole",
       "Grout Seal"
     ],
-    "explanation": "Wall flashings placed above window lintels and floor slabs channel intruding water to weep holes.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Wall flashings placed above window lintels and floor slabs channel intruding water to weep holes."
   },
   {
     "id": 5264,
@@ -4222,8 +3959,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Flemish Bond",
       "English Bond"
     ],
-    "explanation": "Running bond is the simplest, most widely used brick and block pattern bond.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Running bond is the simplest, most widely used brick and block pattern bond."
   },
   {
     "id": 5265,
@@ -4238,8 +3974,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Stack Bond",
       "Flemish Bond"
     ],
-    "explanation": "Common bond provides structural cross-tying between multi-wythe masonry walls.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Common bond provides structural cross-tying between multi-wythe masonry walls."
   },
   {
     "id": 5266,
@@ -4254,8 +3989,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Running Bond",
       "Stack Bond"
     ],
-    "explanation": "Flemish bond provides classic aesthetic appeal and balanced interlocking.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Flemish bond provides classic aesthetic appeal and balanced interlocking."
   },
   {
     "id": 5267,
@@ -4270,8 +4004,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Common Bond",
       "Running Bond"
     ],
-    "explanation": "English bond is one of the strongest traditional multi-wythe pattern bonds.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "English bond is one of the strongest traditional multi-wythe pattern bonds."
   },
   {
     "id": 5268,
@@ -4286,8 +4019,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Flemish Bond",
       "English Bond"
     ],
-    "explanation": "Because stack bond has no mechanical overlapping, continuous horizontal joint reinforcement is structurally required.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Because stack bond has no mechanical overlapping, continuous horizontal joint reinforcement is structurally required."
   },
   {
     "id": 5269,
@@ -4302,8 +4034,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Milestone Activity",
       "Lag Activity"
     ],
-    "explanation": "Dummy activities are drawn as dashed arrows in activity-on-arrow networks to prevent ambiguous dual-node numbering.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Dummy activities are drawn as dashed arrows in activity-on-arrow networks to prevent ambiguous dual-node numbering."
   },
   {
     "id": 5270,
@@ -4318,8 +4049,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Slack Route",
       "Float Path"
     ],
-    "explanation": "Activities on the critical path have zero total float; any delay on the critical path directly delays project completion.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Activities on the critical path have zero total float; any delay on the critical path directly delays project completion."
   },
   {
     "id": 5271,
@@ -4327,15 +4057,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
     "question": "The total amount of scheduling leeway or time by which an activity can be delayed without delaying the overall project completion date.",
-    "answer": "Total Float (Slack)",
+    "answer": "Total Float",
     "choices": [
-      "Total Float (Slack)",
+      "Total Float",
       "Free Float",
       "Independent Float",
       "Interfering Float"
     ],
-    "explanation": "Total Float = Late Finish - Early Finish (or Late Start - Early Start).",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Total Float = Late Finish - Early Finish (or Late Start - Early Start). Sometimes termed total slack."
   },
   {
     "id": 5272,
@@ -4350,8 +4079,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Bar Chart",
       "Line of Balance"
     ],
-    "explanation": "PDM is the universal standard format in modern scheduling software (Primavera, MS Project).",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "PDM is the universal standard format in modern scheduling software (Primavera, MS Project)."
   },
   {
     "id": 5273,
@@ -4366,8 +4094,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Consumable Costs",
       "Marginal Costs"
     ],
-    "explanation": "Owning costs continue to accrue even during seasonal shutdowns and bad weather.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Owning costs continue to accrue even during seasonal shutdowns and bad weather."
   },
   {
     "id": 5274,
@@ -4382,8 +4109,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Capital Costs",
       "Overhead Costs"
     ],
-    "explanation": "Operating costs vary directly with engine operating hours and site working severity.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Operating costs vary directly with engine operating hours and site working severity."
   },
   {
     "id": 5275,
@@ -4398,8 +4124,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Depletion",
       "Salvage Value"
     ],
-    "explanation": "Straight-line and MACRS depreciation methods allocate equipment capital write-off over useful life.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Straight-line and MACRS depreciation methods allocate equipment capital write-off over useful life."
   },
   {
     "id": 5276,
@@ -4414,8 +4139,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Payment Bond",
       "Maintenance Bond"
     ],
-    "explanation": "If the winning bidder reneges, the surety forfeits the bid bond penalty (usually 5% to 10% of bid amount).",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "If the winning bidder reneges, the surety forfeits the bid bond penalty (usually 5% to 10% of bid amount)."
   },
   {
     "id": 5277,
@@ -4430,8 +4154,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Payment Bond",
       "Advance Payment Bond"
     ],
-    "explanation": "If the contractor defaults, the surety steps in to finance or arrange project completion.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "If the contractor defaults, the surety steps in to finance or arrange project completion."
   },
   {
     "id": 5278,
@@ -4446,8 +4169,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Bid Bond",
       "Guaranty Bond"
     ],
-    "explanation": "Payment bonds ensure suppliers and workers receive timely payment without encumbering owner property.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Payment bonds ensure suppliers and workers receive timely payment without encumbering owner property."
   },
   {
     "id": 5279,
@@ -4462,8 +4184,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Consequential Damages",
       "Punitive Damages"
     ],
-    "explanation": "Liquidated damages represent a genuine pre-estimate of owner losses (loss of revenue, rental costs) resulting from late handover.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Liquidated damages represent a genuine pre-estimate of owner losses (loss of revenue, rental costs) resulting from late handover."
   },
   {
     "id": 5280,
@@ -4471,15 +4192,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
     "question": "A percentage (commonly 10% in the Philippines under RA 9184) withheld from each progress payment to a contractor as a guarantee against defective work and to ensure project completion.",
-    "answer": "Retainage (Retention)",
+    "answer": "Retainage",
     "choices": [
-      "Retainage (Retention)",
+      "Retainage",
       "Mobilization Fee",
       "Escalation Reserve",
       "Contingency Fund"
     ],
-    "explanation": "Retainage is released upon final inspection, issuance of certificate of completion, and warranty bond posting.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Retainage is released upon final inspection, issuance of certificate of completion, and warranty bond posting."
   },
   {
     "id": 5281,
@@ -4494,8 +4214,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Shop Drawing",
       "Field Memo"
     ],
-    "explanation": "A formal change order binds both parties to agreed alterations in cost and completion schedule.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "A formal change order binds both parties to agreed alterations in cost and completion schedule."
   },
   {
     "id": 5282,
@@ -4510,8 +4229,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Addendum",
       "Transmittal"
     ],
-    "explanation": "Contractors must rectify all punch list items before final handover and release of retainage.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Contractors must rectify all punch list items before final handover and release of retainage."
   },
   {
     "id": 5283,
@@ -4522,12 +4240,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "answer": "Value Engineering (VE)",
     "choices": [
       "Value Engineering (VE)",
-      "Cost Overrun Analysis",
-      "Quality Audit",
-      "Earned Value Management"
+      "Cost Overrun Analysis (COA)",
+      "Quality Assurance Audit (QAA)",
+      "Earned Value Management (EVM)"
     ],
-    "explanation": "Value engineering eliminates unnecessary capital and maintenance expenses by evaluating alternative materials and methods.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "Value engineering eliminates unnecessary capital and maintenance expenses by evaluating alternative materials and methods."
   },
   {
     "id": 5284,
@@ -4542,8 +4259,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Geographic Information System (GIS)",
       "Critical Path Method (CPM)"
     ],
-    "explanation": "BIM facilitates clash detection, prefabrication scheduling, and multi-disciplinary coordination.",
-    "reference": "Review Innovations — Construction Concepts & Terms Compilation"
+    "explanation": "BIM facilitates clash detection, prefabrication scheduling, and multi-disciplinary coordination."
   },
   {
     "id": 5285,
@@ -4558,8 +4274,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Industrial Construction",
       "Municipal Infrastructure"
     ],
-    "explanation": "Construction is broadly divided into vertical construction (buildings) and horizontal/heavy construction (highways, dams, ports).",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Construction is broadly divided into vertical construction (buildings) and horizontal/heavy construction (highways, dams, ports)."
   },
   {
     "id": 5286,
@@ -4567,15 +4282,14 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
     "question": "The major division of the construction industry that includes highways, airports, railroads, bridges, canals, harbors, dams, and other major public civil works.",
-    "answer": "Heavy Construction (Horizontal Construction)",
+    "answer": "Heavy Construction",
     "choices": [
-      "Heavy Construction (Horizontal Construction)",
-      "Building Construction (Vertical Construction)",
+      "Heavy Construction",
+      "Building Construction",
       "Residential Framing",
-      "Interior Fit-out"
+      "Interior Fit-Out"
     ],
-    "explanation": "Heavy construction requires large fleets of earthmoving, grading, paving, and marine equipment.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Heavy construction requires large fleets of earthmoving, grading, paving, and marine equipment."
   },
   {
     "id": 5287,
@@ -4590,8 +4304,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Building Codes",
       "Safety Standards"
     ],
-    "explanation": "Zoning laws prevent industrial factories from encroaching into low-density residential subdivisions.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Zoning laws prevent industrial factories from encroaching into low-density residential subdivisions."
   },
   {
     "id": 5288,
@@ -4606,8 +4319,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Compacted Cubic Yard (CCM / CCY)",
       "Pay Yard"
     ],
-    "explanation": "Bank volume represents the in-situ density of natural soil before loosening.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Bank volume represents the in-situ density of natural soil before loosening."
   },
   {
     "id": 5289,
@@ -4622,12 +4334,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Compacted Cubic Yard (CCM / CCY)",
       "Swell Yard"
     ],
-    "explanation": "Loose volume dictates the required capacity and number of haul trucks.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Loose volume dictates the required capacity and number of haul trucks."
   },
   {
     "id": 5290,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "Soil or rock material after mechanical rolling, tamping, or vibration has expelled air voids and compressed the particles into fill embankments.",
@@ -4638,12 +4349,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Loose Cubic Yard (LCM / LCY)",
       "Shrink Yard"
     ],
-    "explanation": "Compacted volume is almost always smaller than bank volume due to compaction to high target relative densities.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Compacted volume is almost always smaller than bank volume due to compaction to high target relative densities."
   },
   {
     "id": 5291,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "The volumetric expansion phenomenon in which a soil increases in volume when excavated because soil grains are loosened and air enters the void spaces.",
@@ -4654,12 +4364,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Soil Consolidation",
       "Soil Subsidence"
     ],
-    "explanation": "Percent swell = ((Bank density / Loose density) - 1) * 100%.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Percent swell = ((Bank density / Loose density) - 1) * 100%."
   },
   {
     "id": 5292,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "The reverse of the soil swell phenomenon, occurring when soil is compacted mechanically into an embankment, forcing air out of void spaces so it occupies less volume than in its bank state.",
@@ -4670,8 +4379,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Soil Expansion",
       "Soil Slaking"
     ],
-    "explanation": "Percent shrinkage = (1 - (Bank density / Compacted density)) * 100%.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Percent shrinkage = (1 - (Bank density / Compacted density)) * 100%."
   },
   {
     "id": 5293,
@@ -4686,8 +4394,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Bar Schedule",
       "Flow Diagram"
     ],
-    "explanation": "Mass diagrams indicate balance points, economic haul directions, and borrow/waste locations.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Mass diagrams indicate balance points, economic haul directions, and borrow/waste locations."
   },
   {
     "id": 5294,
@@ -4702,8 +4409,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Overhaul Distance",
       "Economic Limit of Haul"
     ],
-    "explanation": "Haul distance determines whether scrapers, articulated trucks, or highway dumpers are the optimal hauling equipment.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Haul distance determines whether scrapers, articulated trucks, or highway dumpers are the optimal hauling equipment."
   },
   {
     "id": 5295,
@@ -4718,8 +4424,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Economic Haul Distance",
       "Limit of Economical Haul"
     ],
-    "explanation": "Under DPWH specifications, free haul distance is typically 600 meters or as defined in the contract.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Under DPWH specifications, free haul distance is typically 600 meters or as defined in the contract."
   },
   {
     "id": 5296,
@@ -4734,12 +4439,11 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Borrow Pit Haul",
       "Waste Haul"
     ],
-    "explanation": "Overhaul is paid as a supplementary unit price when haul distances exceed free haul allowances.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Overhaul is paid as a supplementary unit price when haul distances exceed free haul allowances."
   },
   {
     "id": 5297,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Physical Properties & Phase Relationships",
     "difficulty": "Medium",
     "question": "The steepest angle with the horizontal at which a loose, granular sloping heap of soil or aggregate will naturally remain stable without sliding downward.",
@@ -4750,8 +4454,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Slope Angle",
       "Batter Angle"
     ],
-    "explanation": "Angle of repose varies with particle shape, gradation, and surface moisture content.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Angle of repose varies with particle shape, gradation, and surface moisture content."
   },
   {
     "id": 5298,
@@ -4766,8 +4469,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Borrow Pit",
       "Retention Berm"
     ],
-    "explanation": "Spoil banks are formed by draglines casting material in linear strips along canals.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Spoil banks are formed by draglines casting material in linear strips along canals."
   },
   {
     "id": 5299,
@@ -4782,8 +4484,7 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Berm",
       "Talus"
     ],
-    "explanation": "Spoil piles assume conical geometry bounded by the material's angle of repose.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Spoil piles assume conical geometry bounded by the material's angle of repose."
   },
   {
     "id": 5300,
@@ -4798,28 +4499,26 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Backhoe",
       "Skimmer"
     ],
-    "explanation": "Clamshell buckets operate vertically supported by holding and closing wire ropes.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Clamshell buckets operate vertically supported by holding and closing wire ropes."
   },
   {
     "id": 5301,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "A static or vibratory compaction roller equipped with numerous steel protruding pads or feet that compact cohesive clay soils from the bottom of the lift upward.",
-    "answer": "Tamping Foot (Sheepsfoot) Roller",
+    "answer": "Sheepsfoot Roller",
     "choices": [
-      "Tamping Foot (Sheepsfoot) Roller",
+      "Sheepsfoot Roller",
       "Smooth Drum Roller",
       "Pneumatic Tire Roller",
       "Grid Roller"
     ],
-    "explanation": "Sheepsfoot rollers knead and aerate wet cohesive clays to achieve high target densities.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Sheepsfoot rollers knead and aerate wet cohesive clays to achieve high target densities."
   },
   {
     "id": 5302,
-    "area": "PSAD",
+    "area": "MSTE",
     "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
     "difficulty": "Medium",
     "question": "A compaction machine equipped with multiple closely spaced rubber tires that delivers kneading action and uniform pressure over irregular surfaces, used for asphalt finishing and subgrade sealing.",
@@ -4830,24 +4529,22 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Smooth Drum Roller",
       "Impact Roller"
     ],
-    "explanation": "Pneumatic rolling kneads aggregates into interlock without crushing soft stones.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Pneumatic rolling kneads aggregates into interlock without crushing soft stones."
   },
   {
     "id": 5303,
-    "area": "MSTE",
+    "area": "HPGE",
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "A compaction roller equipped with an open heavy steel mesh or grid drum that fragments soft rocks, breaks oversize aggregate, and compacts dry granular soils.",
-    "answer": "Grid (Mesh) Roller",
+    "answer": "Grid Roller",
     "choices": [
-      "Grid (Mesh) Roller",
+      "Grid Roller",
       "Smooth Steel Roller",
       "Pneumatic Roller",
       "Tamping Foot Roller"
     ],
-    "explanation": "Grid rollers produce high contact stresses along grid bars to crush oversized friable stone.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Grid rollers produce high contact stresses along grid bars to crush oversized friable stone."
   },
   {
     "id": 5304,
@@ -4862,24 +4559,22 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
       "Scraper",
       "Backhoe"
     ],
-    "explanation": "Motor graders establish accurate subgrade elevations, crowns, and superelevated road curves.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Motor graders establish accurate subgrade elevations, crowns, and superelevated road curves."
   },
   {
     "id": 5305,
     "area": "PSAD",
-    "subtopic": "Pavement Distress, Asphalt & Concrete Paving",
+    "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "A zero-slump, stiff concrete mix placed with asphalt pavers and compacted using heavy vibratory steel drum rollers, widely used in rapid dam construction and heavy-duty industrial pavements.",
     "answer": "Roller-Compacted Concrete (RCC)",
     "choices": [
       "Roller-Compacted Concrete (RCC)",
-      "Precast Concrete",
-      "Shotcrete",
-      "Structural Lightweight Concrete"
+      "Precast Structural Concrete (PSC)",
+      "Sprayed Shotcrete Concrete (SSC)",
+      "Structural Lightweight Concrete (SLC)"
     ],
-    "explanation": "RCC combines the economy of rapid earthfill placement with the strength and durability of conventional concrete.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "RCC combines the economy of rapid earthfill placement with the strength and durability of conventional concrete."
   },
   {
     "id": 5306,
@@ -4887,14 +4582,13 @@ export const PDF_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "A rigid prefabricated steel or aluminum box structure placed in an excavation to protect trench workers from unexpected cave-ins or wall collapses.",
-    "answer": "Trench Shield (Trench Box)",
+    "answer": "Trench Shield",
     "choices": [
-      "Trench Shield (Trench Box)",
+      "Trench Shield",
       "Sheet Piling",
       "Lagging Wall",
       "Underpinning"
     ],
-    "explanation": "Trench boxes protect personnel inside deep pipe trenches without supporting the trench walls themselves.",
-    "reference": "GERTC Refresher — Construction Methods Compilation"
+    "explanation": "Trench boxes protect personnel inside deep pipe trenches without supporting the trench walls themselves. Also known as a trench box."
   }
 ];

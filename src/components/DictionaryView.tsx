@@ -58,6 +58,27 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
 
+  const copiedTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimerRef.current !== null) {
+        window.clearTimeout(copiedTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!termToDelete) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setTermToDelete(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [termToDelete]);
+
+  const bookmarkSet = useMemo(() => new Set(bookmarks), [bookmarks]);
+
   const availableSubtopics = useMemo(() => {
     if (selectedArea === 'ALL') {
       return Object.values(SUBTOPICS_BY_AREA).flat();
@@ -66,14 +87,14 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
   }, [selectedArea]);
 
   const filteredQuestions = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
     return questions.filter(q => {
       if (selectedArea !== 'ALL' && q.area !== selectedArea) return false;
       if (selectedSubtopic !== 'ALL' && q.subtopic !== selectedSubtopic) return false;
-      if (onlyBookmarks && !bookmarks.includes(q.id)) return false;
+      if (onlyBookmarks && !bookmarkSet.has(q.id)) return false;
       if (onlyRecentlyAdded && isInDataBank(q)) return false;
 
-      if (searchTerm.trim()) {
-        const query = searchTerm.toLowerCase();
+      if (query) {
         const inQuestion = q.question.toLowerCase().includes(query);
         const inAnswer = q.answer.toLowerCase().includes(query);
         const inExplanation = q.explanation.toLowerCase().includes(query);
@@ -85,7 +106,7 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
 
       return true;
     });
-  }, [questions, selectedArea, selectedSubtopic, onlyBookmarks, onlyRecentlyAdded, searchTerm, bookmarks]);
+  }, [questions, selectedArea, selectedSubtopic, onlyBookmarks, onlyRecentlyAdded, searchTerm, bookmarkSet]);
 
   // Reset pagination limit when search or filter criteria change
   useEffect(() => {
@@ -123,11 +144,29 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
     return filteredQuestions.slice(0, displayLimit);
   }, [filteredQuestions, displayLimit]);
 
-  const handleCopy = (q: CEQuestion, e: React.MouseEvent) => {
+  const handleCopy = async (q: CEQuestion, e: React.MouseEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(`Term: ${q.answer}\nDefinition: ${q.question}`);
+    const text = `Term: ${q.answer}\nDefinition: ${q.question}`;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
     setCopiedId(q.id);
-    setTimeout(() => setCopiedId(null), 2000);
+    if (copiedTimerRef.current !== null) {
+      window.clearTimeout(copiedTimerRef.current);
+    }
+    copiedTimerRef.current = window.setTimeout(() => {
+      setCopiedId(null);
+      copiedTimerRef.current = null;
+    }, 2000);
   };
 
   const handleConfirmDelete = () => {
@@ -292,8 +331,8 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
 
       {/* Confirmation Dialog for Term Deletion (No window.confirm!) */}
       {termToDelete && (
-        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-md w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100 space-y-4">
+        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-start sm:items-center justify-center p-4 pl-safe pr-safe overflow-y-auto">
+          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-md w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100 space-y-4 my-auto">
             <div className="flex items-center space-x-3 text-rose-600 dark:text-rose-400">
               <div className="p-2 rounded-xl bg-rose-500/10">
                 <AlertTriangle className="w-6 h-6" />
@@ -325,7 +364,7 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
       <div className="space-y-3">
         {visibleQuestions.map((q) => {
           const isExpanded = expandedId === q.id;
-          const isBookmarked = bookmarks.includes(q.id);
+          const isBookmarked = bookmarkSet.has(q.id);
           const isCustomUserTerm = !isInDataBank(q);
 
           return (
@@ -379,7 +418,7 @@ export const DictionaryView: React.FC<DictionaryViewProps> = ({
                     }}
                     className={`p-1 rounded transition ${isBookmarked ? 'text-amber-500' : 'text-stone-400'}`}
                   >
-                    <Bookmark className="w-3.5 h-3.5 fill-current" />
+                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
                   </button>
                   {isExpanded ? <ChevronUp className="w-4 h-4 text-stone-400" /> : <ChevronDown className="w-4 h-4 text-stone-400" />}
                 </div>

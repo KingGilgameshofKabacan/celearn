@@ -82,6 +82,19 @@ class SoundEffectManager {
     return false;
   }
 
+  private dispatchSoundUpdated(): void {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_sound_updated', {
+        detail: {
+          enabled: this.enabled,
+          muted: this.muted,
+          volume: this.volume,
+          activeThemeId: this.activeThemeId
+        }
+      }));
+    }
+  }
+
   public isEnabled(): boolean {
     return this.enabled;
   }
@@ -92,6 +105,7 @@ class SoundEffectManager {
     try {
       localStorage.setItem(this.STORAGE_KEY_ENABLED, String(enable));
     } catch {}
+    this.dispatchSoundUpdated();
   }
 
   public isMuted(): boolean {
@@ -104,6 +118,7 @@ class SoundEffectManager {
     try {
       localStorage.setItem(this.STORAGE_KEY_MUTED, String(muted));
     } catch {}
+    this.dispatchSoundUpdated();
   }
 
   public getVolume(): number {
@@ -117,6 +132,7 @@ class SoundEffectManager {
     try {
       localStorage.setItem(this.STORAGE_KEY_VOLUME, String(clamped));
     } catch {}
+    this.dispatchSoundUpdated();
   }
 
   public getActiveTheme(): ThemeId {
@@ -128,6 +144,7 @@ class SoundEffectManager {
     try {
       localStorage.setItem(this.STORAGE_KEY_THEME, themeId);
     } catch {}
+    this.dispatchSoundUpdated();
   }
 
   public toggle(): boolean {
@@ -136,6 +153,40 @@ class SoundEffectManager {
       this.playClick();
     }
     return this.enabled;
+  }
+
+  public syncFromStorage(): void {
+    if (typeof window === 'undefined') return;
+    try {
+      const storedEnabled = localStorage.getItem(this.STORAGE_KEY_ENABLED);
+      this.enabled = storedEnabled !== null ? storedEnabled === 'true' : true;
+
+      const storedVol = localStorage.getItem(this.STORAGE_KEY_VOLUME);
+      const parsedVol = storedVol !== null ? parseFloat(storedVol) : NaN;
+      this.volume = !isNaN(parsedVol) ? Math.max(0, Math.min(1, parsedVol)) : 0.8;
+
+      const storedMuted = localStorage.getItem(this.STORAGE_KEY_MUTED);
+      this.muted = storedMuted !== null ? storedMuted === 'true' : false;
+
+      const storedTheme = localStorage.getItem(this.STORAGE_KEY_THEME);
+      if (
+        storedTheme === 'vault-tec' ||
+        storedTheme === 'nuka-cola' ||
+        storedTheme === 'power-armor' ||
+        storedTheme === 'radaway-medbay'
+      ) {
+        this.activeThemeId = storedTheme;
+      } else {
+        this.activeThemeId = DEFAULT_THEME_ID;
+      }
+    } catch {
+      this.enabled = true;
+      this.volume = 0.8;
+      this.muted = false;
+      this.activeThemeId = DEFAULT_THEME_ID;
+    }
+    this.updateMasterGain();
+    this.dispatchSoundUpdated();
   }
 
   public resetSettings(): void {

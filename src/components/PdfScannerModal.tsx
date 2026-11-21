@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { CEQuestion, CEArea } from '../types';
 import { SUBTOPICS_BY_AREA } from '../data/questions';
 import {
@@ -24,13 +25,14 @@ import confetti from 'canvas-confetti';
 import {
   STANDARD_TXT_TEMPLATE,
   parseReviewerText,
-  downloadTemplate
+  downloadTemplate,
+  formatReviewerTermCase
 } from '../utils/reviewerParser';
 import { isInDataBank } from '../utils/storage';
 
-// Configure PDF.js worker
+// Configure locally bundled PDF.js worker for 100% offline PWA functionality
 if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 }
 
 interface PdfScannerModalProps {
@@ -59,6 +61,15 @@ export const PdfScannerModal: React.FC<PdfScannerModalProps> = ({
   const [editTerm, setEditTerm] = useState<string>('');
   const [editQuestion, setEditQuestion] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -142,6 +153,7 @@ export const PdfScannerModal: React.FC<PdfScannerModalProps> = ({
     } catch (err: any) {
       setError(`Failed to read file: ${err.message || 'Unknown error'}`);
     } finally {
+      e.target.value = '';
       setIsProcessing(false);
       setProcessingStatus('');
     }
@@ -212,13 +224,15 @@ export const PdfScannerModal: React.FC<PdfScannerModalProps> = ({
     setScannedTerms(prev =>
       prev.map(t => {
         if (t.id === id) {
-          const upper = editTerm.trim().toUpperCase();
-          const cleanQ = editQuestion.trim().endsWith('.') ? editQuestion.trim() : `${editQuestion.trim()}.`;
+          const formattedTerm = formatReviewerTermCase(editTerm.trim());
+          const trimmedQ = editQuestion.trim();
+          const cleanQ = /[.?!]$/.test(trimmedQ) ? trimmedQ : `${trimmedQ}.`;
           return {
             ...t,
-            answer: upper,
+            answer: formattedTerm,
             question: cleanQ,
-            choices: [upper, ...t.choices.filter(c => c.toUpperCase() !== upper).slice(0, 3)]
+            explanation: `${formattedTerm}: ${cleanQ}`,
+            choices: [formattedTerm, ...t.choices.filter(c => c.toUpperCase() !== formattedTerm.toUpperCase()).slice(0, 3)]
           };
         }
         return t;
@@ -247,8 +261,8 @@ export const PdfScannerModal: React.FC<PdfScannerModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl text-stone-900 dark:text-stone-100 my-6 space-y-4">
+    <div className="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 pl-safe pr-safe overflow-y-auto">
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl text-stone-900 dark:text-stone-100 my-auto max-h-[calc(100dvh-2rem)] overflow-y-auto space-y-4">
         
         {/* Simple Header */}
         <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">

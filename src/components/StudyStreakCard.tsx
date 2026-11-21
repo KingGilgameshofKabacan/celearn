@@ -83,6 +83,7 @@ export const StudyStreakCard: React.FC<StudyStreakCardProps> = ({ onStreakExtend
     window.addEventListener('cele_streak_updated', syncAll);
     window.addEventListener('cele_daily_tasks_updated', syncAll);
     window.addEventListener('cele_daily_goal_updated', syncAll);
+    window.addEventListener('cele_backup_restored', syncAll);
 
     return () => {
       clearInterval(interval);
@@ -90,6 +91,7 @@ export const StudyStreakCard: React.FC<StudyStreakCardProps> = ({ onStreakExtend
       window.removeEventListener('cele_streak_updated', syncAll);
       window.removeEventListener('cele_daily_tasks_updated', syncAll);
       window.removeEventListener('cele_daily_goal_updated', syncAll);
+      window.removeEventListener('cele_backup_restored', syncAll);
     };
   }, []);
 
@@ -223,7 +225,7 @@ export const StudyStreakCard: React.FC<StudyStreakCardProps> = ({ onStreakExtend
                   onClick={() => handleChangeGoal(target)}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition cursor-pointer whitespace-nowrap ${
                     active
-                      ? 'bg-orange-600 shadow-xs'
+                      ? 'bg-orange-600 text-white shadow-xs'
                       : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100'
                   }`}
                 >
@@ -334,7 +336,7 @@ export const StudyStreakCard: React.FC<StudyStreakCardProps> = ({ onStreakExtend
             <button
               type="button"
               onClick={handleClaimRation}
-              className="w-full py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-500 font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center space-x-2 transition cursor-pointer whitespace-nowrap"
+              className="w-full py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center space-x-2 transition cursor-pointer whitespace-nowrap"
             >
               <BottleCapIcon className="w-4 h-4 shrink-0" />
               <span>Extend Streak (+50 Caps)</span>

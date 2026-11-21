@@ -114,10 +114,10 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "question": "The modulus of rupture (fr) of concrete representing its tensile flexural cracking strength in NSCP is taken as:",
     "answer": "0.62 · λ · √f'c (MPa)",
     "choices": [
-      "0.33 · √f'c",
+      "0.33 · √f'c (MPa)",
       "0.62 · λ · √f'c (MPa)",
-      "0.70 · √f'c",
-      "0.85 · f'c"
+      "0.70 · √f'c (MPa)",
+      "0.85 · f'c (MPa)"
     ],
     "explanation": "NSCP 2015 Section 419.2.3 defines the modulus of rupture for normal-weight concrete (λ = 1.0) as 0.62√f'c."
   },
@@ -129,10 +129,10 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "question": "Modulus of elasticity Ec for normal weight concrete with unit weight wc = 2300 kg/m³ is approximated by NSCP as:",
     "answer": "4700 · √f'c (MPa)",
     "choices": [
-      "4200 · √f'c",
+      "4200 · √f'c (MPa)",
       "4700 · √f'c (MPa)",
-      "5000 · √f'c",
-      "3500 · √f'c"
+      "5000 · √f'c (MPa)",
+      "3500 · √f'c (MPa)"
     ],
     "explanation": "NSCP Section 419.2.2.1 formula for normal-weight structural concrete specifies Ec = 4700√f'c."
   },
@@ -174,10 +174,10 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "question": "Standard yield strength Fy of ASTM A36 structural carbon steel in metric units is approximately:",
     "answer": "250 MPa (36 ksi)",
     "choices": [
-      "200 MPa",
+      "200 MPa (29 ksi)",
       "250 MPa (36 ksi)",
       "345 MPa (50 ksi)",
-      "400 MPa"
+      "400 MPa (58 ksi)"
     ],
     "explanation": "A36 carbon steel has minimum yield strength Fy = 36 ksi ≈ 248-250 MPa and tensile strength Fu = 400-550 MPa."
   },
@@ -189,10 +189,10 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "question": "Standard yield strength Fy of ASTM A572 Grade 50 and ASTM A992 structural steel wide-flange beams is:",
     "answer": "345 MPa (50 ksi)",
     "choices": [
-      "250 MPa",
-      "300 MPa",
+      "250 MPa (36 ksi)",
+      "300 MPa (43.5 ksi)",
       "345 MPa (50 ksi)",
-      "450 MPa"
+      "450 MPa (65 ksi)"
     ],
     "explanation": "A992/A572 Gr. 50 is the modern standard grade for structural steel I-beams and columns with Fy = 50 ksi (345 MPa)."
   },
@@ -232,12 +232,12 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Hard",
     "question": "Under NSCP 2015, the structural system consisting of an essentially complete frame with moment connections resisting 100% of lateral force is:",
-    "answer": "Moment Resisting Frame System (mrfs)",
+    "answer": "Moment Resisting Frame System (MRFS)",
     "choices": [
-      "Bearing Wall System",
-      "Building Frame System",
-      "Moment Resisting Frame System (mrfs)",
-      "Dual System"
+      "Bearing Wall System (BWS)",
+      "Building Frame System (BFS)",
+      "Moment Resisting Frame System (MRFS)",
+      "Dual Frame System (DFS)"
     ],
     "explanation": "Special Moment Resisting Frames (SMRF) provide high inelastic energy dissipation with R = 8.5."
   },
@@ -277,14 +277,14 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "An admixture added to concrete to increase workability, flowability, and slump without adding extra water.",
-    "answer": "Superplasticizer (high-range Water Reducer)",
+    "answer": "Superplasticizer",
     "choices": [
       "Retarder",
-      "Superplasticizer (high-range Water Reducer)",
-      "Air-entraining Agent",
+      "Superplasticizer",
+      "Air-Entraining Agent",
       "Accelerator"
     ],
-    "explanation": "Superplasticizers disperse cement particles through electrostatic and steric repulsion, reducing w/c ratio."
+    "explanation": "Superplasticizers disperse cement particles through electrostatic and steric repulsion, reducing w/c ratio. Also known as a high-range water reducer."
   },
   {
     "id": 60,
@@ -476,7 +476,7 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "choices": [
       "Plastic Limit (PL)",
       "Liquid Limit (LL)",
-      "Shrinkage Limit (sl)",
+      "Shrinkage Limit (SL)",
       "Plasticity Index (PI)"
     ],
     "explanation": "Standard Casagrande cup test defines LL as the moisture content at which a soil pat groove closes 12.7 mm after 25 drops."
@@ -489,10 +489,10 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "question": "The numerical difference between the Liquid Limit (LL) and Plastic Limit (PL) of a soil is termed the:",
     "answer": "Plasticity Index (PI)",
     "choices": [
-      "Liquidity Index (li)",
+      "Liquidity Index (LI)",
       "Plasticity Index (PI)",
-      "Consistency Index (ci)",
-      "Activity"
+      "Consistency Index (CI)",
+      "Soil Activity (A)"
     ],
     "explanation": "Plasticity Index PI = LL - PL measures the range of water content over which the soil exhibits plastic behavior."
   },
@@ -532,14 +532,14 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "A heavy rigid box structure sunk deep into the earth or riverbed by excavating soil from inside is a:",
-    "answer": "Caisson (well Foundation)",
+    "answer": "Caisson Foundation",
     "choices": [
       "Combined Footing",
-      "Caisson (well Foundation)",
-      "Soldier Pile",
+      "Caisson Foundation",
+      "Soldier Pile Wall",
       "Retaining Cribbing"
     ],
-    "explanation": "Caissons provide foundation support for bridge piers, dock walls, and heavy structures in deep water."
+    "explanation": "Caissons provide foundation support for bridge piers, dock walls, and heavy structures in deep water. Often constructed as an excavated well foundation."
   },
   {
     "id": 160,
@@ -622,14 +622,14 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Hard",
     "question": "Combined correction for earth curvature and atmospheric refraction hcr for sighting distance K (in km) is approximately:",
-    "answer": "hcr = 0.0675 · K² (meters)",
+    "answer": "hcr = 0.0675 · K²",
     "choices": [
       "hcr = 0.0785 · K²",
-      "hcr = 0.0675 · K² (meters)",
+      "hcr = 0.0675 · K²",
       "hcr = 0.0112 · K²",
       "hcr = 0.0450 · K²"
     ],
-    "explanation": "Curvature causes target to appear lower (+0.0785K²) while refraction bends sight ray down (-0.0110K²), net = 0.0675K²."
+    "explanation": "Curvature causes target to appear lower (+0.0785K²) while refraction bends sight ray down (-0.0110K²), net = 0.0675K². Result is expressed in meters."
   },
   {
     "id": 252,
@@ -637,12 +637,12 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
     "question": "The minimum sight distance required on a two-lane highway to permit safe overtaking of a slower vehicle without conflict is:",
-    "answer": "Passing Sight Distance (psd)",
+    "answer": "Passing Sight Distance (PSD)",
     "choices": [
-      "Stopping Sight Distance (ssd)",
-      "Passing Sight Distance (psd)",
-      "Decision Sight Distance",
-      "Intersection Clearance"
+      "Stopping Sight Distance (SSD)",
+      "Passing Sight Distance (PSD)",
+      "Decision Sight Distance (DSD)",
+      "Intersection Sight Distance (ISD)"
     ],
     "explanation": "PSD includes initial maneuver distance d1, time encroaching left lane d2, clearance distance d3, and opposing vehicle distance d4."
   },
@@ -667,12 +667,12 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Medium",
     "question": "The qualitative measure describing traffic operational conditions and motorist perception of flow is termed:",
-    "answer": "Level of Service (los)",
+    "answer": "Level of Service (LOS)",
     "choices": [
-      "Design Capacity",
-      "Level of Service (los)",
-      "Volume-to-capacity Ratio",
-      "Service Rate"
+      "Design Capacity (DC)",
+      "Level of Service (LOS)",
+      "Volume-to-Capacity Ratio (V/C)",
+      "Service Flow Rate (SFR)"
     ],
     "explanation": "LOS is categorized from A (free flow, high maneuverability) to F (forced breakdown, heavy congestion)."
   },
@@ -757,12 +757,12 @@ export const ADDITIONAL_QUESTIONS: CEQuestion[] = [
     "subtopic": "Engineering Mathematics & Geometry",
     "difficulty": "Medium",
     "question": "The interest rate earned by an investor on the unpaid balance of an investment over its project life that equates NPV to zero is:",
-    "answer": "Internal Rate of Return (irr)",
+    "answer": "Internal Rate of Return (IRR)",
     "choices": [
-      "Effective Annual Rate",
-      "Internal Rate of Return (irr)",
-      "Minimum Attractive Rate of Return",
-      "Discount Factor"
+      "Effective Annual Rate (EAR)",
+      "Internal Rate of Return (IRR)",
+      "Minimum Attractive Rate of Return (MARR)",
+      "Benefit-Cost Ratio (BCR)"
     ],
     "explanation": "IRR is the discount rate r at which the Present Worth of cash inflows equals the Present Worth of cash outflows (NPV = 0)."
   }

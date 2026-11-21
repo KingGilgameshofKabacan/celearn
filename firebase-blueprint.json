@@ -1,0 +1,610 @@
+{
+  "entities": {
+    "DwellerProfile": {
+      "title": "DwellerProfile",
+      "description": "Authenticated Vault Dweller account, Overseer settings, Bottle Caps, streak, theme preferences, and companion customization.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the account owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified Google account email address (PII, owner-only).",
+          "minLength": 3,
+          "maxLength": 254
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Google account display name.",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Google account avatar URL.",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "dwellerName": {
+          "type": "string",
+          "description": "Vault Dweller callsign displayed on the Overseer Console.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "targetRank": {
+          "type": "string",
+          "description": "Target CELE board standing.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "targetExamDate": {
+          "type": "string",
+          "description": "Target licensure exam date in YYYY-MM-DD format.",
+          "minLength": 4,
+          "maxLength": 20,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "bottleCaps": {
+          "type": "integer",
+          "description": "Earned Vault Bottle Caps currency."
+        },
+        "dailyStudyGoal": {
+          "type": "integer",
+          "description": "Daily question target between 5 and 200."
+        },
+        "themeMode": {
+          "type": "string",
+          "enum": ["dark", "light"],
+          "description": "Display luminance mode."
+        },
+        "activeThemeId": {
+          "type": "string",
+          "enum": ["vault-tec", "nuka-cola", "power-armor", "radaway-medbay"],
+          "description": "Active Fallout personality skin."
+        },
+        "crtEnabled": {
+          "type": "boolean",
+          "description": "Whether Pip-Boy CRT scanlines are enabled."
+        },
+        "crtIntensity": {
+          "type": "string",
+          "enum": ["subtle", "classic", "strong"],
+          "description": "Pip-Boy CRT scanline opacity preset."
+        },
+        "isDistractionFree": {
+          "type": "boolean",
+          "description": "Whether ambient background shapes are disabled."
+        },
+        "soundMuted": {
+          "type": "boolean",
+          "description": "Whether Pip-Boy audio effects are muted."
+        },
+        "soundVolume": {
+          "type": "number",
+          "description": "Audio feedback volume from 0 to 1."
+        },
+        "streakCurrent": {
+          "type": "integer",
+          "description": "Current consecutive daily study streak."
+        },
+        "streakBest": {
+          "type": "integer",
+          "description": "All-time highest daily study streak."
+        },
+        "streakLastCheckInDate": {
+          "type": "string",
+          "description": "Last check-in YYYY-MM-DD or empty string.",
+          "minLength": 0,
+          "maxLength": 20
+        },
+        "streakHistory": {
+          "type": "array",
+          "description": "Sorted list of YYYY-MM-DD check-in dates (max 2000)."
+        },
+        "avatarCompanion": {
+          "type": "string",
+          "description": "Selected Vault companion ID.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarSuitColor": {
+          "type": "string",
+          "description": "Vault jumpsuit color preset.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarVaultNumber": {
+          "type": "string",
+          "description": "Vault number insignia.",
+          "minLength": 1,
+          "maxLength": 16
+        },
+        "avatarHairStyle": {
+          "type": "string",
+          "description": "Dweller hair style ID.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarHairColor": {
+          "type": "string",
+          "description": "Dweller hair color preset.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarSkinTone": {
+          "type": "string",
+          "description": "Dweller skin tone preset.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarAccessory": {
+          "type": "string",
+          "description": "Dweller eyewear or headgear accessory ID.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of initial profile creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of most recent profile update."
+        }
+      },
+      "required": [
+        "ownerId",
+        "email",
+        "displayName",
+        "photoURL",
+        "dwellerName",
+        "targetRank",
+        "targetExamDate",
+        "bottleCaps",
+        "dailyStudyGoal",
+        "themeMode",
+        "activeThemeId",
+        "crtEnabled",
+        "crtIntensity",
+        "isDistractionFree",
+        "soundMuted",
+        "soundVolume",
+        "streakCurrent",
+        "streakBest",
+        "streakLastCheckInDate",
+        "streakHistory",
+        "avatarCompanion",
+        "avatarSuitColor",
+        "avatarVaultNumber",
+        "avatarHairStyle",
+        "avatarHairColor",
+        "avatarSkinTone",
+        "avatarAccessory",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StudyProgress": {
+      "title": "StudyProgress",
+      "description": "Synchronized flashcard SRS mastery, formula progress, bookmarks, daily activity logs, and unlocked commendations.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "bookmarks": {
+          "type": "array",
+          "description": "Bookmarked question IDs (max 5000)."
+        },
+        "formulaBookmarks": {
+          "type": "array",
+          "description": "Bookmarked formula IDs (max 1000)."
+        },
+        "flashcardProgress": {
+          "type": "object",
+          "description": "Map of questionId string keys to SRS progress objects."
+        },
+        "formulaProgress": {
+          "type": "object",
+          "description": "Map of formulaId string keys to mastery progress objects."
+        },
+        "dailyActivity": {
+          "type": "object",
+          "description": "Map of YYYY-MM-DD date keys to daily activity counters."
+        },
+        "achievements": {
+          "type": "array",
+          "description": "Unlocked/progressed achievement badge records."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "bookmarks",
+        "formulaBookmarks",
+        "flashcardProgress",
+        "formulaProgress",
+        "dailyActivity",
+        "achievements",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ExamSessionRecord": {
+      "title": "ExamSessionRecord",
+      "description": "Completed G.O.A.T. mock exam session history entry stored in the user's cloud log.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "timestamp": {
+          "type": "integer"
+        },
+        "area": {
+          "type": "string",
+          "enum": ["ALL", "PSAD", "HPGE", "MSTE"]
+        },
+        "subtopic": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["ALL", "Easy", "Medium", "Hard"]
+        },
+        "totalQuestions": {
+          "type": "integer"
+        },
+        "correctAnswers": {
+          "type": "integer"
+        },
+        "percentage": {
+          "type": "number"
+        },
+        "timeSpentSeconds": {
+          "type": "integer"
+        },
+        "timeLimitMinutes": {
+          "type": "integer"
+        },
+        "userAnswers": {
+          "type": "object"
+        },
+        "flaggedIds": {
+          "type": "array"
+        },
+        "questionIds": {
+          "type": "array"
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "sessionId",
+        "timestamp",
+        "area",
+        "subtopic",
+        "difficulty",
+        "totalQuestions",
+        "correctAnswers",
+        "percentage",
+        "timeSpentSeconds",
+        "timeLimitMinutes",
+        "userAnswers",
+        "flaggedIds",
+        "questionIds",
+        "passed",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CustomQuestionRecord": {
+      "title": "CustomQuestionRecord",
+      "description": "User-imported custom question/term from PDF blueprint scanner.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "questionId": {
+          "type": "integer"
+        },
+        "area": {
+          "type": "string",
+          "enum": ["PSAD", "HPGE", "MSTE"]
+        },
+        "subtopic": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["Easy", "Medium", "Hard"]
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "answer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "choices": {
+          "type": "array"
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 3000
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        "addedAt": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "questionId",
+        "area",
+        "subtopic",
+        "difficulty",
+        "question",
+        "answer",
+        "choices",
+        "explanation",
+        "reference",
+        "addedAt",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Public non-PII Vault Dweller ranking metrics across daily, weekly, monthly, and all-time leaderboards.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "isPublic": {
+          "type": "boolean"
+        },
+        "nickname": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "photoURL": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "avatarCompanion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarSuitColor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "avatarVaultNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16
+        },
+        "targetRank": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "streakCurrent": {
+          "type": "integer"
+        },
+        "streakBest": {
+          "type": "integer"
+        },
+        "bottleCaps": {
+          "type": "integer"
+        },
+        "tasksCompletedTotal": {
+          "type": "integer"
+        },
+        "questionsAnsweredTotal": {
+          "type": "integer"
+        },
+        "masteredCards": {
+          "type": "integer"
+        },
+        "examsCompleted": {
+          "type": "integer"
+        },
+        "accuracyPercent": {
+          "type": "number"
+        },
+        "compositeScore": {
+          "type": "integer"
+        },
+        "dailyKey": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 20,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "dailyQuestions": {
+          "type": "integer"
+        },
+        "dailyTasks": {
+          "type": "integer"
+        },
+        "dailyScore": {
+          "type": "integer"
+        },
+        "weeklyKey": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 20,
+          "pattern": "^\\d{4}-W\\d{2}$"
+        },
+        "weeklyQuestions": {
+          "type": "integer"
+        },
+        "weeklyTasks": {
+          "type": "integer"
+        },
+        "weeklyScore": {
+          "type": "integer"
+        },
+        "monthlyKey": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 20,
+          "pattern": "^\\d{4}-\\d{2}$"
+        },
+        "monthlyQuestions": {
+          "type": "integer"
+        },
+        "monthlyTasks": {
+          "type": "integer"
+        },
+        "monthlyScore": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "isPublic",
+        "nickname",
+        "photoURL",
+        "avatarCompanion",
+        "avatarSuitColor",
+        "avatarVaultNumber",
+        "targetRank",
+        "streakCurrent",
+        "streakBest",
+        "bottleCaps",
+        "tasksCompletedTotal",
+        "questionsAnsweredTotal",
+        "masteredCards",
+        "examsCompleted",
+        "accuracyPercent",
+        "compositeScore",
+        "dailyKey",
+        "dailyQuestions",
+        "dailyTasks",
+        "dailyScore",
+        "weeklyKey",
+        "weeklyQuestions",
+        "weeklyTasks",
+        "weeklyScore",
+        "monthlyKey",
+        "monthlyQuestions",
+        "monthlyTasks",
+        "monthlyScore",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/DwellerProfile"
+      },
+      "description": "Private owner-only Dweller account, Vault settings, Bottle Caps, streak, and customization."
+    },
+    "/users/{userId}/studyProgress/{progressId}": {
+      "schema": {
+        "$ref": "#/entities/StudyProgress"
+      },
+      "description": "Owner-only study progress document ('main') holding SRS flashcards, formula bookmarks/progress, daily activity, and badges."
+    },
+    "/users/{userId}/examSessions/{sessionId}": {
+      "schema": {
+        "$ref": "#/entities/ExamSessionRecord"
+      },
+      "description": "Owner-only completed mock exam history records."
+    },
+    "/users/{userId}/customQuestions/{questionDocId}": {
+      "schema": {
+        "$ref": "#/entities/CustomQuestionRecord"
+      },
+      "description": "Owner-only user-scanned PDF terms & custom questions."
+    },
+    "/leaderboard/{userId}": {
+      "schema": {
+        "$ref": "#/entities/LeaderboardEntry"
+      },
+      "description": "Non-PII Vault Dweller public standings for daily, weekly, monthly, and all-time rankings."
+    }
+  }
+}

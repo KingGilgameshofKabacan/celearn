@@ -22,6 +22,7 @@ import { INITIAL_ACHIEVEMENTS } from '../data/achievements';
 import { CE_QUESTIONS_MASTER } from '../data/questions';
 import confetti from 'canvas-confetti';
 import { soundManager } from './audio';
+import { vaultJukebox } from './jukeboxPlayer';
 
 const STORAGE_KEYS = {
   EXAM_HISTORY: 'cele_exam_history_v1',
@@ -48,7 +49,9 @@ const STORAGE_KEYS = {
   DAILY_STUDY_GOAL: 'cele_daily_study_goal_v1',
   STREAK_GOAL_CELEBRATED_DATE: 'cele_streak_goal_celebrated_date_v1',
   CRT_ENABLED: 'cele_crt_enabled_v1',
-  CRT_INTENSITY: 'cele_crt_intensity_v1'
+  CRT_INTENSITY: 'cele_crt_intensity_v1',
+  LEADERBOARD_NICKNAME: 'cele_leaderboard_nickname_v1',
+  LEADERBOARD_PUBLIC: 'cele_leaderboard_public_v1'
 };
 
 export const DEFAULT_USER_PROFILE = {
@@ -94,6 +97,9 @@ export const getUserProfile = () => {
 export const saveUserProfile = (profile: { name: string; targetRank: string; targetExamDate: string }): void => {
   try {
     localStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(profile));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_profile_updated', { detail: profile }));
+    }
   } catch (e) {
     console.error('Failed to save user profile', e);
   }
@@ -102,7 +108,8 @@ export const saveUserProfile = (profile: { name: string; targetRank: string; tar
 export const getExamHistory = (): ExamSessionResult[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.EXAM_HISTORY);
-    return raw ? JSON.parse(raw) : [];
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
@@ -114,6 +121,9 @@ export const saveExamResult = (result: ExamSessionResult): void => {
     history.unshift(result);
     // Keep last 50 sessions
     localStorage.setItem(STORAGE_KEYS.EXAM_HISTORY, JSON.stringify(history.slice(0, 50)));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_exam_completed', { detail: result }));
+    }
   } catch (e) {
     console.error('Failed to save exam result', e);
   }
@@ -260,14 +270,16 @@ export const evaluateAchievements = (
   let msteCorrect = 0;
   const answeredQuestionIds = new Set<number>();
 
+  const questionMap = allQuestions ? new Map<number, CEQuestion>(allQuestions.map(item => [item.id, item])) : null;
+
   history.forEach(session => {
     totalQuestionsAnswered += session.totalQuestions;
     totalCorrect += session.correctAnswers;
     session.questionIds.forEach(id => answeredQuestionIds.add(id));
 
-    if (allQuestions) {
+    if (questionMap) {
       session.questionIds.forEach(qid => {
-        const q = allQuestions.find(item => item.id === qid);
+        const q = questionMap.get(qid);
         if (q && session.userAnswers[qid] === q.answer) {
           if (q.area === 'PSAD') psadCorrect++;
           if (q.area === 'HPGE') hpgeCorrect++;
@@ -316,13 +328,14 @@ export const evaluateAchievements = (
         progress = masteredFlashcards;
         if (progress >= 30 && !unlocked) unlocked = true;
         break;
-      case 'night_owl':
+      case 'night_owl': {
         const hour = new Date().getHours();
         if (hour >= 21 || hour <= 4) {
           progress = 1;
           if (!unlocked) unlocked = true;
         }
         break;
+      }
       case 'iron_will':
         if (latestExam && latestExam.totalQuestions >= 20 && latestExam.percentage === 100) {
           progress = 100;
@@ -396,14 +409,16 @@ export const getUserStats = (allQuestions: CEQuestion[]): UserStats => {
   };
   const subtopicStats: Record<string, { total: number; correct: number }> = {};
 
+  const questionMap = new Map<number, CEQuestion>(allQuestions.map(item => [item.id, item]));
+
   history.forEach(session => {
     totalQuestionsAnswered += session.totalQuestions;
     totalCorrect += session.correctAnswers;
 
     session.questionIds.forEach(qid => {
-      const q = allQuestions.find(item => item.id === qid);
-      if (q) {
-        const isCorrect = session.userAnswers[qid] === q.answer;
+      const q = questionMap.get(qid);
+      if (q && areaStats[q.area]) {
+        const isCorrect = session.userAnswers?.[qid] === q.answer;
         areaStats[q.area].total++;
         if (isCorrect) areaStats[q.area].correct++;
 
@@ -441,7 +456,8 @@ export const getUserStats = (allQuestions: CEQuestion[]): UserStats => {
 export const getBookmarks = (): number[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
-    return raw ? JSON.parse(raw) : [];
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter((id): id is number => typeof id === 'number') : [];
   } catch {
     return [];
   }
@@ -457,6 +473,9 @@ export const toggleBookmark = (questionId: number): number[] => {
   }
   try {
     localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_bookmarks_updated', { detail: bookmarks }));
+    }
   } catch (e) {
     console.error('Failed to save bookmarks', e);
   }
@@ -476,6 +495,9 @@ export const getThemeMode = (): 'dark' | 'light' => {
 export const saveThemeMode = (mode: 'dark' | 'light'): void => {
   try {
     localStorage.setItem(STORAGE_KEYS.THEME, mode);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_theme_mode_changed', { detail: mode }));
+    }
   } catch (e) {
     console.error('Failed to save theme mode', e);
   }
@@ -526,6 +548,9 @@ export const saveSoundVolume = (vol: number): void => {
     const clamped = Math.max(0, Math.min(1, vol));
     localStorage.setItem(STORAGE_KEYS.SOUND_VOLUME, String(clamped));
     soundManager.setVolume(clamped);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_sound_updated'));
+    }
   } catch (e) {
     console.error('Failed to save sound volume', e);
   }
@@ -543,6 +568,9 @@ export const saveSoundMuted = (muted: boolean): void => {
   try {
     localStorage.setItem(STORAGE_KEYS.SOUND_MUTED, String(muted));
     soundManager.setMuted(muted);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_sound_updated'));
+    }
   } catch (e) {
     console.error('Failed to save sound mute state', e);
   }
@@ -559,6 +587,9 @@ export const getDistractionFree = (): boolean => {
 export const saveDistractionFree = (df: boolean): void => {
   try {
     localStorage.setItem(STORAGE_KEYS.DISTRACTION_FREE, String(df));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_crt_updated'));
+    }
   } catch (e) {
     console.error('Failed to save distraction free mode', e);
   }
@@ -575,6 +606,9 @@ export const getCrtEnabled = (): boolean => {
 export const saveCrtEnabled = (enabled: boolean): void => {
   try {
     localStorage.setItem(STORAGE_KEYS.CRT_ENABLED, String(enabled));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_crt_updated'));
+    }
   } catch (e) {
     console.error('Failed to save CRT scanline state', e);
   }
@@ -593,6 +627,9 @@ export const getCrtIntensity = (): CrtIntensity => {
 export const saveCrtIntensity = (intensity: CrtIntensity): void => {
   try {
     localStorage.setItem(STORAGE_KEYS.CRT_INTENSITY, intensity);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_crt_updated'));
+    }
   } catch (e) {
     console.error('Failed to save CRT scanline intensity', e);
   }
@@ -639,7 +676,16 @@ export const getStreakData = (): StreakData => {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.STREAK);
     if (raw) {
-      const data: StreakData = JSON.parse(raw);
+      const parsed: StreakData = JSON.parse(raw);
+      const data: StreakData = {
+        currentStreak: typeof parsed?.currentStreak === 'number' ? parsed.currentStreak : 0,
+        lastCheckInDate: typeof parsed?.lastCheckInDate === 'string' ? parsed.lastCheckInDate : null,
+        checkInHistory: Array.isArray(parsed?.checkInHistory) ? parsed.checkInHistory : [],
+        bestStreak: Math.max(
+          typeof parsed?.bestStreak === 'number' ? parsed.bestStreak : 0,
+          typeof parsed?.currentStreak === 'number' ? parsed.currentStreak : 0
+        )
+      };
       const today = getLocalDateString();
       const yesterday = getYesterdayDateString();
 
@@ -722,13 +768,15 @@ export const performDailyCheckIn = (): { streak: StreakData; isNewCheckIn: boole
 // Custom & Recently Added Questions / Terms
 // ==========================================
 
-// Cached lookup sets for the authentic built-in data bank (582 CELE questions)
+// Cached lookup sets for the authentic built-in data bank
+const MASTER_BANK_IDS = new Set<number>();
 const MASTER_BANK_ANSWERS = new Set<string>();
 const MASTER_BANK_PROMPTS = new Set<string>();
 
 const initMasterBankLookup = () => {
-  if (MASTER_BANK_ANSWERS.size === 0 && CE_QUESTIONS_MASTER.length > 0) {
+  if (MASTER_BANK_IDS.size === 0 && CE_QUESTIONS_MASTER.length > 0) {
     CE_QUESTIONS_MASTER.forEach(q => {
+      MASTER_BANK_IDS.add(q.id);
       const a = q.answer.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
       if (a) MASTER_BANK_ANSWERS.add(a);
       const p = q.question.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -748,10 +796,9 @@ export const isInDataBank = (item: CEQuestion | { answer?: string; question?: st
     return MASTER_BANK_ANSWERS.has(norm);
   }
 
-  // Check built-in ID range (1 to CE_QUESTIONS_MASTER.length)
-  if (item.id !== undefined && item.id >= 1 && item.id <= CE_QUESTIONS_MASTER.length) {
-    const candidate = CE_QUESTIONS_MASTER[item.id - 1];
-    if (candidate && candidate.id === item.id) return true;
+  // Check all built-in master IDs (including high-range series IDs)
+  if (item.id !== undefined && MASTER_BANK_IDS.has(item.id)) {
+    return true;
   }
 
   if (item.answer) {
@@ -1109,48 +1156,29 @@ export const scheduleSRSFlashcard = (
   };
 
   const now = Date.now();
+  const intervals = calculateSRSIntervals(prev);
+  const nextInterval = intervals[rating].days;
   let repetitions = prev.repetitions || 0;
   let easeFactor = prev.easeFactor || 2.5;
   let lapses = prev.lapses || 0;
-  let nextInterval = 1;
 
   switch (rating) {
     case 'again': {
       repetitions = 0;
       lapses += 1;
-      nextInterval = 1;
       easeFactor = Math.max(1.3, easeFactor - 0.2);
       break;
     }
     case 'hard': {
-      if (repetitions === 0) {
-        nextInterval = 1;
-      } else {
-        nextInterval = Math.max(1, Math.round((prev.interval || 1) * 1.2));
-      }
       easeFactor = Math.max(1.3, easeFactor - 0.15);
       repetitions += 1;
       break;
     }
     case 'good': {
-      if (repetitions === 0) {
-        nextInterval = 1;
-      } else if (repetitions === 1) {
-        nextInterval = 3;
-      } else {
-        nextInterval = Math.max(2, Math.round((prev.interval || 1) * easeFactor));
-      }
       repetitions += 1;
       break;
     }
     case 'easy': {
-      if (repetitions === 0) {
-        nextInterval = 3;
-      } else if (repetitions === 1) {
-        nextInterval = 7;
-      } else {
-        nextInterval = Math.max(4, Math.round((prev.interval || 1) * easeFactor * 1.3));
-      }
       easeFactor = Math.min(3.0, easeFactor + 0.15);
       repetitions += 1;
       break;
@@ -1254,7 +1282,8 @@ export const getNewCards = (
 export const getFormulaBookmarks = (): string[] => {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.FORMULA_BOOKMARKS);
-    return raw ? JSON.parse(raw) : [];
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === 'string') : [];
   } catch {
     return [];
   }
@@ -1266,6 +1295,9 @@ export const toggleFormulaBookmark = (formulaId: string): string[] => {
   const updated = exists ? current.filter(id => id !== formulaId) : [...current, formulaId];
   try {
     localStorage.setItem(STORAGE_KEYS.FORMULA_BOOKMARKS, JSON.stringify(updated));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_formula_bookmarks_updated', { detail: updated }));
+    }
   } catch (e) {
     console.error('Failed to toggle formula bookmark', e);
   }
@@ -1422,3 +1454,483 @@ export const saveAvatarMinimized = (minimized: boolean): void => {
     }
   } catch {}
 };
+
+// ==========================================
+// JSON BACKUP EXPORT & IMPORT ENGINE
+// ==========================================
+
+export interface CelearnBackupPayload {
+  app: 'CELEARN';
+  format: 'celearn-backup-v1';
+  version: 1;
+  exportedAt: string;
+  keys: Record<string, string>;
+}
+
+const KNOWN_ARRAY_KEYS = new Set<string>([
+  STORAGE_KEYS.EXAM_HISTORY,
+  STORAGE_KEYS.ACHIEVEMENTS,
+  STORAGE_KEYS.BOOKMARKS,
+  STORAGE_KEYS.CUSTOM_QUESTIONS,
+  STORAGE_KEYS.FORMULA_BOOKMARKS
+]);
+
+const KNOWN_OBJECT_KEYS = new Set<string>([
+  STORAGE_KEYS.FLASHCARD_PROGRESS,
+  STORAGE_KEYS.USER_PROFILE,
+  STORAGE_KEYS.STREAK,
+  STORAGE_KEYS.DAILY_ACTIVITY,
+  STORAGE_KEYS.FORMULA_PROGRESS,
+  STORAGE_KEYS.AVATAR_CONFIG,
+  STORAGE_KEYS.AVATAR_POSITION,
+  STORAGE_KEYS.ACTIVE_EXAM_SESSION
+]);
+
+const EXTRA_KNOWN_STORAGE_KEYS = [
+  'cele_sound_effects_enabled_v1',
+  'cele_jukebox_track',
+  'cele_jukebox_vol',
+  'cele_jukebox_player_mode'
+];
+
+const isPlainObject = (val: unknown): val is Record<string, unknown> =>
+  typeof val === 'object' && val !== null && !Array.isArray(val);
+
+const collectAllCeleKeys = (): Record<string, string> => {
+  const keys: Record<string, string> = {};
+  if (typeof localStorage === 'undefined') return keys;
+
+  try {
+    if (typeof localStorage.length === 'number' && typeof localStorage.key === 'function') {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('cele_')) {
+          const val = localStorage.getItem(k);
+          if (val !== null) {
+            keys[k] = val;
+          }
+        }
+      }
+    }
+  } catch {}
+
+  // Fallback sweep for known static keys if localStorage iteration is partial
+  const allStaticKeys = [...Object.values(STORAGE_KEYS), ...EXTRA_KNOWN_STORAGE_KEYS];
+  allStaticKeys.forEach(k => {
+    if (!(k in keys)) {
+      try {
+        const val = localStorage.getItem(k);
+        if (val !== null) {
+          keys[k] = val;
+        }
+      } catch {}
+    }
+  });
+
+  // Ensure today's daily tasks key is included if present
+  try {
+    const todayKey = `${STORAGE_KEYS.DAILY_TASKS}_${getTodayDateString()}`;
+    if (!(todayKey in keys)) {
+      const val = localStorage.getItem(todayKey);
+      if (val !== null) {
+        keys[todayKey] = val;
+      }
+    }
+  } catch {}
+
+  const sorted: Record<string, string> = {};
+  Object.keys(keys).sort().forEach(k => {
+    sorted[k] = keys[k];
+  });
+  return sorted;
+};
+
+export const exportBackupJson = (): {
+  json: string;
+  keyCount: number;
+  payload: CelearnBackupPayload;
+} => {
+  const keys = collectAllCeleKeys();
+  const payload: CelearnBackupPayload = {
+    app: 'CELEARN',
+    format: 'celearn-backup-v1',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    keys
+  };
+  return {
+    json: JSON.stringify(payload, null, 2),
+    keyCount: Object.keys(keys).length,
+    payload
+  };
+};
+
+export const downloadBackupJson = (): { keyCount: number; filename: string } => {
+  const { json, keyCount } = exportBackupJson();
+  const dateStr = getLocalDateString();
+  const filename = `celearn-backup-${dateStr}.json`;
+
+  if (typeof document !== 'undefined' && typeof URL !== 'undefined') {
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  return { keyCount, filename };
+};
+
+export const importBackupJson = (
+  rawText: string
+): { ok: true; restoredCount: number } | { ok: false; error: string } => {
+  if (typeof rawText !== 'string' || rawText.trim().length === 0) {
+    return { ok: false, error: 'Backup file is empty.' };
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(rawText);
+  } catch {
+    return { ok: false, error: 'Invalid JSON file format.' };
+  }
+
+  if (!isPlainObject(parsed)) {
+    return { ok: false, error: 'Backup JSON must be an object.' };
+  }
+
+  let rawEntries: Record<string, unknown> | null = null;
+  if ('keys' in parsed) {
+    if (!isPlainObject(parsed.keys)) {
+      return { ok: false, error: 'Invalid backup payload: "keys" must be an object.' };
+    }
+    rawEntries = parsed.keys;
+  } else {
+    rawEntries = parsed;
+  }
+
+  const sanitizedKeys: Record<string, string> = {};
+  for (const [k, v] of Object.entries(rawEntries)) {
+    if (!k.startsWith('cele_')) continue;
+
+    let serialized: string;
+    if (typeof v === 'string') {
+      serialized = v;
+    } else if (typeof v === 'number' || typeof v === 'boolean') {
+      serialized = String(v);
+    } else if (v !== null && typeof v === 'object') {
+      serialized = JSON.stringify(v);
+    } else {
+      continue;
+    }
+
+    // Validate typed JSON structures for critical CELEARN storage keys
+    if (KNOWN_ARRAY_KEYS.has(k)) {
+      try {
+        const inner = JSON.parse(serialized);
+        if (!Array.isArray(inner)) {
+          return { ok: false, error: `Corrupted array data for "${k}".` };
+        }
+      } catch {
+        return { ok: false, error: `Invalid JSON stored under "${k}".` };
+      }
+    } else if (KNOWN_OBJECT_KEYS.has(k) || k.startsWith(`${STORAGE_KEYS.DAILY_TASKS}_`)) {
+      try {
+        const inner = JSON.parse(serialized);
+        if (!isPlainObject(inner)) {
+          return { ok: false, error: `Corrupted object data for "${k}".` };
+        }
+      } catch {
+        return { ok: false, error: `Invalid JSON stored under "${k}".` };
+      }
+    }
+
+    sanitizedKeys[k] = serialized;
+  }
+
+  const entries = Object.entries(sanitizedKeys);
+  if (entries.length === 0) {
+    return { ok: false, error: 'No valid CELEARN backup keys found in JSON file.' };
+  }
+
+  if (typeof localStorage === 'undefined') {
+    return { ok: false, error: 'Local storage is unavailable in this environment.' };
+  }
+
+  // Snapshot existing cele_* keys for rollback on write/quota failure
+  const previousKeys = collectAllCeleKeys();
+
+  try {
+    Object.keys(previousKeys).forEach(existingKey => {
+      try {
+        localStorage.removeItem(existingKey);
+      } catch {}
+    });
+
+    entries.forEach(([k, val]) => {
+      localStorage.setItem(k, val);
+    });
+  } catch {
+    // Rollback on failure (e.g., storage quota exceeded)
+    try {
+      entries.forEach(([k]) => localStorage.removeItem(k));
+      Object.entries(previousKeys).forEach(([k, val]) => localStorage.setItem(k, val));
+    } catch {}
+    return { ok: false, error: 'Failed to write backup to device storage.' };
+  }
+
+  // Re-sync live audio & jukebox engines
+  soundManager.syncFromStorage();
+  vaultJukebox.syncFromStorage();
+
+  // Broadcast live UI synchronization events
+  if (typeof window !== 'undefined') {
+    const dispatch = (name: string, detail?: unknown) =>
+      window.dispatchEvent(new CustomEvent(name, detail !== undefined ? { detail } : undefined));
+
+    dispatch('cele_backup_restored', { restoredCount: entries.length });
+    dispatch('cele_streak_updated', getStreakData());
+    dispatch('cele_caps_updated', getBottleCaps());
+    dispatch('cele_daily_tasks_updated', { date: getTodayDateString(), tasks: getDailyTasks() });
+    dispatch('cele_daily_goal_updated', getDailyStudyGoal());
+    dispatch('cele_custom_questions_updated', getCustomQuestions());
+    dispatch('cele_flashcard_progress_updated', getFlashcardProgress());
+    dispatch('cele_formula_progress_updated', getFormulaProgress());
+    dispatch('cele_formula_bookmarks_updated', getFormulaBookmarks());
+    dispatch('cele_avatar_updated', getAvatarConfig());
+    dispatch('cele_avatar_minimized_changed', getAvatarMinimized());
+    dispatch('cele_avatar_position_reset');
+    dispatch('cele_theme_changed', getActiveThemeId());
+    dispatch('cele_leaderboard_updated');
+  }
+
+  return { ok: true, restoredCount: entries.length };
+};
+
+// ==========================================
+// DWELLER DASHBOARD METRICS & LEADERBOARD NICKNAMES
+// ==========================================
+
+export const getIsoWeekKey = (d: Date = new Date()): string => {
+  const utc = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = utc.getUTCDay() || 7;
+  utc.setUTCDate(utc.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(utc.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((utc.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return `${utc.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+};
+
+export const getMonthKey = (d: Date = new Date()): string => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  return `${year}-${month}`;
+};
+
+export const getLeaderboardNickname = (): string => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.LEADERBOARD_NICKNAME);
+    if (raw && raw.trim().length > 0) {
+      return raw.trim().slice(0, 40);
+    }
+  } catch {}
+  const profile = getUserProfile();
+  return (profile?.name || DEFAULT_USER_PROFILE.name).trim().slice(0, 40) || 'Vault Dweller';
+};
+
+export const saveLeaderboardNickname = (nickname: string): string => {
+  const cleaned = nickname.trim().slice(0, 40);
+  try {
+    if (cleaned.length > 0) {
+      localStorage.setItem(STORAGE_KEYS.LEADERBOARD_NICKNAME, cleaned);
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.LEADERBOARD_NICKNAME);
+    }
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_leaderboard_updated', { detail: { nickname: cleaned } }));
+    }
+  } catch (e) {
+    console.error('Failed to save leaderboard nickname', e);
+  }
+  return cleaned || getLeaderboardNickname();
+};
+
+export const getLeaderboardVisibility = (): boolean => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.LEADERBOARD_PUBLIC);
+    if (raw === 'false') return false;
+  } catch {}
+  return true;
+};
+
+export const saveLeaderboardVisibility = (isPublic: boolean): boolean => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.LEADERBOARD_PUBLIC, String(isPublic));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cele_leaderboard_updated', { detail: { isPublic } }));
+    }
+  } catch (e) {
+    console.error('Failed to save leaderboard visibility', e);
+  }
+  return isPublic;
+};
+
+export interface DwellerDashboardMetrics {
+  streakCurrent: number;
+  streakBest: number;
+  bottleCaps: number;
+  tasksCompletedTotal: number;
+  questionsAnsweredTotal: number;
+  masteredCards: number;
+  examsCompleted: number;
+  accuracyPercent: number;
+  compositeScore: number;
+  dailyKey: string;
+  dailyQuestions: number;
+  dailyTasks: number;
+  dailyScore: number;
+  weeklyKey: string;
+  weeklyQuestions: number;
+  weeklyTasks: number;
+  weeklyScore: number;
+  monthlyKey: string;
+  monthlyQuestions: number;
+  monthlyTasks: number;
+  monthlyScore: number;
+  todayTasks: DailyTasksStatus;
+  last7Days: DailyActivityRecord[];
+}
+
+const countTasksCompleted = (tasks?: Partial<DailyTasksStatus>): number => {
+  if (!tasks) return 0;
+  return (
+    (tasks.reviewedFlashcards ? 1 : 0) +
+    (tasks.learnedNew ? 1 : 0) +
+    (tasks.tookMockExam ? 1 : 0)
+  );
+};
+
+export const getDwellerDashboardMetrics = (): DwellerDashboardMetrics => {
+  const streak = getStreakData();
+  const bottleCaps = getBottleCaps();
+  const history = getExamHistory();
+  const flashcards = getFlashcardProgress();
+  const formulas = getFormulaProgress();
+  const allActivity = getAllDailyActivity();
+
+  const dailyKey = getTodayDateString();
+  const weeklyKey = getIsoWeekKey();
+  const monthlyKey = getMonthKey();
+  const todayTasks = getDailyTasks(dailyKey);
+
+  // Merge today's task flags so recent completions always count cleanly
+  const normalizedActivity: Record<string, DailyActivityRecord> = { ...allActivity };
+  const existingToday = normalizedActivity[dailyKey];
+  normalizedActivity[dailyKey] = {
+    date: dailyKey,
+    questionsAnswered: existingToday?.questionsAnswered || 0,
+    tasks: {
+      reviewedFlashcards: Boolean(todayTasks.reviewedFlashcards || existingToday?.tasks?.reviewedFlashcards),
+      learnedNew: Boolean(todayTasks.learnedNew || existingToday?.tasks?.learnedNew),
+      tookMockExam: Boolean(todayTasks.tookMockExam || existingToday?.tasks?.tookMockExam)
+    }
+  };
+
+  let tasksCompletedTotal = 0;
+  let activityQuestionsTotal = 0;
+  let dailyQuestions = 0;
+  let dailyTasks = 0;
+  let weeklyQuestions = 0;
+  let weeklyTasks = 0;
+  let monthlyQuestions = 0;
+  let monthlyTasks = 0;
+
+  for (const [dateStr, rec] of Object.entries(normalizedActivity)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) continue;
+    const qCount = Math.max(0, Math.trunc(rec?.questionsAnswered || 0));
+    const tCount = countTasksCompleted(rec?.tasks);
+
+    tasksCompletedTotal += tCount;
+    activityQuestionsTotal += qCount;
+
+    if (dateStr === dailyKey) {
+      dailyQuestions += qCount;
+      dailyTasks += tCount;
+    }
+
+    const parsedDate = new Date(`${dateStr}T12:00:00`);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      if (getIsoWeekKey(parsedDate) === weeklyKey) {
+        weeklyQuestions += qCount;
+        weeklyTasks += tCount;
+      }
+      if (getMonthKey(parsedDate) === monthlyKey) {
+        monthlyQuestions += qCount;
+        monthlyTasks += tCount;
+      }
+    }
+  }
+
+  let examQuestionsTotal = 0;
+  let examCorrectTotal = 0;
+  history.forEach(s => {
+    examQuestionsTotal += Math.max(0, Math.trunc(s.totalQuestions || 0));
+    examCorrectTotal += Math.max(0, Math.trunc(s.correctAnswers || 0));
+  });
+
+  const questionsAnsweredTotal = Math.max(activityQuestionsTotal, examQuestionsTotal);
+  const accuracyPercent =
+    examQuestionsTotal > 0
+      ? Math.min(100, Math.max(0, Math.round((examCorrectTotal / examQuestionsTotal) * 100)))
+      : 0;
+
+  const masteredFlashcards = Object.values(flashcards).filter(f => f?.status === 'mastered').length;
+  const masteredFormulas = Object.values(formulas).filter(f => f?.status === 'mastered').length;
+  const masteredCards = masteredFlashcards + masteredFormulas;
+  const examsCompleted = history.length;
+
+  const dailyScore = Math.min(1000000, dailyQuestions * 10 + dailyTasks * 40);
+  const weeklyScore = Math.min(10000000, weeklyQuestions * 10 + weeklyTasks * 40);
+  const monthlyScore = Math.min(50000000, monthlyQuestions * 10 + monthlyTasks * 40);
+  const compositeScore = Math.min(
+    200000000,
+    Math.round(
+      streak.bestStreak * 50 +
+        tasksCompletedTotal * 40 +
+        questionsAnsweredTotal * 5 +
+        masteredCards * 15 +
+        examsCompleted * 35 +
+        bottleCaps * 0.2
+    )
+  );
+
+  return {
+    streakCurrent: Math.max(0, Math.trunc(streak.currentStreak)),
+    streakBest: Math.max(0, Math.trunc(streak.bestStreak)),
+    bottleCaps: Math.max(0, Math.trunc(bottleCaps)),
+    tasksCompletedTotal,
+    questionsAnsweredTotal,
+    masteredCards,
+    examsCompleted,
+    accuracyPercent,
+    compositeScore,
+    dailyKey,
+    dailyQuestions,
+    dailyTasks: Math.min(10, dailyTasks),
+    dailyScore,
+    weeklyKey,
+    weeklyQuestions,
+    weeklyTasks: Math.min(100, weeklyTasks),
+    weeklyScore,
+    monthlyKey,
+    monthlyQuestions,
+    monthlyTasks: Math.min(500, monthlyTasks),
+    monthlyScore,
+    todayTasks: normalizedActivity[dailyKey].tasks,
+    last7Days: getLast7DaysActivity()
+  };
+};
+

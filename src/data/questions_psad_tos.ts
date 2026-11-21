@@ -82,12 +82,12 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
     "question": "The critical section for two-way (punching) shear in reinforced concrete column footings is located at a distance of:",
-    "answer": "d / 2 FROM THE FACE OF THE COLUMN",
+    "answer": "At d / 2 from the face of the column",
     "choices": [
-      "d from the face of the column",
-      "d / 2 FROM THE FACE OF THE COLUMN",
-      "At the column face",
-      "2d from the column perimeter"
+      "At d from the face of the column",
+      "At d / 2 from the face of the column",
+      "At the face of the column",
+      "At 2d from the column perimeter"
     ],
     "explanation": "Punching shear failure cracks form a truncated pyramid inclined at 45 degrees, intercepting mid-depth at distance d/2."
   },
@@ -144,10 +144,10 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "question": "Minimum shrinkage and temperature reinforcement ratio for Grade 40 (275 MPa) deformed bars in structural concrete slabs is:",
     "answer": "0.0020 of Gross Area",
     "choices": [
-      "0.0014",
-      "0.0018",
+      "0.0014 of Gross Area",
+      "0.0018 of Gross Area",
       "0.0020 of Gross Area",
-      "0.0025"
+      "0.0025 of Gross Area"
     ],
     "explanation": "NSCP Section 424.4.3.2 specifies ρ_temp = 0.0020 for Grade 40 rebars and 0.0018 for Grade 60 (415 MPa) bars."
   },
@@ -157,12 +157,12 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
     "question": "The maximum permissible center-to-center spacing of temperature and shrinkage reinforcement in solid slabs is:",
-    "answer": "5 TIMES SLAB THICKNESS OR 450 mm",
+    "answer": "5 times slab thickness or 450 mm",
     "choices": [
       "3 times slab thickness or 300 mm",
-      "5 TIMES SLAB THICKNESS OR 450 mm",
+      "5 times slab thickness or 450 mm",
       "2 times slab thickness or 500 mm",
-      "600 mm"
+      "4 times slab thickness or 600 mm"
     ],
     "explanation": "Limits crack widths caused by drying shrinkage and diurnal ambient temperature fluctuations."
   },
@@ -172,12 +172,12 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Medium",
     "question": "When reaming or drilling bolt holes in structural steel tension members, the nominal design hole diameter is taken as:",
-    "answer": "BOLT DIAMETER + 2 mm (1/16 INCH) FOR STANDARD HOLE + 2 mm DAMAGE",
+    "answer": "Bolt diameter + 4 mm (2 mm hole + 2 mm damage)",
     "choices": [
-      "Bolt diameter exactly",
-      "BOLT DIAMETER + 2 mm (1/16 INCH) FOR STANDARD HOLE + 2 mm DAMAGE",
-      "Bolt diameter + 6 mm",
-      "1.5 times bolt diameter"
+      "Bolt diameter + 0 mm (nominal hole only)",
+      "Bolt diameter + 2 mm (standard hole clearance)",
+      "Bolt diameter + 4 mm (2 mm hole + 2 mm damage)",
+      "Bolt diameter + 6 mm (oversized hole allowance)"
     ],
     "explanation": "AISC specifies effective hole diameter = bolt diameter + 1/16\" (nominal clearance) + 1/16\" (damage allowance) = d + 1/8\" (≈ d + 3.2 mm)."
   },
@@ -247,14 +247,14 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Medium",
     "question": "The effective throat thickness of a standard equal-leg fillet weld with leg size w is calculated as:",
-    "answer": "0.707 · w (w · sin 45°)",
+    "answer": "0.707 · w",
     "choices": [
       "0.500 · w",
-      "0.707 · w (w · sin 45°)",
-      "w / 2",
+      "0.707 · w",
+      "0.577 · w",
       "0.866 · w"
     ],
-    "explanation": "The weakest failure plane in a fillet weld occurs across the 45-degree theoretical throat dimension."
+    "explanation": "The weakest failure plane in a fillet weld occurs across the 45-degree theoretical throat dimension. Effective throat equals w · sin 45°."
   },
   {
     "id": 718,
@@ -502,10 +502,10 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Hard",
     "question": "A vertical irregularity where a story has lateral shear strength less than 80% of that of the story above is classified as:",
-    "answer": "Weak Storey (discontinuity in Capacity)",
+    "answer": "Weak Storey",
     "choices": [
       "Soft Storey",
-      "Weak Storey (discontinuity in Capacity)",
+      "Weak Storey",
       "Mass Irregularity",
       "Geometric Irregularity"
     ],
@@ -517,11 +517,11 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Medium",
     "question": "In the Moment Distribution Method (Hardy Cross), the carry-over factor for a prismatic beam with far end fixed is:",
-    "answer": "+ 0.50 (+ 1/2)",
+    "answer": "+ 0.50",
     "choices": [
-      "0",
-      "+ 0.50 (+ 1/2)",
-      "+ 1.0",
+      "0.00",
+      "+ 0.50",
+      "+ 1.00",
       "- 0.50"
     ],
     "explanation": "Rotating one fixed-ended beam end by θ induces a moment at the opposite fixed support equal to half the applied moment."
@@ -535,9 +535,9 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "answer": "M1·L1 + 2·M2·(L1 + L2) + M3·L2 = - 6·(A1·a1/L1 + A2·b2/L2)",
     "choices": [
       "M1·L1 + 2·M2·(L1 + L2) + M3·L2 = - 6·(A1·a1/L1 + A2·b2/L2)",
-      "M1 + M2 + M3 = 0",
-      "M1·L2 + M2·(L1 + L2) + M3·L1 = - 3·w·L²",
-      "M1·L1 - 2·M2·L2 + M3·L1 = 0"
+      "M1·L1 + 4·M2·(L1 + L2) + M3·L2 = - 3·(A1·a1/L1 + A2·b2/L2)",
+      "M1·L2 + 2·M2·(L1 + L2) + M3·L1 = - 6·(A1·b1/L1 + A2·a2/L2)",
+      "M1·L1 - 2·M2·(L1 + L2) + M3·L2 = - 2·(A1·a1/L1 + A2·b2/L2)"
     ],
     "explanation": "Clapeyron’s classic Three-Moment Equation derived from compatibility of slopes at the continuous interior support."
   },
@@ -592,12 +592,12 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Hard",
     "question": "In a reinforced concrete column subject to axial force Pn and bending moment Mn, the \"balanced failure\" condition occurs when:",
-    "answer": "CONCRETE CRUSHES AT εcu = 0.003 AT THE EXACT MOMENT TENSION STEEL YIELDS AT εy",
+    "answer": "Concrete crushes at εcu = 0.003 while tension steel yields at εy",
     "choices": [
-      "Axial load Pn equals zero",
-      "CONCRETE CRUSHES AT εcu = 0.003 AT THE EXACT MOMENT TENSION STEEL YIELDS AT εy",
-      "Tension steel strain reaches 0.005",
-      "Compression steel carries 50% of the load"
+      "Axial compressive load Pn equals zero at pure flexure",
+      "Concrete crushes at εcu = 0.003 while tension steel yields at εy",
+      "Net tensile steel strain reaches 0.005 before concrete crushes",
+      "Compression steel yields prior to any concrete cracking"
     ],
     "explanation": "Balanced axial load Pb and balanced moment Mb mark the transition between compression-controlled and tension-controlled column failure."
   },
@@ -640,9 +640,9 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "answer": "tp = l · √[ (2 · Pu) / (0.90 · Fy · B · N) ]",
     "choices": [
       "tp = l · √[ (2 · Pu) / (0.90 · Fy · B · N) ]",
-      "tp = Pu / (Fy · B)",
-      "tp = l · (Pu / Fy)",
-      "tp = 0.50 · l · √(Pu / Fy)"
+      "tp = l · √[ (Pu) / (0.90 · Fy · B · N) ]",
+      "tp = l · √[ (4 · Pu) / (0.75 · Fy · B · N) ]",
+      "tp = 0.50 · l · √[ (Pu) / (Fy · B · N) ]"
     ],
     "explanation": "Based on uniform bearing pressure q = Pu/(B·N) acting on base plate cantilever projections m and n."
   },
@@ -682,14 +682,14 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Easy",
     "question": "Standard ASTM test apparatus used to determine the initial and final setting times of hydraulic cement paste is the:",
-    "answer": "Vicat Needle Apparatus (ASTM C191)",
+    "answer": "Vicat Needle Apparatus",
     "choices": [
       "Slump Cone",
-      "Vicat Needle Apparatus (ASTM C191)",
+      "Vicat Needle Apparatus",
       "Pycnometer Bottle",
       "Le Chatelier Flask"
     ],
-    "explanation": "Initial set is reached when 1 mm needle penetrates to 25 mm depth; final set when needle ring leaves no indentation."
+    "explanation": "Initial set is reached when 1 mm needle penetrates to 25 mm depth; final set when needle ring leaves no indentation. Standardized under ASTM C191."
   },
   {
     "id": 747,
@@ -697,14 +697,14 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "Soundness of Portland cement (freedom from delayed expansive cracking caused by excess free lime or magnesia) is evaluated by the:",
-    "answer": "Autoclave Expansion Test (ASTM C151)",
+    "answer": "Autoclave Expansion Test",
     "choices": [
       "Blaine Air Permeability Test",
-      "Autoclave Expansion Test (ASTM C151)",
-      "Los Angeles Test",
+      "Autoclave Expansion Test",
+      "Los Angeles Abrasion Test",
       "Tensile Briquette Test"
     ],
-    "explanation": "Accelerates hydration of hard-burned free lime (CaO) and periclase (MgO) under high steam pressure."
+    "explanation": "Accelerates hydration of hard-burned free lime (CaO) and periclase (MgO) under high steam pressure. Standardized under ASTM C151."
   },
   {
     "id": 748,
@@ -712,14 +712,14 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Medium",
     "question": "Under NSCP 2015, the basic wind speed V in Wind Zone 1 (covering Eastern seaboard of Luzon, Samar, and Leyte) for Occupancy Category IV is:",
-    "answer": "250 km/h (70 m/s)",
+    "answer": "250 km/h",
     "choices": [
       "200 km/h",
       "220 km/h",
-      "250 km/h (70 m/s)",
+      "250 km/h",
       "300 km/h"
     ],
-    "explanation": "NSCP Section 207 maps the Philippines into 3 wind hazard zones, with Zone 1 subjected to highest super typhoon velocities."
+    "explanation": "NSCP Section 207 maps the Philippines into 3 wind hazard zones, with Zone 1 subjected to highest super typhoon velocities. Equivalent to approximately 70 m/s."
   },
   {
     "id": 749,
@@ -727,12 +727,12 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Hard",
     "question": "In building seismic design, the redundancy factor ρ specified in NSCP Section 208.4.8.3 ranges between:",
-    "answer": "1.0 and 1.25 (or 1.40)",
+    "answer": "1.0 and 1.25",
     "choices": [
-      "0.85 and 1.0",
-      "1.0 and 1.25 (or 1.40)",
+      "0.85 and 1.00",
+      "1.0 and 1.25",
       "1.25 and 1.75",
-      "0.50 and 1.0"
+      "0.50 and 1.00"
     ],
     "explanation": "Penalizes lateral force resisting frames that have few bays and lack multiple alternate load redistribution paths."
   },
@@ -742,12 +742,12 @@ export const PSAD_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Hard",
     "question": "Castigliano’s first theorem states that the partial derivative of total strain energy U with respect to a virtual displacement Δi yields:",
-    "answer": "THE GENERALIZED FORCE Pi ACTING IN THE DIRECTION OF THAT DISPLACEMENT",
+    "answer": "The generalized force Pi acting in the direction of that displacement",
     "choices": [
-      "THE GENERALIZED FORCE Pi ACTING IN THE DIRECTION OF THAT DISPLACEMENT",
-      "The deflection at the support",
-      "The internal bending moment",
-      "The reciprocal stiffness"
+      "The generalized force Pi acting in the direction of that displacement",
+      "The lateral translation measured at the pinned support",
+      "The maximum internal bending moment along the beam",
+      "The reciprocal torsional stiffness at the free end"
     ],
     "explanation": "Castigliano I: ∂U/∂Δi = Pi (equilibrium). Castigliano II: ∂U/∂Pi = Δi (compatibility/deflection)."
   }

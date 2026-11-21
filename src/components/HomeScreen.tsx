@@ -29,8 +29,12 @@ import {
   Brain,
   Layers,
   ChevronRight,
-  Play
+  Play,
+  Sigma,
+  Cloud,
+  ShieldCheck
 } from 'lucide-react';
+import { useFirebaseAuth } from '../contexts/FirebaseAuthContext';
 import {
   getStreakData,
   hasCheckedInToday,
@@ -53,7 +57,7 @@ interface HomeScreenProps {
   onUpdateProfile: (updated: UserProfile) => void;
   stats: UserStats;
   totalQuestionsCount: number;
-  onNavigateTab: (tab: 'exam' | 'flashcards' | 'dictionary' | 'analytics' | 'achievements' | 'themes') => void;
+  onNavigateTab: (tab: 'exam' | 'flashcards' | 'formulas' | 'dictionary' | 'rankings' | 'analytics' | 'achievements' | 'themes') => void;
   onStartQuickExam: (area: 'ALL' | 'PSAD' | 'HPGE' | 'MSTE') => void;
   onStartDueFlashcards?: () => void;
   onStartNewFlashcardsSetup?: () => void;
@@ -89,10 +93,19 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   onResumeExamSession,
   onDiscardExamSession
 }) => {
+  const { user, openLoginModal } = useFirebaseAuth();
   const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
   const [editName, setEditName] = useState<string>(profile.name);
   const [editRank, setEditRank] = useState<string>(profile.targetRank);
   const [editDate, setEditDate] = useState<string>(profile.targetExamDate);
+
+  useEffect(() => {
+    if (!isEditingProfile) {
+      setEditName(profile.name);
+      setEditRank(profile.targetRank);
+      setEditDate(profile.targetExamDate);
+    }
+  }, [profile, isEditingProfile]);
 
   // Daily Tasks State & Sync
   const [dailyTasks, setDailyTasks] = useState<DailyTasksStatus>(getDailyTasks);
@@ -102,8 +115,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       setDailyTasks(getDailyTasks());
     };
     window.addEventListener('cele_daily_tasks_updated', handleDailyTasksUpdated);
+    window.addEventListener('cele_backup_restored', handleDailyTasksUpdated);
     return () => {
       window.removeEventListener('cele_daily_tasks_updated', handleDailyTasksUpdated);
+      window.removeEventListener('cele_backup_restored', handleDailyTasksUpdated);
     };
   }, []);
 
@@ -138,10 +153,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       updateStreakStatus();
     };
     window.addEventListener('cele_streak_updated', handleStreakEvent);
+    window.addEventListener('cele_backup_restored', handleStreakEvent);
 
     return () => {
       clearInterval(interval);
       window.removeEventListener('cele_streak_updated', handleStreakEvent);
+      window.removeEventListener('cele_backup_restored', handleStreakEvent);
     };
   }, []);
 
@@ -171,7 +188,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
     setIsEditingProfile(false);
   };
 
-  const masteryPercentage = Math.round((stats.flashcardsMastered / totalQuestionsCount) * 100);
+  const masteryPercentage = totalQuestionsCount > 0
+    ? Math.round((stats.flashcardsMastered / totalQuestionsCount) * 100)
+    : 0;
 
   return (
     <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
@@ -208,6 +227,34 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               >
                 Customize Avatar
               </button>
+              <span className="text-stone-400 dark:text-stone-600" aria-hidden="true">·</span>
+              <button
+                type="button"
+                onClick={openLoginModal}
+                className={`flex items-center space-x-1 transition font-semibold cursor-pointer ${
+                  user
+                    ? 'text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300'
+                    : 'text-amber-600 hover:text-amber-500 dark:text-amber-300 dark:hover:text-amber-200'
+                }`}
+                title={user ? 'Manage Vault Cloud Sync & Dweller Dossier' : 'Sign in with Google to enable Vault Cloud Sync'}
+              >
+                {user ? (
+                  <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                ) : (
+                  <Cloud className="w-3.5 h-3.5 shrink-0" />
+                )}
+                <span>{user ? 'Cloud Synced' : 'Vault Login'}</span>
+              </button>
+              <span className="text-stone-400 dark:text-stone-600" aria-hidden="true">·</span>
+              <button
+                type="button"
+                onClick={() => onNavigateTab('rankings')}
+                className="text-stone-600 hover:text-amber-600 dark:text-sky-300 dark:hover:text-amber-400 flex items-center space-x-1 transition font-semibold cursor-pointer"
+                title="Open Dweller Dashboard & Multi-User Rankings"
+              >
+                <Trophy className="w-3.5 h-3.5 text-amber-500" />
+                <span>Dweller Rankings</span>
+              </button>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-black text-stone-900 dark:text-amber-400 tracking-tight font-mono">
@@ -226,7 +273,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <FlipClockCountdown
               targetExamDate={profile.targetExamDate}
               onEditDate={() => setIsEditingProfile(true)}
-              className="w-full max-w-sm sm:max-w-md md:max-w-none md:min-w-[340px] lg:min-w-[380px]"
+              className="w-full max-w-sm sm:max-w-md md:max-w-none md:min-w-[300px] lg:min-w-[360px]"
             />
           </div>
 
@@ -235,8 +282,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* Edit Profile Modal */}
       {isEditingProfile && (
-        <div className="fixed inset-0 z-50 bg-stone-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-md w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100">
+        <div className="fixed inset-0 z-50 bg-stone-950/60 backdrop-blur-xs flex items-start sm:items-center justify-center p-4 pl-safe pr-safe overflow-y-auto">
+          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-3xl max-w-md w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100 my-auto">
             <h3 className="text-lg font-bold mb-4">Edit Candidate Profile</h3>
             <form onSubmit={handleSaveProfile} className="space-y-4">
               <div>
@@ -320,7 +367,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 You have an unfinished assessment in progress!
               </h3>
               <p className="text-xs text-stone-600 dark:text-stone-300">
-                Left off at Item {interruptedSession.currentIndex + 1} of {interruptedSession.questions.length} · {Object.keys(interruptedSession.userAnswers).length} answered · {Math.floor(interruptedSession.secondsRemaining / 60)} mins remaining
+                Left off at Item {interruptedSession.currentIndex + 1} of {interruptedSession.questions.length} · {Object.keys(interruptedSession.userAnswers).length} answered ·{' '}
+                {interruptedSession.config.timeLimitMinutes === 0
+                  ? `Untimed (${Math.floor(interruptedSession.secondsElapsed / 60)}m elapsed)`
+                  : interruptedSession.secondsRemaining < 60
+                    ? '<1 min remaining'
+                    : `${Math.floor(interruptedSession.secondsRemaining / 60)} mins remaining`}
               </p>
             </div>
           </div>
@@ -821,7 +873,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           
           {/* Mock Exam Card */}
           <div
@@ -865,6 +917,29 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
             <div className="pt-6 flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono">
               <span>Engage Training Deck</span>
+              <ArrowRight className="w-4 h-4 ml-1 transition group-hover:translate-x-1" />
+            </div>
+          </div>
+
+          {/* Formulas Card */}
+          <div
+            onClick={() => onNavigateTab('formulas')}
+            className="group cursor-pointer bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] hover:border-emerald-400 dark:hover:border-emerald-400 rounded-2xl p-6 transition shadow-xs hover:shadow-md flex flex-col justify-between interactive-card"
+          >
+            <div className="space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-500 flex items-center justify-center font-bold border border-emerald-500/30">
+                <Sigma className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 group-hover:text-emerald-400 transition font-mono">
+                CE Formulas Vault
+              </h3>
+              <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+                HPGE, PSAD &amp; MSTE equations, cropped figures, pinned formulas, and custom Fallout formula flashcards.
+              </p>
+            </div>
+
+            <div className="pt-6 flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono">
+              <span>Open Formulas Vault</span>
               <ArrowRight className="w-4 h-4 ml-1 transition group-hover:translate-x-1" />
             </div>
           </div>
@@ -913,6 +988,29 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
             <div className="pt-6 flex items-center text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">
               <span>Import Blueprints</span>
+              <ArrowRight className="w-4 h-4 ml-1 transition group-hover:translate-x-1" />
+            </div>
+          </div>
+
+          {/* Dweller Dashboard & Rankings Card */}
+          <div
+            onClick={() => onNavigateTab('rankings')}
+            className="group cursor-pointer bg-white dark:bg-[#0E1B38] border border-stone-200 dark:border-[#2B447A] hover:border-amber-400 dark:hover:border-amber-400 rounded-2xl p-6 transition shadow-xs hover:shadow-md flex flex-col justify-between interactive-card"
+          >
+            <div className="space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/15 dark:bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold border border-amber-500/30">
+                <Trophy className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 group-hover:text-amber-400 transition font-mono">
+                Dweller Rankings
+              </h3>
+              <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+                Daily, Weekly, and Monthly standings for streaks, caps &amp; tasks with Top 5 trophies and your own display nickname.
+              </p>
+            </div>
+
+            <div className="pt-6 flex items-center text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">
+              <span>Open Rankings</span>
               <ArrowRight className="w-4 h-4 ml-1 transition group-hover:translate-x-1" />
             </div>
           </div>
@@ -981,8 +1079,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* Streak Check-In Celebration Modal */}
       {streakCelebration && (
-        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#0E1B38] border-2 border-amber-500/50 rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl animate-in zoom-in-95 duration-200 vault-panel-rivets relative">
+        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-xs flex items-start sm:items-center justify-center p-4 pl-safe pr-safe overflow-y-auto">
+          <div className="bg-white dark:bg-[#0E1B38] border-2 border-amber-500/50 rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl animate-in zoom-in-95 duration-200 vault-panel-rivets relative my-auto">
             <div className="w-16 h-16 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-2xl mx-auto flex items-center justify-center shadow-lg text-stone-950 border border-amber-400">
               <BottleCapIcon className="w-10 h-10 text-stone-950" />
             </div>

@@ -7,10 +7,10 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Hard",
     "question": "The qualitative principle stating that the influence line for any internal stress function or reaction is proportional to the deflected shape obtained by releasing that restraint and introducing a corresponding unit displacement is the:",
-    "answer": "MÜLLER-BRESLAU PRINCIPLE",
+    "answer": "Müller-Breslau Principle",
     "choices": [
       "Betti's Reciprocal Theorem",
-      "MÜLLER-BRESLAU PRINCIPLE",
+      "Müller-Breslau Principle",
       "Clapeyron's Theorem",
       "Maxwell's Reciprocal Theorem"
     ],
@@ -37,12 +37,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Medium",
     "question": "According to Mohr's First Moment-Area Theorem, the change in slope (θB/A) between tangents drawn to the elastic curve at points A and B equals the:",
-    "answer": "Area Under the M / (e · I) Diagram Between a and B",
+    "answer": "Area under the M / EI diagram between A and B",
     "choices": [
-      "Area Under the M / (e · I) Diagram Between a and B",
-      "Moment of the Shear Diagram About Point B",
-      "Maximum Deflection Divided by Span Length",
-      "Centroidal Distance of the Load"
+      "Area under the M / EI diagram between A and B",
+      "Moment of the shear diagram about point B",
+      "Maximum deflection divided by span length",
+      "Centroidal distance of the applied load"
     ],
     "explanation": "Mohr I states θB/A = ∫ (M / EI) dx from point A to point B."
   },
@@ -52,12 +52,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Hard",
     "question": "Mohr's Second Moment-Area Theorem states that the vertical tangential deviation (tB/A) of point B from the tangent drawn at point A equals the:",
-    "answer": "First Moment of the Area of the M / (e · I) Diagram Between a and B About Point B",
+    "answer": "First moment of the M / EI diagram between A and B about B",
     "choices": [
-      "First Moment of the Area of the M / (e · I) Diagram Between a and B About Point B",
-      "Total Area of the Shear Diagram Divided by E · I",
-      "Maximum Slope Multiplied by Span Squared",
-      "Second Moment of Inertia of the Bending Diagram"
+      "First moment of the M / EI diagram between A and B about B",
+      "Total area of the shear diagram divided by EI",
+      "Maximum slope multiplied by the square of span",
+      "Second moment of inertia of the bending diagram"
     ],
     "explanation": "Mohr II states tB/A = (Area of M/EI diagram between A and B) · x_bar_B."
   },
@@ -142,11 +142,11 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Hard",
     "question": "In prestressed concrete design, the critical stage occurring immediately upon release of pretensioning tendons to concrete when concrete strength is lowest and tendon stress is highest is the:",
-    "answer": "Transfer Stage (initial Stage)",
+    "answer": "Transfer Stage",
     "choices": [
       "Service Stage",
       "Cracking Stage",
-      "Transfer Stage (initial Stage)",
+      "Transfer Stage",
       "Ultimate Collapse Stage"
     ],
     "explanation": "At transfer, initial prestress Pi and girder self-weight act alone before time-dependent losses (creep, shrinkage, relaxation) occur."
@@ -157,14 +157,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Strength of Materials & Mechanics of Deformable Bodies",
     "difficulty": "Hard",
     "question": "To prevent tensile stresses from developing across the base of an unreinforced concrete or masonry pier under axial compression P and moment M, the eccentricity e must not exceed:",
-    "answer": "h / 6 (RESULTANT REMAINS WITHIN THE MIDDLE THIRD)",
+    "answer": "h / 6",
     "choices": [
       "h / 2",
       "h / 3",
-      "h / 6 (RESULTANT REMAINS WITHIN THE MIDDLE THIRD)",
+      "h / 6",
       "h / 12"
     ],
-    "explanation": "Middle-third rule: for rectangular section of depth h, kern boundary is at e = h/6 (σ_min = P/A - 6M/bh² ≥ 0)."
+    "explanation": "Middle-third rule: for rectangular section of depth h, kern boundary is at e = h/6 (σ_min = P/A - 6M/bh² ≥ 0). Keeps the resultant thrust within the middle third of the footing width."
   },
   {
     "id": 358,
@@ -202,14 +202,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Hard",
     "question": "In the plastic limit analysis of structural steel frames, the Lower Bound (Static) Theorem states that any load computed from a statically admissible equilibrium stress distribution is:",
-    "answer": "LESS THAN OR EQUAL TO THE TRUE PLASTIC COLLAPSE LOAD (P ≤ P_collapse)",
+    "answer": "Less than or equal to the true plastic collapse load",
     "choices": [
-      "Greater Than the True Plastic Collapse Load",
-      "LESS THAN OR EQUAL TO THE TRUE PLASTIC COLLAPSE LOAD (P ≤ P_collapse)",
-      "Exactly Equal to Twice the Working Load",
-      "Governed by Elastic Proportional Limit"
+      "Greater than the true plastic collapse load",
+      "Less than or equal to the true plastic collapse load",
+      "Exactly equal to twice the elastic working load",
+      "Strictly governed by the proportional elastic limit"
     ],
-    "explanation": "Lower bound theorem provides safe, conservative estimates of structural capacity: P_static ≤ P_true ≤ P_kinematic."
+    "explanation": "Lower bound theorem provides safe, conservative estimates of structural capacity: P_static ≤ P_true ≤ P_kinematic. Expressed as P ≤ P_collapse."
   },
   {
     "id": 361,
@@ -247,10 +247,10 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Fluid Dynamics & Energy/Continuity",
     "difficulty": "Easy",
     "question": "The volume of fluid flowing across a conduit cross-section per unit time is known as:",
-    "answer": "Discharge (flow Rate Q)",
+    "answer": "Discharge Rate",
     "choices": [
       "Stream Velocity",
-      "Discharge (flow Rate Q)",
+      "Discharge Rate",
       "Hydraulic Gradient",
       "Fluid Viscosity"
     ],
@@ -262,12 +262,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Fluid Dynamics & Energy/Continuity",
     "difficulty": "Medium",
     "question": "Energy grade line (EGL) in fluid hydraulics represents the sum of:",
-    "answer": "ELEVATION HEAD, PRESSURE HEAD, AND VELOCITY HEAD (z + P/γ + V²/2g)",
+    "answer": "Elevation head, pressure head, and velocity head",
     "choices": [
-      "Elevation Head and Pressure Head Only",
-      "ELEVATION HEAD, PRESSURE HEAD, AND VELOCITY HEAD (z + P/γ + V²/2g)",
-      "Pressure Head and Friction Head Only",
-      "Velocity Head Alone"
+      "Elevation head and pressure head only",
+      "Elevation head, pressure head, and velocity head",
+      "Pressure head and friction head only",
+      "Velocity head and datum elevation only"
     ],
     "explanation": "The Hydraulic Grade Line (HGL) lies below EGL by the velocity head V²/(2g)."
   },
@@ -277,12 +277,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Fluid Dynamics & Energy/Continuity",
     "difficulty": "Medium",
     "question": "Hydraulic grade line (HGL) represents the piezometric head level, which is the sum of:",
-    "answer": "ELEVATION HEAD AND PRESSURE HEAD (z + P/γ)",
+    "answer": "Elevation head and pressure head",
     "choices": [
-      "Total Energy Head",
-      "ELEVATION HEAD AND PRESSURE HEAD (z + P/γ)",
-      "Velocity Head and Pressure Head",
-      "Bed Slope Elevation"
+      "Total energy head and velocity head",
+      "Elevation head and pressure head",
+      "Velocity head and friction head",
+      "Bed slope and critical depth"
     ],
     "explanation": "Water in a piezometer column rises exactly to the height of the Hydraulic Grade Line (HGL)."
   },
@@ -322,14 +322,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Soil Physical Properties & Phase Relationships",
     "difficulty": "Easy",
     "question": "The density of pure liquid water at 4°C in SI units is:",
-    "answer": "1000 kg/m³ (OR 9.81 kN/m³ UNIT WEIGHT)",
+    "answer": "1000 kg/m³",
     "choices": [
       "800 kg/m³",
-      "1000 kg/m³ (OR 9.81 kN/m³ UNIT WEIGHT)",
+      "1000 kg/m³",
       "1200 kg/m³",
       "1500 kg/m³"
     ],
-    "explanation": "Unit weight of water γw = ρ · g = 1000 kg/m³ × 9.81 m/s² = 9810 N/m³ ≈ 9.81 kN/m³."
+    "explanation": "Unit weight of water γw = ρ · g = 1000 kg/m³ × 9.81 m/s² = 9810 N/m³ ≈ 9.81 kN/m³. Corresponds to a standard unit weight of 9.81 kN/m³."
   },
   {
     "id": 369,
@@ -337,12 +337,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Soil Physical Properties & Phase Relationships",
     "difficulty": "Medium",
     "question": "The ratio of the mass of a given volume of solid soil particles to the mass of an equal volume of distilled water is:",
-    "answer": "SPECIFIC GRAVITY OF SOIL SOLIDS (Gs)",
+    "answer": "Specific Gravity of Soil Solids (Gs)",
     "choices": [
-      "Mass Density",
-      "SPECIFIC GRAVITY OF SOIL SOLIDS (Gs)",
-      "Buoyant Ratio",
-      "Unit Density"
+      "Mass Density of Fluid (ρ)",
+      "Specific Gravity of Soil Solids (Gs)",
+      "Buoyant Void Ratio (eb)",
+      "Dry Unit Weight (γd)"
     ],
     "explanation": "Most inorganic soil minerals have specific gravity Gs between 2.60 and 2.80 (quartz ≈ 2.65)."
   },
@@ -412,12 +412,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Hard",
     "question": "The compression index (Cc) used in calculating primary consolidation settlement of normally consolidated clay is the slope of:",
-    "answer": "e vs. log σ' CURVE",
+    "answer": "Void ratio vs. log σ' curve",
     "choices": [
-      "e vs. σ' LINEAR PLOT",
-      "e vs. log σ' CURVE",
-      "t vs. settlement CURVE",
-      "σ vs. ε DIAGRAM"
+      "Void ratio vs. σ' linear plot",
+      "Void ratio vs. log σ' curve",
+      "Time vs. settlement curve",
+      "Stress vs. strain diagram"
     ],
     "explanation": "Cc = (e1 - e2) / log(σ'2 / σ'1). Primary settlement S = [Cc · H / (1 + e0)] · log(σ'f / σ'0)."
   },
@@ -442,11 +442,11 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Easy",
     "question": "The standard length of a surveyor's steel tape in metric engineering work is:",
-    "answer": "30 Meters (or 50 Meters)",
+    "answer": "30 Meters",
     "choices": [
       "10 Meters",
       "20 Meters",
-      "30 Meters (or 50 Meters)",
+      "30 Meters",
       "100 Meters"
     ],
     "explanation": "Standard metric surveying tapes are 30 m or 50 m calibrated at 20°C and 50 N pull tension."
@@ -517,14 +517,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Easy",
     "question": "The central crowning slope provided on roadway pavements to facilitate rapid lateral drainage of storm runoff is the:",
-    "answer": "Camber (cross Slope)",
+    "answer": "Camber",
     "choices": [
       "Superelevation",
-      "Camber (cross Slope)",
+      "Camber",
       "Longitudinal Grade",
       "Kerb Slope"
     ],
-    "explanation": "Standard pavement cross slope is 1.5% to 2.0% for asphalt and concrete pavements."
+    "explanation": "Standard pavement cross slope is 1.5% to 2.0% for asphalt and concrete pavements. Also known as cross slope."
   },
   {
     "id": 382,
@@ -562,12 +562,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Easy",
     "question": "A solid double yellow centerline painted along the middle of a two-lane two-way rural highway indicates:",
-    "answer": "No Passing / Overtaking Prohibited in Both Directions",
+    "answer": "Passing prohibited in both directions",
     "choices": [
-      "Passing Permitted with Caution",
-      "No Passing / Overtaking Prohibited in Both Directions",
-      "One-way Traffic Flow Only",
-      "Pedestrian Priority Zone"
+      "Passing permitted with caution",
+      "Passing prohibited in both directions",
+      "One-way traffic flow only",
+      "Pedestrian priority zone only"
     ],
     "explanation": "Solid barrier lines legally forbid crossing the highway centerline to overtake."
   },
@@ -592,11 +592,11 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Easy",
     "question": "The required protective helmet (hard hat) worn on Philippine construction sites must comply with standard specifications set by:",
-    "answer": "Pns / Oshs / Ansi Z89.1",
+    "answer": "PNS / OSHS / ANSI Z89.1",
     "choices": [
-      "Lto Standards",
-      "Pns / Oshs / Ansi Z89.1",
-      "Denr Dao 20",
+      "LTO Standards",
+      "PNS / OSHS / ANSI Z89.1",
+      "DENR DAO 20",
       "DPWH Volume 1"
     ],
     "explanation": "Industrial safety helmets protect workers from falling tools, materials, and overhead electrical contact hazards."
@@ -607,14 +607,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE safety rules, excavations deeper than what depth must have protective cave-in shoring, sloping, or shield systems?",
-    "answer": "1.5 Meters (5 Feet)",
+    "answer": "1.5 Meters",
     "choices": [
-      "0.5 Meter",
-      "1.0 Meter",
-      "1.5 Meters (5 Feet)",
+      "0.5 Meters",
+      "1.0 Meters",
+      "1.5 Meters",
       "3.0 Meters"
     ],
-    "explanation": "OSHA and DOLE mandate cave-in protection systems for any trench excavation exceeding 1.5 meters (5 feet)."
+    "explanation": "OSHA and DOLE mandate cave-in protection systems for any trench excavation exceeding 1.5 meters (5 feet). Approximately 5 feet."
   },
   {
     "id": 388,
@@ -622,14 +622,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Medium",
     "question": "Under DOLE trench safety standards, safe egress ladders must be placed inside trenches deeper than 1.2 m so that lateral travel distance does not exceed:",
-    "answer": "7.5 Meters (25 Feet)",
+    "answer": "7.5 Meters",
     "choices": [
       "3.0 Meters",
       "5.0 Meters",
-      "7.5 Meters (25 Feet)",
+      "7.5 Meters",
       "15.0 Meters"
     ],
-    "explanation": "Workers inside an excavation must never have to travel more than 7.5 meters (25 feet) laterally to reach an exit ladder."
+    "explanation": "Workers inside an excavation must never have to travel more than 7.5 meters (25 feet) laterally to reach an exit ladder. Approximately 25 feet."
   },
   {
     "id": 389,
@@ -637,14 +637,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Easy",
     "question": "Short daily safety briefings conducted on construction sites with workers prior to commencing morning shift work are called:",
-    "answer": "Toolbox Meetings (tailgate Talks)",
+    "answer": "Toolbox Meetings",
     "choices": [
       "DOLE Arbitration",
-      "Toolbox Meetings (tailgate Talks)",
-      "Oshs Audits",
+      "Toolbox Meetings",
+      "OSHS Audits",
       "Management Reviews"
     ],
-    "explanation": "Toolbox meetings reinforce daily task-specific hazards, PPE verification, and safe operating protocols."
+    "explanation": "Toolbox meetings reinforce daily task-specific hazards, PPE verification, and safe operating protocols. Commonly referred to as tailgate talks."
   },
   {
     "id": 390,
@@ -652,12 +652,12 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Medium",
     "question": "The point in financial analysis where total project revenues equal total project costs (Zero Profit / Zero Loss) is the:",
-    "answer": "Break-even Point (bep)",
+    "answer": "Break-Even Point (BEP)",
     "choices": [
-      "Payback Point",
-      "Break-even Point (bep)",
-      "Shutdown Threshold",
-      "Optimal Recovery"
+      "Payback Period (PBP)",
+      "Break-Even Point (BEP)",
+      "Shutdown Threshold (ST)",
+      "Capital Recovery Point (CRP)"
     ],
     "explanation": "At break-even point, Contribution Margin (Revenue - Variable Cost) equals total Fixed Costs."
   },
@@ -667,14 +667,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Project Management, CPM/PERT & Equipment Economics",
     "difficulty": "Easy",
     "question": "Estimated resale or scrap value of a construction equipment machine at the end of its designated useful service life is its:",
-    "answer": "Salvage Value (scrap Value)",
+    "answer": "Salvage Value",
     "choices": [
       "Book Value",
-      "Salvage Value (scrap Value)",
+      "Salvage Value",
       "First Cost",
       "Replacement Value"
     ],
-    "explanation": "Salvage value (S or SV) is subtracted from initial purchase price to determine total depreciable asset value."
+    "explanation": "Salvage value (S or SV) is subtracted from initial purchase price to determine total depreciable asset value. Also termed scrap or residual value."
   },
   {
     "id": 392,
@@ -757,14 +757,14 @@ export const SUPPLEMENT_QUESTIONS_2: CEQuestion[] = [
     "subtopic": "Engineering Mathematics & Geometry",
     "difficulty": "Easy",
     "question": "The sum of the exterior angles of any convex polygon regardless of the number of sides is always:",
-    "answer": "360° (2π RADIANS)",
+    "answer": "360°",
     "choices": [
       "180°",
-      "360° (2π RADIANS)",
+      "360°",
       "540°",
-      "(n - 2) · 180°"
+      "720°"
     ],
-    "explanation": "Traveling around the perimeter of any closed polygon completes one full 360-degree rotation."
+    "explanation": "Traveling around the perimeter of any closed polygon completes one full 360-degree rotation. Equivalent to 2π radians."
   },
   {
     "id": 398,

@@ -12,8 +12,76 @@ export interface CEQuestion {
   choices: string[];
   explanation: string;
   reference?: string;
+  isFormula?: boolean;
   addedAt?: number;
   isCustom?: boolean;
+  latex?: string;
+  diagramSrc?: string;
+  diagramAlt?: string;
+}
+
+export type HPGEFormulaDomain = 'Hydraulics & Fluid Mechanics' | 'Geotechnical Engineering';
+
+export type PSADFormulaDomain =
+  | 'Engineering Mechanics'
+  | 'Reinforced Concrete Design'
+  | 'Theory of Structures'
+  | 'Strength of Materials'
+  | 'Steel & Prestressed Concrete'
+  | 'Earthquake Engineering';
+
+export type MSTEFormulaDomain =
+  | 'Trigonometry & Geometry'
+  | 'Analytic Geometry & Algebra'
+  | 'Probability & Statistics'
+  | 'Surveying & Earthworks'
+  | 'Highway, Transpo & Ports'
+  | 'Engineering Economy'
+  | 'Calculus, DE & Vector Analysis'
+  | 'Construction & Engineering Physics';
+
+export type FormulaDomain = HPGEFormulaDomain | PSADFormulaDomain | MSTEFormulaDomain;
+
+export interface FormulaVariable {
+  symbol: string;
+  meaning: string;
+}
+
+export interface FormulaEquationItem {
+  label: string;
+  latex: string;
+  condition?: string;
+}
+
+export interface FormulaTable {
+  title: string;
+  headers: string[];
+  rows: string[][];
+}
+
+export interface FormulaDiagram {
+  src: string;
+  caption: string;
+  alt: string;
+}
+
+export interface CEFormula {
+  id: string;
+  area: CEArea;
+  domain: FormulaDomain;
+  topic: string;
+  examSubtopic: string;
+  title: string;
+  pageRef: number;
+  latex: string;
+  secondaryEquations?: FormulaEquationItem[];
+  variables?: FormulaVariable[];
+  notes?: string[];
+  diagrams?: FormulaDiagram[];
+  tables?: FormulaTable[];
+  flashcardPrompt: string;
+  flashcardHint?: string;
+  difficulty: DifficultyLevel;
 }
 
 export type StudyMode = 'flashcard' | 'repetition';
@@ -27,6 +95,7 @@ export interface ExamConfig {
   count: number;
   timeLimitMinutes: number; // 0 for untimed
   feedbackMode: FeedbackMode;
+  formulaOnly?: boolean;
 }
 
 export interface ActiveExamSession {

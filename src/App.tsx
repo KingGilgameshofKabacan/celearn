@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import {
   CEQuestion,
   ExamConfig,
   ExamSessionResult,
   FlashcardProgress,
-  FlashcardMasteryStatus,
   UserProfile,
   ActiveExamSession
 } from './types';
 import { CE_QUESTIONS_MASTER } from './data/questions';
+import { HPGE_FORMULA_QUESTIONS } from './data/questions_hpge_formulas';
+import { PSAD_FORMULA_QUESTIONS } from './data/questions_psad_formulas';
+import { MSTE_FORMULA_QUESTIONS } from './data/questions_mste_formulas';
+import { FormulaAreaFilter } from './data/allFormulas';
 import {
   getExamHistory,
   saveExamResult,
   getFlashcardProgress,
-  updateFlashcardStatus,
   getAchievements,
   evaluateAchievements,
   getUserStats,
@@ -41,10 +43,10 @@ import {
   getDueCards,
   getNewCards,
   setDailyTaskCompleted,
-  incrementDailyQuestionsAnswered,
   requestPersistentStorage,
   getActiveExamSession,
-  clearActiveExamSession
+  clearActiveExamSession,
+  addBottleCaps
 } from './utils/storage';
 import { Header, AppTab } from './components/Header';
 import { HomeScreen } from './components/HomeScreen';
@@ -53,9 +55,11 @@ import { ExamActive } from './components/ExamActive';
 import { ExamResults } from './components/ExamResults';
 import { FlashcardsView } from './components/FlashcardsView';
 import { DictionaryView } from './components/DictionaryView';
+import { FormulasView } from './components/FormulasView';
 import { AnalyticsView } from './components/AnalyticsView';
 import { AchievementsView } from './components/AchievementsView';
 import { ThemesView } from './components/ThemesView';
+import { UserDashboardRankingsView } from './components/UserDashboardRankingsView';
 import { ThemeId, CrtIntensity, THEMES_DATA, DEFAULT_THEME_ID, getThemePalette } from './types/theme';
 import { soundManager } from './utils/audio';
 import { WaterRippleEffect } from './components/WaterRippleEffect';
@@ -64,9 +68,21 @@ import { PdfScannerModal } from './components/PdfScannerModal';
 import { RecentlyAddedModal } from './components/RecentlyAddedModal';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { VaultDwellerPet } from './components/VaultDwellerPet';
+import { FalloutLoginModal } from './components/FalloutLoginModal';
+import { useFirebaseAuth } from './contexts/FirebaseAuthContext';
+import {
+  DEFAULT_SYNC_DEBOUNCE_MS,
+  syncUserProgressToFirestore
+} from './services/firebaseSync';
 import { AlertTriangle } from 'lucide-react';
 
 export default function App() {
+  const { user, isAuthReady } = useFirebaseAuth();
+  const [fatalSyncError, setFatalSyncError] = useState<Error | null>(null);
+  if (fatalSyncError) {
+    throw fatalSyncError;
+  }
+
   const [activeTab, setActiveTab] = useState<AppTab>('home');
   const [examStage, setExamStage] = useState<'setup' | 'active' | 'results'>('setup');
   
@@ -106,6 +122,7 @@ export default function App() {
   const [interruptedSession, setInterruptedSession] = useState<ActiveExamSession | null>(getActiveExamSession);
   const [sessionSecondsRemaining, setSessionSecondsRemaining] = useState<number | undefined>(undefined);
   const [sessionSecondsElapsed, setSessionSecondsElapsed] = useState<number | undefined>(undefined);
+  const [examSessionNonce, setExamSessionNonce] = useState<number>(0);
 
   // Sync interrupted session state on tab focus and storage updates
   useEffect(() => {
@@ -120,12 +137,37 @@ export default function App() {
     };
   }, []);
 
-  const showToast = (msg: string) => {
+  const toastTimerRef = useRef<number | null>(null);
+
+  const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(prev => (prev === msg ? null : prev));
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = window.setTimeout(() => {
+      setToastMessage(null);
+      toastTimerRef.current = null;
     }, 3500);
-  };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current !== null) {
+        window.clearTimeout(toastTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!pendingTabSwitch) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setPendingTabSwitch(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [pendingTabSwitch]);
 
   const handleTabSwitchRequest = (tab: AppTab) => {
     if (examStage === 'active' && tab !== 'exam') {
@@ -293,6 +335,151 @@ export default function App() {
     };
   }, []);
 
+  const skipNextCloudHydrationSyncRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    const handleBackupRestored = (event: Event) => {
+      const detail = (event as CustomEvent<{ source?: string }>).detail;
+      if (detail?.source === 'cloud-sync') {
+        skipNextCloudHydrationSyncRef.current = true;
+      }
+      setThemeMode(getThemeMode());
+      setActiveThemeId(getActiveThemeId());
+      setPreviewThemeId(null);
+      setIsDistractionFree(getDistractionFree());
+      setCrtEnabled(getCrtEnabled());
+      setCrtIntensity(getCrtIntensity());
+      setProfile(getUserProfile());
+      setFlashcardProgress(getFlashcardProgress());
+      setAchievements(getAchievements());
+      setBookmarks(getBookmarks());
+      setExamHistory(getExamHistory());
+      setCustomQuestions(getCustomQuestions());
+      setInterruptedSession(getActiveExamSession());
+      setStreakVersion(v => v + 1);
+      setExamStage(prev => (prev === 'active' ? 'setup' : prev));
+    };
+    window.addEventListener('cele_backup_restored', handleBackupRestored);
+    return () => {
+      window.removeEventListener('cele_backup_restored', handleBackupRestored);
+    };
+  }, []);
+
+  // Debounced auto-sync to Firestore whenever local examHistory, flashcardProgress,
+  // or customQuestions change for an authenticated user.
+  const prevSyncedSnapshotRef = useRef<{
+    uid: string | null;
+    examHistory: ExamSessionResult[];
+    flashcardProgress: FlashcardProgress;
+    customQuestions: CEQuestion[];
+  } | null>(null);
+  const pendingDirtySlicesRef = useRef<{
+    syncExams: boolean;
+    syncProgress: boolean;
+    syncCustom: boolean;
+  }>({
+    syncExams: false,
+    syncProgress: false,
+    syncCustom: false
+  });
+
+  useEffect(() => {
+    const currentUid = user?.uid ?? null;
+    if (!isAuthReady || !user || !currentUid) {
+      prevSyncedSnapshotRef.current = null;
+      pendingDirtySlicesRef.current = {
+        syncExams: false,
+        syncProgress: false,
+        syncCustom: false
+      };
+      return;
+    }
+
+    const prev = prevSyncedSnapshotRef.current;
+    // Initial mount or sign-in user change: record baseline without echoing an immediate write
+    if (!prev || prev.uid !== currentUid) {
+      prevSyncedSnapshotRef.current = {
+        uid: currentUid,
+        examHistory,
+        flashcardProgress,
+        customQuestions
+      };
+      return;
+    }
+
+    // Skip echoing writes right after sign-in cloud merge hydrates local state
+    if (skipNextCloudHydrationSyncRef.current) {
+      skipNextCloudHydrationSyncRef.current = false;
+      prevSyncedSnapshotRef.current = {
+        uid: currentUid,
+        examHistory,
+        flashcardProgress,
+        customQuestions
+      };
+      return;
+    }
+
+    const examsChanged = prev.examHistory !== examHistory;
+    const flashcardsChanged = prev.flashcardProgress !== flashcardProgress;
+    const customChanged = prev.customQuestions !== customQuestions;
+
+    prevSyncedSnapshotRef.current = {
+      uid: currentUid,
+      examHistory,
+      flashcardProgress,
+      customQuestions
+    };
+
+    if (!examsChanged && !flashcardsChanged && !customChanged) {
+      return;
+    }
+
+    pendingDirtySlicesRef.current = {
+      syncExams: pendingDirtySlicesRef.current.syncExams || examsChanged,
+      syncProgress:
+        pendingDirtySlicesRef.current.syncProgress || flashcardsChanged || examsChanged,
+      syncCustom: pendingDirtySlicesRef.current.syncCustom || customChanged
+    };
+
+    const debounceTimer = window.setTimeout(() => {
+      const slices = { ...pendingDirtySlicesRef.current };
+      pendingDirtySlicesRef.current = {
+        syncExams: false,
+        syncProgress: false,
+        syncCustom: false
+      };
+
+      void syncUserProgressToFirestore({
+        user,
+        userId: user.uid,
+        examHistory,
+        flashcardProgress,
+        customQuestions,
+        includeProfile: false,
+        includeProgress: slices.syncProgress,
+        syncExams: slices.syncExams,
+        syncCustom: slices.syncCustom,
+        syncLeaderboard: slices.syncExams || slices.syncProgress
+      }).catch(err => {
+        const error = err instanceof Error ? err : new Error(String(err));
+        const lower = error.message.toLowerCase();
+        const isTransientOffline =
+          lower.includes('client is offline') ||
+          lower.includes('could not reach cloud firestore') ||
+          lower.includes('code=unavailable');
+        if (!isTransientOffline && error.message.includes('"operationType"')) {
+          setFatalSyncError(error);
+        } else {
+          console.warn('Progress sync to Firestore deferred:', error);
+        }
+      });
+    }, DEFAULT_SYNC_DEBOUNCE_MS);
+
+    return () => {
+      window.clearTimeout(debounceTimer);
+    };
+  }, [user, isAuthReady, examHistory, flashcardProgress, customQuestions]);
+
   // Combined active question pool: authentic TOS master + custom scanned terms
   const allQuestions = useMemo(() => {
     return [...CE_QUESTIONS_MASTER, ...customQuestions];
@@ -339,15 +526,18 @@ export default function App() {
     return getNewCards(allQuestions, flashcardProgress).length;
   }, [allQuestions, flashcardProgress]);
 
-  const [flashcardsInitialMode, setFlashcardsInitialMode] = useState<'setup' | 'due' | 'new'>('setup');
+  const [flashcardsLaunch, setFlashcardsLaunch] = useState<{
+    mode: 'setup' | 'due' | 'new';
+    nonce: number;
+  }>({ mode: 'setup', nonce: 0 });
 
   const handleStartDueFlashcards = () => {
-    setFlashcardsInitialMode('due');
+    setFlashcardsLaunch(prev => ({ mode: 'due', nonce: prev.nonce + 1 }));
     setActiveTab('flashcards');
   };
 
   const handleStartNewFlashcardsSetup = () => {
-    setFlashcardsInitialMode('new');
+    setFlashcardsLaunch(prev => ({ mode: 'new', nonce: prev.nonce + 1 }));
     setActiveTab('flashcards');
   };
 
@@ -369,6 +559,7 @@ export default function App() {
       if (config.area !== 'ALL' && q.area !== config.area) return false;
       if (config.subtopic !== 'ALL' && q.subtopic !== config.subtopic) return false;
       if (config.difficulty !== 'ALL' && q.difficulty !== config.difficulty) return false;
+      if (config.formulaOnly && !q.isFormula && !(q.reference || '').includes('Formulas PDF')) return false;
       return true;
     });
 
@@ -384,6 +575,7 @@ export default function App() {
     setCurrentQuestionIndex(0);
     setUserAnswers({});
     setFlaggedIds([]);
+    setExamSessionNonce(n => n + 1);
     setExamStage('active');
   };
 
@@ -401,6 +593,7 @@ export default function App() {
     setFlaggedIds(session.flaggedIds || []);
     setSessionSecondsRemaining(session.secondsRemaining);
     setSessionSecondsElapsed(session.secondsElapsed);
+    setExamSessionNonce(n => n + 1);
     setExamStage('active');
     setActiveTab('exam');
     showToast(`Resumed exam (Item ${session.currentIndex + 1} of ${session.questions.length})`);
@@ -432,10 +625,40 @@ export default function App() {
       difficulty: 'ALL',
       count: 20,
       timeLimitMinutes: 25,
-      feedbackMode: 'delayed'
+      feedbackMode: 'delayed',
+      formulaOnly: false
     });
     setActiveTab('exam');
     setExamStage('setup');
+  };
+
+  // Start targeted G.O.A.T. Exam focusing on scanned PSAD, HPGE, and/or MSTE Formulas
+  const handleStartFormulaExam = (targetArea: FormulaAreaFilter = 'ALL') => {
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
+    const poolSize =
+      targetArea === 'PSAD'
+        ? PSAD_FORMULA_QUESTIONS.length
+        : targetArea === 'HPGE'
+          ? HPGE_FORMULA_QUESTIONS.length
+          : targetArea === 'MSTE'
+            ? MSTE_FORMULA_QUESTIONS.length
+            : PSAD_FORMULA_QUESTIONS.length + HPGE_FORMULA_QUESTIONS.length + MSTE_FORMULA_QUESTIONS.length;
+    setConfig({
+      area: targetArea,
+      subtopic: 'ALL',
+      difficulty: 'ALL',
+      count: Math.min(25, poolSize),
+      timeLimitMinutes: 25,
+      feedbackMode: 'immediate',
+      formulaOnly: true
+    });
+    setActiveTab('exam');
+    setExamStage('setup');
+    const areaLabel = targetArea === 'ALL' ? 'PSAD + HPGE + MSTE Formulas' : `${targetArea} Formulas`;
+    showToast(`${areaLabel} G.O.A.T. Exam configured — pick item count & click Initiate!`);
   };
 
   // Finish exam
@@ -453,7 +676,9 @@ export default function App() {
       }
     });
 
-    const percentage = Math.round((correctCount / activeQuestions.length) * 100);
+    const percentage = activeQuestions.length > 0
+      ? Math.round((correctCount / activeQuestions.length) * 100)
+      : 0;
     const result: ExamSessionResult = {
       id: `exam_${Date.now()}`,
       timestamp: Date.now(),
@@ -475,14 +700,23 @@ export default function App() {
     setLatestResult(result);
     setExamHistory(getExamHistory());
 
-    // Mark daily task completed and track questions answered
-    setDailyTaskCompleted('tookMockExam', true);
-    incrementDailyQuestionsAnswered(activeQuestions.length);
+    // Award Bottle Caps synchronously before cloud submission sync
+    const capsEarned = percentage >= 70 ? 100 : 25;
+    addBottleCaps(capsEarned);
 
-    const { achievements: updatedBadges } = evaluateAchievements(result, CE_QUESTIONS_MASTER);
+    // Mark daily exam task completed (daily answered count is tracked live per unique answer in ExamActive)
+    setDailyTaskCompleted('tookMockExam', true);
+
+    const { achievements: updatedBadges } = evaluateAchievements(result, allQuestions);
     setAchievements(updatedBadges);
 
     setExamStage('results');
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('cele_exam_submitted', { detail: { sessionId: result.id } })
+      );
+    }
   };
 
   // Retake missed questions only
@@ -507,6 +741,7 @@ export default function App() {
     setCurrentQuestionIndex(0);
     setUserAnswers({});
     setFlaggedIds([]);
+    setExamSessionNonce(n => n + 1);
     setExamStage('active');
   };
 
@@ -519,19 +754,21 @@ export default function App() {
     setCurrentQuestionIndex(0);
     setUserAnswers({});
     setFlaggedIds([]);
+    setExamSessionNonce(n => n + 1);
     setExamStage('active');
   };
 
   // Practice specific weak area from analytics
   const handlePracticeWeakArea = (subtopic: string) => {
-    const matchedArea = CE_QUESTIONS_MASTER.find(q => q.subtopic === subtopic)?.area || 'ALL';
+    const matchedArea = allQuestions.find(q => q.subtopic === subtopic)?.area || 'ALL';
     setConfig({
       area: matchedArea,
       subtopic: subtopic,
       difficulty: 'ALL',
       count: 20,
       timeLimitMinutes: 25,
-      feedbackMode: 'immediate'
+      feedbackMode: 'immediate',
+      formulaOnly: false
     });
     setActiveTab('exam');
     setExamStage('setup');
@@ -540,12 +777,19 @@ export default function App() {
   // Retake past exam from history
   const handleRetakePastExam = (pastResult: ExamSessionResult) => {
     const qMap = new Map<number, CEQuestion>();
-    CE_QUESTIONS_MASTER.forEach(q => qMap.set(q.id, q));
+    allQuestions.forEach(q => qMap.set(q.id, q));
     const loadedQuestions = pastResult.questionIds
       .map(id => qMap.get(id))
       .filter((q): q is CEQuestion => q !== undefined);
 
-    if (loadedQuestions.length === 0) return;
+    if (loadedQuestions.length === 0) {
+      showToast('Original questions for this session are no longer available.');
+      return;
+    }
+    clearActiveExamSession();
+    setInterruptedSession(null);
+    setSessionSecondsRemaining(undefined);
+    setSessionSecondsElapsed(undefined);
     setActiveQuestions(loadedQuestions);
     setCurrentQuestionIndex(0);
     setUserAnswers({});
@@ -554,17 +798,18 @@ export default function App() {
       ...prev,
       area: pastResult.area,
       subtopic: pastResult.subtopic,
-      timeLimitMinutes: pastResult.timeLimitMinutes
+      timeLimitMinutes: pastResult.timeLimitMinutes,
+      formulaOnly: false
     }));
+    setExamSessionNonce(n => n + 1);
     setActiveTab('exam');
     setExamStage('active');
   };
 
-  // Update flashcard status
-  const handleUpdateFlashcardStatus = (qid: number, status: FlashcardMasteryStatus) => {
-    const updated = updateFlashcardStatus(qid, status);
-    setFlashcardProgress({ ...updated });
-    const { achievements: updatedBadges } = evaluateAchievements(undefined, CE_QUESTIONS_MASTER);
+  // Sync flashcard progress state and evaluate achievements without double-writing storage
+  const handleSyncFlashcardProgress = () => {
+    setFlashcardProgress(getFlashcardProgress());
+    const { achievements: updatedBadges } = evaluateAchievements(undefined, allQuestions);
     setAchievements(updatedBadges);
   };
 
@@ -645,6 +890,7 @@ export default function App() {
 
             {examStage === 'active' && (
               <ExamActive
+                key={examSessionNonce}
                 questions={activeQuestions}
                 currentIndex={currentQuestionIndex}
                 setCurrentIndex={setCurrentQuestionIndex}
@@ -677,11 +923,22 @@ export default function App() {
           <FlashcardsView
             questions={allQuestions}
             flashcardProgress={flashcardProgress}
-            onUpdateStatus={handleUpdateFlashcardStatus}
+            onSyncProgress={handleSyncFlashcardProgress}
             bookmarks={bookmarks}
             onToggleBookmark={handleToggleBookmark}
-            initialMode={flashcardsInitialMode}
+            initialMode={flashcardsLaunch.mode}
+            launchNonce={flashcardsLaunch.nonce}
             onNavigateHome={() => setActiveTab('home')}
+          />
+        )}
+
+        {activeTab === 'formulas' && (
+          <FormulasView
+            themeMode={themeMode}
+            onStartFormulaExam={handleStartFormulaExam}
+            hpgeQuestionCount={HPGE_FORMULA_QUESTIONS.length}
+            psadQuestionCount={PSAD_FORMULA_QUESTIONS.length}
+            msteQuestionCount={MSTE_FORMULA_QUESTIONS.length}
           />
         )}
 
@@ -695,6 +952,10 @@ export default function App() {
             recentlyAddedCount={recentlyAddedQuestions.length}
             onDeleteCustomTerm={handleDeleteSingleCustomTerm}
           />
+        )}
+
+        {activeTab === 'rankings' && (
+          <UserDashboardRankingsView profile={profile} />
         )}
 
         {activeTab === 'analytics' && (
@@ -726,6 +987,7 @@ export default function App() {
             onResetDefaults={handleResetThemeDefaults}
             themeMode={themeMode}
             setThemeMode={setThemeMode}
+            onNotify={showToast}
           />
         )}
       </main>
@@ -757,8 +1019,8 @@ export default function App() {
 
       {/* Confirmation Dialog for Leaving Active Exam (No window.confirm!) */}
       {pendingTabSwitch && (
-        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100 space-y-4">
+        <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-start sm:items-center justify-center p-4 pl-safe pr-safe overflow-y-auto">
+          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-stone-900 dark:text-stone-100 space-y-4 my-auto">
             <div className="flex items-center space-x-3 text-orange-600 dark:text-orange-400">
               <div className="p-2 rounded-xl bg-orange-500/10">
                 <AlertTriangle className="w-6 h-6" />
@@ -812,6 +1074,9 @@ export default function App() {
           onNavigateTab={handleTabSwitchRequest}
         />
       )}
+
+      {/* Fallout Vault-Tec Cloud Login & Security Clearance Modal */}
+      <FalloutLoginModal />
 
       {/* Footer - Middle Center */}
       <footer className="border-t border-stone-200 dark:border-stone-800 py-6 text-xs text-stone-500 dark:text-stone-400 no-print transition-colors bg-white/70 dark:bg-stone-900/70 backdrop-blur-sm text-center">

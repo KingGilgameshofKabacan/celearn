@@ -65,8 +65,10 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       setActivityHistory(getLast7DaysActivity());
     };
     window.addEventListener('cele_daily_tasks_updated', handleDailyUpdate);
+    window.addEventListener('cele_backup_restored', handleDailyUpdate);
     return () => {
       window.removeEventListener('cele_daily_tasks_updated', handleDailyUpdate);
+      window.removeEventListener('cele_backup_restored', handleDailyUpdate);
     };
   }, []);
 
@@ -337,7 +339,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             {stats.flashcardsMastered}
           </div>
           <span className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 block">
-            of 400 total cards
+            of {questions.length.toLocaleString()} total cards
           </span>
         </div>
 
@@ -751,7 +753,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
                     <span className="text-stone-500 dark:text-stone-400">{new Date(session.timestamp).toLocaleDateString()}</span>
                   </div>
                   <div className="text-stone-500 dark:text-stone-400 mt-1 font-mono">
-                    Time: {Math.floor(session.timeSpentSeconds / 60)}m {session.timeSpentSeconds % 60}s · Pace: {Math.round(session.timeSpentSeconds / session.totalQuestions)}s/item
+                    Time: {Math.floor(session.timeSpentSeconds / 60)}m {session.timeSpentSeconds % 60}s · Pace: {session.totalQuestions > 0 ? Math.round(session.timeSpentSeconds / session.totalQuestions) : 0}s/item
                   </div>
                 </div>
 

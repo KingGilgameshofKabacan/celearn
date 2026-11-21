@@ -17,14 +17,14 @@ import { X, ChevronRight, Compass, EyeOff, Move } from 'lucide-react';
 
 interface VaultDwellerPetProps {
   userName?: string;
-  onNavigateTab?: (tab: 'exam' | 'flashcards' | 'dictionary' | 'analytics' | 'achievements' | 'themes') => void;
+  onNavigateTab?: (tab: 'exam' | 'flashcards' | 'formulas' | 'dictionary' | 'rankings' | 'analytics' | 'achievements' | 'themes') => void;
 }
 
 interface DialogueEntry {
   category: string;
   text: string;
   actionLabel: string;
-  targetTab: 'exam' | 'flashcards' | 'dictionary' | 'analytics' | 'achievements' | 'themes';
+  targetTab: 'exam' | 'flashcards' | 'formulas' | 'dictionary' | 'rankings' | 'analytics' | 'achievements' | 'themes';
 }
 
 const BASE_DIALOGUES: DialogueEntry[] = [
@@ -208,8 +208,21 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
   const [isMinimized, setIsMinimized] = useState<boolean>(getAvatarMinimized);
   const [clickCount, setClickCount] = useState<number>(0);
   const [bonusCapsClaimed, setBonusCapsClaimed] = useState<boolean>(false);
+  const [viewportSize, setViewportSize] = useState<{ w: number; h: number }>(() => ({
+    w: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    h: typeof window !== 'undefined' ? window.innerHeight : 720
+  }));
 
   const autoDismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingTimersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  const scheduleTimeout = useCallback((fn: () => void, delayMs: number) => {
+    const timer = setTimeout(() => {
+      pendingTimersRef.current.delete(timer);
+      fn();
+    }, delayMs);
+    pendingTimersRef.current.add(timer);
+    return timer;
+  }, []);
   const posRef = useRef<{ x: number; y: number }>(pos);
   useEffect(() => {
     posRef.current = pos;
@@ -265,6 +278,10 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
       else setIsMinimized(getAvatarMinimized());
     };
     const handleResize = () => {
+      setViewportSize({
+        w: window.innerWidth,
+        h: window.innerHeight
+      });
       setPos(prev => {
         if (!isCustomPlaced) {
           return getDefaultPosition();
@@ -273,22 +290,46 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
       });
     };
 
+    const handleOrientationChange = () => {
+      handleResize();
+      // iOS/Android often report updated innerWidth/innerHeight slightly after orientationchange fires
+      scheduleTimeout(handleResize, 120);
+      scheduleTimeout(handleResize, 320);
+    };
+
+    const handleBackupRestored = () => {
+      setAvatarConfig(getAvatarConfig());
+      const saved = getAvatarPosition();
+      setPos(saved ? clampPosition(saved.x, saved.y) : getDefaultPosition());
+      setIsCustomPlaced(Boolean(saved?.isCustomPlaced));
+      setIsMinimized(getAvatarMinimized());
+    };
+
     window.addEventListener('cele_avatar_updated', handleConfigUpdate);
     window.addEventListener('cele_avatar_position_reset', handlePositionReset);
     window.addEventListener('cele_avatar_minimized_changed', handleMinimizedSync);
+    window.addEventListener('cele_backup_restored', handleBackupRestored);
     window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientationChange);
+    window.visualViewport?.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('cele_avatar_updated', handleConfigUpdate);
       window.removeEventListener('cele_avatar_position_reset', handlePositionReset);
       window.removeEventListener('cele_avatar_minimized_changed', handleMinimizedSync);
+      window.removeEventListener('cele_backup_restored', handleBackupRestored);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleOrientationChange);
+      window.visualViewport?.removeEventListener('resize', handleResize);
     };
-  }, [isCustomPlaced]);
+  }, [isCustomPlaced, scheduleTimeout]);
 
   useEffect(() => {
+    const timers = pendingTimersRef.current;
     return () => {
       if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
+      timers.forEach(t => clearTimeout(t));
+      timers.clear();
     };
   }, []);
 
@@ -302,14 +343,14 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
       }
       setShowBubble(true);
       setIsWinking(true);
-      setTimeout(() => setIsWinking(false), 900);
+      scheduleTimeout(() => setIsWinking(false), 900);
 
       if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
       autoDismissTimerRef.current = setTimeout(() => {
         setShowBubble(false);
       }, 5000);
     },
-    [activeDialogues.length]
+    [activeDialogues.length, scheduleTimeout]
   );
 
   const handleNextDialogue = (e: React.MouseEvent) => {
@@ -343,14 +384,14 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
           setPos(nextPos);
         }
 
-        setTimeout(() => {
+        scheduleTimeout(() => {
           setIsWalking(false);
         }, 1400);
       }
     }, 7500);
 
     return () => clearInterval(walkInterval);
-  }, [avatarConfig.patrolEnabled, isMinimized, isDragging, showBubble]);
+  }, [avatarConfig.patrolEnabled, isMinimized, isDragging, showBubble, scheduleTimeout]);
 
   const handlePetClick = useCallback(() => {
     soundManager.playPetClick();
@@ -360,13 +401,13 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
       addBottleCaps(5);
       soundManager.playCapsJingle();
       setBonusCapsClaimed(true);
-      setTimeout(() => setBonusCapsClaimed(false), 5500);
+      scheduleTimeout(() => setBonusCapsClaimed(false), 5500);
     }
 
     setIsWinking(true);
-    setTimeout(() => setIsWinking(false), 1200);
+    scheduleTimeout(() => setIsWinking(false), 1200);
     triggerDialogue();
-  }, [clickCount, bonusCapsClaimed, triggerDialogue]);
+  }, [clickCount, bonusCapsClaimed, triggerDialogue, scheduleTimeout]);
 
   const handleHidePet = (e?: React.MouseEvent | React.PointerEvent) => {
     if (e) e.stopPropagation();
@@ -453,9 +494,12 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
 
   const currentDialogue = activeDialogues[dialogueIndex % activeDialogues.length] || activeDialogues[0];
 
-  // Calculate smart bubble alignment so it never clips off top, bottom, left, or right screen sides
-  const viewportW = typeof window !== 'undefined' ? window.innerWidth : 1280;
-  const openBelow = pos.y < 245;
+  // Calculate smart bubble alignment so it never clips off top, bottom, left, or right screen sides (including phone landscape)
+  const viewportW = viewportSize.w;
+  const viewportH = viewportSize.h;
+  const isCompactLandscape = viewportH < 520;
+  const isOnRightHalf = pos.x > viewportW / 2 - AVATAR_BOX_W / 2;
+  const openBelow = pos.y < viewportH * 0.45;
   const horizontalAlignClass =
     pos.x < 130
       ? 'left-0'
@@ -469,6 +513,12 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
       : pos.x > viewportW - AVATAR_BOX_W - 140
       ? 'right-8'
       : 'left-1/2 -translate-x-1/2';
+
+  const bubblePlacementClass = isCompactLandscape
+    ? `${isOnRightHalf ? 'right-full mr-2.5' : 'left-full ml-2.5'} ${
+        pos.y < viewportH * 0.35 ? 'top-0' : pos.y > viewportH * 0.65 ? 'bottom-0' : 'top-1/2 -translate-y-1/2'
+      } w-64 sm:w-72 max-w-[calc(100vw-140px)] max-h-[calc(100dvh-24px)] overflow-y-auto`
+    : `${openBelow ? 'top-full mt-2.5' : 'bottom-full mb-2.5'} ${horizontalAlignClass} w-72 sm:w-80 max-w-[calc(100vw-24px)] max-h-[calc(100dvh-160px)] overflow-y-auto`;
 
   // Minimized dock state
   if (isMinimized) {
@@ -521,9 +571,7 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
               if (autoDismissTimerRef.current) clearTimeout(autoDismissTimerRef.current);
               autoDismissTimerRef.current = setTimeout(() => setShowBubble(false), 5000);
             }}
-            className={`absolute ${
-              openBelow ? 'top-full mt-2.5' : 'bottom-full mb-2.5'
-            } ${horizontalAlignClass} w-72 sm:w-80 bg-[#080F20] text-stone-100 border-2 border-amber-500 rounded-2xl p-3.5 shadow-[0_14px_40px_rgba(0,0,0,0.85)] font-mono text-xs z-50 select-text`}
+            className={`absolute ${bubblePlacementClass} bg-[#080F20] text-stone-100 border-2 border-amber-500 rounded-2xl p-3.5 shadow-[0_14px_40px_rgba(0,0,0,0.85)] font-mono text-xs z-50 select-text`}
           >
             {/* Header bar */}
             <div className="flex items-center justify-between border-b border-amber-500/40 pb-2 mb-2 bg-[#050B17] -mx-3.5 -mt-3.5 px-3.5 pt-2.5 rounded-t-2xl">
@@ -590,25 +638,27 @@ export const VaultDwellerPet: React.FC<VaultDwellerPetProps> = ({
               </div>
             </div>
 
-            {/* Speech Bubble Pointer Beak (Up or Down) */}
-            {openBelow ? (
-              <>
-                <div
-                  className={`absolute -top-2.5 ${pointerHorizontalClass} w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[9px] border-b-amber-500`}
-                />
-                <div
-                  className={`absolute -top-1.5 ${pointerHorizontalClass} w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[8px] border-b-[#050B17]`}
-                />
-              </>
-            ) : (
-              <>
-                <div
-                  className={`absolute -bottom-2.5 ${pointerHorizontalClass} w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[9px] border-t-amber-500`}
-                />
-                <div
-                  className={`absolute -bottom-1.5 ${pointerHorizontalClass} w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[8px] border-t-[#080F20]`}
-                />
-              </>
+            {/* Speech Bubble Pointer Beak (Up or Down when stacked vertically) */}
+            {!isCompactLandscape && (
+              openBelow ? (
+                <>
+                  <div
+                    className={`absolute -top-2.5 ${pointerHorizontalClass} w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[9px] border-b-amber-500`}
+                  />
+                  <div
+                    className={`absolute -top-1.5 ${pointerHorizontalClass} w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[8px] border-b-[#050B17]`}
+                  />
+                </>
+              ) : (
+                <>
+                  <div
+                    className={`absolute -bottom-2.5 ${pointerHorizontalClass} w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[9px] border-t-amber-500`}
+                  />
+                  <div
+                    className={`absolute -bottom-1.5 ${pointerHorizontalClass} w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[8px] border-t-[#080F20]`}
+                  />
+                </>
+              )
             )}
           </div>
         )}

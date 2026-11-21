@@ -12,9 +12,8 @@ import {
 } from '../data/questions';
 import {
   Play,
-  RotateCcw,
-  Clock,
-  AlertCircle
+  Sigma,
+  X
 } from 'lucide-react';
 
 interface ExamSetupProps {
@@ -50,11 +49,42 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
       if (config.area !== 'ALL' && q.area !== config.area) return false;
       if (config.subtopic !== 'ALL' && q.subtopic !== config.subtopic) return false;
       if (config.difficulty !== 'ALL' && q.difficulty !== config.difficulty) return false;
+      if (config.formulaOnly && !q.isFormula && !(q.reference || '').includes('Formulas PDF')) return false;
       return true;
     }).length;
-  }, [questions, config.area, config.subtopic, config.difficulty]);
+  }, [questions, config.area, config.subtopic, config.difficulty, config.formulaOnly]);
 
-  const effectiveCount = Math.min(config.count, matchingQuestionsCount || 1);
+  const formulaCounts = useMemo(() => {
+    const counts = { PSAD: 0, HPGE: 0, MSTE: 0, ALL: 0 };
+    questions.forEach(q => {
+      if (q.isFormula || (q.reference || '').includes('Formulas PDF')) {
+        counts.ALL += 1;
+        if (q.area === 'PSAD' || q.area === 'HPGE' || q.area === 'MSTE') {
+          counts[q.area] += 1;
+        }
+      }
+    });
+    return counts;
+  }, [questions]);
+
+  const { areaCounts, subtopicCounts } = useMemo(() => {
+    const aCounts: Record<CEArea, number> = { PSAD: 0, HPGE: 0, MSTE: 0 };
+    const sCountsAll: Record<string, number> = {};
+    const sCountsByArea: Record<CEArea, Record<string, number>> = { PSAD: {}, HPGE: {}, MSTE: {} };
+    for (const q of questions) {
+      if (q.area === 'PSAD' || q.area === 'HPGE' || q.area === 'MSTE') {
+        aCounts[q.area] += 1;
+        sCountsAll[q.subtopic] = (sCountsAll[q.subtopic] || 0) + 1;
+        sCountsByArea[q.area][q.subtopic] = (sCountsByArea[q.area][q.subtopic] || 0) + 1;
+      }
+    }
+    return {
+      areaCounts: aCounts,
+      subtopicCounts: config.area === 'ALL' ? sCountsAll : sCountsByArea[config.area]
+    };
+  }, [questions, config.area]);
+
+  const effectiveCount = matchingQuestionsCount === 0 ? 0 : Math.min(config.count, matchingQuestionsCount);
 
   return (
     <div className="max-w-4xl mx-auto w-full my-6 p-4 sm:p-6 lg:p-8 space-y-6">
@@ -87,7 +117,13 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
             <div className="flex items-center space-x-3 text-xs font-mono text-stone-500 dark:text-stone-400 pt-1">
               <span>Item {interruptedSession.currentIndex + 1} of {interruptedSession.questions.length}</span>
               <span>·</span>
-              <span>{Math.floor(interruptedSession.secondsRemaining / 60)} mins left</span>
+              <span>
+                {interruptedSession.config.timeLimitMinutes === 0
+                  ? `Untimed (${Math.floor(interruptedSession.secondsElapsed / 60)}m elapsed)`
+                  : interruptedSession.secondsRemaining < 60
+                    ? '<1 min left'
+                    : `${Math.floor(interruptedSession.secondsRemaining / 60)} mins left`}
+              </span>
               {interruptedSession.flaggedIds.length > 0 && (
                 <>
                   <span>·</span>
@@ -155,10 +191,11 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
                   difficulty: 'ALL',
                   count: 50,
                   timeLimitMinutes: 45,
-                  feedbackMode: 'delayed'
+                  feedbackMode: 'delayed',
+                  formulaOnly: false
                 })
               }
-              className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition"
+              className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition cursor-pointer"
             >
               PSAD (50Q)
             </button>
@@ -170,12 +207,101 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
                   difficulty: 'ALL',
                   count: 50,
                   timeLimitMinutes: 45,
-                  feedbackMode: 'delayed'
+                  feedbackMode: 'delayed',
+                  formulaOnly: false
                 })
               }
-              className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition"
+              className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition cursor-pointer"
             >
               HPGE (50Q)
+            </button>
+            <button
+              onClick={() =>
+                onQuickPreset({
+                  area: 'PSAD',
+                  subtopic: 'ALL',
+                  difficulty: 'ALL',
+                  count: formulaCounts.PSAD || 43,
+                  timeLimitMinutes: 45,
+                  feedbackMode: 'immediate',
+                  formulaOnly: true
+                })
+              }
+              data-keep-color={config.formulaOnly && config.area === 'PSAD' ? true : undefined}
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl border transition flex items-center space-x-1 cursor-pointer ${
+                config.formulaOnly && config.area === 'PSAD'
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
+                  : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/35'
+              }`}
+            >
+              <Sigma className="w-3.5 h-3.5" />
+              <span>PSAD Formulas</span>
+            </button>
+            <button
+              onClick={() =>
+                onQuickPreset({
+                  area: 'HPGE',
+                  subtopic: 'ALL',
+                  difficulty: 'ALL',
+                  count: formulaCounts.HPGE || 44,
+                  timeLimitMinutes: 45,
+                  feedbackMode: 'immediate',
+                  formulaOnly: true
+                })
+              }
+              data-keep-color={config.formulaOnly && config.area === 'HPGE' ? true : undefined}
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl border transition flex items-center space-x-1 cursor-pointer ${
+                config.formulaOnly && config.area === 'HPGE'
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
+                  : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/35'
+              }`}
+            >
+              <Sigma className="w-3.5 h-3.5" />
+              <span>HPGE Formulas</span>
+            </button>
+            <button
+              onClick={() =>
+                onQuickPreset({
+                  area: 'MSTE',
+                  subtopic: 'ALL',
+                  difficulty: 'ALL',
+                  count: formulaCounts.MSTE || 49,
+                  timeLimitMinutes: 45,
+                  feedbackMode: 'immediate',
+                  formulaOnly: true
+                })
+              }
+              data-keep-color={config.formulaOnly && config.area === 'MSTE' ? true : undefined}
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl border transition flex items-center space-x-1 cursor-pointer ${
+                config.formulaOnly && config.area === 'MSTE'
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
+                  : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/35'
+              }`}
+            >
+              <Sigma className="w-3.5 h-3.5" />
+              <span>MSTE Formulas</span>
+            </button>
+            <button
+              onClick={() =>
+                onQuickPreset({
+                  area: 'ALL',
+                  subtopic: 'ALL',
+                  difficulty: 'ALL',
+                  count: 100,
+                  timeLimitMinutes: 60,
+                  feedbackMode: 'immediate',
+                  formulaOnly: true
+                })
+              }
+              data-keep-color={config.formulaOnly && config.area === 'ALL' ? true : undefined}
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl border transition flex items-center space-x-1 cursor-pointer ${
+                config.formulaOnly && config.area === 'ALL'
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
+                  : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/35'
+              }`}
+            >
+              <Sigma className="w-3.5 h-3.5" />
+              <span>All Formulas</span>
             </button>
             <button
               onClick={() =>
@@ -185,10 +311,11 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
                   difficulty: 'ALL',
                   count: 50,
                   timeLimitMinutes: 45,
-                  feedbackMode: 'delayed'
+                  feedbackMode: 'delayed',
+                  formulaOnly: false
                 })
               }
-              className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition"
+              className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 transition cursor-pointer"
             >
               MSTE (50Q)
             </button>
@@ -200,15 +327,37 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
                   difficulty: 'ALL',
                   count: 100,
                   timeLimitMinutes: 75,
-                  feedbackMode: 'delayed'
+                  feedbackMode: 'delayed',
+                  formulaOnly: false
                 })
               }
-              className="px-3 py-1.5 text-xs font-bold rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-900/50 transition"
+              className="px-3 py-1.5 text-xs font-bold rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-900/50 transition cursor-pointer"
             >
               Full Mock (100Q)
             </button>
           </div>
         </div>
+
+        {/* Active Formula-Only Indicator */}
+        {config.formulaOnly && (
+          <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <div className="flex items-center space-x-2 text-emerald-700 dark:text-emerald-300 font-bold">
+              <Sigma className="w-4 h-4 shrink-0" />
+              <span>
+                {config.area === 'ALL' ? 'HPGE, PSAD & MSTE Formulas' : `${config.area} Formulas`} Focus Active — drawing from the{' '}
+                {config.area === 'ALL' ? 'HPGE, PSAD & MSTE' : config.area} Formula question bank ({matchingQuestionsCount} items available)
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setConfig(prev => ({ ...prev, formulaOnly: false }))}
+              className="px-2.5 py-1 rounded-lg bg-stone-900/10 dark:bg-white/10 hover:bg-rose-500/20 text-stone-700 dark:text-stone-200 font-bold flex items-center space-x-1 transition cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Clear Filter</span>
+            </button>
+          </div>
+        )}
 
         {/* 1. Area Selection */}
         <div className="space-y-3">
@@ -231,12 +380,18 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
 
             {CE_AREAS.map(areaKey => {
               const isSelected = config.area === areaKey;
-              const areaCount = questions.filter(q => q.area === areaKey).length;
+              const areaCount = areaCounts[areaKey] || 0;
               return (
                 <button
                   key={areaKey}
                   type="button"
-                  onClick={() => setConfig(prev => ({ ...prev, area: areaKey, subtopic: 'ALL' }))}
+                  onClick={() =>
+                    setConfig(prev => ({
+                      ...prev,
+                      area: areaKey,
+                      subtopic: 'ALL'
+                    }))
+                  }
                   className={`p-3.5 rounded-2xl text-left border transition ${
                     isSelected
                       ? 'bg-orange-50 dark:bg-orange-950/50 border-orange-500 text-orange-900 dark:text-orange-200 font-bold ring-1 ring-orange-500'
@@ -268,10 +423,7 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
           >
             <option value="ALL">All Subtopics ({config.area})</option>
             {availableSubtopics.map(sub => {
-              const count = questions.filter(q => {
-                if (config.area !== 'ALL' && q.area !== config.area) return false;
-                return q.subtopic === sub;
-              }).length;
+              const count = subtopicCounts[sub] || 0;
               return (
                 <option key={sub} value={sub}>
                   {sub} ({count} items)
@@ -305,7 +457,7 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
             </label>
             <select
               value={config.count}
-              onChange={(e) => setConfig(prev => ({ ...prev, count: parseInt(e.target.value) }))}
+              onChange={(e) => setConfig(prev => ({ ...prev, count: parseInt(e.target.value, 10) }))}
               className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-orange-500 outline-none transition text-stone-900 dark:text-stone-100"
             >
               <option value="10">10 Items</option>
@@ -313,7 +465,10 @@ export const ExamSetup: React.FC<ExamSetupProps> = ({
               <option value="50">50 Items</option>
               <option value="100">100 Items</option>
               <option value="140">140 Items</option>
-              <option value="400">All Available ({matchingQuestionsCount} Max)</option>
+              {![10, 20, 50, 100, 140, 999999].includes(config.count) && (
+                <option value={config.count}>{config.count} Items</option>
+              )}
+              <option value="999999">All Available ({matchingQuestionsCount} Max)</option>
             </select>
           </div>
         </div>

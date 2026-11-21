@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Copy, Check, RefreshCw } from 'lucide-react';
 import { ThemeId } from '../types/theme';
 import {
@@ -21,9 +21,17 @@ export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProp
 }) => {
   const todayQuote = useMemo(() => getDailyQuote(), []);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState<number>(() => {
-    return CELE_MOTIVATIONAL_QUOTES.findIndex(q => q.id === todayQuote.id);
+    const idx = CELE_MOTIVATIONAL_QUOTES.findIndex(q => q.id === todayQuote.id);
+    return idx >= 0 ? idx : 0;
   });
   const [copied, setCopied] = useState<boolean>(false);
+  const copiedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+    };
+  }, []);
 
   const activeQuote: CeleMotivationalQuote =
     CELE_MOTIVATIONAL_QUOTES[currentQuoteIndex] || todayQuote;
@@ -40,12 +48,39 @@ export const DailyMotivationalQuoteCard: React.FC<DailyMotivationalQuoteCardProp
     setCurrentQuoteIndex(idx >= 0 ? idx : 0);
   };
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     const textToCopy = `“${activeQuote.quote}” — ${activeQuote.author}`;
-    navigator.clipboard?.writeText(textToCopy);
-    soundManager.playCorrect();
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    let ok = false;
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(textToCopy);
+        ok = true;
+      }
+    } catch {
+      ok = false;
+    }
+
+    if (!ok && typeof document !== 'undefined') {
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        ok = document.execCommand('copy');
+        document.body.removeChild(textarea);
+      } catch {
+        ok = false;
+      }
+    }
+
+    if (ok) {
+      soundManager.playCorrect();
+      setCopied(true);
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+      copiedTimerRef.current = setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   // Fallout Shelter room-tailored typography and visual accents

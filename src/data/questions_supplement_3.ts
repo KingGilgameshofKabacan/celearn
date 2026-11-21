@@ -22,12 +22,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Seismic Engineering & NSCP Provisions",
     "difficulty": "Medium",
     "question": "The Seismic Zone factor Z for the majority of the Philippine archipelago in NSCP 2015 is:",
-    "answer": "ZONE 4 (Z = 0.40)",
+    "answer": "Zone 4 (Z = 0.40)",
     "choices": [
-      "ZONE 2 (Z = 0.20)",
-      "ZONE 3 (Z = 0.30)",
-      "ZONE 4 (Z = 0.40)",
-      "ZONE 5 (Z = 0.50)"
+      "Zone 2 (Z = 0.20)",
+      "Zone 3 (Z = 0.30)",
+      "Zone 4 (Z = 0.40)",
+      "Zone 5 (Z = 0.50)"
     ],
     "explanation": "Except for Palawan, Sulu, and Tawi-Tawi (Zone 2, Z=0.20), the rest of the Philippines is in high-seismic Zone 4 (Z=0.40)."
   },
@@ -52,12 +52,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
     "question": "The minimum clear spacing between parallel longitudinal rebars in a horizontal layer in beams is:",
-    "answer": "BAR DIAMETER db, 25 mm, OR 4/3 OF COARSE AGGREGATE SIZE",
+    "answer": "db, 25 mm, or 4/3 nominal aggregate size",
     "choices": [
-      "20 mm",
-      "BAR DIAMETER db, 25 mm, OR 4/3 OF COARSE AGGREGATE SIZE",
-      "50 mm",
-      "2 times db"
+      "db, 20 mm, or 1/2 aggregate size",
+      "db, 25 mm, or 4/3 nominal aggregate size",
+      "2db, 40 mm, or 1.5 aggregate size",
+      "3db, 50 mm, or twice aggregate size"
     ],
     "explanation": "This ensures coarse aggregate passes freely without creating voids or honeycombing around steel."
   },
@@ -82,12 +82,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Hard",
     "question": "Block shear rupture failure mode in structural steel bolted connections involves simultaneous:",
-    "answer": "Tension Rupture on One Plane and Shear Yield/rupture on Perpendicular Plane",
+    "answer": "Tension rupture and perpendicular shear rupture",
     "choices": [
-      "Flexural Crippling and Flange Buckling",
-      "Tension Rupture on One Plane and Shear Yield/rupture on Perpendicular Plane",
-      "Bolt Bearing and Web Yielding",
-      "Torsional Twist and Weld Tearing"
+      "Flexural flange crippling and web local buckling",
+      "Tension rupture and perpendicular shear rupture",
+      "Bolt thread stripping and weld crater cracking",
+      "Lateral torsional twist and end plate prying"
     ],
     "explanation": "AISC Section J4.3 checks block shear capacity against combined shear path tear-out and tension rupture."
   },
@@ -97,11 +97,11 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Medium",
     "question": "A structural support that prevents both horizontal and vertical translations as well as rotational movement is a:",
-    "answer": "Fixed Support (built-in Support)",
+    "answer": "Fixed Support",
     "choices": [
       "Roller Support",
       "Pin Support",
-      "Fixed Support (built-in Support)",
+      "Fixed Support",
       "Rocker Support"
     ],
     "explanation": "A 2D fixed support exerts three reaction components: horizontal force Rx, vertical force Ry, and resisting moment M."
@@ -112,10 +112,10 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Structural Mechanics & Statics",
     "difficulty": "Easy",
     "question": "A structural support that prevents horizontal and vertical translation but permits free rotation is a:",
-    "answer": "Pinned (hinged) Support",
+    "answer": "Pinned Support",
     "choices": [
       "Roller Support",
-      "Pinned (hinged) Support",
+      "Pinned Support",
       "Fixed Support",
       "Sliding Guide"
     ],
@@ -142,14 +142,14 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "ASTM standard test method used to measure the abrasion resistance and degradation of coarse mineral aggregates is the:",
-    "answer": "Los Angeles Abrasion Test (ASTM C131)",
+    "answer": "Los Angeles Abrasion Test",
     "choices": [
       "Marshall Stability Test",
-      "Los Angeles Abrasion Test (ASTM C131)",
+      "Los Angeles Abrasion Test",
       "Proctor Density Test",
       "Vicat Needle Test"
     ],
-    "explanation": "Aggregates rotate inside a steel drum with steel charges; maximum allowable loss for concrete coarse aggregate is 40%."
+    "explanation": "Aggregates rotate inside a steel drum with steel charges; maximum allowable loss for concrete coarse aggregate is 40%. Standardized under ASTM C131."
   },
   {
     "id": 411,
@@ -172,12 +172,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Fluid Dynamics & Energy/Continuity",
     "difficulty": "Medium",
     "question": "The ratio of dynamic absolute viscosity (μ) to fluid mass density (ρ) is termed:",
-    "answer": "KINEMATIC VISCOSITY (ν)",
+    "answer": "Kinematic Viscosity (ν)",
     "choices": [
-      "Dynamic Viscosity",
-      "KINEMATIC VISCOSITY (ν)",
-      "Bulk Modulus",
-      "Relative Fluidity"
+      "Dynamic Viscosity (μ)",
+      "Kinematic Viscosity (ν)",
+      "Bulk Modulus (K)",
+      "Relative Fluidity (φ)"
     ],
     "explanation": "Kinematic viscosity ν = μ / ρ has SI units of m²/s (or Stokes in CGS system: 1 St = 10⁻⁴ m²/s)."
   },
@@ -189,10 +189,10 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "question": "Field test measuring penetration resistance in borings by driving a split-barrel sampler with a 63.5 kg hammer dropped 760 mm is:",
     "answer": "Standard Penetration Test (SPT)",
     "choices": [
-      "Cone Penetration Test (cpt)",
+      "Cone Penetration Test (CPT)",
       "Standard Penetration Test (SPT)",
-      "Vane Shear Test",
-      "Plate Load Test"
+      "Field Vane Shear Test (VST)",
+      "Plate Bearing Load Test (PLT)"
     ],
     "explanation": "The N-value is the number of blows needed for the final 300 mm (12 in) of penetration (ASTM D1586)."
   },
@@ -202,14 +202,14 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Soil Classification, Compaction & Permeability",
     "difficulty": "Medium",
     "question": "In the Standard Penetration Test (SPT), blow counts recorded over which drive interval are summed to obtain N-value?",
-    "answer": "THE LAST TWO 150 mm (6 in) INCREMENTS (TOTAL 300 mm)",
+    "answer": "The last two 150 mm increments",
     "choices": [
-      "THE FIRST 150 mm INCREMENT",
-      "THE LAST TWO 150 mm (6 in) INCREMENTS (TOTAL 300 mm)",
-      "ALL THREE 150 mm INCREMENTS",
-      "THE MIDDLE 150 mm INCREMENT"
+      "The first 150 mm increment",
+      "The last two 150 mm increments",
+      "All three 150 mm increments",
+      "The middle 150 mm increment"
     ],
-    "explanation": "The first 150 mm is seated penetration; the sum of blows for the next two 150 mm intervals gives N."
+    "explanation": "The first 150 mm is seated penetration; the sum of blows for the next two 150 mm intervals gives N. Totaling 300 mm of penetration."
   },
   {
     "id": 415,
@@ -217,12 +217,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Hard",
     "question": "A soil deposit that has been subjected to historical effective overburden pressures greater than the current existing overburden is:",
-    "answer": "OVERCONSOLIDATED SOIL (OCR > 1.0)",
+    "answer": "Overconsolidated Soil (OCR > 1.0)",
     "choices": [
-      "Normally Consolidated Soil",
-      "OVERCONSOLIDATED SOIL (OCR > 1.0)",
-      "Underconsolidated Soil",
-      "Collapsible Soil"
+      "Normally Consolidated Soil (OCR = 1.0)",
+      "Overconsolidated Soil (OCR > 1.0)",
+      "Underconsolidated Soil (OCR < 1.0)",
+      "Zero-Consolidation Soil (OCR = 0.0)"
     ],
     "explanation": "Overconsolidation Ratio OCR = σ'c / σ'0 > 1. Overconsolidated clays show stiffer initial response and lower settlement."
   },
@@ -262,14 +262,14 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Hydrology, Coastal & Harbor Engineering",
     "difficulty": "Medium",
     "question": "A coastal wall built perpendicular to the beach into the surf zone to trap littoral sand drift and prevent beach erosion is a:",
-    "answer": "Groin (groyne)",
+    "answer": "Groin",
     "choices": [
       "Breakwater",
       "Revetment",
-      "Groin (groyne)",
+      "Groin",
       "Dolphin"
     ],
-    "explanation": "Groins trap longshore sediment transport moving along the beach profile, stabilizing downdrift shorelines."
+    "explanation": "Groins trap longshore sediment transport moving along the beach profile, stabilizing downdrift shorelines. Also spelled groyne."
   },
   {
     "id": 419,
@@ -277,12 +277,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Surveying, Leveling & Errors",
     "difficulty": "Medium",
     "question": "The magnetic declination at a survey station is defined as the horizontal angle between:",
-    "answer": "True North (geographic Meridian) and Magnetic North",
+    "answer": "True North and Magnetic North",
     "choices": [
       "Magnetic North and Grid North",
-      "True North (geographic Meridian) and Magnetic North",
-      "Assumed Meridian and Polar Axis",
-      "Horizon and Zenith Meridian"
+      "True North and Magnetic North",
+      "Assumed Meridian and Grid North",
+      "Horizon Axis and Zenith Meridian"
     ],
     "explanation": "Declination is East or West depending on whether the magnetic needle points east or west of astronomical true north."
   },
@@ -307,12 +307,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
     "question": "The point where a straight horizontal tangent intersects the circular arc of a highway curve is the:",
-    "answer": "Point of Curvature (pc)",
+    "answer": "Point of Curvature (PC)",
     "choices": [
-      "Point of Tangency (pt)",
-      "Point of Curvature (pc)",
+      "Point of Tangency (PT)",
+      "Point of Curvature (PC)",
       "Point of Intersection (PI)",
-      "External Secant Point"
+      "Point of Reverse Curve (PRC)"
     ],
     "explanation": "PC marks the start station of circular curvature; PT marks the exit point where curve transitions back to tangent."
   },
@@ -322,12 +322,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Highway Geometric Design & Sight Distances",
     "difficulty": "Medium",
     "question": "The point where a circular curve ends and transitions back to a forward tangent line is the:",
-    "answer": "Point of Tangency (pt)",
+    "answer": "Point of Tangency (PT)",
     "choices": [
-      "Point of Curvature (pc)",
-      "Point of Tangency (pt)",
+      "Point of Curvature (PC)",
+      "Point of Tangency (PT)",
       "Point of Intersection (PI)",
-      "Midpoint of Curve"
+      "Point of Compound Curve (PCC)"
     ],
     "explanation": "Station PT = Station PC + Length of Curve L."
   },
@@ -337,12 +337,12 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Traffic Engineering, Markings & Signs",
     "difficulty": "Medium",
     "question": "The maximum rate of flow of vehicles that can pass through an intersection approach during a continuous green signal is the:",
-    "answer": "SATURATION FLOW RATE (s)",
+    "answer": "Saturation Flow Rate (s)",
     "choices": [
-      "Service Volume",
-      "SATURATION FLOW RATE (s)",
-      "Critical Volume",
-      "Arrival Headway"
+      "Service Flow Volume (V)",
+      "Saturation Flow Rate (s)",
+      "Critical Lane Volume (Vc)",
+      "Average Headway Rate (h)"
     ],
     "explanation": "Typical base saturation flow rate is approximately 1900 passenger cars per hour of green time per lane (pcphgpl)."
   },
@@ -352,14 +352,14 @@ export const SUPPLEMENT_QUESTIONS_3: CEQuestion[] = [
     "subtopic": "Construction Safety, OSH Standards (RA 11058 / DOLE DO 13)",
     "difficulty": "Easy",
     "question": "Under Philippine OSH standards, the minimum safety distance of scaffolding or crane booms from live electrical overhead power lines up to 50 kV is:",
-    "answer": "3.0 Meters (10 Feet)",
+    "answer": "3.0 Meters",
     "choices": [
-      "1.0 Meter",
+      "1.0 Meters",
       "2.0 Meters",
-      "3.0 Meters (10 Feet)",
+      "3.0 Meters",
       "5.0 Meters"
     ],
-    "explanation": "Maintaining a minimum clearance of 3.0 m (10 ft) prevents dangerous electrical arc flashovers and electrocution."
+    "explanation": "Maintaining a minimum clearance of 3.0 m (10 ft) prevents dangerous electrical arc flashovers and electrocution. Equivalent to 10 feet."
   },
   {
     "id": 425,

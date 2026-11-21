@@ -52,14 +52,14 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Fluid Statics & Buoyancy",
     "difficulty": "Hard",
     "question": "When an open cylindrical liquid tank is rotated about its vertical axis at constant angular velocity ω, the free surface forms a:",
-    "answer": "PARABOLOID OF REVOLUTION (z = ω² · r² / 2g)",
+    "answer": "Paraboloid of Revolution",
     "choices": [
       "Spherical Bowl",
-      "PARABOLOID OF REVOLUTION (z = ω² · r² / 2g)",
-      "Hyperboloid",
+      "Paraboloid of Revolution",
+      "Hyperbolic Cone",
       "Conical Funnel"
     ],
-    "explanation": "Centrifugal acceleration causes pressure gradient in radial direction, shaping the liquid surface into a paraboloid."
+    "explanation": "Centrifugal acceleration causes pressure gradient in radial direction, shaping the liquid surface into a paraboloid. Free surface equation in cylindrical coordinates: z = ω² · r² / 2g."
   },
   {
     "id": 805,
@@ -67,14 +67,14 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Fluid Statics & Buoyancy",
     "difficulty": "Hard",
     "question": "The volume of a paraboloid of revolution of height h and base radius r formed by rotating fluid is equal to:",
-    "answer": "HALF THE VOLUME OF THE CIRCUMSCRIBING CYLINDER (0.5 · π · r² · h)",
+    "answer": "Half the volume of the circumscribing cylinder",
     "choices": [
-      "HALF THE VOLUME OF THE CIRCUMSCRIBING CYLINDER (0.5 · π · r² · h)",
-      "One-third the volume of cylinder (1/3 · π · r² · h)",
-      "Two-thirds the volume of cylinder",
-      "Equal to the cylinder volume"
+      "Half the volume of the circumscribing cylinder",
+      "One-third the volume of the circumscribing cylinder",
+      "Two-thirds the volume of the circumscribing cylinder",
+      "Equal to the volume of the circumscribing cylinder"
     ],
-    "explanation": "Crucial in CELE problems for determining liquid volume spilled during rotation: V_paraboloid = (1/2) · π · r² · h."
+    "explanation": "Crucial in CELE problems for determining liquid volume spilled during rotation: V_paraboloid = (1/2) · π · r² · h. Volume formula: V = 0.5 · π · r² · h."
   },
   {
     "id": 806,
@@ -84,10 +84,10 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "question": "In open channel hydraulics, the critical depth y_c for a rectangular channel of width b carrying discharge Q is given by:",
     "answer": "y_c = [ (Q / b)² / g ]^(1/3) = (q² / g)^(1/3)",
     "choices": [
-      "y_c = (Q² / g)^(1/2)",
+      "y_c = (Q² / g)^(1/2) = (q / g)^(1/2)",
       "y_c = [ (Q / b)² / g ]^(1/3) = (q² / g)^(1/3)",
-      "y_c = q / √(g)",
-      "y_c = 2 · q² / g"
+      "y_c = (q / √g) = (Q / b√g)",
+      "y_c = (2 · q² / g) = (2Q² / b²g)"
     ],
     "explanation": "At critical flow depth, specific energy E is at absolute minimum and Froude number Fr = 1.0."
   },
@@ -172,14 +172,14 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Hard",
     "question": "Terzaghi’s principle of effective stress in saturated soils states that total normal stress σ is the sum of:",
-    "answer": "EFFECTIVE STRESS σ' AND PORE WATER PRESSURE u (σ = σ' + u)",
+    "answer": "Effective Stress σ' and Pore Water Pressure u",
     "choices": [
-      "SHEAR STRESS τ AND PORE PRESSURE u",
-      "EFFECTIVE STRESS σ' AND PORE WATER PRESSURE u (σ = σ' + u)",
-      "Atmospheric Pressure and Hydrostatic Head",
-      "COHESION c AND FRICTION STRESS"
+      "Shear Stress τ and Pore Water Pressure u",
+      "Effective Stress σ' and Pore Water Pressure u",
+      "Atmospheric Pressure P and Hydrostatic Head h",
+      "Soil Cohesion c and Normal Stress σ"
     ],
-    "explanation": "Soil skeleton volume change, settlement, and shear resistance are controlled exclusively by effective stress σ' = σ - u."
+    "explanation": "Soil skeleton volume change, settlement, and shear resistance are controlled exclusively by effective stress σ' = σ - u. Governed by Terzaghi's effective stress equation: σ = σ' + u."
   },
   {
     "id": 813,
@@ -187,12 +187,12 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Hard",
     "question": "In an unconfined compression test on cohesive saturated clay (φ = 0), the undrained shear strength c_u is equal to:",
-    "answer": "HALF OF THE UNCONFINED COMPRESSIVE STRENGTH (c_u = q_u / 2)",
+    "answer": "Half of the unconfined compressive strength (cu = qu / 2)",
     "choices": [
-      "Equal to the unconfined compressive strength (c_u = q_u)",
-      "HALF OF THE UNCONFINED COMPRESSIVE STRENGTH (c_u = q_u / 2)",
-      "Twice the compressive strength (c_u = 2 · q_u)",
-      "c_u = q_u · tan 45°"
+      "Equal to the unconfined compressive strength (cu = qu)",
+      "Half of the unconfined compressive strength (cu = qu / 2)",
+      "Twice the unconfined compressive strength (cu = 2 · qu)",
+      "Tangent component of compressive strength (cu = qu · tan 45°)"
     ],
     "explanation": "Because cell pressure σ3 = 0, Mohr’s circle has diameter qu, yielding radius cu = qu / 2."
   },
@@ -292,12 +292,12 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Consolidation, Shear Strength & Bearing Capacity",
     "difficulty": "Medium",
     "question": "For a normally consolidated clay soil subjected to a Consolidated-Drained (CD) triaxial test, the effective cohesion c' is equal to:",
-    "answer": "ZERO (c' = 0)",
+    "answer": "Zero (c' = 0)",
     "choices": [
-      "qu / 2",
-      "ZERO (c' = 0)",
-      "Equal to pore pressure u",
-      "0.577 · σ'1"
+      "Half of qu (c' = qu / 2)",
+      "Zero (c' = 0)",
+      "Equal to pore pressure (c' = u)",
+      "Fractional stress (c' = 0.58 · σ'1)"
     ],
     "explanation": "Normally consolidated clays have zero effective cohesion intercept; shear strength is governed purely by internal friction: τ = σ' · tan φ'."
   },
@@ -322,14 +322,14 @@ export const HPGE_TOS_QUESTIONS: CEQuestion[] = [
     "subtopic": "Foundations, Retaining Walls & Slope Stability",
     "difficulty": "Medium",
     "question": "The Factor of Safety against overturning for a retaining wall is defined as the ratio of:",
-    "answer": "TOTAL RESISTING MOMENTS TO TOTAL OVERTURNING MOMENTS (ΣMR / ΣMO)",
+    "answer": "Total Resisting Moments to Total Overturning Moments",
     "choices": [
       "Total Overturning Moments to Resisting Moments",
-      "TOTAL RESISTING MOMENTS TO TOTAL OVERTURNING MOMENTS (ΣMR / ΣMO)",
-      "Base Friction to Horizontal Thrust",
-      "Soil Bearing Capacity to Base Pressure"
+      "Total Resisting Moments to Total Overturning Moments",
+      "Base Sliding Friction to Lateral Earth Thrust",
+      "Ultimate Bearing Capacity to Toe Bearing Pressure"
     ],
-    "explanation": "Moments are evaluated about the toe of the retaining wall base slab; minimum required FS overturning ≥ 2.0."
+    "explanation": "Moments are evaluated about the toe of the retaining wall base slab; minimum required FS overturning ≥ 2.0. Computed as FS = ΣMR / ΣMO."
   },
   {
     "id": 823,

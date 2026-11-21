@@ -322,12 +322,12 @@ export const PSAD_QUESTIONS: CEQuestion[] = [
     "subtopic": "Reinforced Concrete & Prestressed Design",
     "difficulty": "Medium",
     "question": "Minimum mixing duration for a batch of Portland cement concrete for pavement in a standard central plant mixer.",
-    "answer": "1.5 Minutes (90 Seconds)",
+    "answer": "90 Seconds",
     "choices": [
       "45 Seconds",
-      "1.0 Minute",
-      "1.5 Minutes (90 Seconds)",
-      "3.0 Minutes"
+      "60 Seconds",
+      "90 Seconds",
+      "180 Seconds"
     ],
     "explanation": "Specifications require a minimum of 1.5 minutes (90 seconds) of active mixing for paving batch drums."
   },
@@ -354,7 +354,7 @@ export const PSAD_QUESTIONS: CEQuestion[] = [
     "question": "The minimum compressive strength f'c for reinforced concrete structural members according to NSCP 2015 is:",
     "answer": "17 MPa (2500 psi)",
     "choices": [
-      "14 MPa",
+      "14 MPa (2000 psi)",
       "17 MPa (2500 psi)",
       "21 MPa (3000 psi)",
       "28 MPa (4000 psi)"
@@ -457,12 +457,12 @@ export const PSAD_QUESTIONS: CEQuestion[] = [
     "subtopic": "Construction Materials & Testing",
     "difficulty": "Medium",
     "question": "The deleterious chemical degradation of concrete resulting from reactions between active amorphous silica in aggregates and alkalis (Na2O, K2O) in cement paste is:",
-    "answer": "Alkali-silica Reaction (asr)",
+    "answer": "Alkali-Silica Reaction (ASR)",
     "choices": [
-      "Sulfate Attack",
-      "Carbonation Induced Corrosion",
-      "Alkali-silica Reaction (asr)",
-      "Calcium Leaching"
+      "Sulfate Attack (SA)",
+      "Carbonation Induced Corrosion (CIC)",
+      "Alkali-Silica Reaction (ASR)",
+      "Calcium Leaching (CL)"
     ],
     "explanation": "ASR forms an expansive alkali-silicate gel that imbibes moisture, exerts high osmotic pressure, and causes map cracking."
   },
@@ -487,12 +487,12 @@ export const PSAD_QUESTIONS: CEQuestion[] = [
     "subtopic": "Structural Steel & Timber Design",
     "difficulty": "Hard",
     "question": "In structural steel member design, the Effective Length Factor K for a column with both ends fixed against rotation and translation is:",
-    "answer": "0.50 (theoretical) / 0.65 (recommended)",
+    "answer": "0.65 (Design) / 0.50 (Theoretical)",
     "choices": [
-      "1.0",
-      "0.70",
-      "0.50 (theoretical) / 0.65 (recommended)",
-      "2.0"
+      "0.65 (Design) / 0.50 (Theoretical)",
+      "1.00 (Design) / 0.85 (Theoretical)",
+      "0.80 (Design) / 0.70 (Theoretical)",
+      "1.20 (Design) / 1.00 (Theoretical)"
     ],
     "explanation": "A fixed-fixed compression column has theoretical inflection points at L/4 from each end, yielding K = 0.50."
   },

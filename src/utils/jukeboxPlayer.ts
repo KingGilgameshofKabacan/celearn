@@ -35,7 +35,12 @@ class VaultJukeboxManager {
           if (idx !== -1) this.currentTrackIndex = idx;
         }
         const savedVol = localStorage.getItem('cele_jukebox_vol');
-        if (savedVol) this.volume = parseFloat(savedVol);
+        if (savedVol !== null) {
+          const parsedVol = parseFloat(savedVol);
+          if (!isNaN(parsedVol)) {
+            this.volume = Math.max(0, Math.min(1, parsedVol));
+          }
+        }
         const savedMode = localStorage.getItem('cele_jukebox_player_mode');
         if (savedMode === 'cassette' || savedMode === 'vinyl') {
           this.playerMode = savedMode;
@@ -106,6 +111,35 @@ class VaultJukeboxManager {
       loopMode: this.loopMode,
       playerMode: this.playerMode
     };
+  }
+
+  public syncFromStorage(): void {
+    if (typeof window === 'undefined') return;
+    try {
+      const savedTrackId = localStorage.getItem('cele_jukebox_track');
+      if (savedTrackId) {
+        const idx = VAULT_JUKEBOX_TRACKS.findIndex(t => t.id === savedTrackId);
+        if (idx !== -1) this.currentTrackIndex = idx;
+      } else {
+        this.currentTrackIndex = 0;
+      }
+
+      const savedVol = localStorage.getItem('cele_jukebox_vol');
+      const parsedVol = savedVol !== null ? parseFloat(savedVol) : NaN;
+      this.volume = !isNaN(parsedVol) ? Math.max(0, Math.min(1, parsedVol)) : 0.65;
+
+      const savedMode = localStorage.getItem('cele_jukebox_player_mode');
+      this.playerMode = savedMode === 'cassette' || savedMode === 'vinyl' ? savedMode : 'cassette';
+
+      if (this.audio) {
+        this.audio.volume = this.isMuted ? 0 : this.volume;
+        const targetTrack = VAULT_JUKEBOX_TRACKS[this.currentTrackIndex] || VAULT_JUKEBOX_TRACKS[0];
+        if (!this.isPlaying && targetTrack && !this.audio.src.includes(targetTrack.src)) {
+          this.audio.src = targetTrack.src;
+        }
+      }
+    } catch {}
+    this.notifyListeners();
   }
 
   public setPlayerMode(mode: JukeboxPlayerMode): void {

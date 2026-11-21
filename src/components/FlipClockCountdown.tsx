@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Calendar, Clock, Edit3, Sparkles, Volume2, VolumeX, Cpu, RefreshCw } from 'lucide-react';
+import { Calendar, Edit3, Volume2, VolumeX, Cpu, RefreshCw } from 'lucide-react';
 import { soundManager } from '../utils/audio';
 
 interface FlipClockCountdownProps {
@@ -146,17 +146,27 @@ export const FlipClockCountdown: React.FC<FlipClockCountdownProps> = ({
     seconds: '00'
   });
 
-  const [totalSecondsRemaining, setTotalSecondsRemaining] = useState<number>(0);
-
   // Ticking audio ref (optional subtle click)
   useEffect(() => {
+    const parseTargetTime = (dateStr: string): number => {
+      const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr.trim());
+      if (match) {
+        const y = parseInt(match[1], 10);
+        const m = parseInt(match[2], 10) - 1;
+        const d = parseInt(match[3], 10);
+        const localTime = new Date(y, m, d, 0, 0, 0, 0).getTime();
+        if (!Number.isNaN(localTime)) return localTime;
+      }
+      const parsed = new Date(dateStr).getTime();
+      return Number.isNaN(parsed) ? Date.now() : parsed;
+    };
+
     const calculateTime = () => {
-      const targetTime = new Date(targetExamDate).getTime();
-      const now = new Date().getTime();
+      const targetTime = parseTargetTime(targetExamDate);
+      const now = Date.now();
       const diffMs = Math.max(0, targetTime - now);
 
       const totalSec = Math.floor(diffMs / 1000);
-      setTotalSecondsRemaining(totalSec);
 
       const d = Math.floor(totalSec / (3600 * 24));
       const h = Math.floor((totalSec % (3600 * 24)) / 3600);
